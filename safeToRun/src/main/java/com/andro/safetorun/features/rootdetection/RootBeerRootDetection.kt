@@ -1,16 +1,20 @@
 package com.andro.safetorun.features.rootdetection
 
 import android.content.Context
+import com.andro.safetorun.checks.SafeToRunCheck
 import com.scottyab.rootbeer.RootBeer
 
-class RootBeerRootDetection(private val context: Context) : RootDetection {
+class RootBeerRootDetection(private val rootDetectionConfig: RootDetectionConfig) :
+    SafeToRunCheck {
 
-    private val rootBeer by lazy {
-        RootBeer(context)
+    override fun canRun(context: Context): Boolean {
+        if (rootDetectionConfig.tolerateRoot) return true
+
+        return if (rootDetectionConfig.tolerateBusyBox) {
+            RootBeer(context).isRootedWithBusyBoxCheck.not()
+        } else {
+            RootBeer(context).isRooted.not()
+        }
     }
-
-    override fun isRooted(): Boolean = rootBeer.isRootedWithBusyBoxCheck
-
-    override fun isRootedIgnoringBusyBox(): Boolean = rootBeer.isRooted
 
 }

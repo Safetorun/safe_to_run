@@ -1,13 +1,12 @@
 package com.andro.safetorun
 
-import android.content.Context
 import com.andro.safetorun.di.SafeToRunDefault
 import com.andro.safetorun.di.SafeToRunFactory
 
 
 object SafeToRun {
 
-    lateinit var context: Context
+    lateinit var configuration: SafeToRunConfiguration
 
     var safeToRunFactory: SafeToRunFactory? = null
         get() {
@@ -21,14 +20,14 @@ object SafeToRun {
     /**
      * Initialise with context
      */
-    fun init(context: Context) {
-        this.context = context
+    fun init(configuration: SafeToRunConfiguration) {
+        this.configuration = configuration
     }
 
     /**
      * Check if it is safe to run the application
      */
     fun isSafeToRun(): Boolean {
-        return safeToRunFactory?.rootDetection(context)?.isRooted() ?: true
+        return configuration.build().canRun(configuration.context)
     }
 }
