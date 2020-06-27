@@ -6,10 +6,14 @@ import com.andro.safetorun.checks.SafeToRunCheck
 
 class SafeToRunConfiguration(val context: Context) {
 
-    val safeToRunChecks = mutableListOf<SafeToRunCheck>()
+    private val safeToRunChecks = mutableListOf<SafeToRunCheck>()
 
     fun add(safeToRunCheck: SafeToRunCheck) {
         safeToRunChecks.add(safeToRunCheck)
+    }
+
+    operator fun plus(safeToRunCheck: SafeToRunCheck) {
+        add(safeToRunCheck)
     }
 
     fun build(): SafeToRunCheck = CompositeSafeToRunCheck(safeToRunChecks)
