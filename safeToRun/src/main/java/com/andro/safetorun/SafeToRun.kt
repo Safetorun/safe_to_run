@@ -1,21 +1,8 @@
 package com.andro.safetorun
 
-import com.andro.safetorun.di.SafeToRunDefault
-import com.andro.safetorun.di.SafeToRunFactory
-
-
 object SafeToRun {
 
     lateinit var configuration: SafeToRunConfiguration
-
-    var safeToRunFactory: SafeToRunFactory? = null
-        get() {
-            return if (field == null) {
-                SafeToRunDefault
-            } else {
-                field
-            }
-        }
 
     /**
      * Initialise with context

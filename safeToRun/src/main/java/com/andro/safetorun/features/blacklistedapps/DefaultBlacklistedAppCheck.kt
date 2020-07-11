@@ -10,3 +10,4 @@ class DefaultBlacklistedAppCheck(private val context: Context) : BlacklistedAppC
             .contains(packageName)
     }
 }
+
