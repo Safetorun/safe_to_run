@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Safe to run</string>
+    <string name="safe_to_run_result">Safe to run %b</string>
 </resources>
