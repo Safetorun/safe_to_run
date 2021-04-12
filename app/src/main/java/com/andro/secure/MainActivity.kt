@@ -1,14 +1,10 @@
 package com.andro.secure
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.andro.safetorun.SafeToRun
-import com.andro.safetorun.SafeToRunConfiguration
 import com.andro.safetorun.configure
-import com.andro.safetorun.features.blacklistedapps.BlacklistedAppCheck
 import com.andro.safetorun.features.rootdetection.rootDetection
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +25,6 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        safeToRunResult.text = getString(R.string.safe_to_run_result, SafeToRun.isSafeToRun())
+//        safeToRunResult.text = getString(R.string.safe_to_run_result, SafeToRun.isSafeToRun())
     }
 }
