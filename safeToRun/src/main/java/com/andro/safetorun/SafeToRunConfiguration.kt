@@ -8,7 +8,7 @@ class SafeToRunConfiguration(val context: Context) {
 
     private val safeToRunChecks = mutableListOf<SafeToRunCheck>()
 
-    fun add(safeToRunCheck: SafeToRunCheck) {
+    private fun add(safeToRunCheck: SafeToRunCheck) {
         safeToRunChecks.add(safeToRunCheck)
     }
 
