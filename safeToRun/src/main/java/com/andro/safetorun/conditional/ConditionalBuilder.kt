@@ -1,32 +1,32 @@
-package com.andro.safetorun.features.oscheck.composites
+package com.andro.safetorun.conditional
 
-class OsConditionalBuilder {
+internal class ConditionalBuilder {
 
-    private val ands = mutableListOf<OsConditional>()
-    private val ors = mutableListOf<OsConditional>()
-    private val nots = mutableListOf<OsConditional>()
+    private val ands = mutableListOf<Conditional>()
+    private val ors = mutableListOf<Conditional>()
+    private val nots = mutableListOf<Conditional>()
 
-    infix fun and(conditional: OsConditional) {
+    infix fun and(conditional: Conditional) {
         ands.add(conditional)
     }
 
-    infix fun or(conditional: OsConditional) {
+    infix fun or(conditional: Conditional) {
         ors.add(conditional)
     }
 
-    infix fun not(conditional: OsConditional) {
+    infix fun not(conditional: Conditional) {
         nots.add(conditional)
     }
 
-    internal fun build(): OsConditional {
-        return DefaultOsConditional(ands, ors, nots)
+    internal fun build(): Conditional {
+        return DefaultConditional(ands, ors, nots)
     }
 
-    private class DefaultOsConditional(
-        private val ands: List<OsConditional>,
-        private val ors: List<OsConditional>,
-        private val nots: List<OsConditional>,
-    ) : OsConditional {
+    private class DefaultConditional(
+        private val ands: List<Conditional>,
+        private val ors: List<Conditional>,
+        private val nots: List<Conditional>,
+    ) : Conditional {
 
         override fun invoke(): Boolean =
             (areAllAndsTrue() || hasASingleOrPassed()) && thereAreNoNotsThatAreTrue()

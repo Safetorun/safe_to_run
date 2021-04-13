@@ -1,13 +1,13 @@
-package com.andro.safetorun.features.oscheck.composites
+package com.andro.safetorun.conditional
 
 import com.google.common.truth.Truth.assertThat
 import junit.framework.TestCase
 
-class OsConditionalBuilderTest : TestCase() {
+class ConditionalBuilderTest : TestCase() {
 
     fun `test that we can add two ands and if both pass all passes`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { true }
             and { true }
         }
@@ -21,7 +21,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that we can add two ands and if one fails both fail`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { true }
             and { false }
             
@@ -36,7 +36,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that we can add an and and a not if the and passes and the not is true we returns false`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { true }
             not { true }
             
@@ -51,7 +51,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that we can add an and and a not if the and passes and the not is false we returns true`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { true }
             not { false }
             
@@ -66,7 +66,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that we can add an and and a not if the and fails and the not is false we returns false`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { false }
             not { false }
             
@@ -81,7 +81,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that when if we add an and that is true and a or that is false then we pass`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { true }
             or { false }
             
@@ -96,7 +96,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that when if we add an and that is false and a or that is true then we pass`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { false }
             or { true }
             
@@ -111,7 +111,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that when if we add an and that is false and a or that is false then we fail`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { false }
             or { false }
             
@@ -126,7 +126,7 @@ class OsConditionalBuilderTest : TestCase() {
 
     fun `test that when if we add an and that is true and a or that is true but a not is true then we fail`() {
         // Given
-        val builtResult = osConditionalBuilder {
+        val builtResult = conditionalBuilder {
             and { true }
             or { true }
             not { true }

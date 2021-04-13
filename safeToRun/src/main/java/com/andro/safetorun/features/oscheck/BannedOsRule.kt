@@ -8,12 +8,3 @@ enum class Comparators {
     LessThanOrEqualTo,
     EqualTo
 }
-
-sealed class BannedOsRule {
-    data class OsVersion(val comparators: Comparators, val number: Int)
-}
-
-
-infix fun BannedOsRule.and(bannedOsRule: BannedOsRule) {
-
-}
