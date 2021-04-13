@@ -6,6 +6,11 @@ internal class ConditionalBuilder {
     private val ors = mutableListOf<Conditional>()
     private val nots = mutableListOf<Conditional>()
 
+
+    infix fun with(conditional: Conditional) {
+        and(conditional)
+    }
+
     infix fun and(conditional: Conditional) {
         ands.add(conditional)
     }
