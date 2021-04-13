@@ -1,8 +1,10 @@
 package com.andro.safetorun
 
+import android.content.Context
+
 object SafeToRun {
 
-    lateinit var configuration: SafeToRunConfiguration
+    private lateinit var configuration: SafeToRunConfiguration
 
     /**
      * Initialise with context
@@ -14,7 +16,7 @@ object SafeToRun {
     /**
      * Check if it is safe to run the application
      */
-    fun isSafeToRun(): Boolean {
-        return configuration.build().canRun(configuration.context)
+    fun isSafeToRun(context : Context): Boolean {
+        return configuration.build().canRun(context)
     }
 }

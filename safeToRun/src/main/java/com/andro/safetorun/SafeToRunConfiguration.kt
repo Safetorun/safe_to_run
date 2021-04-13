@@ -1,10 +1,9 @@
 package com.andro.safetorun
 
-import android.content.Context
 import com.andro.safetorun.checks.CompositeSafeToRunCheck
 import com.andro.safetorun.checks.SafeToRunCheck
 
-class SafeToRunConfiguration(val context: Context) {
+class SafeToRunConfiguration {
 
     private val safeToRunChecks = mutableListOf<SafeToRunCheck>()
 
@@ -20,9 +19,8 @@ class SafeToRunConfiguration(val context: Context) {
 }
 
 fun configure(
-    context: Context,
     configuration: SafeToRunConfiguration.() -> Unit
 ): SafeToRunConfiguration =
-    SafeToRunConfiguration(context).apply {
+    SafeToRunConfiguration().apply {
         configuration()
     }

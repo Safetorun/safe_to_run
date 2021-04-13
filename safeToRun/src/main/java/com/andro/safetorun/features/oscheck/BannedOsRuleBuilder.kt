@@ -1,7 +1,5 @@
 package com.andro.safetorun.features.oscheck
 
-import com.andro.safetorun.features.rootdetection.RootBeerRootDetection
-
 class BannedOsRuleBuilder {
     var osVersion: Int? = null
 }

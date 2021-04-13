@@ -9,18 +9,19 @@ import org.junit.Test
 
 class BlacklistedAppConfigurationTest {
 
+
     private val blacklistedAppCheck = mockk<BlacklistedAppCheck>(relaxed = true)
 
     @Before
     fun setup() {
-        every { blacklistedAppCheck.isAppPresent("com.abc.com") } returns true
-        every { blacklistedAppCheck.isAppPresent("com.abc.def") } returns false
+        every { blacklistedAppCheck.isAppPresent(IS_PRESENT_PACKAGE) } returns true
+        every { blacklistedAppCheck.isAppPresent(NOT_PRESENT_PACKAGE) } returns false
     }
 
     @Test
     fun `we configure our blacklisted app to fail if com abc com exists can run should fail`() {
         val conf = blacklistConfiguration(blacklistedAppCheck) {
-            +"com.abc.com"
+            +IS_PRESENT_PACKAGE
         }
         assertThat(conf.canRun(mockk(relaxed = true))).isFalse()
     }
@@ -28,7 +29,7 @@ class BlacklistedAppConfigurationTest {
     @Test
     fun `we configure our blacklisted app to fail with def can run should succeed`() {
         val conf = blacklistConfiguration(blacklistedAppCheck) {
-            +"com.abc.def"
+            +NOT_PRESENT_PACKAGE
         }
 
         assertThat(conf.canRun(mockk(relaxed = true))).isTrue()
@@ -37,11 +38,17 @@ class BlacklistedAppConfigurationTest {
     @Test
     fun `we configure our blacklisted app to fail with both can run should fail`() {
         val conf = blacklistConfiguration(blacklistedAppCheck) {
-            +"com.abc.def"
-            +"com.abc.com"
+            +NOT_PRESENT_PACKAGE
+            +IS_PRESENT_PACKAGE
         }
 
         assertThat(conf.canRun(mockk(relaxed = true))).isFalse()
     }
+
+    companion object {
+        private const val IS_PRESENT_PACKAGE = "com.abc.com"
+        private const val NOT_PRESENT_PACKAGE = "com.abc.def"
+    }
+
 
 }
