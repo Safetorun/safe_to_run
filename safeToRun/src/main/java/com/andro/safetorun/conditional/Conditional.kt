@@ -7,7 +7,7 @@ fun interface Conditional {
     operator fun invoke(): Boolean
 }
 
-internal fun conditionalBuilder(builder: ConditionalBuilder.() -> Unit): Conditional {
+ fun conditionalBuilder(builder: ConditionalBuilder.() -> Unit): Conditional {
     return with(ConditionalBuilder()) {
         builder()
         build()

@@ -15,6 +15,10 @@ class SafeToRunConfiguration {
         add(safeToRunCheck)
     }
 
+    operator fun plus(safeToRunCheck: () -> SafeToRunCheck) {
+        add(safeToRunCheck())
+    }
+
     fun build(): SafeToRunCheck = CompositeSafeToRunCheck(safeToRunChecks)
 }
 

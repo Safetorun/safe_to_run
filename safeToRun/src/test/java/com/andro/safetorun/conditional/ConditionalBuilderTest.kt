@@ -24,7 +24,6 @@ class ConditionalBuilderTest : TestCase() {
         val builtResult = conditionalBuilder {
             and { true }
             and { false }
-            
         }
 
         // When

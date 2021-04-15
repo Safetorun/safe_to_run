@@ -32,12 +32,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation "com.scottyab:rootbeer-lib:$rootbeerVersion"
 
-    // spek
-    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
-    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation 'junit:junit:4.13.2'
-    testImplementation "com.google.truth:truth:1.1.2"
+    testImplementation "com.google.truth:truth:$googleTruth"
 
     testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'

@@ -2,6 +2,7 @@ package com.andro.safetorun.features.oscheck
 
 import android.content.Context
 import com.andro.safetorun.checks.SafeToRunCheck
+import com.andro.safetorun.conditional.Conditional
 
 class OSDetectionCheck(
     private val osDetectionConfig: OSDetectionConfig
@@ -16,4 +17,9 @@ class OSDetectionCheck(
 
         return true
     }
+}
+
+
+fun osDetectionCheck(vararg conditional: Conditional) : SafeToRunCheck {
+    return OSDetectionCheck(OSDetectionConfig(conditional.toList()))
 }

@@ -4,7 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.safetorun.SafeToRun
+import com.andro.safetorun.conditional.conditionalBuilder
 import com.andro.safetorun.configure
+import com.andro.safetorun.features.blacklistedapps.blacklistConfiguration
+import com.andro.safetorun.features.oscheck.OSConfiguration.minOsVersion
+import com.andro.safetorun.features.oscheck.OSConfiguration.notManufacturer
+import com.andro.safetorun.features.oscheck.osDetectionCheck
 import com.andro.safetorun.features.rootdetection.rootDetection
 import com.andro.secure.databinding.ActivityMainBinding
 
@@ -18,13 +23,31 @@ class MainActivity : AppCompatActivity() {
             configure {
 
                 // Root beer (detect root)
-                rootDetection {
-                    tolerateRoot = false
-                    tolerateBusyBox = true
+                plus {
+                    rootDetection {
+                        tolerateRoot = false
+                        tolerateBusyBox = true
+                    }
                 }
 
-                // Black list certain apps
 
+                // Black list certain apps
+                plus {
+                    blacklistConfiguration {
+                        +"com.abc.def"
+                        +"com.google.earth"
+                    }
+                }
+
+                // OS Blacklist version
+                plus {
+                    osDetectionCheck(
+                        conditionalBuilder {
+                            with(minOsVersion(22))
+                            and(notManufacturer("Abc"))
+                        }
+                    )
+                }
             }
         )
 

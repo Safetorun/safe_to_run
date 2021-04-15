@@ -1,6 +1,6 @@
 package com.andro.safetorun.conditional
 
-internal class ConditionalBuilder {
+class ConditionalBuilder {
 
     private val ands = mutableListOf<Conditional>()
     private val ors = mutableListOf<Conditional>()
