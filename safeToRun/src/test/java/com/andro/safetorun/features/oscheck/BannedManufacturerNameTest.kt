@@ -4,23 +4,21 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Test
 
-internal class BannedManufacturerNameTest {
+internal class BannedManufacturerNameTest : TestCase() {
 
     @MockK
     lateinit var osInformationQuery: OSInformationQuery
 
-    @Before
-    fun before() {
+    override fun setUp() {
         MockKAnnotations.init(this)
     }
 
-
-    @Test
     fun `test that banned manufacturer fails if exact match`() {
-        // Given
+        // GivenOSDetectionCheckTest
         every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER
         val rule = osInformationQuery.notManufacturer(DODGY_MANUFACTURER)
 
@@ -28,10 +26,9 @@ internal class BannedManufacturerNameTest {
         val result = rule.invoke()
 
         // Then
-        assertThat(result).isFalse()
+        assertThat(result.failed).isTrue()
     }
 
-    @Test
     fun `test that banned manufacturer fails if passed in as upper`() {
         // Given
         every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER.toUpperCase()
@@ -41,11 +38,10 @@ internal class BannedManufacturerNameTest {
         val result = rule.invoke()
 
         // Then
-        assertThat(result).isFalse()
+        assertThat(result.failed).isTrue()
 
     }
 
-    @Test
     fun `test that banned manufacturer passes if not equal`() {
         // Given
         every { osInformationQuery.manufacturer() } returns GOOD_MANUFACTURER
@@ -55,7 +51,7 @@ internal class BannedManufacturerNameTest {
         val result = rule.invoke()
 
         // Then
-        assertThat(result).isTrue()
+        assertThat(result.failed).isFalse()
     }
 
 

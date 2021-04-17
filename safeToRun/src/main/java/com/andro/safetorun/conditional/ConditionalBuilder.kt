@@ -4,8 +4,6 @@ class ConditionalBuilder {
 
     private val ands = mutableListOf<Conditional>()
     private val ors = mutableListOf<Conditional>()
-    private val nots = mutableListOf<Conditional>()
-
 
     infix fun with(conditional: Conditional) {
         and(conditional)
@@ -19,53 +17,56 @@ class ConditionalBuilder {
         ors.add(conditional)
     }
 
-    infix fun not(conditional: Conditional) {
-        nots.add(conditional)
-    }
 
     internal fun build(): Conditional {
-        return DefaultConditional(ands, ors, nots)
+        return DefaultConditional(ands, ors)
     }
 
     private class DefaultConditional(
         private val ands: List<Conditional>,
-        private val ors: List<Conditional>,
-        private val nots: List<Conditional>,
+        private val ors: List<Conditional>
     ) : Conditional {
 
-        override fun invoke(): Boolean =
-            (areAllAndsTrue() || hasASingleOrPassed()) && thereAreNoNotsThatAreTrue()
+        override fun invoke(): ConditionalResponse {
 
-        private fun thereAreNoNotsThatAreTrue(): Boolean {
-            nots.forEach { not ->
-                if (not()) {
-                    return false
+            with(hasASingleOrPassed()) {
+                if (this != null && !failed) {
+                    return ConditionalResponse(false)
                 }
             }
 
-            return true
+            with(areAllAndsTrue()) {
+                if (failed) {
+                    return this
+                }
+            }
+
+            return ConditionalResponse(false)
         }
 
-        private fun hasASingleOrPassed(): Boolean {
-            var singleOrPassed = false
 
+        private fun hasASingleOrPassed(): ConditionalResponse? {
             ors.forEach { or ->
-                if (or()) {
-                    singleOrPassed = true
+                with(or()) {
+                    if (!failed) {
+                        return ConditionalResponse(false)
+                    }
                 }
             }
-            return singleOrPassed
+
+            return null
         }
 
-        private fun areAllAndsTrue(): Boolean {
-            var shouldContinue = true
-
+        private fun areAllAndsTrue(): ConditionalResponse {
             ands.forEach { and ->
-                if (!and()) {
-                    shouldContinue = false
+                with(and()) {
+                    if (failed) {
+                        return this
+                    }
                 }
             }
-            return shouldContinue
+
+            return ConditionalResponse(false)
         }
 
     }

@@ -50,7 +50,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
-
-        binding.safeToRunResult.text = getString(R.string.safe_to_run_result, SafeToRun.isSafeToRun(this))
     }
 }

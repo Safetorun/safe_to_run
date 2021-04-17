@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_blacklisted_apps_found">No blacklisted apps found</string>
+    <string name="found_blacklisted_app">Found blacklisted app - %s</string>
+    <string name="os_check_passed">OS Check passed</string>
+    <string name="os_check_failed">OS Check failed</string>
+    <string name="root_detection_passed">Root detection passed</string>
+    <string name="root_detection_failed">Root detection failed</string>
+    <string name="root_detection_did_not_run">Root detection not run due to configuration</string>
+</resources>
