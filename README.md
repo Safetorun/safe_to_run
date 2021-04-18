@@ -49,3 +49,6 @@ Security analytics
 
 Remote wipe
 
+Remote configuration 
+
+Check online / off device 
