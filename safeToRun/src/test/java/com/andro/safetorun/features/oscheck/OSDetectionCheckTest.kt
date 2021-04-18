@@ -21,10 +21,14 @@ class OSDetectionCheckTest : TestCase() {
     fun `test that we can create a os version rule that fails if os is too low`() {
         // Given
         every { osInformationQuery.osVersion() } returns 29
-        val osDetectionRule = OSDetectionConfig(listOf(MinOSVersionRule(30, osInformationQuery)))
 
         // When
-        val result = osDetection(osDetectionRule).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
+        val result = osDetectionCheck(
+            MinOSVersionRule(
+                30,
+                osInformationQuery
+            )
+        ).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
@@ -38,11 +42,14 @@ class OSDetectionCheckTest : TestCase() {
     fun `test that we can create a os version rule that passes if os is high enough`() {
         // Given
         every { osInformationQuery.osVersion() } returns 30
-        val osDetectionRule = OSDetectionConfig(listOf(MinOSVersionRule(30, osInformationQuery)))
 
         // When
-        val result =
-            osDetection(osDetectionRule).canRun(mockk(relaxed = true)) as SafeToRunReport.SafeToRunReportSuccess
+        val result = osDetectionCheck(
+            MinOSVersionRule(
+                30,
+                osInformationQuery
+            )
+        ).canRun(mockk(relaxed = true)) as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
         assertThat(result.successMessage).isNotNull()
@@ -53,11 +60,14 @@ class OSDetectionCheckTest : TestCase() {
         // Given
         every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER
 
-        val osDetectionRule =
-            OSDetectionConfig(listOf(BannedManufacturerName(DODGY_MANUFACTURER, osInformationQuery)))
 
         // When
-        val result = osDetection(osDetectionRule).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
+        val result = osDetectionCheck(
+            BannedManufacturerName(
+                DODGY_MANUFACTURER,
+                osInformationQuery
+            )
+        ).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
@@ -79,10 +89,10 @@ class OSDetectionCheckTest : TestCase() {
             }
         }
 
-        val osDetectionRule = OSDetectionConfig(listOf(conditional))
+        val osDetectionRule = osDetectionCheck(conditional)
 
         // When
-        val result = osDetection(osDetectionRule).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
+        val result = osDetectionRule.canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
@@ -90,9 +100,6 @@ class OSDetectionCheckTest : TestCase() {
             assertThat(failureMessage).contains(DODGY_MANUFACTURER)
         }
     }
-
-    private fun osDetection(osDetectionConfig: OSDetectionConfig) =
-        OSDetectionCheck(osDetectionConfig)
 
     companion object {
         const val DODGY_MANUFACTURER = "dodgy manufacturer"

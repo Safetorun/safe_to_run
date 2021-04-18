@@ -21,8 +21,9 @@ class ConditionalBuilderTest : TestCase() {
 
     fun `test that we can add two ands and if one fails both fail`() {
         // Given
+        val failMessage = "failure message"
         val builtResult = conditionalBuilder {
-            and { ConditionalResponse(true) }
+            and { ConditionalResponse(true, failMessage) }
             and { ConditionalResponse(false) }
         }
 
@@ -31,6 +32,24 @@ class ConditionalBuilderTest : TestCase() {
 
         // Then
         assertThat(result.failed).isTrue()
+        assertThat(result.message).isEqualTo(failMessage)
+    }
+
+    fun `test that if we an and and an or we see the right message`() {
+        // Given
+        val failMessage = "failure message"
+
+        val builtResult = conditionalBuilder {
+            and { ConditionalResponse(true, failMessage) }
+            or { ConditionalResponse(true) }
+        }
+
+        // When
+        val result = builtResult()
+
+        // Then
+        assertThat(result.failed).isTrue()
+        assertThat(result.message).isEqualTo(failMessage)
     }
 
     fun `test that when if we add an and that is true and a or that is false then we pass`() {

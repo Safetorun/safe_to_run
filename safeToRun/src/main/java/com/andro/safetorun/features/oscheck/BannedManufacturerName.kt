@@ -8,8 +8,7 @@ class BannedManufacturerName(private val manufacturerName: String, private val o
     Conditional {
     override fun invoke(): ConditionalResponse {
         return ConditionalResponse(
-            failed = osInformationQuery.manufacturer()
-                .toUpperCase(Locale.ROOT) == manufacturerName.toUpperCase(Locale.ROOT),
+            failed = osInformationQuery.manufacturer().equals(manufacturerName, ignoreCase = true),
             message = "${osInformationQuery.manufacturer()} == $manufacturerName"
         )
     }
