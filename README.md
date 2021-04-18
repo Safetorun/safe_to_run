@@ -33,6 +33,14 @@ Is it a simulator
 
 Is a debugger attached
 
+Check versions of libraries (e.g. open SSL lib version)
+
+Check the apk signature
+
+Hashes of any SOs that are used
+
+Check memory header to detect injections
+
 ## Futures 
 
 Authentication logging
