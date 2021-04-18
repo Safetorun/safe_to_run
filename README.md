@@ -7,3 +7,33 @@ The purpose of this configuration is to provide a simple and extensible framewor
 to check the phone you're running on is safe to run your application.
 
 
+### Things to add
+
+* Get configuration from remote
+* Do the checks remotely 
+
+
+### Features
+
+Root detection
+
+Blacklisted apps
+
+OS Version, manufacturer, device 
+
+SafetyNet 
+
+Hardware encryption enabled
+
+Is it a simulator
+
+Is a debugger attached
+
+## Futures 
+
+Authentication logging
+
+Security analytics
+
+Remote wipe
+

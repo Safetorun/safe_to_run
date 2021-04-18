@@ -2,3 +2,6 @@
 .idea
 local.properties
 .gradle
+/docs/node_modules/**
+/docs/.docusaurus/
+/docs/build
