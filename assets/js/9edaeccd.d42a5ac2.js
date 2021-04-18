@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[20],{66:function(l){l.exports=JSON.parse('{"allTagsPath":"https://dllewellyn.github.io/safe_to_run/blog/tags","slug":"hello","name":"hello","count":2,"permalink":"https://dllewellyn.github.io/safe_to_run/blog/tags/hello"}')}}]);
