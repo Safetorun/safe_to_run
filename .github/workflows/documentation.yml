@@ -46,8 +46,8 @@ jobs:
           if [ -e yarn.lock ]; then
           cd docs && yarn install --frozen-lockfile
           elif [ -e package-lock.json ]; then
-          npm ci
+          cd docs && npm ci
           else
-          npm i
+          cd docs && npm i
           fi
           cd docs && npm run deploy
