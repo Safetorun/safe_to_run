@@ -1,6 +1,5 @@
 package com.andro.safetorun
 
-import android.content.Context
 import com.andro.safetorun.reporting.SafeToRunReport
 
 object SafeToRun {
@@ -17,7 +16,7 @@ object SafeToRun {
     /**
      * Check if it is safe to run the application
      */
-    fun isSafeToRun(context : Context): SafeToRunReport {
-        return configuration.build().canRun(context)
+    fun isSafeToRun(): SafeToRunReport {
+        return configuration.build().canRun()
     }
 }

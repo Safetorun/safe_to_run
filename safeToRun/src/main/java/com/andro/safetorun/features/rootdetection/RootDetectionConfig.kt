@@ -1,5 +1,6 @@
 package com.andro.safetorun.features.rootdetection
 
+import android.content.Context
 import com.andro.safetorun.checks.SafeToRunCheck
 
 class RootDetectionConfig {
@@ -7,9 +8,13 @@ class RootDetectionConfig {
     var tolerateBusyBox = true
 }
 
-fun rootDetection(config: RootDetectionConfig.() -> Unit): SafeToRunCheck =
+fun Context.rootDetection(config: RootDetectionConfig.() -> Unit): SafeToRunCheck =
     RootDetectionConfig().apply {
         config()
     }.run {
-        RootBeerRootDetection(this)
+        RootBeerRootDetection(
+            this,
+            AndroidRootDetectionChecker(this@rootDetection),
+            AndroidRootDetectionStrings(this@rootDetection)
+        )
     }

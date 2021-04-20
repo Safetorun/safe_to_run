@@ -10,18 +10,28 @@ annotation class BlacklistedScope
 class BlacklistedAppConfiguration(private val blacklistedAppCheck: BlacklistedAppCheck) {
 
     private val blacklistedApplications = mutableListOf<String>()
+    internal lateinit var appStrings: BlacklistedAppStrings
 
     operator fun String.unaryPlus() = blacklistedApplications.add(this)
 
-    internal fun build() = BlacklistedApplicationDetection(blacklistedApplications, blacklistedAppCheck)
+    internal fun build() = BlacklistedApplicationDetection(blacklistedApplications, blacklistedAppCheck, appStrings)
 }
 
 
-fun blacklistConfiguration(appCheck: BlacklistedAppCheck, block: BlacklistedAppConfiguration.() -> Unit) : SafeToRunCheck=
+internal fun blacklistConfiguration(
+    appCheck: BlacklistedAppCheck,
+    appStrings: BlacklistedAppStrings,
+    block: BlacklistedAppConfiguration.() -> Unit
+): SafeToRunCheck =
     with(BlacklistedAppConfiguration(appCheck)) {
+        this.appStrings = appStrings
         block()
         build()
     }
 
-fun Context.blacklistConfiguration(block : BlacklistedAppConfiguration.() -> Unit) =
-    blacklistConfiguration(DefaultBlacklistedAppCheck(this), block)
+fun Context.blacklistConfiguration(block: BlacklistedAppConfiguration.() -> Unit) =
+    blacklistConfiguration(
+        DefaultBlacklistedAppCheck(this),
+        AndroidBlacklistedAppStrings(this@blacklistConfiguration),
+        block
+    )

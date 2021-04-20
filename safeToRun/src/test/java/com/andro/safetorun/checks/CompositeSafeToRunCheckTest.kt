@@ -17,9 +17,6 @@ class CompositeSafeToRunCheckTest : TestCase() {
     @MockK
     lateinit var check2: SafeToRunCheck
 
-    @MockK
-    lateinit var mockContext: Context
-
     private val compositeSafeToRunCheck by lazy {
         CompositeSafeToRunCheck(listOf(check1, check2))
     }
@@ -35,11 +32,11 @@ class CompositeSafeToRunCheckTest : TestCase() {
         val result1 = SafeToRunReport.SafeToRunReportSuccess("")
         val result2 = SafeToRunReport.SafeToRunReportSuccess("")
 
-        every { check1.canRun(mockContext) } returns result1
-        every { check2.canRun(mockContext) } returns result2
+        every { check1.canRun() } returns result1
+        every { check2.canRun() } returns result2
 
         // When
-        val result = compositeSafeToRunCheck.canRun(mockContext) as SafeToRunReport.MultipleReports
+        val result = compositeSafeToRunCheck.canRun() as SafeToRunReport.MultipleReports
 
         // Then
         assertThat(result.reports).containsExactly(result1, result2)

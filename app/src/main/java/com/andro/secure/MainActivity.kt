@@ -1,11 +1,7 @@
 package com.andro.secure
 
-import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.annotation.RequiresApi
@@ -18,8 +14,8 @@ import com.andro.safetorun.features.oscheck.OSConfiguration.minOsVersion
 import com.andro.safetorun.features.oscheck.OSConfiguration.notManufacturer
 import com.andro.safetorun.features.oscheck.osDetectionCheck
 import com.andro.safetorun.features.rootdetection.rootDetection
+import com.andro.safetorun.features.signatureverify.verifySignatureConfig
 import com.andro.secure.databinding.ActivityMainBinding
-import java.security.MessageDigest
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,15 +24,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
-
-        val sigs = packageManager
-            .getPackageInfo(packageName, PackageManager.GET_SIGNING_CERTIFICATES).signingInfo
-
-        sigs.apkContentsSigners.forEach {
-            Log.v("Signature", it.toCharsString())
-        }
-
-        checkAppSignature(this)
 
         SafeToRun.init(
             configure {
@@ -57,6 +44,9 @@ class MainActivity : AppCompatActivity() {
                         +"com.google.earth"
                     }
                 }
+                plus(
+                    verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+                )
 
                 // OS Blacklist version
                 plus {
@@ -69,31 +59,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
-    }
 
-    companion object {
-        const val SIGNATURE: String = "abc"
-    }
-
-    fun checkAppSignature(context: Context): Int {
-        try {
-            val packageInfo: PackageInfo =
-                context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_SIGNATURES)
-            for (signature in packageInfo.signatures) {
-                val md = MessageDigest.getInstance("SHA")
-                md.update(signature.toByteArray())
-                val currentSignature: String = Base64.encodeToString(md.digest(), Base64.DEFAULT)
-                Log.d("REMOVE_ME", "Include this string as a value for SIGNATURE:$currentSignature")
-
-                //compare signatures
-                if (SIGNATURE == currentSignature) {
-                    return 1
-                }
-            }
-        } catch (e: Exception) {
-            //assumes an issue in checking signature., but we let the caller decide on what to do.
-        }
-        return -1
+        val safeToRun = SafeToRun.isSafeToRun()
+        Log.v("SafeToRun", safeToRun.toString())
     }
 }
 

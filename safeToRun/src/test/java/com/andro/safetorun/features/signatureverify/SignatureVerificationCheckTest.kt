@@ -7,7 +7,6 @@ import android.content.pm.Signature
 import android.content.pm.SigningInfo
 import android.content.res.Resources
 import android.util.Base64
-import com.andro.safetorun.R
 import com.andro.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
 import io.mockk.InternalPlatformDsl.toStr
@@ -20,16 +19,12 @@ import junit.framework.TestCase
 
 
 internal class SignatureVerificationCheckTest : TestCase() {
-
-    @MockK
-    private lateinit var mockContext: Context
-
+    private val mockContext = mockk<Context>()
     private val mockPackageManager = mockk<PackageManager>()
     private val mockPackage = mockk<PackageInfo>()
     private val signatureInfo = mockk<SigningInfo>()
     private val signature = mockk<Signature>()
     private val sdkVersion = 30
-    private val mockResources = mockk<Resources>()
 
     override fun setUp() {
         MockKAnnotations.init(this)
@@ -46,7 +41,6 @@ internal class SignatureVerificationCheckTest : TestCase() {
         mockPackage.signatures = arrayOf(signature)
         every { signatureInfo.apkContentsSigners } returns arrayOf(signature)
         every { signature.toByteArray() } returns "fake signature".toByteArray()
-        every { mockContext.resources } returns mockResources
         mockkStatic(Base64::class)
         every { Base64.encodeToString(any(), any()) } answers {
             java.util.Base64.getEncoder().encodeToString(args[0] as ByteArray)
@@ -55,13 +49,15 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
     fun `test that we verify a signature given expected input when we fail`() {
         // Given
-        every { mockResources.getString(R.string.no_signature_match, any()) } answers {
-            args[1].toStr()
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureNotMatchedMessage(any()) } answers {
+                String.format(FAILURE_MESSAGE, args[0].toStr().removeSuffix("[").removeSuffix("]"))
+            }
         }
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("abc"), sdkVersion)
-            .canRun(mockContext) as SafeToRunReport.SafeToRunReportFailure
+        val reportResult = SignatureVerificationCheck(listOf("abc"), sdkVersion, mockStrings, mockContext)
+            .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
         assertThat(reportResult.failureMessage).contains("WgtvIJ0A//RKGHShVDQRPdd/9ks=")
@@ -69,40 +65,46 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
     fun `test that we verify a signature given expected input`() {
         // Given
-        val signatureMatch = "Signature match"
-        every { mockResources.getString(R.string.signature_match) } returns signatureMatch
-
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureMatchesMessage() } returns SUCCESS_MESSAGE
+        }
         // When
-        val reportResult = SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), sdkVersion)
-            .canRun(mockContext) as SafeToRunReport.SafeToRunReportSuccess
+        val reportResult =
+            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), sdkVersion, mockStrings, mockContext)
+                .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
-        assertThat(reportResult.successMessage).isEqualTo(signatureMatch)
+        assertThat(reportResult.successMessage).isEqualTo(SUCCESS_MESSAGE)
     }
 
     fun `test that we fail a signature if it is not possible to generate`() {
         // Given
-        val signatureMatch = "No signature match"
-        every { mockResources.getString(R.string.signature_not_found) } returns signatureMatch
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureNotFoundMessage() } returns NOT_FOUND_MESSAGE
+        }
+
         every { signature.toByteArray() } returns null
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), sdkVersion)
-            .canRun(mockContext) as SafeToRunReport.SafeToRunReportFailure
+        val reportResult =
+            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), sdkVersion, mockStrings, mockContext)
+                .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
-        assertThat(reportResult.failureMessage).isEqualTo(signatureMatch)
+        assertThat(reportResult.failureMessage).isEqualTo(NOT_FOUND_MESSAGE)
     }
 
     fun `test that we verify a signature given expected input when we fail_lower_sdk`() {
         // Given
-        every { mockResources.getString(R.string.no_signature_match, any()) } answers {
-            args[1].toStr()
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureNotMatchedMessage(any()) } answers {
+                String.format(FAILURE_MESSAGE, args[0].toStr().removeSuffix("[").removeSuffix("]"))
+            }
         }
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("abc"), 27)
-            .canRun(mockContext) as SafeToRunReport.SafeToRunReportFailure
+        val reportResult = SignatureVerificationCheck(listOf("abc"), 27, mockStrings, mockContext)
+            .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
         assertThat(reportResult.failureMessage).contains("WgtvIJ0A//RKGHShVDQRPdd/9ks=")
@@ -110,32 +112,40 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
     fun `test that we verify a signature given expected input_lower_sdk`() {
         // Given
-        val signatureMatch = "Signature match"
-        every { mockResources.getString(R.string.signature_match) } returns signatureMatch
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureMatchesMessage() } returns SUCCESS_MESSAGE
+        }
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), 27)
-            .canRun(mockContext) as SafeToRunReport.SafeToRunReportSuccess
+        val reportResult =
+            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), 27, mockStrings, mockContext)
+                .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
-        assertThat(reportResult.successMessage).isEqualTo(signatureMatch)
+        assertThat(reportResult.successMessage).isEqualTo(SUCCESS_MESSAGE)
     }
 
     fun `test that we fail a signature if it is not possible to generate_lower_sdk`() {
         // Given
-        val signatureMatch = "No signature match"
-        every { mockResources.getString(R.string.signature_not_found) } returns signatureMatch
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureNotFoundMessage() } returns NOT_FOUND_MESSAGE
+        }
+
         every { signature.toByteArray() } returns null
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), 27)
-            .canRun(mockContext) as SafeToRunReport.SafeToRunReportFailure
+        val reportResult =
+            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), 27, mockStrings, mockContext)
+                .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
-        assertThat(reportResult.failureMessage).isEqualTo(signatureMatch)
+        assertThat(reportResult.failureMessage).isEqualTo(NOT_FOUND_MESSAGE)
     }
 
     companion object {
         const val OUR_PACKAGE = "com.abc.def"
+        const val SUCCESS_MESSAGE = "Success"
+        const val FAILURE_MESSAGE = "Failure message %s"
+        const val NOT_FOUND_MESSAGE = "Not found "
     }
 }

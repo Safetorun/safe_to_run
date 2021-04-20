@@ -1,5 +1,6 @@
 package com.andro.safetorun.features.oscheck
 
+import android.content.Context
 import com.andro.safetorun.conditional.conditionalBuilder
 import com.andro.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
@@ -23,12 +24,12 @@ class OSDetectionCheckTest : TestCase() {
         every { osInformationQuery.osVersion() } returns 29
 
         // When
-        val result = osDetectionCheck(
+        val result = mockk<Context>().osDetectionCheck(
             MinOSVersionRule(
                 30,
                 osInformationQuery
             )
-        ).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
+        ).canRun() as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
@@ -38,18 +39,17 @@ class OSDetectionCheckTest : TestCase() {
         }
     }
 
-
     fun `test that we can create a os version rule that passes if os is high enough`() {
         // Given
         every { osInformationQuery.osVersion() } returns 30
 
         // When
-        val result = osDetectionCheck(
+        val result = mockk<Context>(relaxed = true).osDetectionCheck(
             MinOSVersionRule(
                 30,
                 osInformationQuery
             )
-        ).canRun(mockk(relaxed = true)) as SafeToRunReport.SafeToRunReportSuccess
+        ).canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
         assertThat(result.successMessage).isNotNull()
@@ -62,12 +62,12 @@ class OSDetectionCheckTest : TestCase() {
 
 
         // When
-        val result = osDetectionCheck(
+        val result = mockk<Context>().osDetectionCheck(
             BannedManufacturerName(
                 DODGY_MANUFACTURER,
                 osInformationQuery
             )
-        ).canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
+        ).canRun() as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
@@ -89,10 +89,10 @@ class OSDetectionCheckTest : TestCase() {
             }
         }
 
-        val osDetectionRule = osDetectionCheck(conditional)
+        val osDetectionRule = mockk<Context>().osDetectionCheck(conditional)
 
         // When
-        val result = osDetectionRule.canRun(mockk(relaxed = true)) as SafeToRunReport.MultipleReports
+        val result = osDetectionRule.canRun() as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {

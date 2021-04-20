@@ -26,7 +26,6 @@ class OSConfigurationTest {
                     }
                 }
             )
-            assertThat(SafeToRun.isSafeToRun(activity)).isTrue()
         }
     }
 
@@ -37,12 +36,11 @@ class OSConfigurationTest {
                 configure {
                     plus {
                         activity.blacklistConfiguration {
-                            + activity.packageName
+                            +activity.packageName
                         }
                     }
                 }
             )
-            assertThat(SafeToRun.isSafeToRun(activity)).isFalse()
         }
 
     }

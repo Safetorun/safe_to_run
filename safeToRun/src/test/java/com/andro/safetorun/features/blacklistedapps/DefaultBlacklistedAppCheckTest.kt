@@ -30,7 +30,7 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
         // When
         val result = mockContext.blacklistConfiguration {
             +NOT_PRESENT_PACKAGE
-        }.canRun(mockContext) as SafeToRunReport.SafeToRunReportSuccess
+        }.canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
         assertThat(result.successMessage).isNotNull()
@@ -43,7 +43,7 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
         // When
         val result = mockContext.blacklistConfiguration {
             +IS_PRESENT_PACKAGE
-        }.canRun(mockContext) as SafeToRunReport.MultipleReports
+        }.canRun() as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {

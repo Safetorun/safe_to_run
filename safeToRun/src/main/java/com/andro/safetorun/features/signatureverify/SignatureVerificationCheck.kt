@@ -6,29 +6,30 @@ import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.os.Build
 import android.util.Base64
-import com.andro.safetorun.R
 import com.andro.safetorun.checks.SafeToRunCheck
 import com.andro.safetorun.reporting.SafeToRunReport
 import java.security.MessageDigest
 
 class SignatureVerificationCheck(
     private val expectedSignature: List<String>,
-    private val sdkVersion: Int = Build.VERSION_CODES.P
+    private val sdkVersion: Int = Build.VERSION_CODES.P,
+    private val signatureVerificationStrings: SignatureVerificationStrings,
+    private val context : Context
 ) : SafeToRunCheck {
 
-    override fun canRun(context: Context): SafeToRunReport {
+    override fun canRun(): SafeToRunReport {
         return context.getAppSignature()?.string()?.let { currentSignature ->
             if (expectedSignature.contains(currentSignature)) {
-                SafeToRunReport.SafeToRunReportSuccess(context.resources.getString(R.string.signature_match))
+                SafeToRunReport.SafeToRunReportSuccess(signatureVerificationStrings.signatureMatchesMessage())
             } else {
                 SafeToRunReport.SafeToRunReportFailure(
                     SIGNATURE_NOT_MATCH,
-                    context.resources.getString(R.string.no_signature_match, currentSignature)
+                    signatureVerificationStrings.signatureNotMatchedMessage(currentSignature)
                 )
             }
         } ?: SafeToRunReport.SafeToRunReportFailure(
             SIGNATURE_NOT_FOUND,
-            context.resources.getString(R.string.signature_not_found)
+            signatureVerificationStrings.signatureNotFoundMessage()
         )
     }
 
