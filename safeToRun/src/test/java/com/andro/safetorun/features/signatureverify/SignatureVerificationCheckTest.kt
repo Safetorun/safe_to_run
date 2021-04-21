@@ -60,7 +60,7 @@ internal class SignatureVerificationCheckTest : TestCase() {
             .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
-        assertThat(reportResult.failureMessage).contains("WgtvIJ0A//RKGHShVDQRPdd/9ks=")
+        assertThat(reportResult.failureMessage).contains(SIGNATURE)
     }
 
     fun `test that we verify a signature given expected input`() {
@@ -70,7 +70,7 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), sdkVersion, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE), sdkVersion, mockStrings, mockContext)
                 .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
@@ -87,7 +87,7 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), sdkVersion, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE), sdkVersion, mockStrings, mockContext)
                 .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
@@ -107,7 +107,7 @@ internal class SignatureVerificationCheckTest : TestCase() {
             .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
-        assertThat(reportResult.failureMessage).contains("WgtvIJ0A//RKGHShVDQRPdd/9ks=")
+        assertThat(reportResult.failureMessage).contains(SIGNATURE)
     }
 
     fun `test that we verify a signature given expected input_lower_sdk`() {
@@ -118,7 +118,7 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), 27, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE), 27, mockStrings, mockContext)
                 .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
@@ -135,7 +135,7 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf("WgtvIJ0A//RKGHShVDQRPdd/9ks="), 27, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE), 27, mockStrings, mockContext)
                 .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
@@ -143,9 +143,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
     }
 
     companion object {
-        const val OUR_PACKAGE = "com.abc.def"
-        const val SUCCESS_MESSAGE = "Success"
-        const val FAILURE_MESSAGE = "Failure message %s"
-        const val NOT_FOUND_MESSAGE = "Not found "
+        private const val OUR_PACKAGE = "com.abc.def"
+        private const val SUCCESS_MESSAGE = "Success"
+        private const val FAILURE_MESSAGE = "Failure message %s"
+        private const val NOT_FOUND_MESSAGE = "Not found "
+        private const val SIGNATURE = "WgtvIJ0A//RKGHShVDQRPdd/9ks="
     }
 }
