@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>My Site Blog</title>
+        <title>Safe to run Blog</title>
         <link>https://dllewellyn.github.io/safe_to_run/blog</link>
-        <description>My Site Blog</description>
+        <description>Safe to run Blog</description>
         <lastBuildDate>Tue, 14 Apr 2020 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
