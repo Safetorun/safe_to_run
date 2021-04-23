@@ -10,4 +10,8 @@
     <string name="no_signature_match">Signature was not a match. Got signature %s</string>
     <string name="signature_not_found">Signature not found</string>
     <string name="signature_match">Signature match</string>
+    <string name="debuggable">App is debuggable</string>
+    <string name="not_debuggable">App is not debuggable</string>
+    <string name="debugger_attached">Debugger is not attached</string>
+    <string name="debugger_not_attached">Debugger is not attached</string>
 </resources>

@@ -27,7 +27,7 @@ Or, declare all. That's not suggested
 
 Disallow an application on device
 
-```
+```kotlin
  blacklistConfiguration(blacklistedAppCheck) {
     +"com.abc.def"
 }

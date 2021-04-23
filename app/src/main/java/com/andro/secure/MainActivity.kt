@@ -10,6 +10,7 @@ import com.andro.safetorun.SafeToRun
 import com.andro.safetorun.conditional.conditionalBuilder
 import com.andro.safetorun.configure
 import com.andro.safetorun.features.blacklistedapps.blacklistConfiguration
+import com.andro.safetorun.features.debug.debugCheck
 import com.andro.safetorun.features.oscheck.OSConfiguration.minOsVersion
 import com.andro.safetorun.features.oscheck.OSConfiguration.notManufacturer
 import com.andro.safetorun.features.oscheck.osDetectionCheck
@@ -29,34 +30,30 @@ class MainActivity : AppCompatActivity() {
             configure {
 
                 // Root beer (detect root)
-                plus {
-                    rootDetection {
-                        tolerateRoot = false
-                        tolerateBusyBox = true
-                    }
+                this errorIf rootDetection {
+                    tolerateRoot = false
+                    tolerateBusyBox = true
                 }
 
 
                 // Black list certain apps
-                plus {
-                    blacklistConfiguration {
-                        +"com.abc.def"
-                        +"com.google.earth"
-                    }
+                this errorIf blacklistConfiguration {
+                    +"com.abc.def"
+                    +"com.google.earth"
                 }
-                plus(
-                    verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
-                )
+
+                this errorIf verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
 
                 // OS Blacklist version
-                plus {
-                    osDetectionCheck(
-                        conditionalBuilder {
-                            with(minOsVersion(22))
-                            and(notManufacturer("Abc"))
-                        }
-                    )
-                }
+                this warnIf osDetectionCheck(
+                    conditionalBuilder {
+                        with(minOsVersion(22))
+                        and(notManufacturer("Abc"))
+                    }
+                )
+
+                this warnIf debugCheck()
+
             }
         )
 

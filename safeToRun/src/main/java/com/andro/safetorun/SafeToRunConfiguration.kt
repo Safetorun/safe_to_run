@@ -6,20 +6,29 @@ import com.andro.safetorun.checks.SafeToRunCheck
 class SafeToRunConfiguration {
 
     private val safeToRunChecks = mutableListOf<SafeToRunCheck>()
+    private val safeToRunWarnings = mutableListOf<SafeToRunCheck>()
 
     private fun add(safeToRunCheck: SafeToRunCheck) {
         safeToRunChecks.add(safeToRunCheck)
     }
 
-    operator fun plus(safeToRunCheck: SafeToRunCheck) {
+    infix fun errorIf(safeToRunCheck: SafeToRunCheck) {
         add(safeToRunCheck)
     }
 
-    operator fun plus(safeToRunCheck: () -> SafeToRunCheck) {
+    infix fun errorIf(safeToRunCheck: () -> SafeToRunCheck) {
         add(safeToRunCheck())
     }
 
-    fun build(): SafeToRunCheck = CompositeSafeToRunCheck(safeToRunChecks)
+    infix fun warnIf(safeToRunCheck: SafeToRunCheck) {
+        safeToRunWarnings.add(safeToRunCheck)
+    }
+
+    infix fun warnIf(safeToRunCheck: () -> SafeToRunCheck) {
+        safeToRunWarnings.add(safeToRunCheck())
+    }
+
+    fun build(): SafeToRunCheck = CompositeSafeToRunCheck(safeToRunChecks, safeToRunWarnings)
 }
 
 fun configure(

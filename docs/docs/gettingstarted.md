@@ -7,7 +7,7 @@ slug: /
 An example of a configuration, done in App:
 
 
-```
+```kotlin
   SafeToRun.init(
             configure {
 

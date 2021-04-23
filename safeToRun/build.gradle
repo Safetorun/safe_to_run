@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: "com.vanniktech.android.junit.jacoco"
 
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
-
 
 
     defaultConfig {
@@ -40,5 +40,4 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
 }

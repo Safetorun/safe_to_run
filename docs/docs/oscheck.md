@@ -8,7 +8,7 @@ slug: /oscheck
 Use to blacklist Manufacturer / OS Version combinations
 
 
-```
+```kotlin
 val conditional = conditionalBuilder {
     with(osInformationQuery) {
         with(minOsVersion(30))

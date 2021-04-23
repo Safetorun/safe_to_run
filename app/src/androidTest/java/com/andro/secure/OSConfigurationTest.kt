@@ -4,7 +4,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.andro.safetorun.SafeToRun
 import com.andro.safetorun.configure
 import com.andro.safetorun.features.blacklistedapps.blacklistConfiguration
-import com.google.common.truth.Truth.assertThat
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,7 +18,7 @@ class OSConfigurationTest {
         activityRule.scenario.onActivity { activity ->
             SafeToRun.init(
                 configure {
-                    plus {
+                    errorIf {
                         activity.blacklistConfiguration {
                             +"com.abc.def"
                         }
@@ -34,7 +33,7 @@ class OSConfigurationTest {
         activityRule.scenario.onActivity { activity ->
             SafeToRun.init(
                 configure {
-                    plus {
+                    errorIf {
                         activity.blacklistConfiguration {
                             +activity.packageName
                         }

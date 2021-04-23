@@ -1,14 +1,15 @@
-package com.andro.safetorun.checks
+package com.andro.safetorun
 
+import com.andro.safetorun.checks.SafeToRunCheck
 import com.andro.safetorun.reporting.SafeToRunReport
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import junit.framework.TestCase
 import org.junit.jupiter.api.Test
 
-class CompositeSafeToRunCheckTest : TestCase() {
+internal class SafeToRunConfigurationTest : TestCase() {
 
     @MockK
     lateinit var check1: SafeToRunCheck
@@ -23,25 +24,10 @@ class CompositeSafeToRunCheckTest : TestCase() {
     private val result1 = SafeToRunReport.SafeToRunReportSuccess("")
     private val result2 = SafeToRunReport.SafeToRunReportSuccess("")
 
-    private val compositeSafeToRunCheck by lazy {
-        CompositeSafeToRunCheck(listOf(check1, check2), emptyList())
-    }
-
     override fun setUp() {
         MockKAnnotations.init(this)
         every { check1.canRun() } returns result1
         every { check2.canRun() } returns result2
-    }
-
-    @Test
-    fun `test that composite class runs other safe to run check`() {
-
-        // Given
-        // When
-        val result = compositeSafeToRunCheck.canRun() as SafeToRunReport.MultipleReports
-
-        // Then
-        assertThat(result.reports).containsExactly(result1, result2)
     }
 
     @Test
@@ -53,15 +39,21 @@ class CompositeSafeToRunCheckTest : TestCase() {
 
         val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
 
-        val composeCheck = CompositeSafeToRunCheck(listOf(check1, check2), listOf(check3))
+        SafeToRun.init(
+            configure {
+                this errorIf check1
+                this errorIf check2
+                this warnIf check3
+            }
+        )
 
         every { check3.canRun() } returns result3
 
         // When
-        val result = composeCheck.canRun() as SafeToRunReport.MultipleReports
+        val result = SafeToRun.isSafeToRun() as SafeToRunReport.MultipleReports
 
         // Then
-        assertThat(result.reports).containsExactly(
+        Truth.assertThat(result.reports).containsExactly(
             result1,
             result2,
             SafeToRunReport.SafeToRunWarning(failureReason, failureMessage)
@@ -81,15 +73,21 @@ class CompositeSafeToRunCheckTest : TestCase() {
         val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
         val result4 = SafeToRunReport.SafeToRunReportFailure(failureReason2, failureMessage2)
 
-        val composeCheck = CompositeSafeToRunCheck(listOf(check1, check2), listOf(check3))
+        SafeToRun.init(
+            configure {
+                this errorIf check1
+                this errorIf check2
+                this warnIf check3
+            }
+        )
 
         every { check3.canRun() } returns SafeToRunReport.MultipleReports(listOf(result3, result4))
 
         // When
-        val result = composeCheck.canRun() as SafeToRunReport.MultipleReports
+        val result = SafeToRun.isSafeToRun() as SafeToRunReport.MultipleReports
 
         // Then
-        assertThat(result.reports).containsExactly(
+        Truth.assertThat(result.reports).containsExactly(
             result1,
             result2,
             SafeToRunReport.MultipleReports(
