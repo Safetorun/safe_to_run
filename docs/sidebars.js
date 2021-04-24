@@ -1,5 +1,6 @@
 module.exports = {
   someSidebar: {
-    Docusaurus: ['gettingstarted', 'rootdetection', 'blacklisting', 'oscheck', 'debugcheck', 'signatureverification']
+    Overview: ['why','gettingstarted'],
+    Checks: ['rootdetection', 'blacklisting', 'oscheck', 'debugcheck', 'signatureverification']
   },
 };

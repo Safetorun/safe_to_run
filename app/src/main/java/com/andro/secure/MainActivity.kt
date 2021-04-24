@@ -17,6 +17,7 @@ import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
 import com.andro.secure.databinding.ActivityMainBinding
+import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,8 +58,18 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        val safeToRun = SafeToRun.isSafeToRun()
+
+        val safToRun = SafeToRun.isSafeToRun()
         Log.v("SafeToRun", safeToRun.toString())
+    }
+
+    fun throwIfSomethingFailed(safeToRunReport: SafeToRunReport) {
+        when (safeToRunReport) {
+            is SafeToRunReport.MultipleReports -> safeToRunReport.reports.forEach(::throwIfSomethingFailed)
+            is SafeToRunReport.SafeToRunReportFailure -> throw RuntimeException(safeToRunReport.failureMessage)
+            is SafeToRunReport.SafeToRunReportSuccess ->{} // Nothing
+            is SafeToRunReport.SafeToRunWarning -> {} // It's a good idea to
+        }
     }
 }
 
