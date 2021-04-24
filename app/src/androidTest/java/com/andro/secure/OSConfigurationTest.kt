@@ -1,9 +1,9 @@
 package com.andro.secure
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.andro.safetorun.SafeToRun
-import com.andro.safetorun.configure
-import com.andro.safetorun.features.blacklistedapps.blacklistConfiguration
+import io.github.dllewellyn.safetorun.SafeToRun
+import io.github.dllewellyn.safetorun.configure
+import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfiguration
 import org.junit.Rule
 import org.junit.Test
 
