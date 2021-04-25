@@ -59,16 +59,21 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-        val safToRun = SafeToRun.isSafeToRun()
+        val safeToRun = SafeToRun.isSafeToRun()
+        throwIfSomethingFailed(safeToRun)
         Log.v("SafeToRun", safeToRun.toString())
     }
 
-    fun throwIfSomethingFailed(safeToRunReport: SafeToRunReport) {
+    private fun throwIfSomethingFailed(safeToRunReport: SafeToRunReport) {
         when (safeToRunReport) {
             is SafeToRunReport.MultipleReports -> safeToRunReport.reports.forEach(::throwIfSomethingFailed)
             is SafeToRunReport.SafeToRunReportFailure -> throw RuntimeException(safeToRunReport.failureMessage)
-            is SafeToRunReport.SafeToRunReportSuccess ->{} // Nothing
-            is SafeToRunReport.SafeToRunWarning -> {} // It's a good idea to
+            is SafeToRunReport.SafeToRunReportSuccess -> {
+                // Nothing
+            }
+            is SafeToRunReport.SafeToRunWarning -> {
+                // It's a good idea to
+            }
         }
     }
 }
