@@ -24,7 +24,10 @@ fun SafeToRunReport.toGrouped(): GroupedSafeToRunReports {
     }
 }
 
-private fun flattenAndExtract(safeToRunReport: SafeToRunReport): Triple<List<SafeToRunReport.SafeToRunReportSuccess>, List<SafeToRunReport.SafeToRunReportFailure>, List<SafeToRunReport.SafeToRunWarning>> {
+private fun flattenAndExtract(safeToRunReport: SafeToRunReport): Triple<
+        List<SafeToRunReport.SafeToRunReportSuccess>,
+        List<SafeToRunReport.SafeToRunReportFailure>,
+        List<SafeToRunReport.SafeToRunWarning>> {
     val failures = mutableListOf<SafeToRunReport.SafeToRunReportFailure>()
     val success = mutableListOf<SafeToRunReport.SafeToRunReportSuccess>()
     val warnings = mutableListOf<SafeToRunReport.SafeToRunWarning>()
