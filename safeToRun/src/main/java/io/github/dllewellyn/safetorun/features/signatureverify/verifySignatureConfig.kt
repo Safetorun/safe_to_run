@@ -11,7 +11,7 @@ fun Context.verifySignatureConfig(vararg signature: String): SafeToRunCheck {
     )
 }
 
-fun Context.verifySignatureConfigOverrideSdkVersion(sdkVersion: Int, vararg signature: String): SafeToRunCheck {
+internal fun Context.verifySignatureConfigOverrideSdkVersion(sdkVersion: Int, vararg signature: String): SafeToRunCheck {
     return SignatureVerificationCheck(
         signature.toList(), sdkVersion, AndroidSignatureVerificationStringsImpl(this),
         this

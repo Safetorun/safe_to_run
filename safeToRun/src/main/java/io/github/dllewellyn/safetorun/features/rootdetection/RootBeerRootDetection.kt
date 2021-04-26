@@ -3,10 +3,10 @@ package io.github.dllewellyn.safetorun.features.rootdetection
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
-class RootBeerRootDetection(
+internal class RootBeerRootDetection(
     private val rootDetectionConfig: RootDetectionConfig,
     private val rootDetectionChecker: RootDetectionChecker,
-    private val rootDetectionStrings : RootDetectionStrings
+    private val rootDetectionStrings: RootDetectionStrings
 ) :
     SafeToRunCheck {
 

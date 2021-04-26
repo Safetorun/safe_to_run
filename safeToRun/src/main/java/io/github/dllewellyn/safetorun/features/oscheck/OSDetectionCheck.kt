@@ -7,7 +7,7 @@ import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.github.dllewellyn.safetorun.reporting.toMultipleReport
 
-class OSDetectionCheck(
+internal class OSDetectionCheck(
     private val osDetectionConfig: OSDetectionConfig,
     private val osDetectionStrings : OSDetectionStrings
 ) : SafeToRunCheck {

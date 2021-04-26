@@ -1,4 +1,4 @@
-# Safe to Run 
+# Safe to Run
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run)
 
@@ -6,49 +6,54 @@
 
 [Documentation website](http://dllewellyn.github.io/safe_to_run/)
 
-
-The purpose of this configuration is to provide a simple and extensible framework you can use in order
-to check the phone you're running on is safe to run your application.
-
+The purpose of this configuration is to provide a simple and extensible framework you can use in order to check the
+phone you're running on is safe to run your application.
 
 ### Things to add
 
 * Get configuration from remote
-* Do the checks remotely 
-
+* Do the checks remotely
 
 ### Features
 
-Root detection
+- [x] Root detection
 
-Blacklisted apps
+- [x] Blacklisted apps
 
-OS Version, manufacturer, device 
+- [x] OS Version, manufacturer
 
-SafetyNet 
+- [ ] Device
 
-Hardware encryption enabled
+- [ ] SafetyNet
 
-Is it a simulator
+- [ ] Hardware encryption enabled
 
-Is a debugger attached
+- [ ] Is it a simulator
 
-Check versions of libraries (e.g. open SSL lib version)
+- [ ] Is a debugger attached
 
-Check the apk signature
+- [ ] Check versions of libraries (e.g. open SSL lib version)
 
-Hashes of any SOs that are used
+- [x] Check the apk signature
 
-Check memory header to detect injections
+- [x] Hashes of any SOs that are used
 
-## Futures 
+- [ ] Check memory header to detect injections
 
-Authentication logging
+## Futures
 
-Security analytics
+- [ ] Authentication logging
 
-Remote wipe
+- [ ] Security analytics
 
-Remote configuration 
+- [ ] Remote wipe
 
-Check online / off device 
+- [ ] Remote configuration
+
+- [ ] Check online / off device 
+
+
+## Developing
+
+### Sonarcloud
+

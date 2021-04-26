@@ -10,7 +10,7 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import java.security.MessageDigest
 
-class SignatureVerificationCheck(
+internal class SignatureVerificationCheck(
     private val expectedSignature: List<String>,
     private val sdkVersion: Int = Build.VERSION_CODES.P,
     private val signatureVerificationStrings: SignatureVerificationStrings,

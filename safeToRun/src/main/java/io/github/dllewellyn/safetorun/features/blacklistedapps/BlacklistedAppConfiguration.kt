@@ -7,7 +7,7 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 annotation class BlacklistedScope
 
 @BlacklistedScope
-class BlacklistedAppConfiguration(private val blacklistedAppCheck: BlacklistedAppCheck) {
+class BlacklistedAppConfiguration internal constructor(private val blacklistedAppCheck: BlacklistedAppCheck) {
 
     private val blacklistedApplications = mutableListOf<String>()
     internal lateinit var appStrings: BlacklistedAppStrings

@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.features.oscheck
 
-interface OSInformationQuery {
+internal interface OSInformationQuery {
     fun osVersion(): Int
     fun manufacturer(): String
     fun model(): String

@@ -4,7 +4,7 @@ import android.content.Context
 import io.github.dllewellyn.safetorun.R
 import io.github.dllewellyn.safetorun.reporting.BaseAndroidStrings
 
-class AndroidDebuggableStrings(context: Context) : BaseAndroidStrings(context),
+internal class AndroidDebuggableStrings(context: Context) : BaseAndroidStrings(context),
     DebuggableStrings {
 
     override fun appIsDebuggableMessage(): String {

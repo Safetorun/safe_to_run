@@ -10,10 +10,10 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import junit.framework.TestCase
 
-class OSDetectionCheckTest : TestCase() {
+internal class OSDetectionCheckTest : TestCase() {
 
     @MockK
-    lateinit var osInformationQuery: OSInformationQuery
+    private lateinit var osInformationQuery: OSInformationQuery
 
     override fun setUp() {
         MockKAnnotations.init(this)

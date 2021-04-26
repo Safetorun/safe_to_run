@@ -1,3 +1,7 @@
+plugins {
+    id("org.jetbrains.dokka")
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: "com.vanniktech.android.junit.jacoco"
@@ -48,4 +52,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+tasks.named("dokkaHtml") {
+    outputDirectory.set(new java.io.File(buildDir.absolutePath + "/../../docs/static/html/"))
 }

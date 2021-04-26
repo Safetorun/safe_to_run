@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.features.debug
 
-interface IsDebuggable {
+internal interface IsDebuggable {
     fun isDebuggable() : Boolean
     fun isDebuggerAttached() : Boolean
 }

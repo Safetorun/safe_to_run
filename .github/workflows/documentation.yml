@@ -37,6 +37,8 @@ jobs:
       - uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
+      - name: Build dokkas
+        run: ./gradlew safeToRun:dokkaHtml
       - name: Release to GitHub Pages
         working-directory: docs
         env:
