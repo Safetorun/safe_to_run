@@ -1,0 +1,31 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id("org.jetbrains.dokka")
+}
+
+apply plugin: "com.vanniktech.android.junit.jacoco"
+
+ext {
+    PUBLISH_GROUP_ID = 'io.github.dllewellyn.safetorun'
+    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_ARTIFACT_ID = 'safeToRunCore'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
+group 'io.github.dllewellyn.safetorun'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "com.google.truth:truth:$googleTruth"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+}

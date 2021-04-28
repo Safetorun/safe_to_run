@@ -3,6 +3,15 @@ id: why
 title: Why Safe to Run?
 slug: /
 ---
+:::caution
+
+No solution to tamper detection is foolproof, if someone is
+able to decompile your application and push it onto an unsuspecting
+device, it is possible remove the functionality of safe to run.
+
+This just makes it that much harder...
+
+:::
 
 ## Motivation
 

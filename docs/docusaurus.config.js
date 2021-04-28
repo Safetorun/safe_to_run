@@ -24,11 +24,6 @@ module.exports = {
           position: 'left',
         },
         {
-          href: "https://dllewellyn.github.io/safe_to_run/html/index.html",
-          label: 'Javadocs',
-          position: 'left',
-        },
-        {
           href: 'https://github.com/dllewellyn/safe_to_run/',
           label: 'GitHub',
           position: 'right',

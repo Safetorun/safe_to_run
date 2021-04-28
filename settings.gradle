@@ -1,3 +1,5 @@
 include ':safeToRun'
 include ':app'
 rootProject.name = "Safe to run"
+include 'safeToRunCore'
+

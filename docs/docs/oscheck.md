@@ -9,12 +9,11 @@ Use to blacklist Manufacturer / OS Version combinations
 
 
 ```kotlin
-val conditional = conditionalBuilder {
-    with(osInformationQuery) {
-        with(minOsVersion(30))
-        and(notManufacturer(DODGY_MANUFACTURER))
+// OS Blacklist version
+osDetectionCheck(
+    conditionalBuilder {
+        with(minOsVersion(22))
+        and(notManufacturer("Abc"))
     }
-}
-
-val osDetectionRule = OSDetectionConfig(listOf(conditional))
+).warn()
 ```

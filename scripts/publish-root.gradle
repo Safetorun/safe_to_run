@@ -1,6 +1,6 @@
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
-ext["sonatypeStagingProfileId"] = ''
+ext["sonatypeStagingProfileId"] = 'io.github.dllewellyn'
 ext["signing.keyId"] = ''
 ext["signing.password"] = ''
 ext["signing.secretKeyRingFile"] = ''
@@ -20,14 +20,15 @@ if (secretPropsFile.exists()) {
     ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
 }
 
+
 nexusPublishing {
+    packageGroup = "io.github.dllewellyn.safetorun"  //defaults to 'project.group'
     repositories {
         sonatype {
-            stagingProfileId = sonatypeStagingProfileId
+            packageGroup = "io.github.dllewellyn"
             username = ossrhUsername
             password = ossrhPassword
-
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"))
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }

@@ -20,12 +20,16 @@ class SafeToRunConfiguration {
         add(safeToRunCheck())
     }
 
-    infix fun warnIf(safeToRunCheck: SafeToRunCheck) {
-        safeToRunWarnings.add(safeToRunCheck)
+    fun SafeToRunCheck.warn() {
+        safeToRunWarnings.add(this)
     }
 
-    infix fun warnIf(safeToRunCheck: () -> SafeToRunCheck) {
-        safeToRunWarnings.add(safeToRunCheck())
+    fun SafeToRunCheck.error() {
+        safeToRunChecks.add(this)
+    }
+
+    infix fun warnIf(safeToRunCheck: SafeToRunCheck) {
+        safeToRunWarnings.add(safeToRunCheck)
     }
 
     fun build(): SafeToRunCheck = CompositeSafeToRunCheck(safeToRunChecks, safeToRunWarnings)

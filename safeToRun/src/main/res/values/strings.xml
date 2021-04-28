@@ -14,4 +14,7 @@
     <string name="not_debuggable">App is not debuggable</string>
     <string name="debugger_attached">Debugger is not attached</string>
     <string name="debugger_not_attached">Debugger is not attached</string>
+    <string name="could_not_find_package">Could not find package</string>
+    <string name="package_was_not_in_allowed_List">Package was not in allowed list (%s)</string>
+    <string name="package_was_in_allowed_list">"Install package was in allowed list "</string>
 </resources>

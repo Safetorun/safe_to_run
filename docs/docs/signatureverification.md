@@ -8,7 +8,7 @@ In order to configure:
 
 
 ```kotlin
-this errorIf verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=").error()
 ```
 
 To generate your signature, the simplest way is to simply run the report and read

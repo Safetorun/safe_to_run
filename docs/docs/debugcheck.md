@@ -8,7 +8,7 @@ Debug check is the simplest to configure.
 
 
 ```kotlin
-this errorIf debugCheck()
+debugCheck().error()
 ```
 
 

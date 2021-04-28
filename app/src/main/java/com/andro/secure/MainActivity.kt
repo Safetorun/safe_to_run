@@ -17,6 +17,7 @@ import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
 import com.andro.secure.databinding.ActivityMainBinding
+import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
 
@@ -31,29 +32,30 @@ class MainActivity : AppCompatActivity() {
             configure {
 
                 // Root beer (detect root)
-                this errorIf rootDetection {
+                rootDetection {
                     tolerateRoot = false
                     tolerateBusyBox = true
-                }
-
+                }.error()
 
                 // Black list certain apps
-                this errorIf blacklistConfiguration {
+                blacklistConfiguration {
                     +"com.abc.def"
                     +"com.google.earth"
-                }
+                }.error()
 
-                this errorIf verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+                verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+                    .error()
 
                 // OS Blacklist version
-                this warnIf osDetectionCheck(
+                osDetectionCheck(
                     conditionalBuilder {
                         with(minOsVersion(22))
                         and(notManufacturer("Abc"))
                     }
-                )
+                ).warn()
 
-                this warnIf debugCheck()
+                debugCheck().warn()
+
 
             }
         )

@@ -29,6 +29,17 @@ internal fun blacklistConfiguration(
         build()
     }
 
+/**
+ * Configure application blacklisting by specifying an application which you want
+ * to warn about
+ *
+ * ```
+ * this errorIf blacklistConfiguration {
+ *  +"com.abc.def"
+ *  +"com.google.earth"
+ * }
+ * ```
+ */
 fun Context.blacklistConfiguration(block: BlacklistedAppConfiguration.() -> Unit) =
     blacklistConfiguration(
         DefaultBlacklistedAppCheck(this),

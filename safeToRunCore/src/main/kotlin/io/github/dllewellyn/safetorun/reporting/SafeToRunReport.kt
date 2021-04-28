@@ -8,4 +8,4 @@ sealed class SafeToRunReport {
     data class SafeToRunWarning(val warnReason: String, val warningMessage: String) : SafeToRunReport()
 }
 
-fun List<SafeToRunReport>.toMultipleReport() = SafeToRunReport.MultipleReports(this)
+

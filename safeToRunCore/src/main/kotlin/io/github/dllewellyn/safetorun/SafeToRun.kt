@@ -10,7 +10,7 @@ object SafeToRun {
      * Initialise with context
      */
     fun init(configuration: SafeToRunConfiguration) {
-        this.configuration = configuration
+        SafeToRun.configuration = configuration
     }
 
     /**

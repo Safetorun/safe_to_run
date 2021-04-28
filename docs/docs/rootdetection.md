@@ -1,4 +1,4 @@
- ---
+---
 id: rootdetection
 title: Root detection
 slug: /rootdetection
