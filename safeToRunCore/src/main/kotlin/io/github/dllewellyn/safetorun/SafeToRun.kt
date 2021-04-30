@@ -7,10 +7,17 @@ object SafeToRun {
     private lateinit var configuration: SafeToRunConfiguration
 
     /**
-     * Initialise with context
+     * Initialise with configuration
      */
     fun init(configuration: SafeToRunConfiguration) {
         SafeToRun.configuration = configuration
+    }
+
+    /**
+     * Initialise with configuration block
+     */
+    fun init(configuration : () -> SafeToRunConfiguration) {
+        init(configuration())
     }
 
     /**

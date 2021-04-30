@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -22,11 +23,12 @@ android {
 
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -34,9 +36,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(":safeToRun")
-    implementation project(":safeToRunCore")
+    implementation "io.github.dllewellyn.safetorun:safetorun:1.0.0"
+    implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.0"
 
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerView"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'

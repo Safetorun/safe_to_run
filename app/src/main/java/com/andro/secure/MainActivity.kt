@@ -19,9 +19,13 @@ import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureCo
 import com.andro.secure.databinding.ActivityMainBinding
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import io.github.dllewellyn.safetorun.reporting.toGrouped
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val reportsController = ResultEpoxyController()
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 // Black list certain apps
                 blacklistConfiguration {
                     +"com.abc.def"
-                    +"com.google.earth"
+                    +packageName
                 }.error()
 
                 verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 // OS Blacklist version
                 osDetectionCheck(
                     conditionalBuilder {
-                        with(minOsVersion(22))
+                        with(minOsVersion(41))
                         and(notManufacturer("Abc"))
                     }
                 ).warn()
@@ -59,24 +63,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         )
+        binding.reportList.setController(reportsController)
+        reportsController.setData(SafeToRun.isSafeToRun().toGrouped())
 
-
-        val safeToRun = SafeToRun.isSafeToRun()
-        throwIfSomethingFailed(safeToRun)
-        Log.v("SafeToRun", safeToRun.toString())
     }
 
-    private fun throwIfSomethingFailed(safeToRunReport: SafeToRunReport) {
-        when (safeToRunReport) {
-            is SafeToRunReport.MultipleReports -> safeToRunReport.reports.forEach(::throwIfSomethingFailed)
-            is SafeToRunReport.SafeToRunReportFailure -> throw RuntimeException(safeToRunReport.failureMessage)
-            is SafeToRunReport.SafeToRunReportSuccess -> {
-                // Nothing
-            }
-            is SafeToRunReport.SafeToRunWarning -> {
-                // It's a good idea to
-            }
-        }
-    }
 }
 

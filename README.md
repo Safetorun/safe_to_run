@@ -9,51 +9,54 @@
 The purpose of this configuration is to provide a simple and extensible framework you can use in order to check the
 phone you're running on is safe to run your application.
 
-### Things to add
+## Quickstart
 
-* Get configuration from remote
-* Do the checks remotely
+```groovy
+implementation "io.github.dllewellyn.safetorun:safetorun:1.0.0"
+implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.0"
+```
 
-### Features
+In Activity, fragment or app 
 
-- [x] Root detection
+```kotlin
+SafeToRun.init(
+    configure {
 
-- [x] Blacklisted apps
+        // Root beer (detect root)
+        rootDetection {
+            tolerateRoot = false
+            tolerateBusyBox = true
+        }.error()
 
-- [x] OS Version, manufacturer
+        // Black list certain apps
+        blacklistConfiguration {
+            +"com.abc.def"
+            +"com.google.earth"
+        }.error()
 
-- [ ] Device
+        verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+            .error()
 
-- [ ] SafetyNet
+        // OS Blacklist version
+        osDetectionCheck(
+            conditionalBuilder {
+                with(minOsVersion(22))
+                and(notManufacturer("Abc"))
+            }
+        ).warn()
 
-- [ ] Hardware encryption enabled
+        debugCheck().warn()
 
-- [ ] Is it a simulator
+        installOriginCheckWithDefaults().error()
+    }
+)
+```
 
-- [ ] Is a debugger attached
+Usage:
 
-- [ ] Check versions of libraries (e.g. open SSL lib version)
-
-- [x] Check the apk signature
-
-- [x] Hashes of any SOs that are used
-
-- [ ] Check memory header to detect injections
-
-## Futures
-
-- [ ] Authentication logging
-
-- [ ] Security analytics
-
-- [ ] Remote wipe
-
-- [ ] Remote configuration
-
-- [ ] Check online / off device 
+```kotlin
+SafeToRun.safeToRun(this)
+```
 
 
-## Developing
-
-### Sonarcloud
-
+See docs for full information, and "app" for an example

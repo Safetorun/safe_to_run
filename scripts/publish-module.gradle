@@ -17,8 +17,14 @@ task androidSourcesJar(type: Jar) {
     }
 }
 
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    archiveClassifier.set('javadoc')
+    from dokkaJavadoc.outputDirectory
+}
+
 artifacts {
     archives androidSourcesJar
+    archives javadocJar
 }
 
 afterEvaluate {
@@ -36,6 +42,7 @@ afterEvaluate {
                 }
 
                 artifact androidSourcesJar
+                artifact javadocJar
 
                 pom {
                     name = PUBLISH_ARTIFACT_ID
