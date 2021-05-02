@@ -16,10 +16,6 @@ class SafeToRunConfiguration {
         add(safeToRunCheck)
     }
 
-    infix fun errorIf(safeToRunCheck: () -> SafeToRunCheck) {
-        add(safeToRunCheck())
-    }
-
     fun SafeToRunCheck.warn() {
         safeToRunWarnings.add(this)
     }

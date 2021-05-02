@@ -19,3 +19,12 @@ class InstallOriginBuilder(
     fun build(): SafeToRunCheck =
         InstallOriginCheck(installOriginStrings, allowedOrigins, installOriginQuery)
 }
+
+fun installOrigin(
+    installOriginQuery: InstallOriginQuery,
+    installOriginStrings: InstallOriginStrings,
+    installOriginBuilder: InstallOriginBuilder.() -> Unit
+) = with(InstallOriginBuilder(installOriginQuery, installOriginStrings)) {
+    installOriginBuilder()
+    build()
+}

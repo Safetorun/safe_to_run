@@ -39,13 +39,13 @@ internal class SafeToRunConfigurationTest : TestCase() {
 
         val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
 
-        SafeToRun.init(
+        SafeToRun.init {
             configure {
                 this errorIf check1
                 this errorIf check2
                 this warnIf check3
             }
-        )
+        }
 
         every { check3.canRun() } returns result3
 
@@ -75,9 +75,9 @@ internal class SafeToRunConfigurationTest : TestCase() {
 
         SafeToRun.init(
             configure {
-                this errorIf check1
-                this errorIf check2
-                this warnIf check3
+                check1.error()
+                check2.error()
+                check3.warn()
             }
         )
 

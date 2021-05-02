@@ -61,6 +61,22 @@ internal class InstallOriginCheckTest : TestCase() {
 
     }
 
+    fun `test with some integration logic`() {
+        // Given
+        every { installOriginQuery.getInstallPackageName() } returns GooglePlayStore().originPackage
+
+        val installOriginCheck = installOrigin(installOriginQuery, strings) {
+            +GooglePlayStore()
+            +AmazonStore()
+        }
+
+        // When
+        val result = installOriginCheck.canRun() as SafeToRunReport.SafeToRunReportSuccess
+
+        // Then
+        assertThat(result.successMessage).isEqualTo(MATCHED)
+    }
+
     companion object {
         const val NOT_FOUND = "NOT FOUND"
         const val NOT_MATCHING = "Not matching %s"
