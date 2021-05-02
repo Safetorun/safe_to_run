@@ -1,12 +1,12 @@
 package io.github.dllewellyn.safetorun.features.debug
 
-import io.github.dllewellyn.safetorun.features.debug.AndroidDebuggableStringsSample.DEBUGGABLE
-import io.github.dllewellyn.safetorun.features.debug.AndroidDebuggableStringsSample.DEBUGGER_ATTACHED
-import io.github.dllewellyn.safetorun.features.debug.AndroidDebuggableStringsSample.DEBUGGER_NOT_ATTACHED
-import io.github.dllewellyn.safetorun.features.debug.AndroidDebuggableStringsSample.NOT_DEBUGGABLE
-import io.github.dllewellyn.safetorun.features.debug.AndroidDebuggableStringsSample.mapReportsToMessages
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.DEBUGGABLE
+import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.DEBUGGER_ATTACHED
+import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.DEBUGGER_NOT_ATTACHED
+import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.NOT_DEBUGGABLE
+import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.mapReportsToMessages
+import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -80,7 +80,5 @@ internal class DebuggableCheckTest : TestCase() {
         assertThat(result.reports.map(::mapReportsToMessages).flatten())
             .isEqualTo(listOf(NOT_DEBUGGABLE, DEBUGGER_ATTACHED))
     }
-
-
 
 }

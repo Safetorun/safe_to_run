@@ -1,10 +1,9 @@
 package io.github.dllewellyn.safetorun.features.debug
 
-import android.content.Context
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
-internal class DebuggableCheck(
+class DebuggableCheck(
     private val isDebuggable: IsDebuggable,
     private val debuggableStrings: DebuggableStrings
 ) : SafeToRunCheck {
@@ -33,15 +32,4 @@ internal class DebuggableCheck(
         const val DEBUGGABLE_FAILURE = "db-f"
         const val DEBUGGER_ATTACHED_FAILURE = "dba-f"
     }
-}
-
-/**
- * Add a debug check to warn or error if there is a debugger attached or if the app is debuggable
- *
- * ```
- * this warnIf debugCheck()
- * ```
- */
-fun Context.debugCheck(): SafeToRunCheck {
-    return DebuggableCheck(AndroidIsDebuggable(this), AndroidDebuggableStrings(this))
 }

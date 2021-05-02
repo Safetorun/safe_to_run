@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.features.blacklistedapps
 
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.every
 import io.mockk.mockk

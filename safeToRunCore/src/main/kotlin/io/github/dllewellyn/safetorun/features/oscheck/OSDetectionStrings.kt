@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.features.oscheck
 
-internal interface OSDetectionStrings {
+interface OSDetectionStrings {
     fun genericFailureMessage(): String
     fun genericPassMessage(): String
 }

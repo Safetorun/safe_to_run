@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.features.oscheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
 import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 
-internal class BannedManufacturerName(
+class BannedManufacturerName(
     private val manufacturerName: String,
     private val osInformationQuery: OSInformationQuery
 ) :
@@ -16,6 +16,6 @@ internal class BannedManufacturerName(
     }
 }
 
-internal fun OSInformationQuery.notManufacturer(manufacturerName: String): Conditional =
+fun OSInformationQuery.notManufacturer(manufacturerName: String): Conditional =
     BannedManufacturerName(manufacturerName, this)
 
