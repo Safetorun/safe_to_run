@@ -1,0 +1,6 @@
+applicationType: function
+defaultPackage: io.github.dllewellyn.safetorun.backend
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [ annotation-api, app-name, aws-lambda, aws-v2-sdk, gradle, http-client, junit, kotlin, kotlin-extension-functions, log4j2, readme, shade, yaml ]

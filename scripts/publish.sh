@@ -1,0 +1,1 @@
+./gradle build test publishToSonatype

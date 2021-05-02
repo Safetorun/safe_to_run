@@ -1,0 +1,67 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm")
+    id("org.jetbrains.kotlin.kapt")
+    id("io.micronaut.library") version "1.5.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
+    id("org.jetbrains.dokka")
+    id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
+
+}
+
+apply plugin: "com.vanniktech.android.junit.jacoco"
+
+version = "0.1"
+group = "io.github.dllewellyn.safetorun.backend"
+
+micronaut {
+    runtime("lambda")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("io.github.dllewellyn.safetorun.backend.*")
+    }
+}
+
+dependencies {
+    implementation project(":safeToRunCore")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+    implementation("javax.annotation:javax.annotation-api")
+    implementation("org.apache.logging.log4j:log4j-core:2.13.3")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    runtimeOnly("org.apache.logging.log4j:log4j-api:2.13.3")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.13.2")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
+    implementation("io.micronaut.aws:micronaut-function-aws")
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+}
+
+tasks {
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+}
+
+jacocoBadgeGenSetting {
+    jacocoReportPath  "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+    readmePath "$projectDir/README.md"
+    // since v0.2.0, percentage limitation (0-100) for different type of coverage
+    limit = ['instruction': 0, 'branch': 0, 'line': 0, 'method': 0, 'class': 0]
+}
