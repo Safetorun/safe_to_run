@@ -1,9 +1,11 @@
 package io.github.dllewellyn.safetorun.features.installorigin
 
-import android.content.Context
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 
-internal class InstallOriginBuilder(private val context: Context) {
+class InstallOriginBuilder(
+    private val installOriginQuery: InstallOriginQuery,
+    private val installOriginStrings: InstallOriginStrings
+) {
     private val allowedOrigins = mutableListOf<InstallOrigin>()
 
     operator fun plus(installOrigin: InstallOrigin) {
@@ -15,5 +17,5 @@ internal class InstallOriginBuilder(private val context: Context) {
     }
 
     fun build(): SafeToRunCheck =
-        InstallOriginCheck(context, AndroidInstallOriginStrings(context), allowedOrigins)
+        InstallOriginCheck(installOriginStrings, allowedOrigins, installOriginQuery)
 }

@@ -7,13 +7,17 @@ fun Context.verifySignatureConfig(vararg signature: String): SafeToRunCheck {
     return SignatureVerificationCheck(
         signature.toList(),
         signatureVerificationStrings = AndroidSignatureVerificationStringsImpl(this),
-        context = this
+        signatureVerificationQuery = AndroidSignatureVerificationQuery(this)
     )
 }
 
-internal fun Context.verifySignatureConfigOverrideSdkVersion(sdkVersion: Int, vararg signature: String): SafeToRunCheck {
+internal fun Context.verifySignatureConfigOverrideSdkVersion(
+    sdkVersion: Int,
+    vararg signature: String
+): SafeToRunCheck {
     return SignatureVerificationCheck(
-        signature.toList(), sdkVersion, AndroidSignatureVerificationStringsImpl(this),
-        this
+        signature.toList(),
+        AndroidSignatureVerificationStringsImpl(this),
+        AndroidSignatureVerificationQuery(this, sdkVersion)
     )
 }

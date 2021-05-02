@@ -6,8 +6,8 @@ import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.content.pm.SigningInfo
 import android.util.Base64
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -54,7 +54,11 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("abc"), sdkVersion, mockStrings, mockContext)
+        val reportResult = SignatureVerificationCheck(
+            listOf("abc"),
+            mockStrings,
+            AndroidSignatureVerificationQuery(mockContext, sdkVersion),
+        )
             .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
@@ -68,7 +72,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE), sdkVersion, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE),
+                mockStrings,
+                AndroidSignatureVerificationQuery(mockContext, sdkVersion),
+            )
                 .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
@@ -85,7 +92,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE), sdkVersion, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE),
+                mockStrings,
+                AndroidSignatureVerificationQuery(mockContext, sdkVersion),
+            )
                 .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
@@ -101,7 +111,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("abc"), 27, mockStrings, mockContext)
+        val reportResult = SignatureVerificationCheck(listOf("abc"),
+            mockStrings,
+            AndroidSignatureVerificationQuery(mockContext, 27),
+        )
             .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then
@@ -116,7 +129,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE), 27, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE),
+                mockStrings,
+                AndroidSignatureVerificationQuery(mockContext, 27),
+            )
                 .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
@@ -133,7 +149,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE), 27, mockStrings, mockContext)
+            SignatureVerificationCheck(listOf(SIGNATURE),
+                mockStrings,
+                AndroidSignatureVerificationQuery(mockContext, 27),
+            )
                 .canRun() as SafeToRunReport.SafeToRunReportFailure
 
         // Then

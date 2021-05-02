@@ -1,10 +1,10 @@
 package io.github.dllewellyn.safetorun.features.oscheck
 
-import android.content.Context
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
+import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import io.github.dllewellyn.safetorun.conditional.Conditional
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
-import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -12,9 +12,12 @@ import junit.framework.TestCase
 internal class OSDetectionCheckTest : TestCase() {
 
     private val osInformationQuery = mockk<OSInformationQuery>()
+    private val osInformationStrings = mockk<OSDetectionStrings>()
 
     override fun setUp() {
-        MockKAnnotations.init(this)
+        every { osInformationStrings.genericFailureMessage() } returns "Failed"
+        every { osInformationStrings.genericPassMessage() } returns "Passed"
+
     }
 
     fun `test that we can create a os version rule that fails if os is too low`() {
@@ -22,7 +25,7 @@ internal class OSDetectionCheckTest : TestCase() {
         every { osInformationQuery.osVersion() } returns 29
 
         // When
-        val result = mockk<Context>().osDetectionCheck(
+        val result = osDetectionCheck(
             MinOSVersionRule(
                 30,
                 osInformationQuery
@@ -31,9 +34,9 @@ internal class OSDetectionCheckTest : TestCase() {
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
-            assertThat(failureMessage).isNotNull()
-            assertThat(failureMessage).contains("30")
-            assertThat(failureMessage).contains("29")
+            Truth.assertThat(failureMessage).isNotNull()
+            Truth.assertThat(failureMessage).contains("30")
+            Truth.assertThat(failureMessage).contains("29")
         }
     }
 
@@ -42,7 +45,7 @@ internal class OSDetectionCheckTest : TestCase() {
         every { osInformationQuery.osVersion() } returns 30
 
         // When
-        val result = mockk<Context>(relaxed = true).osDetectionCheck(
+        val result = osDetectionCheck(
             MinOSVersionRule(
                 30,
                 osInformationQuery
@@ -50,7 +53,7 @@ internal class OSDetectionCheckTest : TestCase() {
         ).canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then
-        assertThat(result.successMessage).isNotNull()
+        Truth.assertThat(result.successMessage).isNotNull()
     }
 
 
@@ -60,7 +63,7 @@ internal class OSDetectionCheckTest : TestCase() {
 
 
         // When
-        val result = mockk<Context>().osDetectionCheck(
+        val result = osDetectionCheck(
             BannedManufacturerName(
                 DODGY_MANUFACTURER,
                 osInformationQuery
@@ -69,8 +72,8 @@ internal class OSDetectionCheckTest : TestCase() {
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
-            assertThat(failureMessage).isNotNull()
-            assertThat(failureMessage).contains(DODGY_MANUFACTURER)
+            Truth.assertThat(failureMessage).isNotNull()
+            Truth.assertThat(failureMessage).contains(DODGY_MANUFACTURER)
         }
     }
 
@@ -87,19 +90,25 @@ internal class OSDetectionCheckTest : TestCase() {
             }
         }
 
-        val osDetectionRule = mockk<Context>().osDetectionCheck(conditional)
+        val osDetectionRule = osDetectionCheck(conditional)
 
         // When
         val result = osDetectionRule.canRun() as SafeToRunReport.MultipleReports
 
         // Then
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
-            assertThat(failureMessage).isNotNull()
-            assertThat(failureMessage).contains(DODGY_MANUFACTURER)
+            Truth.assertThat(failureMessage).isNotNull()
+            Truth.assertThat(failureMessage).contains(DODGY_MANUFACTURER)
         }
+    }
+
+    private fun osDetectionCheck(vararg conditional: Conditional): SafeToRunCheck {
+        return OSDetectionCheck(OSDetectionConfig(conditional.toList()), osInformationStrings)
     }
 
     companion object {
         const val DODGY_MANUFACTURER = "dodgy manufacturer"
     }
+
+
 }

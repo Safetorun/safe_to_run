@@ -23,7 +23,7 @@ class BlacklistedAppConfigurationTest : TestCase() {
             args[0].toStr()
         }
 
-        val conf = blacklistConfiguration(blacklistedAppCheck, mockStringsConfiguration) {
+        val conf = blacklistConfig(blacklistedAppCheck, mockStringsConfiguration) {
             +IS_PRESENT_PACKAGE
         }
 
@@ -35,7 +35,7 @@ class BlacklistedAppConfigurationTest : TestCase() {
 
     fun `test we configure our blacklisted app to fail with def can run should succeed`() {
         every { mockStringsConfiguration.didNotFindBlacklistedAppMessage() } returns "Message"
-        val conf = blacklistConfiguration(blacklistedAppCheck, mockStringsConfiguration) {
+        val conf = blacklistConfig(blacklistedAppCheck, mockStringsConfiguration) {
             +NOT_PRESENT_PACKAGE
         }
 
@@ -48,7 +48,7 @@ class BlacklistedAppConfigurationTest : TestCase() {
             args[0].toStr()
         }
 
-        val conf = blacklistConfiguration(blacklistedAppCheck, mockStringsConfiguration) {
+        val conf = blacklistConfig(blacklistedAppCheck, mockStringsConfiguration) {
             +NOT_PRESENT_PACKAGE
             +IS_PRESENT_PACKAGE
         }

@@ -45,7 +45,11 @@ internal class InstallOriginCheckTest : TestCase() {
             every { packageManager.getInstallSourceInfo(any()) } returns mockk<InstallSourceInfo>().apply {
                 every { installingPackageName } returns null
             }
-            val installOriginCheck = InstallOriginCheck(context, strings, listOf(InstallOrigin("")), version)
+            val installOriginCheck = InstallOriginCheck(
+                strings,
+                listOf(InstallOrigin("")),
+                AndroidInstallOriginQuery(context, version)
+            )
 
             // When
             val result = installOriginCheck.canRun() as SafeToRunReport.SafeToRunReportFailure
@@ -58,7 +62,8 @@ internal class InstallOriginCheckTest : TestCase() {
     fun `test that if the package returns a different package to allowed it will return an error`() {
         // Given
         versions.forEach { version ->
-            val installOriginCheck = InstallOriginCheck(context, strings, listOf(InstallOrigin("")), version)
+            val installOriginCheck =
+                InstallOriginCheck(strings, listOf(InstallOrigin("")), AndroidInstallOriginQuery(context, version))
 
             // When
             val result = installOriginCheck.canRun() as SafeToRunReport.SafeToRunReportFailure
@@ -72,7 +77,11 @@ internal class InstallOriginCheckTest : TestCase() {
         // Given
         versions.forEach { version ->
             val installOriginCheck =
-                InstallOriginCheck(context, strings, listOf(InstallOrigin(PACKAGE_NAME_RETURNS)), version)
+                InstallOriginCheck(
+                    strings,
+                    listOf(InstallOrigin(PACKAGE_NAME_RETURNS)),
+                    AndroidInstallOriginQuery(context, version)
+                )
 
             // When
             val result = installOriginCheck.canRun() as SafeToRunReport.SafeToRunReportSuccess

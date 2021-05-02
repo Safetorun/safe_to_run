@@ -5,14 +5,14 @@ import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.github.dllewellyn.safetorun.reporting.toMultipleReport
 
 
-internal class BlacklistedApplicationDetection(
-    private val allFiles: List<String>,
+class BlacklistedApplicationDetection(
+    private val blacklistedApplications: List<String>,
     private val blacklistedAppCheck: BlacklistedAppCheck,
     private val blacklistedAppStrings: BlacklistedAppStrings
 ) : SafeToRunCheck {
 
     override fun canRun(): SafeToRunReport {
-        val blacklistedAppsPresent = allFiles.filter {
+        val blacklistedAppsPresent = blacklistedApplications.filter {
             blacklistedAppCheck.isAppPresent(it)
         }
 

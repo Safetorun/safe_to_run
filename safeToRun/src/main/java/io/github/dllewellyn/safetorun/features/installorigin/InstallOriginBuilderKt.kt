@@ -27,7 +27,7 @@ fun Context.installOriginCheckWithDefaults(vararg allowedOrigins: String): SafeT
  * have been installed from
  */
 fun Context.installOriginCheckWithoutDefaults(vararg allowedOrigins: String): SafeToRunCheck {
-    return with(InstallOriginBuilder(this)) {
+    return with(InstallOriginBuilder(AndroidInstallOriginQuery(this), AndroidInstallOriginStrings(this))) {
         allowedOrigins
             .map(::InstallOrigin)
             .forEach(::plus)

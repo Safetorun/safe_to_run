@@ -9,19 +9,13 @@ module.exports = {
     favicon: 'img/favicon.ico',
     organizationName: 'dllewellyn',
     projectName: 'safe_to_run',
-    plugins: ['@docusaurus/plugin-google-analytics'],
     themeConfig: {
-        googleAnalytics: {
-            trackingID: 'G-6R8G50F31N',
-            anonymizeIP: true,
-        },
         navbar: {
             title: 'Safe to run',
             logo: {
                 alt: 'Safe to run',
                 src: 'img/safetorun.jpg',
             },
-
             items: [
                 {
                     to: 'docs/',
@@ -38,7 +32,8 @@ module.exports = {
         },
         footer: {
             style: 'dark',
-            links: [],
+            links: [
+            ],
             copyright: `Copyright © ${new Date().getFullYear()} Daniel Llewellyn, Inc. Built with Docusaurus.`,
         },
         prism: {
