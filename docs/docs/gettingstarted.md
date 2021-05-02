@@ -4,6 +4,13 @@ title: Getting started
 slug: /gettingstarted
 ---
 
+Gradle:
+
+```groovy
+implementation "io.github.dllewellyn.safetorun:safetorun:1.0.0"
+implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.0"
+```
+
 An example of a configuration, done in App class:
 
 ```kotlin
@@ -43,7 +50,7 @@ SafeToRun.init(
 Then use like this
 
 ```kotlin
-SafeToRun.safeToRun(this)
+SafeToRun.safeToRun()
 ```
 
 ## Errors or Warns
