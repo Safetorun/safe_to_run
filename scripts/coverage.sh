@@ -1,2 +1,1 @@
-./gradlew :safeToRunCore:jacocoTestReport
-./gradlew :safeToRun:jacocoTestReportDebug
+./gradlew :safeToRunCore:jacocoTestReport :safeToRun:jacocoTestReportDebug :safeToRun:generateJacocoBadge :safeToRunCore:generateJacocoBadge

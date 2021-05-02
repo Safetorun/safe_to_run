@@ -2,6 +2,15 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run)
 
+Core
+
+![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safetorun/badge.svg)
+
+Safe to run (android library)
+
+![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safeToRunCore/badge.svg)
+
+
 
 The purpose of this configuration is to provide a simple and extensible framework you can use in order to check the
 phone you're running on is safe to run your application.

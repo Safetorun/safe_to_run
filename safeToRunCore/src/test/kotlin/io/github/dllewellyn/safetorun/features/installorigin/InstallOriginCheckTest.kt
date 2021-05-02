@@ -61,6 +61,10 @@ internal class InstallOriginCheckTest : TestCase() {
 
     }
 
+    fun `test assert to string of origin install`() {
+        assertThat(InstallOrigin(PACKAGE_NAME_RETURNS).originPackage).isEqualTo(PACKAGE_NAME_RETURNS)
+    }
+
     fun `test with some integration logic`() {
         // Given
         every { installOriginQuery.getInstallPackageName() } returns GooglePlayStore().originPackage
