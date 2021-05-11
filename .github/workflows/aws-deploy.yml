@@ -8,6 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Install Dependencies
       run: ./gradlew shadowJar
     - uses: actions/checkout@v1
