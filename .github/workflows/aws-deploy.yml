@@ -14,8 +14,8 @@ jobs:
     - uses: actions/checkout@v1
     - uses: falnyr/aws-sam-deploy-action@v1.3.0
       env:
-        TEMPLATE: 'sam-template.yaml'
-        AWS_STACK_NAME: my-serverless-application
+        TEMPLATE: 'sam-template.yml'
+        AWS_STACK_NAME: sam-safetorun-backend
         AWS_REGION: 'eu-west-1'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
