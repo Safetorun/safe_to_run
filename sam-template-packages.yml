@@ -1,0 +1,172 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Creates infrastructure for Safe to Run
+Resources:
+  SafeToRunGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        ApiKeyRequired: true
+      DefinitionBody:
+        swagger: 2.0
+        info:
+          version: '1.0'
+          title: Safe to run backend
+        basePath: /
+        schemes:
+        - https
+        paths:
+          /deviceCheck:
+            post:
+              produces:
+              - application/json
+              responses:
+                '200':
+                  description: 200 response
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SafeToRunBackend.Arn}/invocations
+                httpMethod: POST
+                responses:
+                  default:
+                    statusCode: '200'
+                    responseTemplates:
+                      application/json: '#set($allParams = $input.params()) {"data":
+                        $input.json(''$'') }'
+                passthroughBehavior: when_no_match
+                contentHandling: CONVERT_TO_TEXT
+                type: aws
+          /verifyCheck:
+            post:
+              produces:
+              - application/json
+              responses:
+                '200':
+                  description: 200 response
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SafeToRunBackendVerify.Arn}/invocations
+                httpMethod: POST
+                responses:
+                  default:
+                    statusCode: '200'
+                    responseTemplates:
+                      application/json: '#set($allParams = $input.params())  { "data":
+                        $input.json(''$'') }'
+                passthroughBehavior: when_no_match
+                contentHandling: CONVERT_TO_TEXT
+                type: aws
+  SafeToRunBackend:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java11
+      CodeUri: s3://safe-to-run-lambda-bucket/7f90deee43ccf92e99063ed6db26936b
+      Description: A function used for verifying a device and returning a signed token
+      MemorySize: 1024
+      Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunRequestHandler
+      Timeout: 120
+      FunctionName: SafeToRun
+  SafeToRunBackendVerify:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java11
+      CodeUri: s3://safe-to-run-lambda-bucket/7f90deee43ccf92e99063ed6db26936b
+      Description: A function used for verifying a device and returning a signed token
+      MemorySize: 1024
+      Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunVerifyHandler
+      Timeout: 120
+      FunctionName: SafeToRunVerify
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+        - SafeToRunBackend
+        - Arn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceAccount:
+        Fn::Sub: ${AWS::AccountId}
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:aws:execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: SafeToRunGateway
+          - /Prod/POST/deviceCheck
+  LambdaInvokePermissionVerify:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Fn::GetAtt:
+        - SafeToRunBackendVerify
+        - Arn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceAccount:
+        Fn::Sub: ${AWS::AccountId}
+      SourceArn:
+        Fn::Join:
+        - ''
+        - - 'arn:aws:execute-api:'
+          - Ref: AWS::Region
+          - ':'
+          - Ref: AWS::AccountId
+          - ':'
+          - Ref: SafeToRunGateway
+          - /Prod/POST/verifyCheck
+  ApiKeyProd:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Name: ApiKeyProd
+      Enabled: 'true'
+      StageKeys:
+      - RestApiId:
+          Ref: SafeToRunGateway
+        StageName: Prod
+  UsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    Properties:
+      ApiStages:
+      - ApiId:
+          Ref: SafeToRunGateway
+        Stage: Prod
+      Description: Usage plan for the deployment
+      UsagePlanName: UsagePlan
+  UsagePlanKeyProd:
+    Type: AWS::ApiGateway::UsagePlanKey
+    Properties:
+      KeyId:
+        Ref: ApiKeyProd
+      KeyType: API_KEY
+      UsagePlanId:
+        Ref: UsagePlan
+Outputs:
+  ApiGatewayArn:
+    Description: Permission ARN
+    Value:
+      Fn::Join:
+      - ''
+      - - 'arn:aws:execute-api:'
+        - Ref: AWS::Region
+        - ':'
+        - Ref: AWS::AccountId
+        - ':'
+        - Ref: SafeToRunGateway
+        - /Prod/POST/deviceCheck
+  ApiGatewayArnVerify:
+    Description: Permission ARN
+    Value:
+      Fn::Join:
+      - ''
+      - - 'arn:aws:execute-api:'
+        - Ref: AWS::Region
+        - ':'
+        - Ref: AWS::AccountId
+        - ':'
+        - Ref: SafeToRunGateway
+        - /Prod/POST/verifyCheck
