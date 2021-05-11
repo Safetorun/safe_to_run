@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
     id("org.jetbrains.dokka")
     id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
+    id "com.diffplug.spotless"
 
 }
 

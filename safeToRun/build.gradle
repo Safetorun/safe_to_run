@@ -1,7 +1,7 @@
 plugins {
     id("org.jetbrains.dokka")
     id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
-
+    id "com.diffplug.spotless"
 }
 
 apply plugin: 'com.android.library'
