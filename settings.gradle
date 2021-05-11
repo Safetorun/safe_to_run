@@ -1,5 +1,3 @@
-include ':safeToRun'
-include ':app'
+include ':safeToRun', ':app', ':safeToRunCore', ':SafeToRunBackend'
 rootProject.name = "Safe to run"
-include 'safeToRunCore'
 

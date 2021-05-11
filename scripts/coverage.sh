@@ -1,1 +1,4 @@
-./gradlew :safeToRunCore:jacocoTestReport :safeToRun:jacocoTestReportDebug :safeToRun:generateJacocoBadge :safeToRunCore:generateJacocoBadge
+./gradlew spotlessApply build test\
+    :safeToRunCore:jacocoTestReport :safeToRun:jacocoTestReportDebug \
+    :safeToRun:generateJacocoBadge :safeToRunCore:generateJacocoBadge \
+    :SafeToRunBackend:jacocoTestReport :SafeToRunBackend:generateJacocoBadge
