@@ -13,7 +13,11 @@ apply plugin: "com.vanniktech.android.junit.jacoco"
 
 version = "0.1"
 group = "io.github.dllewellyn.safetorun.backend"
-
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+}
 micronaut {
     runtime("lambda")
     testRuntime("junit5")
@@ -25,6 +29,11 @@ micronaut {
 
 dependencies {
     implementation project(":safeToRunCore")
+    implementation project(":SafeToRunBackendCore")
+    implementation("com.auth0:java-jwt:$jwtVersion")
+    implementation("joda-time:joda-time:$jodaTime")
+    implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
+    implementation("com.amazonaws:aws-lambda-java-events:3.1.0")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
@@ -38,7 +47,12 @@ dependencies {
     implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.aws:micronaut-function-aws")
+    kapt "io.micronaut:micronaut-inject-java:2.5.0"
+
+    testImplementation "com.google.truth:truth:$googleTruth"
+    testImplementation "io.mockk:mockk:$mockkVersion"
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    kaptTest "io.micronaut:micronaut-inject-java:2.5.0"
 }
 
 
@@ -60,8 +74,12 @@ tasks {
 }
 
 jacocoBadgeGenSetting {
-    jacocoReportPath  "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+    jacocoReportPath "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
     readmePath "$projectDir/README.md"
     // since v0.2.0, percentage limitation (0-100) for different type of coverage
     limit = ['instruction': 0, 'branch': 0, 'line': 0, 'method': 0, 'class': 0]
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1.2'
 }

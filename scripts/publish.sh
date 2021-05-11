@@ -1,1 +1,1 @@
-./gradle build test publishToSonatype
+./gradlew build test publishToSonatype

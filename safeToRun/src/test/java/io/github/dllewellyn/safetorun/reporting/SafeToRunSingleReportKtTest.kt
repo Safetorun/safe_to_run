@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.reporting
 import com.google.common.truth.Truth.assertThat
 import junit.framework.TestCase
 
-internal class SafeToRunReportKtTest : TestCase() {
+internal class SafeToRunSingleReportKtTest : TestCase() {
 
     private val failures = listOf(
         SafeToRunReport.SafeToRunReportFailure("A", "B"),
