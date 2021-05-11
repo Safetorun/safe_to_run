@@ -1,0 +1,20 @@
+{
+  "apiKey": "Apikey",
+  "deviceId": "deviceId",
+  "osCheck": {
+    "osVersion": "os version",
+    "manufacturer": "manufacturer"
+  },
+  "installOrigin": {
+    "installOriginPackageName": "instll origin"
+  },
+  "blacklistedApp": {
+    "installedPackages": [
+      "com.a.b",
+      "com.d.e"
+    ]
+  },
+  "signatureVerification": {
+    "signatureVerification": "signature "
+  }
+}

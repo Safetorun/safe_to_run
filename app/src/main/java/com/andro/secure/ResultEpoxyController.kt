@@ -10,27 +10,27 @@ class ResultEpoxyController : TypedEpoxyController<GroupedSafeToRunReports>() {
         var count = 1
 
         data.failedReports.forEach {
-            SafeToRunFailedReportBindingModel_()
-                .report(it)
-                .id(count)
-                .addTo(this)
+            safeToRunFailedReport {
+                report(it)
+                id(count)
+            }
             count++
         }
 
         data.successReports.forEach {
-            SafeToRunSuccessReportBindingModel_()
-                .report(it)
-                .id(count)
-                .addTo(this)
-            count++
+            safeToRunSuccessReport {
+                report(it)
+                id(count)
+                count++
+            }
         }
 
         data.warningReports.forEach {
-            SafeToRunWarnReportBindingModel_()
-                .report(it)
-                .id(count)
-                .addTo(this)
-            count++
+            safeToRunWarnReport {
+                report(it)
+                id(count)
+                count++
+            }
         }
     }
 }
