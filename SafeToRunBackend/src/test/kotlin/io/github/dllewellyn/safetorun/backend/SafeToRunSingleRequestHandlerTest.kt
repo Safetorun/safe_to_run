@@ -75,7 +75,7 @@ class SafeToRunSingleRequestHandlerTest {
         val deviceResponse = deviceRequestHandler.execute(easilyAcceptableModel)
 
         // Then
-        with(verifier.verifierForApiKey(easilyAcceptableModel.apiKey).verifyJwt(deviceResponse.data)) {
+        with(verifier.verifierForApiKey(easilyAcceptableModel.apiKey).verifyJwt(deviceResponse.signature)) {
             assertThat(anyFailures).isFalse()
             assertThat(correctIssuer).isTrue()
         }
