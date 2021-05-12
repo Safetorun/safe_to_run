@@ -63,7 +63,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       Runtime: java11
-      CodeUri: SafeToRunBackend/build/libs/SafeToRunBackend-0.1-all.jar
+      CodeUri: SafeToRunBackend-0.1-all.jar
       Description: A function used for verifying a device and returning a signed token
       MemorySize: 1024
       Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunRequestHandler
@@ -74,7 +74,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       Runtime: java11
-      CodeUri: SafeToRunBackend/build/libs/SafeToRunBackend-0.1-all.jar
+      CodeUri: SafeToRunBackend-0.1-all.jar
       Description: A function used for verifying a device and returning a signed token
       MemorySize: 1024
       Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunVerifyHandler
