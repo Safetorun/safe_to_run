@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.features.oscheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
 import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 
-class MinOSVersionRule(private val minOSVersion: Int, private val osInformationQuery: OSInformationQuery) :
+internal class MinOSVersionRule(private val minOSVersion: Int, private val osInformationQuery: OSInformationQuery) :
     Conditional {
 
     override fun invoke(): ConditionalResponse {

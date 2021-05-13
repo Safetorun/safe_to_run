@@ -3,8 +3,7 @@ package io.github.dllewellyn.safetorun.features.installorigin
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
-
-class InstallOriginCheck(
+internal class InstallOriginCheck(
     private val installOriginStrings: InstallOriginStrings,
     private val allowedPackages: List<InstallOrigin>,
     private val installOriginQuery: InstallOriginQuery

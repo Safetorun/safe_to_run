@@ -5,5 +5,5 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
 
 fun Context.osDetectionCheck(vararg conditional: Conditional): SafeToRunCheck {
-    return OSDetectionCheck(OSDetectionConfig(conditional.toList()), AndroidOSDetectionStrings(this))
+    return osDetectionCheckConfig(AndroidOSDetectionStrings(this), conditional.toList())
 }
