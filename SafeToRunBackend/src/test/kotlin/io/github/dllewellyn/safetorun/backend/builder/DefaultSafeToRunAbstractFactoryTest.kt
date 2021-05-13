@@ -1,13 +1,16 @@
 package io.github.dllewellyn.safetorun.backend.builder
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.SafeToRunSingle
 import io.github.dllewellyn.safetorun.backend.models.deviceInformation
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Test
+import javax.inject.Inject
 
+@MicronautTest
 internal class DefaultSafeToRunAbstractFactoryTest {
 
-    private val factory = DefaultSafeToRunAbstractFactory(SafeToRunSingle)
+    @Inject
+    private lateinit var factory : DefaultSafeToRunAbstractFactory
 
     private val deviceInformation = deviceInformation("") {
         installOrigin("install")

@@ -37,7 +37,6 @@ internal class BannedManufacturerNameTest : TestCase() {
 
         // Then
         assertThat(result.failed).isTrue()
-
     }
 
     fun `test that banned manufacturer passes if not equal`() {
@@ -51,7 +50,6 @@ internal class BannedManufacturerNameTest : TestCase() {
         // Then
         assertThat(result.failed).isFalse()
     }
-
 
     companion object {
         const val DODGY_MANUFACTURER = "dodgy"

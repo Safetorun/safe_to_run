@@ -20,7 +20,6 @@ internal class SafeToRunSingleConfigurationTest : TestCase() {
     @MockK
     lateinit var check3: SafeToRunCheck
 
-
     private val result1 = SafeToRunReport.SafeToRunReportSuccess("")
     private val result2 = SafeToRunReport.SafeToRunReportSuccess("")
 

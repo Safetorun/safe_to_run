@@ -13,5 +13,4 @@ internal class VerifySignatureConfigKtTest : TestCase() {
         assertThat(mockContext.verifySignatureConfig()).isNotNull()
         assertThat(mockContext.verifySignatureConfigOverrideSdkVersion(1)).isNotNull()
     }
-
 }

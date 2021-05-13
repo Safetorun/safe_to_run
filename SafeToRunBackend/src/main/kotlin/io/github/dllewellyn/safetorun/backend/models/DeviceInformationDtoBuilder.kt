@@ -2,7 +2,6 @@ package io.github.dllewellyn.safetorun.backend.models
 
 import java.util.UUID
 
-
 class DeviceInformationDtoBuilder(private val apiKey: String) {
 
     private var _deviceId = UUID.randomUUID().toString()
@@ -55,18 +54,15 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
             }
             blacklistedApp = BlacklistedAppsDto().apply { installedPackages = _installedApplications }
             signatureVerification = SignatureVerification().apply {
-                signatureVerification = signature
+                signatureVerificationString = signature
             }
         }
-
-
     }
 
     private fun unwrapOrThrow(field: String?, fieldName: String): String {
         return field ?: throw IllegalArgumentException("$fieldName cannot be null")
     }
 }
-
 
 fun deviceInformation(apiKey: String, block: DeviceInformationDtoBuilder.() -> Unit): DeviceInformationDto {
     return with(DeviceInformationDtoBuilder(apiKey)) {

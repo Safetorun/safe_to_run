@@ -4,5 +4,5 @@ import io.micronaut.core.annotation.Introspected
 
 @Introspected
 class SignatureVerification {
-    var signatureVerification: String = ""
+    var signatureVerificationString: String = ""
 }

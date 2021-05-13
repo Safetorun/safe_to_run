@@ -9,16 +9,21 @@ import io.github.dllewellyn.safetorun.backend.verifiers.DefaultJwtVerifier
 import io.github.dllewellyn.safetorun.backend.verifiers.JwtVerifier
 import io.mockk.every
 import io.mockk.mockk
+import org.joda.time.DateTime
+import org.joda.time.Duration
+import org.joda.time.ReadableDuration
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import java.util.Date
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class DefaultJwtGeneratorTest {
 
     private val expiryTime = mockk<ExpireTimeHandler>()
 
-    @BeforeAll
+    @BeforeEach
     fun before() {
         every { expiryTime.getExpiryTime() } returns DefaultExpireTimeHandler().getExpiryTime()
     }
@@ -78,6 +83,28 @@ internal class DefaultJwtGeneratorTest {
         assertThat(result.anyFailures).isFalse()
     }
 
+    @Test
+    fun `test that verifier fails if expired`() {
+        every { expiryTime.getExpiryTime() } returns DateTime()
+            .withDurationAdded(Duration.standardMinutes(10), -1)
+            .toDate()
+
+        val result = generateForSecret()
+            .generateSecretFor(SafeToRunResult.empty(ApiKeyOne, DeviceIdOne).copy(failures = 1))
+            .verify(verifierForSecret(SecretOne, ApiKeyOne))
+
+        assertThat(result.expired).isTrue()
+    }
+
+    @Test
+    fun `test that verifier passes if expired`() {
+        val result = generateForSecret()
+            .generateSecretFor(SafeToRunResult.empty(ApiKeyOne, DeviceIdOne).copy(failures = 0))
+            .verify(verifierForSecret(SecretOne, ApiKeyOne))
+
+        assertThat(result.expired).isFalse()
+    }
+
     private fun generateForSecret() =
         DefaultJwtGenerator(DefaultJwtFactory(SecretOne), expiryTime)
 
@@ -95,5 +122,4 @@ internal class DefaultJwtGeneratorTest {
     }
 
     private fun String.verify(jwtVerifier: JwtVerifier) = jwtVerifier.verifyJwt(this)
-
 }

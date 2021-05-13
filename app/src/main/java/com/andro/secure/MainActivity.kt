@@ -2,10 +2,10 @@ package com.andro.secure
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.andro.secure.databinding.ActivityMainBinding
 import io.github.dllewellyn.safetorun.SafeToRun
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.configure
@@ -16,11 +16,7 @@ import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.notManufa
 import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
-import com.andro.secure.databinding.ActivityMainBinding
-import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.github.dllewellyn.safetorun.reporting.toGrouped
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,20 +49,19 @@ class MainActivity : AppCompatActivity() {
                 // OS Blacklist version
                 osDetectionCheck(
                     conditionalBuilder {
-                        with(minOsVersion(41))
+                        with(minOsVersion(MIN_OS_VERSION))
                         and(notManufacturer("Abc"))
                     }
                 ).warn()
 
                 debugCheck().warn()
-
-
             }
         )
         binding.reportList.setController(reportsController)
         reportsController.setData(SafeToRun.isSafeToRun().toGrouped())
-
     }
 
+    companion object {
+        const val MIN_OS_VERSION = 41
+    }
 }
-

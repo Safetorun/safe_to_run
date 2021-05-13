@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.features.debug
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
-class DebuggableCheck(
+internal class DebuggableCheck(
     private val isDebuggable: IsDebuggable,
     private val debuggableStrings: DebuggableStrings
 ) : SafeToRunCheck {

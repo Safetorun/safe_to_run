@@ -6,4 +6,3 @@ import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
 interface SafeToRunAbstractFactory {
     fun generateSafeToRun(deviceInformation: DeviceInformationDto): SafeToRun
 }
-

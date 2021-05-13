@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.os.Build
 import android.util.Base64
+import java.lang.NullPointerException
 import java.security.MessageDigest
 
 class AndroidSignatureVerificationQuery(
@@ -19,7 +20,7 @@ class AndroidSignatureVerificationQuery(
     }
 
     @SuppressLint("NewApi", "PackageManagerGetSignatures")
-    private fun Context.getAppSignature(): Signature? = if (sdkVersion < 28) {
+    private fun Context.getAppSignature(): Signature? = if (sdkVersion < Build.VERSION_CODES.P) {
         packageManager.getPackageInfo(
             packageName,
             PackageManager.GET_SIGNATURES
@@ -31,12 +32,10 @@ class AndroidSignatureVerificationQuery(
         ).signingInfo.apkContentsSigners.firstOrNull()
     }
 
-    private fun Signature.string(): String? = try {
-        val signatureBytes = toByteArray()
+    private fun Signature.string(): String? {
+        val signatureBytes = toByteArray() ?: return null
         val digest = MessageDigest.getInstance("SHA")
         val hash = digest.digest(signatureBytes)
-        Base64.encodeToString(hash, Base64.NO_WRAP)
-    } catch (exception: Exception) {
-        null
+        return Base64.encodeToString(hash, Base64.NO_WRAP)
     }
 }

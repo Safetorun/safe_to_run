@@ -53,12 +53,9 @@ internal class OSDetectionCheckTest : TestCase() {
         assertThat(result.successMessage).isNotNull()
     }
 
-
     fun `test that we can create a rule that will fail if manufacturer is dodgy`() {
         // Given
         every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER
-
-
         // When
         val result = mockk<Context>().osDetectionCheck(
             BannedManufacturerName(
@@ -73,7 +70,6 @@ internal class OSDetectionCheckTest : TestCase() {
             assertThat(failureMessage).contains(DODGY_MANUFACTURER)
         }
     }
-
 
     fun `test that we can create a rule that will fail if manufacturer and os version`() {
         // Given

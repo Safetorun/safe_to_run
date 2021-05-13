@@ -1,5 +1,7 @@
 package io.github.dllewellyn.safetorun.features.blacklistedapps
 
+import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+
 @DslMarker
 annotation class BlacklistedScope
 
@@ -13,7 +15,6 @@ class BlacklistedAppConfiguration(
 
     operator fun String.unaryPlus() = blacklistedApplications.add(this)
 
-    fun build() = BlacklistedApplicationDetection(blacklistedApplications, blacklistedAppCheck, appStrings)
+    fun build(): SafeToRunCheck =
+        BlacklistedApplicationDetection(blacklistedApplications, blacklistedAppCheck, appStrings)
 }
-
-

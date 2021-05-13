@@ -20,7 +20,7 @@ internal class AndroidDebuggableStringsTest : TestCase() {
     }
 
     fun `test messages are as expected`() {
-        with (AndroidDebuggableStrings(context)) {
+        with(AndroidDebuggableStrings(context)) {
             assertThat(appIsDebuggableMessage()).isEqualTo(DEBUGGABLE)
             assertThat(appIsNotDebuggableMessage()).isEqualTo(NOT_DEBUGGABLE)
             assertThat(debuggerAttachedMessage()).isEqualTo(DEBUGGER_ATTACHED)

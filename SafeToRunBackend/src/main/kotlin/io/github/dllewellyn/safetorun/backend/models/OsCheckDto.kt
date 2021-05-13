@@ -6,4 +6,5 @@ import io.micronaut.core.annotation.Introspected
 class OsCheckDto {
     var osVersion: String = ""
     var manufacturer: String = ""
+    var model: String = ""
 }

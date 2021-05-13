@@ -14,7 +14,6 @@ data class GroupedSafeToRunReports(
     val successReports: List<SafeToRunReport.SafeToRunReportSuccess>
 )
 
-
 /**
  * Convert a safe to run report to a grouped safe to run reports
  */

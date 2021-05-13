@@ -5,7 +5,7 @@ import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.github.dllewellyn.safetorun.reporting.toMultipleReport
 
 
-class BlacklistedApplicationDetection(
+internal class BlacklistedApplicationDetection(
     private val blacklistedApplications: List<String>,
     private val blacklistedAppCheck: BlacklistedAppCheck,
     private val blacklistedAppStrings: BlacklistedAppStrings
@@ -35,9 +35,7 @@ class BlacklistedApplicationDetection(
         blacklistedAppStrings.foundBlacklistedAppMessage(foundResult)
     )
 
-
     companion object {
         const val BLACKLISTED_APP_ERROR_CODE = "bl-app"
     }
 }
-

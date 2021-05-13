@@ -7,9 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
 
-
 class BlacklistedAppConfigurationTest : TestCase() {
-
     private val blacklistedAppCheck = mockk<BlacklistedAppCheck>(relaxed = true)
     private val mockStringsConfiguration = mockk<BlacklistedAppStrings>()
 

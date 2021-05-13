@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.features.installorigin
 
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 
-class InstallOriginBuilder(
+class InstallOriginBuilder internal constructor(
     private val installOriginQuery: InstallOriginQuery,
     private val installOriginStrings: InstallOriginStrings
 ) {

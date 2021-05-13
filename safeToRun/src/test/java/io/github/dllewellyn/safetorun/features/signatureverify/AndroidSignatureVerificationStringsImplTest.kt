@@ -25,7 +25,7 @@ internal class AndroidSignatureVerificationStringsImplTest : TestCase() {
     }
 
     fun `test that strings return expected`() {
-        with (AndroidSignatureVerificationStringsImpl(mockContext)) {
+        with(AndroidSignatureVerificationStringsImpl(mockContext)) {
             assertThat(signatureMatchesMessage()).isEqualTo(SUCCESS_MESSAGE)
             assertThat(signatureNotFoundMessage()).isEqualTo(NOT_FOUND_MESSAGE)
             assertThat(signatureNotMatchedMessage("Abc")).isEqualTo(FAILURE_MESSAGE.format("Abc"))

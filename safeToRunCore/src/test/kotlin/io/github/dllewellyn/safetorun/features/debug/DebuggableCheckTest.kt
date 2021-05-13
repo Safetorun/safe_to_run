@@ -1,11 +1,11 @@
 package io.github.dllewellyn.safetorun.features.debug
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.DEBUGGABLE
-import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.DEBUGGER_ATTACHED
-import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.DEBUGGER_NOT_ATTACHED
-import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.NOT_DEBUGGABLE
-import io.github.dllewellyn.safetorun.features.debug.DebuggableStringsSample.mapReportsToMessages
+import io.github.dllewellyn.safetorun.features.debug.SharedFunctions.DEBUGGABLE
+import io.github.dllewellyn.safetorun.features.debug.SharedFunctions.DEBUGGER_ATTACHED
+import io.github.dllewellyn.safetorun.features.debug.SharedFunctions.DEBUGGER_NOT_ATTACHED
+import io.github.dllewellyn.safetorun.features.debug.SharedFunctions.NOT_DEBUGGABLE
+import io.github.dllewellyn.safetorun.features.debug.SharedFunctions.mapReportsToMessages
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
@@ -30,7 +30,6 @@ internal class DebuggableCheckTest : TestCase() {
         every { debuggable.isDebuggable() } returns false
         every { debuggable.isDebuggerAttached() } returns false
 
-
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
 
@@ -43,7 +42,6 @@ internal class DebuggableCheckTest : TestCase() {
         // Given
         every { debuggable.isDebuggable() } returns true
         every { debuggable.isDebuggerAttached() } returns false
-
 
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
@@ -58,7 +56,6 @@ internal class DebuggableCheckTest : TestCase() {
         every { debuggable.isDebuggable() } returns true
         every { debuggable.isDebuggerAttached() } returns true
 
-
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
 
@@ -72,7 +69,6 @@ internal class DebuggableCheckTest : TestCase() {
         every { debuggable.isDebuggable() } returns false
         every { debuggable.isDebuggerAttached() } returns true
 
-
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
 
@@ -80,5 +76,4 @@ internal class DebuggableCheckTest : TestCase() {
         assertThat(result.reports.map(::mapReportsToMessages).flatten())
             .isEqualTo(listOf(NOT_DEBUGGABLE, DEBUGGER_ATTACHED))
     }
-
 }

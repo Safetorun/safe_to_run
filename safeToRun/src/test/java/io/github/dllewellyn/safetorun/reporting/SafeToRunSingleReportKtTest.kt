@@ -27,7 +27,6 @@ internal class SafeToRunSingleReportKtTest : TestCase() {
         SafeToRunReport.MultipleReports(multiSuccess)
     )
 
-
     fun `test that a grouped report returns correct result`() {
         val reports = SafeToRunReport.MultipleReports(listOf(failures, warnings, success).flatten())
             .toGrouped()

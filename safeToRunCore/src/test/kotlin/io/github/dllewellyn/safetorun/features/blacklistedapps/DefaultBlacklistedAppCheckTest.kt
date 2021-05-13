@@ -10,7 +10,6 @@ import junit.framework.TestCase
 
 internal class DefaultBlacklistedAppCheckTest : TestCase() {
 
-
     private val blacklistedCheck = mockk<BlacklistedAppCheck>()
     private val mockStrings = mockk<BlacklistedAppStrings>()
 
@@ -18,7 +17,7 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
         every { blacklistedCheck.isAppPresent(NOT_PRESENT_PACKAGE) } returns false
         every { blacklistedCheck.isAppPresent(IS_PRESENT_PACKAGE) } returns true
         every { mockStrings.didNotFindBlacklistedAppMessage() } returns NOT_FOUND_BLACKLISTED
-        every { mockStrings.foundBlacklistedAppMessage(any()) } answers  {
+        every { mockStrings.foundBlacklistedAppMessage(any()) } answers {
             stringWithoutSuffixForArg(0)
         }
     }
@@ -33,7 +32,6 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
 
         // Then
         assertThat(result.successMessage).isEqualTo(NOT_FOUND_BLACKLISTED)
-
     }
 
     fun `test that calling blacklisted apps with a package not existing`() {
@@ -50,7 +48,6 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
         }
     }
 
-
     private fun blacklistedConf(block: BlacklistedAppConfiguration.() -> Unit): SafeToRunCheck =
         blacklistConfig(blacklistedCheck, mockStrings, block)
 
@@ -58,6 +55,5 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
         private const val IS_PRESENT_PACKAGE = "com.abc.com"
         private const val NOT_PRESENT_PACKAGE = "com.abc.def"
         private const val NOT_FOUND_BLACKLISTED = "Not found strings"
-
     }
 }

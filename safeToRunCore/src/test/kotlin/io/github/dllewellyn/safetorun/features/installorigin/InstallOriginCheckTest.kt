@@ -33,7 +33,6 @@ internal class InstallOriginCheckTest : TestCase() {
 
         // Then
         assertThat(result.failureMessage).isEqualTo(NOT_FOUND)
-
     }
 
     fun `test that if the package returns a different package to allowed it will return an error`() {
@@ -45,7 +44,6 @@ internal class InstallOriginCheckTest : TestCase() {
 
         // Then
         assertThat(result.failureMessage).isEqualTo(NOT_MATCHING.format(PACKAGE_NAME_RETURNS))
-
     }
 
     fun `test that if the package returns an allowed package we return success`() {
@@ -58,7 +56,6 @@ internal class InstallOriginCheckTest : TestCase() {
 
         // Then
         assertThat(result.successMessage).isEqualTo(MATCHED)
-
     }
 
     fun `test assert to string of origin install`() {

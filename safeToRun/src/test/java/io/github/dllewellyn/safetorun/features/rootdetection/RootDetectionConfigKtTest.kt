@@ -8,7 +8,6 @@ import junit.framework.TestCase
 
 internal class RootDetectionConfigKtTest : TestCase() {
 
-
     fun `test that root detection config does not return null`() {
         val context = mockk<Context>(relaxed = true)
 

@@ -18,4 +18,3 @@ class BannedManufacturerName(
 
 fun OSInformationQuery.notManufacturer(manufacturerName: String): Conditional =
     BannedManufacturerName(manufacturerName, this)
-

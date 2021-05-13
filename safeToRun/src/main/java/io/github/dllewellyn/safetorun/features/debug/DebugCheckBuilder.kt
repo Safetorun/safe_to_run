@@ -11,5 +11,5 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
  * ```
  */
 fun Context.debugCheck(): SafeToRunCheck {
-    return DebuggableCheck(AndroidIsDebuggable(this), AndroidDebuggableStrings(this))
+    return debugCheckConfiguration(AndroidIsDebuggable(this), AndroidDebuggableStrings(this))
 }

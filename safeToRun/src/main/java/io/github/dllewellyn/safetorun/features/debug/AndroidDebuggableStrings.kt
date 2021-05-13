@@ -13,12 +13,10 @@ internal class AndroidDebuggableStrings(context: Context) : BaseAndroidStrings(c
 
     override fun appIsNotDebuggableMessage(): String {
         return resources.getString(R.string.not_debuggable)
-
     }
 
     override fun debuggerAttachedMessage(): String {
         return resources.getString(R.string.debugger_attached)
-
     }
 
     override fun debuggerNotAttachedMessage(): String {

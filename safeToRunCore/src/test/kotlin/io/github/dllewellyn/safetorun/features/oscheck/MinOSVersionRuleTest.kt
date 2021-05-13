@@ -6,7 +6,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import junit.framework.TestCase
 
-
 internal class MinOSVersionRuleTest : TestCase() {
 
     @MockK
@@ -28,7 +27,6 @@ internal class MinOSVersionRuleTest : TestCase() {
         assertThat(result.failed).isTrue()
     }
 
-
     fun `test that min os version passes if equal`() {
         // Given
         every { osInformationQuery.osVersion() } returns 30
@@ -40,7 +38,6 @@ internal class MinOSVersionRuleTest : TestCase() {
         // Then
         assertThat(result.failed).isFalse()
     }
-
 
     fun `test that min os version passes if higher`() {
         // Given

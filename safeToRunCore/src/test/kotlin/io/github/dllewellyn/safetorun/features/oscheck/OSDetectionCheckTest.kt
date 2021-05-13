@@ -17,7 +17,6 @@ internal class OSDetectionCheckTest : TestCase() {
     override fun setUp() {
         every { osInformationStrings.genericFailureMessage() } returns "Failed"
         every { osInformationStrings.genericPassMessage() } returns "Passed"
-
     }
 
     fun `test that we can create a os version rule that fails if os is too low`() {
@@ -56,11 +55,9 @@ internal class OSDetectionCheckTest : TestCase() {
         Truth.assertThat(result.successMessage).isNotNull()
     }
 
-
     fun `test that we can create a rule that will fail if manufacturer is dodgy`() {
         // Given
         every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER
-
 
         // When
         val result = osDetectionCheck(
@@ -76,7 +73,6 @@ internal class OSDetectionCheckTest : TestCase() {
             Truth.assertThat(failureMessage).contains(DODGY_MANUFACTURER)
         }
     }
-
 
     fun `test that we can create a rule that will fail if manufacturer and os version`() {
         // Given
@@ -109,6 +105,4 @@ internal class OSDetectionCheckTest : TestCase() {
     companion object {
         const val DODGY_MANUFACTURER = "dodgy manufacturer"
     }
-
-
 }

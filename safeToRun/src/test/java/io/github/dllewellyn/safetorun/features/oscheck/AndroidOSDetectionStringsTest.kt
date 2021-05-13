@@ -26,10 +26,8 @@ internal class AndroidOSDetectionStringsTest : TestCase() {
         }
     }
 
-
     companion object {
         const val PASSED = "passed"
         const val FAILED = "failed"
     }
-
 }

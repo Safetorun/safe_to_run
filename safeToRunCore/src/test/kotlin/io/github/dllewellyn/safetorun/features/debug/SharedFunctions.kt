@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.features.debug
 
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
-object DebuggableStringsSample {
+object SharedFunctions {
     const val DEBUGGER_ATTACHED = "Debugger attached"
     const val DEBUGGER_NOT_ATTACHED = "Debugger not attached"
     const val DEBUGGABLE = "Debuggable"

@@ -3,7 +3,6 @@ package io.github.dllewellyn.safetorun.backend.services
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.backend.builder.JwtVerifierFactory
 import io.github.dllewellyn.safetorun.backend.models.ConfirmVerificationRequestDto
-import io.github.dllewellyn.safetorun.backend.models.SignatureVerification
 import io.github.dllewellyn.safetorun.backend.verifiers.JwtVerifier
 import io.github.dllewellyn.safetorun.backend.verifiers.VerifierResult
 import io.mockk.every

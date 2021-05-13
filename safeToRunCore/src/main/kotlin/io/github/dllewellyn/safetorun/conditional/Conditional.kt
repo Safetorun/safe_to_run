@@ -1,8 +1,5 @@
 package io.github.dllewellyn.safetorun.conditional
 
-
-data class ConditionalResponse(val failed: Boolean, val message: String? = null)
-
 fun interface Conditional {
     /**
      * Returns true if it's pass
@@ -16,4 +13,3 @@ fun conditionalBuilder(builder: ConditionalBuilder.() -> Unit): Conditional {
         build()
     }
 }
-

@@ -1,10 +1,7 @@
 package io.github.dllewellyn.safetorun.features.signatureverify
 
-import android.content.pm.Signature
-import android.util.Base64
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
-import java.security.MessageDigest
 
 internal class SignatureVerificationCheck(
     private val expectedSignature: List<String>,

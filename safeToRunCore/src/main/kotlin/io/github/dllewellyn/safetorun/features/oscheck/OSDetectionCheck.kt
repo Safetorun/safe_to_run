@@ -5,9 +5,9 @@ import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.github.dllewellyn.safetorun.reporting.toMultipleReport
 
- class OSDetectionCheck(
+class OSDetectionCheck(
     private val osDetectionConfig: OSDetectionConfig,
-    private val osDetectionStrings : OSDetectionStrings
+    private val osDetectionStrings: OSDetectionStrings
 ) : SafeToRunCheck {
 
     override fun canRun(): SafeToRunReport {

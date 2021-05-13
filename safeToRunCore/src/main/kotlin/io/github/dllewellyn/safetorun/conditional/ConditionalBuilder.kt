@@ -17,7 +17,6 @@ class ConditionalBuilder {
         ors.add(conditional)
     }
 
-
     internal fun build(): Conditional {
         return DefaultConditional(ands, ors)
     }
@@ -29,21 +28,17 @@ class ConditionalBuilder {
 
         override fun invoke(): ConditionalResponse {
 
-            with(hasASingleOrPassed()) {
-                if (this != null && !failed) {
-                    return ConditionalResponse(false)
-                }
-            }
-
-            with(areAllAndsTrue()) {
-                if (failed) {
-                    return this
+            val hasSingleOrPassed = hasASingleOrPassed()
+            if (hasSingleOrPassed == null || hasSingleOrPassed.failed) {
+                with(areAllAndsTrue()) {
+                    if (failed) {
+                        return this
+                    }
                 }
             }
 
             return ConditionalResponse(false)
         }
-
 
         private fun hasASingleOrPassed(): ConditionalResponse? {
             ors.forEach { or ->
@@ -68,6 +63,5 @@ class ConditionalBuilder {
 
             return ConditionalResponse(false)
         }
-
     }
 }

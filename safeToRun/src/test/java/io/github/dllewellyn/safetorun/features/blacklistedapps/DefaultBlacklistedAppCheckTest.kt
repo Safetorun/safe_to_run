@@ -16,7 +16,6 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
     private val mockPackage1 = mockk<PackageInfo>()
     private val packageInfos = listOf(mockPackage1)
 
-
     override fun setUp() {
         every { mockContext.packageManager } returns mockPackageManager
         every { mockPackageManager.getInstalledPackages(any()) } returns packageInfos
@@ -34,7 +33,6 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
 
         // Then
         assertThat(result.successMessage).isNotNull()
-
     }
 
     fun `test that calling blacklisted apps with a package not existing`() {

@@ -2,7 +2,6 @@ package io.github.dllewellyn.safetorun.features.blacklistedapps
 
 import android.content.Context
 
-
 /**
  * Configure application blacklisting by specifying an application which you want
  * to warn about

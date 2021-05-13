@@ -57,7 +57,6 @@ class ConditionalBuilderTest : TestCase() {
         val builtResult = conditionalBuilder {
             and { ConditionalResponse(true) }
             or { ConditionalResponse(false) }
-
         }
 
         // When
@@ -72,7 +71,6 @@ class ConditionalBuilderTest : TestCase() {
         val builtResult = conditionalBuilder {
             and { ConditionalResponse(false) }
             or { ConditionalResponse(false) }
-
         }
 
         // When
@@ -96,5 +94,4 @@ class ConditionalBuilderTest : TestCase() {
         // Then
         assertThat(result.failed).isFalse()
     }
-
 }

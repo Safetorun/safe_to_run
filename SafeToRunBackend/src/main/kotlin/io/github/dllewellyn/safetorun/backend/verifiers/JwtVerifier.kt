@@ -13,4 +13,3 @@ data class VerifierResult(
 interface JwtVerifier {
     fun verifyJwt(jwt: String): VerifierResult
 }
-

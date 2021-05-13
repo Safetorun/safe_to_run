@@ -2,7 +2,6 @@ package io.github.dllewellyn.safetorun.backend.services
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.SafeToRun
-import io.github.dllewellyn.safetorun.backend.SafeToRunSingleRequestHandlerTest
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.generators.JwtGenerator
 import io.github.dllewellyn.safetorun.backend.models.BlacklistedAppsDto
@@ -38,7 +37,7 @@ internal class SafeToRunServiceTest {
             manufacturer = "Google"
         }
         signatureVerification = SignatureVerification().apply {
-            signatureVerification = ""
+            signatureVerificationString = ""
         }
     }
 
