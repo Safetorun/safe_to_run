@@ -7,8 +7,9 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
  * Add a debug check to warn or error if there is a debugger attached or if the app is debuggable
  *
  * ```
- * this warnIf debugCheck()
+ * debugCheck().warn()
  * ```
+ * @receiver Android context - call this from app, fragment or activity
  */
 fun Context.debugCheck(): SafeToRunCheck {
     return debugCheckConfiguration(AndroidIsDebuggable(this), AndroidDebuggableStrings(this))

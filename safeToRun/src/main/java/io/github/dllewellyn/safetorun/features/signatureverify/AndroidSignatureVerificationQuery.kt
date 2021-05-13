@@ -6,10 +6,9 @@ import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.os.Build
 import android.util.Base64
-import java.lang.NullPointerException
 import java.security.MessageDigest
 
-class AndroidSignatureVerificationQuery(
+internal class AndroidSignatureVerificationQuery(
     private val context: Context,
     private val sdkVersion: Int = Build.VERSION_CODES.P,
 ) :

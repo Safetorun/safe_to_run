@@ -7,11 +7,13 @@ import android.content.Context
  * to warn about
  *
  * ```
- * this errorIf blacklistConfiguration {
+ * blacklistConfiguration {
  *  +"com.abc.def"
  *  +"com.google.earth"
- * }
+ * }.error()
  * ```
+ *
+ * @param block builder for configuration
  */
 fun Context.blacklistConfiguration(block: BlacklistedAppConfiguration.() -> Unit) =
     with(
