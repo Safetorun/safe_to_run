@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run build & test
-        run: ./gradlew build test shadowJar
+        run: ./gradlew detekt build test shadowJar
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
         with:
