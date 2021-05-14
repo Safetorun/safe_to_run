@@ -4,12 +4,12 @@ import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.SafeToRun
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.generators.JwtGenerator
-import io.github.dllewellyn.safetorun.backend.models.BlacklistedAppsDto
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.backend.models.InstallOriginDto
-import io.github.dllewellyn.safetorun.backend.models.OsCheckDto
-import io.github.dllewellyn.safetorun.backend.models.SafeToRunResult
-import io.github.dllewellyn.safetorun.backend.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
+import io.github.dllewellyn.safetorun.models.models.OsCheckDto
+import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
+import io.github.dllewellyn.safetorun.models.models.SignatureVerification
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
@@ -75,6 +75,5 @@ internal class SafeToRunServiceTest {
 
         // Then
         assertThat(result).isEqualTo(successfulString)
-
     }
 }

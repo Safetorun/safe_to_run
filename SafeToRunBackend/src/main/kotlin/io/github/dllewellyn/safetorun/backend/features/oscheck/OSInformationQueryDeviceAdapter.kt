@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.features.oscheck
 
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.backend.models.OsCheckDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.OsCheckDto
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQuery
 
 class OSInformationQueryDeviceAdapter(private val osCheck: OsCheckDto) : OSInformationQuery {

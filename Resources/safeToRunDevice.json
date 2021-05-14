@@ -2,7 +2,7 @@
   "apiKey": "Apikey",
   "deviceId": "deviceId",
   "osCheck": {
-    "osVersion": "os version",
+    "osVersion": "31",
     "manufacturer": "manufacturer"
   },
   "installOrigin": {

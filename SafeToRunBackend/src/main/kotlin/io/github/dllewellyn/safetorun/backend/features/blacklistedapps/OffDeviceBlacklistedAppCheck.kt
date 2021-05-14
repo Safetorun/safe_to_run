@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.features.blacklistedapps
 
-import io.github.dllewellyn.safetorun.backend.models.BlacklistedAppsDto
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.features.blacklistedapps.BlacklistedAppCheck
 import io.github.dllewellyn.safetorun.features.blacklistedapps.BlacklistedAppConfiguration
 import io.github.dllewellyn.safetorun.features.blacklistedapps.BlacklistedAppStrings

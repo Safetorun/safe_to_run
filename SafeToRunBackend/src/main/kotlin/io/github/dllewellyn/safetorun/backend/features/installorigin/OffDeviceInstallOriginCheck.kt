@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.features.installorigin
 
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.backend.models.InstallOriginDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.features.installorigin.AmazonStore
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore

@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.generators
 
 import com.auth0.jwt.JWT
-import io.github.dllewellyn.safetorun.backend.models.SafeToRunResult
+import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
 import io.github.dllewellyn.safetorun.backend.utils.ExpireTimeHandler
 import io.github.dllewellyn.safetorun.backend.utils.JwtFactory
 import javax.inject.Singleton

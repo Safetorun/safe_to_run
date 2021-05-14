@@ -2,8 +2,8 @@ package io.github.dllewellyn.safetorun.backend.services
 
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.generators.JwtGenerator
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.backend.models.SafeToRunResult
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
 import io.github.dllewellyn.safetorun.reporting.toGrouped
 import javax.inject.Singleton
 

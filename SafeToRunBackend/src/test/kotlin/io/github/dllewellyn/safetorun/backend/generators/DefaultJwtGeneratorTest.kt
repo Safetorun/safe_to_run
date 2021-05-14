@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.generators
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.backend.models.SafeToRunResult
+import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
 import io.github.dllewellyn.safetorun.backend.utils.DefaultExpireTimeHandler
 import io.github.dllewellyn.safetorun.backend.utils.DefaultJwtFactory
 import io.github.dllewellyn.safetorun.backend.utils.ExpireTimeHandler
@@ -11,12 +11,9 @@ import io.mockk.every
 import io.mockk.mockk
 import org.joda.time.DateTime
 import org.joda.time.Duration
-import org.joda.time.ReadableDuration
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import java.util.Date
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class DefaultJwtGeneratorTest {

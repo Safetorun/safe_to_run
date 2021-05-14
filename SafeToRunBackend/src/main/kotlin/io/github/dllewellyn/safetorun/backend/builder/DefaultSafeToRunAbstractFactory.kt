@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.backend.builder
 
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.backend.safeToRun
 import io.micronaut.context.BeanContext
 import javax.inject.Singleton

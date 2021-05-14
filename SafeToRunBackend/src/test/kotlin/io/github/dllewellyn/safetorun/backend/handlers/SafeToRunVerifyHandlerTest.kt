@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.handlers
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.backend.models.ConfirmVerificationRequestDto
+import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
 import io.github.dllewellyn.safetorun.backend.services.SafeToRunVerificationService
 import io.github.dllewellyn.safetorun.backend.verifiers.VerifierResult
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest

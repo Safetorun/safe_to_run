@@ -1,10 +1,10 @@
 package io.github.dllewellyn.safetorun.backend.util
 
-import io.github.dllewellyn.safetorun.backend.models.BlacklistedAppsDto
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.backend.models.InstallOriginDto
-import io.github.dllewellyn.safetorun.backend.models.OsCheckDto
-import io.github.dllewellyn.safetorun.backend.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
+import io.github.dllewellyn.safetorun.models.models.OsCheckDto
+import io.github.dllewellyn.safetorun.models.models.SignatureVerification
 import io.github.dllewellyn.safetorun.backend.util.Constants.ApiKey
 import io.github.dllewellyn.safetorun.backend.util.Constants.DeviceId
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore

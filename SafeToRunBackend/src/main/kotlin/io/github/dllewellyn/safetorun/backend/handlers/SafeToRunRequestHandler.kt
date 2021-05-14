@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.handlers
 
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.backend.models.DeviceSignatureDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
 import io.github.dllewellyn.safetorun.backend.services.SafeToRunService
 import io.micronaut.context.annotation.Prototype
 import io.micronaut.core.annotation.Introspected

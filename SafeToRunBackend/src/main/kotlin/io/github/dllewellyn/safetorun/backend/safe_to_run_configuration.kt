@@ -6,7 +6,7 @@ import io.github.dllewellyn.safetorun.backend.features.blacklistedapps.blacklist
 import io.github.dllewellyn.safetorun.backend.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.backend.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.backend.features.oscheck.osInformation
-import io.github.dllewellyn.safetorun.backend.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.configure
 import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion

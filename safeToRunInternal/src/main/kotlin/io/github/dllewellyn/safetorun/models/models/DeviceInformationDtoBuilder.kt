@@ -1,4 +1,4 @@
-package io.github.dllewellyn.safetorun.backend.models
+package io.github.dllewellyn.safetorun.models.models
 
 import java.util.UUID
 

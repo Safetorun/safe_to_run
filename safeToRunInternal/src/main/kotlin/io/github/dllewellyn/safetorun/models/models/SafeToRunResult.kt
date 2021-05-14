@@ -1,8 +1,5 @@
-package io.github.dllewellyn.safetorun.backend.models
+package io.github.dllewellyn.safetorun.models.models
 
-import io.micronaut.core.annotation.Introspected
-
-@Introspected
 data class SafeToRunResult(
     val failures: Int,
     val successes: Int,

@@ -1,8 +1,8 @@
-package io.github.dllewellyn.safetorun.backend.models
+package io.github.dllewellyn.safetorun.models.models
 
-import io.micronaut.core.annotation.Introspected
+import kotlinx.serialization.Serializable
 
-@Introspected
+@Serializable
 class DeviceInformationDto {
     var apiKey: String = ""
     var deviceId: String = ""

@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.features.installorigin
 
 import com.google.common.truth.Truth
-import io.github.dllewellyn.safetorun.backend.models.InstallOriginDto
+import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
 import io.github.dllewellyn.safetorun.backend.util.easilyAcceptableModel
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.micronaut.context.BeanContext

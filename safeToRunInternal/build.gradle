@@ -4,6 +4,7 @@ plugins {
     id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.0'
 }
 
 apply plugin: "com.vanniktech.android.junit.jacoco"
@@ -17,7 +18,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation 'junit:junit:4.13.2'
     testImplementation "com.google.truth:truth:$googleTruth"
