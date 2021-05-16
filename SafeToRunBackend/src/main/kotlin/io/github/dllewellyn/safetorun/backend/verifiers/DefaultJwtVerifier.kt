@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException
 import com.auth0.jwt.interfaces.DecodedJWT
 import io.github.dllewellyn.safetorun.backend.generators.DefaultJwtGenerator
 import io.github.dllewellyn.safetorun.backend.utils.JwtFactory
+import io.github.dllewellyn.safetorun.models.models.VerifierResult
 
 class DefaultJwtVerifier(
     private val apiKey: String,

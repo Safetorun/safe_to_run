@@ -1,5 +1,7 @@
 package io.github.dllewellyn.safetorun.models.models
 
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.UUID
 
 class DeviceInformationDtoBuilder(private val apiKey: String) {
@@ -43,7 +45,7 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
         val signature = unwrapOrThrow(_signature, "Signature")
 
         return DeviceInformationDto().apply {
-            this.apiKey = apiKey
+            this.apiKey = this@DeviceInformationDtoBuilder.apiKey
             deviceId = _deviceId
             osCheck = OsCheckDto().apply {
                 this.osVersion = osVersion
@@ -70,3 +72,5 @@ fun deviceInformation(apiKey: String, block: DeviceInformationDtoBuilder.() -> U
         build()
     }
 }
+
+fun DeviceInformationDto.serialize() = Json.encodeToString(this)

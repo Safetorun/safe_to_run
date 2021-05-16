@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.backend.handlers
 
 import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
 import io.github.dllewellyn.safetorun.backend.services.SafeToRunVerificationService
-import io.github.dllewellyn.safetorun.backend.verifiers.VerifierResult
+import io.github.dllewellyn.safetorun.models.models.VerifierResult
 import io.micronaut.context.annotation.Prototype
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.function.aws.MicronautRequestHandler

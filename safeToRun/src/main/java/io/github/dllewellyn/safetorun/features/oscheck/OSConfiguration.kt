@@ -5,7 +5,7 @@ import io.github.dllewellyn.safetorun.conditional.Conditional
 
 object OSConfiguration {
 
-    private val osInformationQuery = object : OSInformationQuery {
+    internal var osInformationQuery = object : OSInformationQuery {
         override fun osVersion(): Int = Build.VERSION.SDK_INT
         override fun manufacturer(): String = Build.MANUFACTURER
         override fun model(): String = Build.MODEL
