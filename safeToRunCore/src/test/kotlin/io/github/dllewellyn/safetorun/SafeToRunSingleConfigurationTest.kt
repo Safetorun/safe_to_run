@@ -38,7 +38,7 @@ internal class SafeToRunSingleConfigurationTest : TestCase() {
 
         val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
 
-        SafeToRunSingle.init {
+        SafeToRun.init {
             configure {
                 this errorIf check1
                 this errorIf check2
@@ -49,7 +49,7 @@ internal class SafeToRunSingleConfigurationTest : TestCase() {
         every { check3.canRun() } returns result3
 
         // When
-        val result = SafeToRunSingle.isSafeToRun() as SafeToRunReport.MultipleReports
+        val result = SafeToRun.isSafeToRun() as SafeToRunReport.MultipleReports
 
         // Then
         Truth.assertThat(result.reports).containsExactly(
@@ -72,7 +72,7 @@ internal class SafeToRunSingleConfigurationTest : TestCase() {
         val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
         val result4 = SafeToRunReport.SafeToRunReportFailure(failureReason2, failureMessage2)
 
-        SafeToRunSingle.init(
+        SafeToRun.init(
             configure {
                 check1.error()
                 check2.error()
@@ -83,7 +83,7 @@ internal class SafeToRunSingleConfigurationTest : TestCase() {
         every { check3.canRun() } returns SafeToRunReport.MultipleReports(listOf(result3, result4))
 
         // When
-        val result = SafeToRunSingle.isSafeToRun() as SafeToRunReport.MultipleReports
+        val result = SafeToRun.isSafeToRun() as SafeToRunReport.MultipleReports
 
         // Then
         Truth.assertThat(result.reports).containsExactly(

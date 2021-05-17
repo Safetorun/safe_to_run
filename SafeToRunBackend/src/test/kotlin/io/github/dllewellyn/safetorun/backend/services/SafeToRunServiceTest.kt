@@ -1,16 +1,16 @@
 package io.github.dllewellyn.safetorun.backend.services
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.SafeToRun
+import io.github.dllewellyn.safetorun.SafeToRunLogic
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.generators.JwtGenerator
+import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
 import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
 import io.github.dllewellyn.safetorun.models.models.OsCheckDto
 import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
 import io.github.dllewellyn.safetorun.models.models.SignatureVerification
-import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +20,7 @@ internal class SafeToRunServiceTest {
 
     private val safeToRunTokenGenerator = mockk<JwtGenerator>()
     private val safeToRunAbstractFactory = mockk<SafeToRunAbstractFactory>()
-    private val safeToRunMock = mockk<SafeToRun>()
+    private val safeToRunMock = mockk<SafeToRunLogic>()
     private val safeToRunService = SafeToRunService(safeToRunTokenGenerator, safeToRunAbstractFactory)
 
     private val easilyAcceptableModel = DeviceInformationDto().apply {

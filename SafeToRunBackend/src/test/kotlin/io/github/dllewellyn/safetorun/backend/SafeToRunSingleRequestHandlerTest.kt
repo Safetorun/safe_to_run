@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.backend
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.SafeToRun
+import io.github.dllewellyn.safetorun.SafeToRunLogic
 import io.github.dllewellyn.safetorun.backend.builder.DefaultSafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.builder.JwtVerifierFactory
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
@@ -29,7 +29,7 @@ class SafeToRunSingleRequestHandlerTest {
 
     private val model = easilyAcceptableModel
     private val safeToRunAbstractFactory = mockk<SafeToRunAbstractFactory>()
-    private val safeToRun = mockk<SafeToRun>()
+    private val safeToRun = mockk<SafeToRunLogic>()
 
     @BeforeAll
     fun setup() {

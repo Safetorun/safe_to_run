@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.backend
 
-import io.github.dllewellyn.safetorun.SafeToRun
+import io.github.dllewellyn.safetorun.SafeToRunLogic
 import io.github.dllewellyn.safetorun.SafeToRunConfiguration
 import io.github.dllewellyn.safetorun.backend.features.blacklistedapps.blacklistedAppCheck
 import io.github.dllewellyn.safetorun.backend.features.installorigin.installOriginCheckWithDefaults
@@ -35,5 +35,5 @@ internal fun DeviceInformationDto.safeToRunConfiguration(context: BeanContext): 
         installOriginCheckWithDefaults(context).error()
     }
 
-internal fun DeviceInformationDto.safeToRun(context: BeanContext): SafeToRun =
+internal fun DeviceInformationDto.safeToRun(context: BeanContext): SafeToRunLogic =
     SafeToRunOffDevice(safeToRunConfiguration(context))

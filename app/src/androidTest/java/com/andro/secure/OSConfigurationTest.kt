@@ -7,7 +7,6 @@ import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfigur
 import org.junit.Rule
 import org.junit.Test
 
-
 class OSConfigurationTest {
 
     @get:Rule
@@ -16,31 +15,26 @@ class OSConfigurationTest {
     @Test
     fun testThatWeCanDoASimpleOsConfigurationTest() {
         activityRule.scenario.onActivity { activity ->
-            SafeToRun.init(
+            SafeToRun.init {
                 configure {
-                    errorIf {
-                        activity.blacklistConfiguration {
-                            +"com.abc.def"
-                        }
-                    }
+                    activity.blacklistConfiguration {
+                        +"com.abc.def"
+                    }.error()
                 }
-            )
+            }
         }
     }
 
     @Test
     fun testThatWeCanDoASimpleOsConfigurationTestThatFails() {
         activityRule.scenario.onActivity { activity ->
-            SafeToRun.init(
+            SafeToRun.init {
                 configure {
-                    errorIf {
-                        activity.blacklistConfiguration {
-                            +activity.packageName
-                        }
-                    }
+                    activity.blacklistConfiguration {
+                        +activity.packageName
+                    }.warn()
                 }
-            )
+            }
         }
-
     }
 }

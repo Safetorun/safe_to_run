@@ -13,7 +13,7 @@ import org.mockserver.model.HttpRequest.request
 import org.mockserver.model.HttpResponse.response
 import kotlin.random.Random
 
-internal class DefaultSafeToRunApiIntegrationTest : TestCase() {
+internal class DefaultISafeToRunApiIntegrationTest : TestCase() {
 
     private var port: Int = 0
     private var mockServer: ClientAndServer = ClientAndServer.startClientAndServer(port)
