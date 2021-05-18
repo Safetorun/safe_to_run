@@ -4,29 +4,30 @@ import io.github.dllewellyn.safetorun.models.models.DataWrappedSignatureResult
 import io.github.dllewellyn.safetorun.models.models.DataWrappedVerifyResult
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
+import io.github.dllewellyn.safetorun.models.models.VerifierResult
 
-class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, apiKey: String) : SafeToRunApi {
+internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, apiKey: String) : SafeToRunApi {
 
     private val headers by lazy { mapOf(API_KEY_HEADER_NAME to apiKey) }
 
-    override fun postNewDevice(deviceInformation: DeviceInformationDto): DataWrappedSignatureResult {
+    override fun postNewDevice(deviceInformation: DeviceInformationDto): DeviceSignatureDto {
         return httpClient.post(
             DEVICE_CHECK_ENDPOINT,
             headers,
             deviceInformation,
             DeviceInformationDto.serializer(),
             DataWrappedSignatureResult.serializer()
-        )
+        ).data
     }
 
-    override fun verifyDataResult(deviceSignature: DeviceSignatureDto): DataWrappedVerifyResult {
+    override fun verifyDataResult(deviceSignature: DeviceSignatureDto): VerifierResult {
         return httpClient.post(
             VERIFY_CHECK_ENDPOINT,
             headers,
             deviceSignature,
             DeviceSignatureDto.serializer(),
             DataWrappedVerifyResult.serializer()
-        )
+        ).data
     }
 
     companion object {

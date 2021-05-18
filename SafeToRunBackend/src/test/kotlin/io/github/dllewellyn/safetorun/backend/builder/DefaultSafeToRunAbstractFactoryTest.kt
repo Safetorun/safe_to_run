@@ -18,6 +18,7 @@ internal class DefaultSafeToRunAbstractFactoryTest {
         osVersion("osversion")
         manufacturer("manufacturer")
         signature("signature")
+        model("model")
     }
 
     @Test

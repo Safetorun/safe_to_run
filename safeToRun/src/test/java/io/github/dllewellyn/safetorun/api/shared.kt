@@ -9,5 +9,6 @@ val deviceInformation by lazy {
         installOrigin("Install origin")
         installedApplication("com.example")
         signature("Abcdef")
+        model("model")
     }
 }

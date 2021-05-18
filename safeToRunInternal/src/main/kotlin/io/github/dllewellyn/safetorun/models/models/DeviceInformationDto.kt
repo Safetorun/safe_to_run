@@ -10,4 +10,47 @@ class DeviceInformationDto {
     var installOrigin: InstallOriginDto = InstallOriginDto()
     var blacklistedApp: BlacklistedAppsDto = BlacklistedAppsDto()
     var signatureVerification: SignatureVerification = SignatureVerification()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as DeviceInformationDto
+
+        println("*&********** EQUALS *********")
+        println(
+            "API key ${apiKey == other.apiKey} DevId: ${other.deviceId == deviceId}" +
+                    "osCheck ${osCheck == other.osCheck} installOrig ${other.installOrigin == installOrigin}" +
+                    "blacklisted ${blacklistedApp == other.blacklistedApp} " +
+                    "Signature ${signatureVerification == other.signatureVerification}"
+        )
+        if (apiKey != other.apiKey) return false
+        if (deviceId != other.deviceId) return false
+        if (osCheck != other.osCheck) return false
+        if (installOrigin != other.installOrigin) return false
+        if (blacklistedApp != other.blacklistedApp) return false
+        if (signatureVerification != other.signatureVerification) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = apiKey.hashCode()
+        result = 31 * result + deviceId.hashCode()
+        result = 31 * result + osCheck.hashCode()
+        result = 31 * result + installOrigin.hashCode()
+        result = 31 * result + blacklistedApp.hashCode()
+        result = 31 * result + signatureVerification.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return "DeviceInformationDto(" +
+                "apiKey='$apiKey', " +
+                "deviceId='$deviceId', " +
+                "osCheck=$osCheck, " +
+                "installOrigin=$installOrigin, " +
+                "blacklistedApp=$blacklistedApp, " +
+                "signatureVerification=$signatureVerification)"
+    }
 }

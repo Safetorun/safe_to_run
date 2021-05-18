@@ -6,7 +6,6 @@ import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.notManufacturer
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
-import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -16,7 +15,6 @@ internal class OSDetectionCheckTestAndroid : TestCase() {
     private val osInformationQuery = mockk<OSInformationQuery>()
 
     override fun setUp() {
-        MockKAnnotations.init(this)
         OSConfiguration.osInformationQuery = osInformationQuery
     }
 

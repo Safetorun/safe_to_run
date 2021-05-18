@@ -12,8 +12,9 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
     private var _manufacturer: String? = null
     private val _installedApplications: MutableList<String> = mutableListOf()
     private var _signature: String? = null
+    private var _model: String? = null
 
-    fun installOrigin(installOrigin: String) {
+    fun installOrigin(installOrigin: String?) {
         _installOrigin = installOrigin
     }
 
@@ -37,19 +38,49 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
         _signature = signature
     }
 
+    fun model(model: String) {
+        _model = model
+    }
+
+    fun buildPartial(): DeviceInformationDto {
+        val osVersion = _osVersion ?: ""
+        val manufacturer = _manufacturer ?: ""
+        val signature = _signature ?: ""
+        val model = _model ?: ""
+
+        return buildDtoForUnwrappedValues(osVersion, manufacturer, model, _installOrigin, signature)
+    }
+
     fun build(): DeviceInformationDto {
 
         val osVersion = unwrapOrThrow(_osVersion, "Os version")
         val manufacturer = unwrapOrThrow(_manufacturer, "Manufacturer")
-        val installOrigin = unwrapOrThrow(_installOrigin, "Install origin")
         val signature = unwrapOrThrow(_signature, "Signature")
+        val model = unwrapOrThrow(_model, "Model")
 
-        return DeviceInformationDto().apply {
+        return buildDtoForUnwrappedValues(
+            osVersion,
+            manufacturer,
+            model,
+            _installOrigin,
+            signature
+        )
+    }
+
+    private fun buildDtoForUnwrappedValues(
+        osVersion: String,
+        manufacturer: String,
+        model: String,
+        installOrigin: String?,
+        signature: String
+    ) =
+        DeviceInformationDto().apply {
             this.apiKey = this@DeviceInformationDtoBuilder.apiKey
             deviceId = _deviceId
             osCheck = OsCheckDto().apply {
                 this.osVersion = osVersion
                 this.manufacturer = manufacturer
+                this.model = model
             }
             this.installOrigin = InstallOriginDto().apply {
                 this.installOriginPackageName = installOrigin
@@ -59,11 +90,10 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
                 signatureVerificationString = signature
             }
         }
-    }
+}
 
-    private fun unwrapOrThrow(field: String?, fieldName: String): String {
-        return field ?: throw IllegalArgumentException("$fieldName cannot be null")
-    }
+internal fun unwrapOrThrow(field: String?, fieldName: String): String {
+    return field ?: throw IllegalArgumentException("$fieldName cannot be null")
 }
 
 fun deviceInformation(apiKey: String, block: DeviceInformationDtoBuilder.() -> Unit): DeviceInformationDto {

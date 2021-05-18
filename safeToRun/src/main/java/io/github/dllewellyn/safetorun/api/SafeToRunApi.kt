@@ -1,11 +1,10 @@
 package io.github.dllewellyn.safetorun.api
 
-import io.github.dllewellyn.safetorun.models.models.DataWrappedSignatureResult
-import io.github.dllewellyn.safetorun.models.models.DataWrappedVerifyResult
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
+import io.github.dllewellyn.safetorun.models.models.VerifierResult
 
-interface SafeToRunApi {
-    fun postNewDevice(deviceInformation: DeviceInformationDto): DataWrappedSignatureResult
-    fun verifyDataResult(deviceSignature: DeviceSignatureDto): DataWrappedVerifyResult
+internal interface SafeToRunApi {
+    fun postNewDevice(deviceInformation: DeviceInformationDto): DeviceSignatureDto
+    fun verifyDataResult(deviceSignature: DeviceSignatureDto): VerifierResult
 }

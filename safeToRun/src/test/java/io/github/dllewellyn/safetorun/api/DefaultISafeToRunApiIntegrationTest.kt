@@ -44,7 +44,7 @@ internal class DefaultISafeToRunApiIntegrationTest : TestCase() {
 
         val httpClient = DefaultSafeToRunApi(DefaultHttpClient(url), API_KEY)
 
-        assertThat(httpClient.postNewDevice(deviceInformation)).isEqualTo(response)
+        assertThat(httpClient.postNewDevice(deviceInformation)).isEqualTo(response.data)
     }
 
     @Test

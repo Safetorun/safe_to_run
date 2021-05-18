@@ -39,7 +39,7 @@ internal class DefaultSafeToRunApiTest : TestCase() {
         val result = defaultSafeToRunApi.postNewDevice(deviceInformation)
 
         // Then
-        assertThat(result).isEqualTo(dataWrapperSignatureResult)
+        assertThat(result).isEqualTo(dataWrapperSignatureResult.data)
     }
 
     fun `test that when we call verify endpoint it returns expected result`() {
@@ -58,7 +58,7 @@ internal class DefaultSafeToRunApiTest : TestCase() {
         val result = defaultSafeToRunApi.verifyDataResult(deviceSignatureDto)
 
         // Then
-        assertThat(result).isEqualTo(deviceSignatureVerification)
+        assertThat(result).isEqualTo(deviceSignatureVerification.data)
     }
 
     companion object {

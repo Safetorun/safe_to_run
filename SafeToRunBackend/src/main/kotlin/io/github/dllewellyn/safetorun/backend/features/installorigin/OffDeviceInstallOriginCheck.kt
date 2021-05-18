@@ -11,7 +11,7 @@ import io.github.dllewellyn.safetorun.features.installorigin.installOrigin
 import io.micronaut.context.BeanContext
 
 internal class OffDeviceInstallOriginCheck(private val installOriginDto: InstallOriginDto) : InstallOriginQuery {
-    override fun getInstallPackageName(): String {
+    override fun getInstallPackageName(): String? {
         return installOriginDto.installOriginPackageName
     }
 }
