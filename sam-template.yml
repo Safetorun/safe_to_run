@@ -122,7 +122,6 @@ Resources:
        Description: Usage plan for the deployment
        UsagePlanName: UsagePlan
 
-
   UsagePlanKeyProd:
      Type: AWS::ApiGateway::UsagePlanKey
      Properties:
