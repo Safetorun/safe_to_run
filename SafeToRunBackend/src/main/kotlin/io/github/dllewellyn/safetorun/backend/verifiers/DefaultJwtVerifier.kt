@@ -6,11 +6,13 @@ import com.auth0.jwt.interfaces.DecodedJWT
 import io.github.dllewellyn.safetorun.backend.generators.DefaultJwtGenerator
 import io.github.dllewellyn.safetorun.backend.utils.JwtFactory
 import io.github.dllewellyn.safetorun.models.models.VerifierResult
+import org.slf4j.LoggerFactory
 
 class DefaultJwtVerifier(
     private val apiKey: String,
     private val jwtFactory: JwtFactory
 ) : JwtVerifier {
+
     override fun verifyJwt(jwt: String): VerifierResult {
 
         return try {
@@ -18,12 +20,12 @@ class DefaultJwtVerifier(
                 verifierResult(correctSignature = true)
             }
         } catch (e: SignatureVerificationException) {
-            println(e)
+            Logger.error(e.message)
             with(jwtFactory.decode(jwt)) {
                 verifierResult(correctSignature = false)
             }
         } catch (e: TokenExpiredException) {
-            println(e)
+            Logger.error(e.message)
             with(jwtFactory.decode(jwt)) {
                 verifierResult(correctSignature = false, expired = true)
             }
@@ -35,5 +37,14 @@ class DefaultJwtVerifier(
         anyFailures = (claims[DefaultJwtGenerator.Errors]?.asInt() ?: 1) > 0,
         correctSignature = correctSignature,
         expired = expired
-    )
+    ).also {
+        // This is unexpected - so let's log it
+        if (!it.correctIssuer) {
+            Logger.error("Expected $apiKey but was $issuer")
+        }
+    }
+
+    companion object {
+        private val Logger = LoggerFactory.getLogger(DefaultJwtVerifier::class.java)
+    }
 }
