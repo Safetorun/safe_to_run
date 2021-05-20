@@ -34,7 +34,7 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
         _installedApplications.add(packageName)
     }
 
-    fun signature(signature: String) {
+    fun signature(signature: String?) {
         _signature = signature
     }
 
@@ -45,16 +45,14 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
     fun buildPartial(): DeviceInformationDto {
         val osVersion = _osVersion ?: ""
         val manufacturer = _manufacturer ?: ""
-        val signature = _signature ?: ""
         val model = _model ?: ""
 
-        return buildDtoForUnwrappedValues(osVersion, manufacturer, model, _installOrigin, signature)
+        return buildDtoForUnwrappedValues(osVersion, manufacturer, model, _installOrigin, _signature)
     }
 
     fun build(): DeviceInformationDto {
         val osVersion = unwrapOrThrow(_osVersion, "Os version")
         val manufacturer = unwrapOrThrow(_manufacturer, "Manufacturer")
-        val signature = unwrapOrThrow(_signature, "Signature")
         val model = unwrapOrThrow(_model, "Model")
 
         return buildDtoForUnwrappedValues(
@@ -62,7 +60,7 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
             manufacturer,
             model,
             _installOrigin,
-            signature
+            _signature
         )
     }
 
@@ -71,7 +69,7 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
         manufacturer: String,
         model: String,
         installOrigin: String?,
-        signature: String
+        signature: String?
     ) =
         DeviceInformationDto().apply {
             this.apiKey = this@DeviceInformationDtoBuilder.apiKey

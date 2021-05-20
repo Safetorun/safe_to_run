@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class SignatureVerification {
-    var signatureVerificationString: String = ""
+    var signatureVerificationString: String? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
