@@ -17,13 +17,6 @@ class DeviceInformationDto {
 
         other as DeviceInformationDto
 
-        println("*&********** EQUALS *********")
-        println(
-            "API key ${apiKey == other.apiKey} DevId: ${other.deviceId == deviceId}" +
-                    "osCheck ${osCheck == other.osCheck} installOrig ${other.installOrigin == installOrigin}" +
-                    "blacklisted ${blacklistedApp == other.blacklistedApp} " +
-                    "Signature ${signatureVerification == other.signatureVerification}"
-        )
         if (apiKey != other.apiKey) return false
         if (deviceId != other.deviceId) return false
         if (osCheck != other.osCheck) return false

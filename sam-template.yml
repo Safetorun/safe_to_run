@@ -8,6 +8,7 @@ Resources:
   SafeToRunGateway:
     Type: AWS::Serverless::Api
     Properties:
+      TracingEnabled: true
       StageName: Prod
       Auth:
         ApiKeyRequired: true
@@ -69,6 +70,7 @@ Resources:
       Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunRequestHandler
       Timeout: 120
       FunctionName: SafeToRun
+      Tracing: Active
 
   SafeToRunBackendVerify:
     Type: 'AWS::Serverless::Function'
@@ -80,6 +82,7 @@ Resources:
       Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunVerifyHandler
       Timeout: 120
       FunctionName: SafeToRunVerify
+      Tracing: Active
 
   LambdaInvokePermission:
     Type: 'AWS::Lambda::Permission'

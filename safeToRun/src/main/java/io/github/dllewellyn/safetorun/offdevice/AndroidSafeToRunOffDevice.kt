@@ -7,6 +7,8 @@ import io.github.dllewellyn.safetorun.api.SafeToRunApi
 import io.github.dllewellyn.safetorun.features.installorigin.AndroidInstallOriginQuery
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQueryAndroid
 import io.github.dllewellyn.safetorun.models.models.deviceInformation
+import io.github.dllewellyn.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
+import io.github.dllewellyn.safetorun.offdevice.builders.BlacklistedAppsOffDeviceBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.CompositeBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.InstallOriginOffDeviceBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.OSCheckOffDeviceBuilder
@@ -43,7 +45,8 @@ fun Context.safeToRunOffDevice(
     url, apiKey, CompositeBuilder(
         listOf(
             OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
-            InstallOriginOffDeviceBuilder(AndroidInstallOriginQuery(this))
+            InstallOriginOffDeviceBuilder(AndroidInstallOriginQuery(this)),
+            BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this))
         )
     )
 )

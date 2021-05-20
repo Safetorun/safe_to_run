@@ -52,7 +52,6 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
     }
 
     fun build(): DeviceInformationDto {
-
         val osVersion = unwrapOrThrow(_osVersion, "Os version")
         val manufacturer = unwrapOrThrow(_manufacturer, "Manufacturer")
         val signature = unwrapOrThrow(_signature, "Signature")
