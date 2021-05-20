@@ -13,14 +13,14 @@ import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
 import io.micronaut.context.BeanContext
 
-const val MIN_OS_VERSION = 41
+const val MIN_OS_VERSION = 29
 
 internal fun DeviceInformationDto.safeToRunConfiguration(context: BeanContext): SafeToRunConfiguration =
     configure {
 
         blacklistedAppCheck(context) {
             +"com.example.abc"
-        }.error()
+        }.warn()
 
         osDetectionCheck(
             context,
