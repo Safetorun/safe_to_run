@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi.Companion.API_KEY_HEADER_NAME
 import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi.Companion.DEVICE_CHECK_ENDPOINT
 import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi.Companion.VERIFY_CHECK_ENDPOINT
+import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
 import io.github.dllewellyn.safetorun.models.models.DataWrappedSignatureResult
 import io.github.dllewellyn.safetorun.models.models.DataWrappedVerifyResult
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
@@ -48,8 +49,8 @@ internal class DefaultSafeToRunApiTest : TestCase() {
             mockHttpClient.post(
                 VERIFY_CHECK_ENDPOINT,
                 mapOf(API_KEY_HEADER_NAME to API_KEY),
-                deviceSignatureDto,
-                DeviceSignatureDto.serializer(),
+                any(),
+                ConfirmVerificationRequestDto.serializer(),
                 DataWrappedVerifyResult.serializer()
             )
         } returns deviceSignatureVerification

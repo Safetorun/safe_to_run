@@ -1,12 +1,14 @@
 package io.github.dllewellyn.safetorun.api
 
+import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
 import io.github.dllewellyn.safetorun.models.models.DataWrappedSignatureResult
 import io.github.dllewellyn.safetorun.models.models.DataWrappedVerifyResult
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
 import io.github.dllewellyn.safetorun.models.models.VerifierResult
 
-internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, apiKey: String) : SafeToRunApi {
+internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, private val apiKey: String) :
+    SafeToRunApi {
 
     private val headers by lazy { mapOf(API_KEY_HEADER_NAME to apiKey) }
 
@@ -24,8 +26,11 @@ internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, 
         return httpClient.post(
             VERIFY_CHECK_ENDPOINT,
             headers,
-            deviceSignature,
-            DeviceSignatureDto.serializer(),
+            ConfirmVerificationRequestDto().apply {
+                signature = deviceSignature.signature
+                apiKey = this@DefaultSafeToRunApi.apiKey
+            },
+            ConfirmVerificationRequestDto.serializer(),
             DataWrappedVerifyResult.serializer()
         ).data
     }

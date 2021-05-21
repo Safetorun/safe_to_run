@@ -29,7 +29,7 @@ internal class BannedManufacturerNameTest : TestCase() {
 
     fun `test that banned manufacturer fails if passed in as upper`() {
         // Given
-        every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER.uppercase()
+        every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER.toUpperCase()
         val rule = osInformationQuery.notManufacturer(DODGY_MANUFACTURER)
 
         // When

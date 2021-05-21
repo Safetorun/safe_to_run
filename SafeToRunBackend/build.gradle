@@ -1,4 +1,5 @@
 plugins {
+    id "jacoco"
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.kapt")
     id("io.micronaut.library") version "1.5.0"
@@ -10,7 +11,7 @@ plugins {
     id "io.gitlab.arturbosch.detekt"
 }
 
-apply plugin: "com.vanniktech.android.junit.jacoco"
+//apply plugin: "com.vanniktech.android.junit.jacoco"
 
 version = "0.1"
 group = "io.github.dllewellyn.safetorun.backend"
@@ -34,6 +35,9 @@ dependencies {
     implementation("com.auth0:java-jwt:$jwtVersion")
     implementation("joda-time:joda-time:$jodaTime")
     implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
+    implementation("com.amazonaws:aws-java-sdk-codedeploy:1.11.1022")
+    implementation("com.amazonaws:aws-java-sdk-lambda:1.11.1022")
+
     implementation("com.amazonaws:aws-lambda-java-events:3.1.0")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-runtime")
@@ -91,4 +95,15 @@ task cleanTestDebugUnitTest() {
 
 task testDebugUnitTest() {
 
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        getClassDirectories().setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: [
+                            'io/github/dllewellyn/safetorun/backend/handlers/SafeToRunPreHookHandler**'
+                    ])
+                }))
+    }
 }

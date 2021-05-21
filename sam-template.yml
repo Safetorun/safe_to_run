@@ -66,11 +66,41 @@ Resources:
       Runtime: java11
       CodeUri: SafeToRunBackend-0.1-all.jar
       Description: A function used for verifying a device and returning a signed token
-      MemorySize: 1024
+      MemorySize: 512
       Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunRequestHandler
       Timeout: 120
       FunctionName: SafeToRun
       Tracing: Active
+      AutoPublishAlias: live
+      DeploymentPreference:
+        Type: AllAtOnce
+        Hooks:
+          PreTraffic: !Ref SafeToRunPreHookHandler
+
+  SafeToRunPreHookHandler:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "codedeploy:PutLifecycleEventHookExecutionStatus"
+              Resource:
+                !Sub 'arn:${AWS::Partition}:codedeploy:${AWS::Region}:${AWS::AccountId}:deploymentgroup:${ServerlessDeploymentApplication}/*'
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "lambda:InvokeFunction"
+              Resource: !GetAtt SafeToRunBackend.Arn
+      Runtime: java11
+      CodeUri: SafeToRunBackend-0.1-all.jar
+      Description: Pre hook test
+      MemorySize: 512
+      Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunPreHookHandler
+      Timeout: 120
+      FunctionName: 'CodeDeployHook_preTrafficHook'
 
   SafeToRunBackendVerify:
     Type: 'AWS::Serverless::Function'
@@ -78,7 +108,7 @@ Resources:
       Runtime: java11
       CodeUri: SafeToRunBackend-0.1-all.jar
       Description: A function used for verifying a device and returning a signed token
-      MemorySize: 1024
+      MemorySize: 512
       Handler: io.github.dllewellyn.safetorun.backend.handlers.SafeToRunVerifyHandler
       Timeout: 120
       FunctionName: SafeToRunVerify

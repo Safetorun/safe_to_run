@@ -1,6 +1,5 @@
 package io.github.dllewellyn.safetorun.reporting
 
-
 sealed class SafeToRunReport {
     data class SafeToRunReportFailure(val failureReason: String, val failureMessage: String) : SafeToRunReport()
     data class SafeToRunReportSuccess(val successMessage: String) : SafeToRunReport()
