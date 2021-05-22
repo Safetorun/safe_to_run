@@ -12,10 +12,10 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
  * @param signature one or more signatures that are acceptable
  */
 fun Context.verifySignatureConfig(vararg signature: String): SafeToRunCheck {
-    return SignatureVerificationCheck(
-        signature.toList(),
+    return verifySignatureConfiguration(
         signatureVerificationStrings = AndroidSignatureVerificationStringsImpl(this),
-        signatureVerificationQuery = AndroidSignatureVerificationQuery(this)
+        signatureVerificationQuery = AndroidSignatureVerificationQuery(this),
+        *signature
     )
 }
 
@@ -23,9 +23,9 @@ internal fun Context.verifySignatureConfigOverrideSdkVersion(
     sdkVersion: Int,
     vararg signature: String
 ): SafeToRunCheck {
-    return SignatureVerificationCheck(
-        signature.toList(),
+    return verifySignatureConfiguration(
         AndroidSignatureVerificationStringsImpl(this),
-        AndroidSignatureVerificationQuery(this, sdkVersion)
+        AndroidSignatureVerificationQuery(this, sdkVersion),
+        *signature
     )
 }

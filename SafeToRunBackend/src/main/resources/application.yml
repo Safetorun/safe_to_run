@@ -9,6 +9,9 @@ safe:
       was_allowed: "Package was allowed"
       os_detection_check_generic_failure: "OS detection failed"
       os_detection_check_generic_pass: "OS Detection passed"
+      signature_verification: "Signature verification pass"
+      signature_verification_failure: "Signature verification failed (%s)"
+      signature_verification_not_found: "Signature was not found"
 
 micronaut:
   application:

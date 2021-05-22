@@ -15,7 +15,6 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import junit.framework.TestCase
 
-
 internal class SignatureVerificationCheckTest : TestCase() {
     private val mockContext = mockk<Context>()
     private val mockPackageManager = mockk<PackageManager>()
@@ -54,10 +53,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
 
         // When
-        val reportResult = SignatureVerificationCheck(
-            listOf("abc"),
+        val reportResult = verifySignatureConfiguration(
             mockStrings,
             AndroidSignatureVerificationQuery(mockContext, sdkVersion),
+            "abc",
         )
             .canRun() as SafeToRunReport.SafeToRunReportFailure
 
@@ -72,9 +71,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE),
+            verifySignatureConfiguration(
                 mockStrings,
                 AndroidSignatureVerificationQuery(mockContext, sdkVersion),
+                SIGNATURE,
             )
                 .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
@@ -92,9 +92,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE),
+            verifySignatureConfiguration(
                 mockStrings,
                 AndroidSignatureVerificationQuery(mockContext, sdkVersion),
+                SIGNATURE,
             )
                 .canRun() as SafeToRunReport.SafeToRunReportFailure
 
@@ -111,9 +112,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
         }
 
         // When
-        val reportResult = SignatureVerificationCheck(listOf("abc"),
+        val reportResult = verifySignatureConfiguration(
             mockStrings,
             AndroidSignatureVerificationQuery(mockContext, 27),
+            "abc",
         )
             .canRun() as SafeToRunReport.SafeToRunReportFailure
 
@@ -129,9 +131,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE),
+            verifySignatureConfiguration(
                 mockStrings,
                 AndroidSignatureVerificationQuery(mockContext, 27),
+                SIGNATURE,
             )
                 .canRun() as SafeToRunReport.SafeToRunReportSuccess
 
@@ -149,9 +152,10 @@ internal class SignatureVerificationCheckTest : TestCase() {
 
         // When
         val reportResult =
-            SignatureVerificationCheck(listOf(SIGNATURE),
+            verifySignatureConfiguration(
                 mockStrings,
                 AndroidSignatureVerificationQuery(mockContext, 27),
+                SIGNATURE,
             )
                 .canRun() as SafeToRunReport.SafeToRunReportFailure
 

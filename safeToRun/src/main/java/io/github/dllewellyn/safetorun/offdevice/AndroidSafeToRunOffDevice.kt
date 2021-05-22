@@ -57,7 +57,7 @@ internal fun safeToRunOffDevice(
     offDeviceResultBuilder: OffDeviceResultBuilder
 ): SafeToRunOffDevice {
     if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
-        return requireNotNull(safeToRunOffDeviceLazy[url])
+        return requireNotNull(safeToRunOffDeviceLazy[apiKey])
     }
 
     return AndroidSafeToRunOffDevice(
