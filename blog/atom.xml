@@ -8,18 +8,18 @@
     <subtitle>Safe to run Blog</subtitle>
     <icon>https://dllewellyn.github.io/safe_to_run/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Blog Plugin]]></title>
-        <id>Blog Plugin</id>
-        <link href="https://dllewellyn.github.io/safe_to_run/safe_to_run/blog/2020/04/14/blog-plugin"/>
-        <updated>2020-04-14T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[You can use our blog plugin to do your posts]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[A large blog post]]></title>
         <id>A large blog post</id>
         <link href="https://dllewellyn.github.io/safe_to_run/safe_to_run/blog/2020/04/14/large-blog-post"/>
         <updated>2020-04-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hello, this is an example]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Blog Plugin]]></title>
+        <id>Blog Plugin</id>
+        <link href="https://dllewellyn.github.io/safe_to_run/safe_to_run/blog/2020/04/14/blog-plugin"/>
+        <updated>2020-04-14T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[You can use our blog plugin to do your posts]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>
