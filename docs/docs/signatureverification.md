@@ -6,9 +6,14 @@ slug: /signature
 
 In order to configure:
 
-
+## On device 
 ```kotlin
 verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=").error()
+```
+
+## Off device
+```kotlin
+verifySignatureCheck(context, "cSP1O3JN/8+Ag14WAOeOEnwAnpY=").error()
 ```
 
 To generate your signature, the simplest way is to simply run the report and read

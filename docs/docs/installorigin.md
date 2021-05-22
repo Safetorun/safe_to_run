@@ -15,6 +15,7 @@ to let you develop; e.g  with if (!BuildConfig.DEBUG)
 
 :::
 
+## On device 
 ```kotlin
 
 // With amazon and google play store configured 
@@ -24,4 +25,10 @@ installOriginCheckWithDefaults("com.example.installer").error()
 // Without amazon and google play store configured by default 
 installOriginCheckWithoutDefaults("com.example.installer").error()
 
+```
+
+## Off device 
+
+```kotlin
+installOriginCheckWithDefaults(context, "com.example.installer").error()
 ```
