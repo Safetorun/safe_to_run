@@ -162,6 +162,3 @@ Outputs:
   ApiEndpoint:
     Description: "API Endpoint"
     Value: !Sub "https://${SafeToRunGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
-  ApiKey:
-    Description: "API Endpoint"
-    Value: !Sub "https://${SafeToRunGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
