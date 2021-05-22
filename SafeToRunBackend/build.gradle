@@ -98,6 +98,9 @@ task testDebugUnitTest() {
 }
 
 jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
     afterEvaluate {
         getClassDirectories().setFrom(
                 files(classDirectories.files.collect {
