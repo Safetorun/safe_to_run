@@ -17,8 +17,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        
       - name: Run build & test
         run: ./gradlew detekt build test shadowJar
+        env:
+          SERVER_URL: 'http://example.com'
+          API_KEY: 'apikey'
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
         with:
