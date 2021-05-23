@@ -6,6 +6,8 @@ import io.github.dllewellyn.safetorun.backend.builder.DefaultSafeToRunAbstractFa
 import io.github.dllewellyn.safetorun.backend.builder.JwtVerifierFactory
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.handlers.SafeToRunRequestHandler
+import io.github.dllewellyn.safetorun.backend.repository.JwtSecretRepository
+import io.github.dllewellyn.safetorun.backend.util.DummyJwtSecretRepository
 import io.github.dllewellyn.safetorun.backend.util.easilyAcceptableModel
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.micronaut.test.annotation.MockBean
@@ -35,6 +37,9 @@ class SafeToRunSingleRequestHandlerTest {
     fun setup() {
         every { safeToRunAbstractFactory.generateSafeToRun(model) } returns safeToRun
     }
+
+    @MockBean(JwtSecretRepository::class)
+    fun mockSecretRepository(): JwtSecretRepository = DummyJwtSecretRepository()
 
     @MockBean(DefaultSafeToRunAbstractFactory::class)
     fun mockBean(): SafeToRunAbstractFactory = safeToRunAbstractFactory

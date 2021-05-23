@@ -1,12 +1,13 @@
 package io.github.dllewellyn.safetorun.backend.builder
 
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.backend.util.DummyJwtSecretRepository
 import io.github.dllewellyn.safetorun.backend.utils.DefaultJwtFactory
 import org.junit.jupiter.api.Test
 
 internal class DefaultJwtVerifierFactoryTest {
 
-    private val defaultJwtVerifierFactory = DefaultJwtVerifierFactory(DefaultJwtFactory(""))
+    private val defaultJwtVerifierFactory = DefaultJwtVerifierFactory(DefaultJwtFactory(DummyJwtSecretRepository()))
 
     @Test
     fun `verifier for key will get a verifier`() {

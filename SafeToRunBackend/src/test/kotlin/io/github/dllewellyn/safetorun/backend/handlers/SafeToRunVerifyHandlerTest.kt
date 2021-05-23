@@ -1,9 +1,12 @@
 package io.github.dllewellyn.safetorun.backend.handlers
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
+import io.github.dllewellyn.safetorun.backend.repository.JwtSecretRepository
 import io.github.dllewellyn.safetorun.backend.services.SafeToRunVerificationService
+import io.github.dllewellyn.safetorun.backend.util.DummyJwtSecretRepository
+import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
 import io.github.dllewellyn.safetorun.models.models.VerifierResult
+import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.mockk.every
 import io.mockk.mockk
@@ -25,6 +28,9 @@ internal class SafeToRunVerifyHandlerTest {
     fun before() {
         safeToRunVerify.safeToRun = safeToRunService
     }
+
+    @MockBean(JwtSecretRepository::class)
+    fun mockSecretRepository(): JwtSecretRepository = DummyJwtSecretRepository()
 
     @Test
     fun `test that service calls through to verify`() {
