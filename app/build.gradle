@@ -26,10 +26,21 @@ android {
         dataBinding true
     }
 
+
+
     buildTypes {
+        def serverUrl = System.getenv("SERVER_URL") ?: SERVER_URL
+        def apiKey = System.getenv("API_KEY") ?: API_KEY
+
+        debug {
+            buildConfigField "String", "SERVER_URL", "\"$serverUrl\""
+            buildConfigField "String", "API_KEY", "\"$apiKey\""
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SERVER_URL", "\"$serverUrl\""
+            buildConfigField "String", "API_KEY", "\"$apiKey\""
         }
     }
 }
@@ -38,7 +49,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":safeToRun")
     implementation project(":safeToRunCore")
-
+    implementation("com.auth0:java-jwt:$jwtVersion")
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
     implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerView"
