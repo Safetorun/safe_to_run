@@ -7,7 +7,20 @@ slug: /oscheck
 
 Use to blacklist Manufacturer / OS Version combinations
 
-## On device 
+## Configuration
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+defaultValue="ondevice"
+values={[
+{ label: 'On device', value: 'ondevice', },
+{ label: 'Off device', value: 'offdevice', },
+]
+}>
+
+<TabItem value="ondevice">
 
 ```kotlin
 // OS Blacklist version
@@ -19,9 +32,10 @@ osDetectionCheck(
 ).warn()
 ```
 
-## Off device
+</TabItem>
 
-Slightly more involved for off device
+<TabItem value="offdevice">
+
 
 ```kotlin
 
@@ -35,3 +49,7 @@ osDetectionCheck(
     }
 ).error()
 ```
+
+</TabItem>
+
+</Tabs>

@@ -27,9 +27,18 @@ Or, declare all. That's not suggested
 
 ## Configuration 
 
-### On device
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-Disallow an application on device
+<Tabs
+  defaultValue="ondevice"
+  values={[
+    { label: 'On device', value: 'ondevice', },
+    { label: 'Off device', value: 'offdevice', },
+  ]
+}>
+
+<TabItem value="ondevice">
 
 ```kotlin
  blacklistConfiguration(blacklistedAppCheck) {
@@ -37,13 +46,18 @@ Disallow an application on device
 }.error()
 ```
 
-
-### Off device
-
-Off device configuration is configured like so:
+</TabItem>
+    
+<TabItem value="offdevice">
 
 ```kotlin
 blacklistedAppCheck(context) {
     +"com.example.abc"
 }.error()
 ```
+
+</TabItem>
+    
+</Tabs>
+
+
