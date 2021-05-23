@@ -10,6 +10,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
 import javax.inject.Inject
 
 @MicronautTest
@@ -43,5 +44,10 @@ internal class SafeToRunVerifyHandlerTest {
 
         // Then
         assertThat(result).isEqualTo(verifierResult)
+    }
+
+    @Test
+    fun `test an exception is thrown if the signature is empty`() {
+        assertThrows<IllegalArgumentException> { safeToRunVerify.execute(ConfirmVerificationRequestDto()) }
     }
 }

@@ -100,13 +100,15 @@ task testDebugUnitTest() {
 jacocoTestReport {
     reports {
         xml.enabled = true
+        html.enabled = true
     }
 
     afterEvaluate {
         getClassDirectories().setFrom(
                 files(classDirectories.files.collect {
                     fileTree(dir: it, exclude: [
-                            'io/github/dllewellyn/safetorun/backend/handlers/SafeToRunPreHookHandler**'
+                            'io/github/dllewellyn/safetorun/backend/handlers/SafeToRunPreHookHandler**', // Pointless to test - this is a test :)
+                            'io/github/dllewellyn/safetorun/backend/repository/AWSSecretsManagerJwtSecretRepository**' // AWS Passthroughs - not worth the effort to test
                     ])
                 }))
     }
