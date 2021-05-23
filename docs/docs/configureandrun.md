@@ -89,3 +89,9 @@ You should check the following for your JWT
 * That the numbers of errors is 0
 * ISS Is the API key you used (i.e it is not a different API key)
 * Exp (expiry time) has not expired
+
+
+If you setup the backend using the instructions in these docs, the
+secret you need to decode the JWT can be found here:
+
+https://eu-west-1.console.aws.amazon.com/secretsmanager/home

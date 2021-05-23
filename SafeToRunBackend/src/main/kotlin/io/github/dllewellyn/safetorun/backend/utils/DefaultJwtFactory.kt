@@ -4,14 +4,14 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTCreator
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
-import io.micronaut.context.annotation.Value
+import io.github.dllewellyn.safetorun.backend.repository.JwtSecretRepository
 import javax.inject.Singleton
 
 @Singleton
-class DefaultJwtFactory(@Value("\${safe.to.run.jwtsecret}") private val jwtSecret: String) : JwtFactory {
+class DefaultJwtFactory(private val secretRepository: JwtSecretRepository) : JwtFactory {
 
     override fun verify(decode: String): DecodedJWT {
-        return JWT.require(Algorithm.HMAC256(jwtSecret))
+        return JWT.require(Algorithm.HMAC256(secretRepository.getJwtSecret()))
             .build()
             .verify(decode)
     }
@@ -21,6 +21,6 @@ class DefaultJwtFactory(@Value("\${safe.to.run.jwtsecret}") private val jwtSecre
     }
 
     override fun JWTCreator.Builder.sign(): String {
-        return sign(Algorithm.HMAC256(jwtSecret))
+        return sign(Algorithm.HMAC256(secretRepository.getJwtSecret()))
     }
 }

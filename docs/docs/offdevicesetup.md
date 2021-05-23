@@ -43,3 +43,21 @@ https://eu-west-1.console.aws.amazon.com/apigateway/main/apis
 #### API Keys on the side, then click 'show'
 
 ![API](images/apiKey.png)
+
+Finally, you will need to find the JWT secret that was generated
+to do so, go here:
+
+https://eu-west-1.console.aws.amazon.com/secretsmanager/home
+
+### Select your secret in the list
+
+![List of sectes](images/secretslist.png)
+
+
+#### Select to reveal your secret
+
+![Reveal](images/reveal.png)
+
+
+Take a note of this secret, you will need it in order to 
+verify your JWT

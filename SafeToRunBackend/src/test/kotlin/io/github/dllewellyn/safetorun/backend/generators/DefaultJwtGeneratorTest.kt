@@ -1,6 +1,7 @@
 package io.github.dllewellyn.safetorun.backend.generators
 
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.backend.repository.JwtSecretRepository
 import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
 import io.github.dllewellyn.safetorun.backend.utils.DefaultExpireTimeHandler
 import io.github.dllewellyn.safetorun.backend.utils.DefaultJwtFactory
@@ -103,10 +104,14 @@ internal class DefaultJwtGeneratorTest {
     }
 
     private fun generateForSecret() =
-        DefaultJwtGenerator(DefaultJwtFactory(SecretOne), expiryTime)
+        DefaultJwtGenerator(DefaultJwtFactory(mockk<JwtSecretRepository>().apply {
+            every { this@apply.getJwtSecret() } returns SecretOne
+        }), expiryTime)
 
     private fun verifierForSecret(secret: String, apiKey: String) =
-        DefaultJwtVerifier(apiKey, DefaultJwtFactory(secret))
+        DefaultJwtVerifier(apiKey, DefaultJwtFactory(mockk<JwtSecretRepository>().apply {
+            every { this@apply.getJwtSecret() } returns secret
+        }))
 
     companion object {
         const val SecretOne = "Secret"
