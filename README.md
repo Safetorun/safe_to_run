@@ -1,6 +1,6 @@
 # Safe to Run
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run) [![codecov](https://codecov.io/gh/dllewellyn/safe_to_run/branch/master/graph/badge.svg?token=WUGLW5ALWB)](https://codecov.io/gh/dllewellyn/safe_to_run)
 
 Core
 
