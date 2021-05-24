@@ -76,6 +76,11 @@ Resources:
         Type: AllAtOnce
         Hooks:
           PreTraffic: !Ref SafeToRunPreHookHandler
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn:
+              Ref:
+                JwtSecret
 
   SafeToRunPreHookHandler:
     Type: 'AWS::Serverless::Function'
@@ -113,6 +118,11 @@ Resources:
       Timeout: 120
       FunctionName: SafeToRunVerify
       Tracing: Active
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn:
+              Ref:
+                JwtSecret
 
   LambdaInvokePermission:
     Type: 'AWS::Lambda::Permission'
@@ -142,6 +152,16 @@ Resources:
          - RestApiId: !Ref SafeToRunGateway
            StageName: Prod
 
+  JwtSecret:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Name: JwtSecret
+      Description: "Secret for JWT signatures"
+      GenerateSecretString:
+        SecretStringTemplate: '{}'
+        GenerateStringKey: "JwtSecret"
+        PasswordLength: 30
+        ExcludeCharacters: '"@/\'
 
   UsagePlan:
      Type: AWS::ApiGateway::UsagePlan
@@ -159,9 +179,6 @@ Resources:
        KeyType: API_KEY
        UsagePlanId: !Ref UsagePlan
 Outputs:
-  ApiGatewayArn:
-    Description: Permission ARN
-    Value: !Join [ "", [ "arn:aws:execute-api:", !Ref AWS::Region, ":",  !Ref AWS::AccountId, ":", !Ref SafeToRunGateway,"/Prod/POST/deviceCheck"] ]
-  ApiGatewayArnVerify:
-    Description: Permission ARN
-    Value: !Join [ "", [ "arn:aws:execute-api:", !Ref AWS::Region, ":",  !Ref AWS::AccountId, ":", !Ref SafeToRunGateway,"/Prod/POST/verifyCheck"] ]
+  ApiEndpoint:
+    Description: "API Endpoint"
+    Value: !Sub "https://${SafeToRunGateway}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

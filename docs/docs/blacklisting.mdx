@@ -25,10 +25,39 @@ Or, declare all. That's not suggested
 <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 ```
 
-Disallow an application on device
+## Configuration 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="ondevice"
+  values={[
+    { label: 'On device', value: 'ondevice', },
+    { label: 'Off device', value: 'offdevice', },
+  ]
+}>
+
+<TabItem value="ondevice">
 
 ```kotlin
  blacklistConfiguration(blacklistedAppCheck) {
     +"com.abc.def"
-}
+}.error()
 ```
+
+</TabItem>
+    
+<TabItem value="offdevice">
+
+```kotlin
+blacklistedAppCheck(context) {
+    +"com.example.abc"
+}.error()
+```
+
+</TabItem>
+    
+</Tabs>
+
+

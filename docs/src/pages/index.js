@@ -78,6 +78,14 @@ export default function Home() {
                             </div>
                         </section>
                     )}
+
+                    <h3 className="text--center">Gallery</h3>
+                    <section>
+                    <div className="text--center">
+                        <img className={styles.mainImage} src="img/android_sample.png" alt={siteConfig.title}/>
+                    </div>
+                    </section>
+
                 </main>
             </div>
         </Layout>

@@ -35,9 +35,9 @@ dependencies {
     implementation("com.auth0:java-jwt:$jwtVersion")
     implementation("joda-time:joda-time:$jodaTime")
     implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
-    implementation("com.amazonaws:aws-java-sdk-codedeploy:1.11.1022")
-    implementation("com.amazonaws:aws-java-sdk-lambda:1.11.1022")
-
+    implementation("com.amazonaws:aws-java-sdk-codedeploy:$awsVersion")
+    implementation("com.amazonaws:aws-java-sdk-lambda:$awsVersion")
+    implementation("com.amazonaws:aws-java-sdk-secretsmanager:$awsVersion")
     implementation("com.amazonaws:aws-lambda-java-events:3.1.0")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-runtime")
@@ -94,11 +94,13 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
+
     afterEvaluate {
         getClassDirectories().setFrom(
                 files(classDirectories.files.collect {
                     fileTree(dir: it, exclude: [
-                            'io/github/dllewellyn/safetorun/backend/handlers/SafeToRunPreHookHandler**'
+                            'io/github/dllewellyn/safetorun/backend/handlers/SafeToRunPreHookHandler**', // Pointless to test - this is a test :)
+                            'io/github/dllewellyn/safetorun/backend/repository/AWSSecretsManagerJwtSecretRepository**' // AWS Passthroughs - not worth the effort to test
                     ])
                 }))
     }
