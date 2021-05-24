@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class AWSSecretsManagerJwtSecretRepository : JwtSecretRepository {
 
-    private val awsSecretsManager = AWSSecretsManagerClientBuilder.defaultClient()
+    private val awsSecretsManager by lazy { AWSSecretsManagerClientBuilder.defaultClient() }
     private val objectMapper = ObjectMapper()
 
     override fun getJwtSecret(): String {
