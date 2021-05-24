@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="title" type="String"/>
+        <variable name="value" type="String"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_margin="@dimen/padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Title"
+                android:text="@{title}"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/textView"/>
+
+        <TextView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/title"
+                tools:text="Value"
+                android:text="@{value}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" tools:layout_editor_absoluteY="16dp" android:id="@+id/textView"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

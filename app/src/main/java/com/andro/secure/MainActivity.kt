@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.databinding.ActivityMainBinding
+import com.auth0.jwt.JWT
+import com.auth0.jwt.interfaces.DecodedJWT
 import io.github.dllewellyn.safetorun.SafeToRun
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.configure
@@ -19,6 +21,7 @@ import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
 import io.github.dllewellyn.safetorun.offdevice.safeToRunOffDevice
 import io.github.dllewellyn.safetorun.reporting.toGrouped
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,11 +33,13 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
-        safeToRunOffDevice(
-            "https://rygl69bpz0.execute-api.eu-west-1.amazonaws.com/Prod/",
-            "5bzdwZ8Drs1AIsmJAx0M37bndOeEkwbv6pI5fjx1"
-        ).isSafeToRun {
+        safeToRunOffDevice(BuildConfig.SERVER_URL, BuildConfig.API_KEY).isSafeToRun {
+            // Send this result to the server for verification.
+            // This sample is for demonstration purposes only
             Log.v("IsSafeToRun", it.signedResult)
+
+            // In reality, you need to use JWT.verify() with your secret
+            reportsController.setData(reportsController.reports, JWT.decode(it.signedResult).verifierResult())
         }
 
         SafeToRun.init(
@@ -42,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
                 // Root beer (detect root)
                 rootDetection {
-                    tolerateRoot = false
                     tolerateBusyBox = true
                 }.error()
 
@@ -67,10 +71,22 @@ class MainActivity : AppCompatActivity() {
             }
         )
         binding.reportList.setController(reportsController)
-        reportsController.setData(SafeToRun.isSafeToRun().toGrouped())
+        reportsController.setData(SafeToRun.isSafeToRun().toGrouped(), mapOf())
     }
+
+    private fun DecodedJWT.verifierResult(): Map<String, String> =
+        mapOf(
+            "correctIssuer" to (issuer == BuildConfig.API_KEY),
+            "anyFailures" to ((claims[Errors]?.asInt() ?: 1) > 0),
+            "expired" to expiresAt.after(Date()),
+            "anyWarnings" to ((claims[Warnings]?.asInt() ?: 1) > 0),
+            "anyPasses" to ((claims[Passes]?.asInt() ?: 1) > 0)
+        ).mapValues { it.value.toString() }
 
     companion object {
         const val MIN_OS_VERSION = 41
+        const val Warnings = "warnings"
+        const val Errors = "errors"
+        const val Passes = "passes"
     }
 }

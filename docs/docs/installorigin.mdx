@@ -15,6 +15,21 @@ to let you develop; e.g  with if (!BuildConfig.DEBUG)
 
 :::
 
+## Configuration
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+defaultValue="ondevice"
+values={[
+{ label: 'On device', value: 'ondevice', },
+{ label: 'Off device', value: 'offdevice', },
+]
+}>
+
+<TabItem value="ondevice">
+
 ```kotlin
 
 // With amazon and google play store configured 
@@ -25,3 +40,15 @@ installOriginCheckWithDefaults("com.example.installer").error()
 installOriginCheckWithoutDefaults("com.example.installer").error()
 
 ```
+
+</TabItem>
+
+<TabItem value="offdevice">
+
+```kotlin
+installOriginCheckWithDefaults(context, "com.example.installer").error()
+```
+
+</TabItem>
+
+</Tabs>

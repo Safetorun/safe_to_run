@@ -1,0 +1,55 @@
+---
+id: oscheck
+title: OS Check
+slug: /oscheck
+---
+
+
+Use to blacklist Manufacturer / OS Version combinations
+
+## Configuration
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+defaultValue="ondevice"
+values={[
+{ label: 'On device', value: 'ondevice', },
+{ label: 'Off device', value: 'offdevice', },
+]
+}>
+
+<TabItem value="ondevice">
+
+```kotlin
+// OS Blacklist version
+osDetectionCheck(
+    conditionalBuilder {
+        with(minOsVersion(22))
+        and(notManufacturer("Abc"))
+    }
+).warn()
+```
+
+</TabItem>
+
+<TabItem value="offdevice">
+
+
+```kotlin
+
+osDetectionCheck(
+    context,
+    with(osInformation()) {
+        conditionalBuilder {
+            with(minOsVersion(22))
+            and(notManufacturer("Abc"))
+        }
+    }
+).error()
+```
+
+</TabItem>
+
+</Tabs>
