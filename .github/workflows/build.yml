@@ -30,6 +30,7 @@ jobs:
           path: SafeToRunBackend/build/libs/SafeToRunBackend-0.1-all.jar
           retention-days: 5
   deploy:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: build
     steps:
