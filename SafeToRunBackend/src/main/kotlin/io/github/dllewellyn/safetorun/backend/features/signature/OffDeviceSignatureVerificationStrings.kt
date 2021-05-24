@@ -9,7 +9,7 @@ class OffDeviceSignatureVerificationStrings(
     @Value("\${safe.to.run.signature_verification}")
     private val verifySignaturePass: String,
     @Value("\${safe.to.run.signature_verification_failure}")
-    private val genericPassMessage: String,
+    private val genericFailMessage: String,
     @Value("\${safe.to.run.signature_verification_not_found}")
     private val signatureNotFound: String
 ) : SignatureVerificationStrings {
@@ -23,6 +23,6 @@ class OffDeviceSignatureVerificationStrings(
     }
 
     override fun signatureNotMatchedMessage(actualSignature: String): String {
-        return genericPassMessage.format(actualSignature)
+        return genericFailMessage.format(actualSignature)
     }
 }
