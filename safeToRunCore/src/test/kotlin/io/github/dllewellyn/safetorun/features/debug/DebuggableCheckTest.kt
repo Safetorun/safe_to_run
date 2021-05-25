@@ -16,7 +16,7 @@ internal class DebuggableCheckTest : TestCase() {
     private val debuggable = mockk<IsDebuggable>()
     private val debuggableStrings = mockk<DebuggableStrings>()
 
-    private val check = DebuggableCheck(debuggable, debuggableStrings)
+    private val check = debugCheckConfiguration(debuggable, debuggableStrings)
 
     override fun setUp() {
         every { debuggableStrings.appIsDebuggableMessage() } returns DEBUGGABLE

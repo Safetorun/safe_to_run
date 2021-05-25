@@ -3,6 +3,7 @@ package io.github.dllewellyn.safetorun.features.oscheck
 import com.google.common.truth.Truth
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
+import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
@@ -95,6 +96,23 @@ internal class OSDetectionCheckTest : TestCase() {
         with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
             Truth.assertThat(failureMessage).isNotNull()
             Truth.assertThat(failureMessage).contains(DODGY_MANUFACTURER)
+        }
+    }
+
+    fun `test that we can a generic message if failing with a null conditional message`() {
+        // Given
+        val builder = conditionalBuilder {
+            with { ConditionalResponse(true, null) }
+        }
+
+        val rule = osDetectionCheck(builder)
+
+        // When
+        val result = rule.canRun() as SafeToRunReport.MultipleReports
+
+        // Then
+        with(result.reports.first() as SafeToRunReport.SafeToRunReportFailure) {
+            Truth.assertThat(failureMessage).isEqualTo(osInformationStrings.genericFailureMessage())
         }
     }
 
