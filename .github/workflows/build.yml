@@ -18,12 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run build & test
-        run: ./gradlew detekt build test shadowJar
+        run: ./gradlew detekt build test shadow Jar && bash scripts/coverage.sh 
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
-      - name: Gather coverage
-        run: bash scripts/coverage.sh
+     
       - name: Upload coverage data
         run: bash <(curl -s https://codecov.io/bash)
         env:
