@@ -15,9 +15,10 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     private val safeToRunApi = mockk<SafeToRunApi>()
     private val offDeviceResultBuilder = mockk<OffDeviceResultBuilder>()
     private val api: String = "Apikkey"
+    private val deviceId: String = "DeviceId"
 
     private val androidSafeToRunOffDevice =
-        AndroidSafeToRunOffDevice(safeToRunApi, offDeviceResultBuilder, api)
+        AndroidSafeToRunOffDevice(safeToRunApi, offDeviceResultBuilder, api, deviceId)
 
     fun `test that when we call android safe to run it returns result from client`() {
         // Given
@@ -39,10 +40,10 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
     private fun matchingDto() = deviceInformation(api) {
         dtoResult()
+        deviceId(deviceId)
     }
 
     private fun DeviceInformationDtoBuilder.dtoResult() {
-        deviceId("Abc")
         installOrigin("install")
         installedApplication("packagename")
         osVersion("osversion")

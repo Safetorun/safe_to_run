@@ -12,12 +12,14 @@ import io.github.dllewellyn.safetorun.offdevice.builders.BlacklistedAppsOffDevic
 import io.github.dllewellyn.safetorun.offdevice.builders.CompositeBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.InstallOriginOffDeviceBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.OSCheckOffDeviceBuilder
+import io.github.dllewellyn.safetorun.repository.AndroidDeviceIdRepository
 import java.util.concurrent.Executors
 
 internal class AndroidSafeToRunOffDevice internal constructor(
     private val safeToRunApi: SafeToRunApi,
     private val offDeviceResultBuilder: OffDeviceResultBuilder,
-    private val apiKey: String
+    private val apiKey: String,
+    private val deviceId: String
 ) :
     SafeToRunOffDevice {
     private val executor by lazy { Executors.newSingleThreadExecutor() }
@@ -29,6 +31,7 @@ internal class AndroidSafeToRunOffDevice internal constructor(
     override fun isSafeToRun(): SafeToRunOffDeviceResult =
         safeToRunApi.postNewDevice(
             deviceInformation(apiKey) {
+                deviceId(deviceId)
                 offDeviceResultBuilder.buildOffDeviceResultBuilder(this)
             }
         ).run {
@@ -42,19 +45,23 @@ fun Context.safeToRunOffDevice(
     url: String,
     apiKey: String
 ) = safeToRunOffDevice(
-    url, apiKey, CompositeBuilder(
+    url,
+    apiKey,
+    CompositeBuilder(
         listOf(
             OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
             InstallOriginOffDeviceBuilder(AndroidInstallOriginQuery(this)),
             BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this))
         )
-    )
+    ),
+    AndroidDeviceIdRepository(this).getOrCreateDeviceIdSync()
 )
 
 internal fun safeToRunOffDevice(
     url: String,
     apiKey: String,
-    offDeviceResultBuilder: OffDeviceResultBuilder
+    offDeviceResultBuilder: OffDeviceResultBuilder,
+    deviceId: String
 ): SafeToRunOffDevice {
     if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
         return requireNotNull(safeToRunOffDeviceLazy[apiKey])
@@ -66,6 +73,7 @@ internal fun safeToRunOffDevice(
             apiKey,
         ),
         offDeviceResultBuilder,
-        apiKey
+        apiKey,
+        deviceId
     ).also { safeToRunOffDeviceLazy[apiKey] = it }
 }
