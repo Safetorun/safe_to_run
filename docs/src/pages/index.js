@@ -13,34 +13,51 @@ const features = [
         // imageUrl: 'img/undraw_docusaurus_mountain.svg',
         description: (
             <>
-                Safe to run is a simple to use, tool to help with Android security
+                Safe to run is a simple to use, tool to help with Android security.
             </>
         ),
     },
     {
-        title: 'Configurable',
+        title: 'Off device',
         // imageUrl: 'img/undraw_docusaurus_tree.svg',
         description: (
             <>
-                Safe to run is easily configured to suit your apps specific needs
+                Safe to run can run on and off device - perform your checks where it makes
+                sense to you
             </>
         ),
     },
     {
-        title: 'Extensible',
-        // imageUrl: 'img/undraw_docusaurus_tree.svg',
-        description: (
+        title: 'Root detection', description: (
             <>
-                Safe to run is extensible to add your own security rules
-            </>
-        ),
+                Detect rooted devices
+            </>)
     },
+    {
+        title: 'Signature check', description: (
+            <>
+                Verify the signature of your application
+            </>)
+    },
+    {title: 'Blacklisted apps', description: (<>Stop running if known malicious applications are running </>)},
+    {title: 'Install origin', description: (<>Enforce how your app is installed)</>)},
+    {title: 'Os configuration check', description: (<>enforce min OS versions, avoid certain manufacturers etc</>)},
+    {title: 'Debug check', description: (<>Added protection against reverse engineering</>)},
 ];
+
+const secondRow = [
+
+
+];
+
+const thirdRow = [
+
+]
 
 function Feature({imageUrl, title, description}) {
     const imgUrl = useBaseUrl(imageUrl);
     return (
-        <div className={classnames('col col--4', styles.feature)}>
+        <div className={classnames('col', styles.feature)}>
             {imgUrl && (
                 <div className="text--center">
                     <img className={styles.featureImage} src={imgUrl} alt={title}/>
@@ -79,11 +96,31 @@ export default function Home() {
                         </section>
                     )}
 
+                    {secondRow && secondRow.length > 0 && (
+                        <section className={styles.section}>
+                            <div className={styles.features}>
+                                {secondRow.map((props, idx) => (
+                                    <Feature key={idx} {...props} />
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {thirdRow && thirdRow.length > 0 && (
+                        <section className={styles.section}>
+                            <div className={styles.features}>
+                                {thirdRow.map((props, idx) => (
+                                    <Feature key={idx} {...props} />
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
                     <h3 className="text--center">Gallery</h3>
                     <section>
-                    <div className="text--center">
-                        <img className={styles.mainImage} src="img/android_sample.png" alt={siteConfig.title}/>
-                    </div>
+                        <div className="text--center">
+                            <img className={styles.mainImage} src="img/android_sample.png" alt={siteConfig.title}/>
+                        </div>
                     </section>
 
                 </main>
