@@ -1,17 +1,19 @@
 package io.github.dllewellyn.safetorun.offdevice
 
 import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
+import io.mockk.every
+import io.mockk.mockk
 import junit.framework.TestCase
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 internal class AndroidSafeToRunOffDeviceKtTest : TestCase() {
 
-    private val context: Context by lazy { ApplicationProvider.getApplicationContext() }
+    private val context: Context by lazy {
+        mockk<Context>().apply {
+            every { getSharedPreferences(any(), any()) } returns FakeSharedPrefs()
+        }
+    }
 
     @Test
     fun `test device returns as expected and returns the same result if given correct`() {
