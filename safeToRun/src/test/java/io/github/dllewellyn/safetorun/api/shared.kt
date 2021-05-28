@@ -1,14 +1,21 @@
 package io.github.dllewellyn.safetorun.api
 
-import io.github.dllewellyn.safetorun.models.models.deviceInformation
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 
 val deviceInformation by lazy {
-    deviceInformation("5bzdwZ8Drs1AIsmJAx0M37bndOeEkwbv6pI5fjx1") {
+    deviceInformationBuilder("5bzdwZ8Drs1AIsmJAx0M37bndOeEkwbv6pI5fjx1") {
         osVersion("31")
         manufacturer("Manufacturer")
         installOrigin("Install origin")
         installedApplication("com.example")
         signature("Abcdef")
         model("model")
+        board("board")
+        bootloader("bootloader")
+        device("device")
+        hardware("hardware")
+        host("host")
+        cpuAbi("cpu")
+        cpuAbi("cpuAbi")
     }
 }

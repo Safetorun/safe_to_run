@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDtoBuilder
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.github.dllewellyn.safetorun.offdevice.OffDeviceResultBuilder
 import junit.framework.TestCase
 
@@ -25,7 +25,7 @@ internal class CompositeBuilderTest : TestCase() {
         )
 
         // When
-        val result = compositeBuilder.buildOffDeviceResultBuilder(DeviceInformationDtoBuilder(""))
+        val result = compositeBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
         with(result.buildPartial()) {

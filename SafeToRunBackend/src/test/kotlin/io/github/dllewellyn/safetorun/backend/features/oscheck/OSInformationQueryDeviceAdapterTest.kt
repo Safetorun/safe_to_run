@@ -17,6 +17,19 @@ internal class OSInformationQueryDeviceAdapterTest {
     lateinit var beanContext: BeanContext
 
     @Test
+    fun `test that we can retrieve all values from our model`() {
+        val osInformationQuery = OSInformationQueryDeviceAdapter(easilyAcceptableModel.osCheck)
+        with(osInformationQuery) {
+            assertThat(board()).isEqualTo(easilyAcceptableModel.osCheck.board)
+            assertThat(bootloader()).isEqualTo(easilyAcceptableModel.osCheck.bootloader)
+            assertThat(cpuAbi()).isEqualTo(easilyAcceptableModel.osCheck.cpuAbi)
+            assertThat(device()).isEqualTo(easilyAcceptableModel.osCheck.device)
+            assertThat(hardware()).isEqualTo(easilyAcceptableModel.osCheck.hardware)
+            assertThat(host()).isEqualTo(easilyAcceptableModel.osCheck.host)
+        }
+    }
+
+    @Test
     fun `test that we can perform a safe to run check off device for the os information`() {
         val result = with(easilyAcceptableModel.osInformation()) {
             osDetectionCheck(

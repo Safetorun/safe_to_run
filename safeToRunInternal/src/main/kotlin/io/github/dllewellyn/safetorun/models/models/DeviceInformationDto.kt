@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.models.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DeviceInformationDto {
+class DeviceInformationDto internal constructor() {
     var apiKey: String = ""
     var deviceId: String = ""
     var osCheck: OsCheckDto = OsCheckDto()

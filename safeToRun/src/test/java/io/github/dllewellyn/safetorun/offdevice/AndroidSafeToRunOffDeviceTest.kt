@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.api.SafeToRunApi
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDtoBuilder
 import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
-import io.github.dllewellyn.safetorun.models.models.deviceInformation
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -38,7 +38,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         verify { safeToRunApi.postNewDevice(matchingDto()) }
     }
 
-    private fun matchingDto() = deviceInformation(api) {
+    private fun matchingDto() = deviceInformationBuilder(api) {
         dtoResult()
         deviceId(deviceId)
     }
@@ -50,5 +50,12 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         manufacturer("manufacturer")
         signature("signature")
         model("model")
+        board("board")
+        bootloader("bootloader")
+        device("device")
+        hardware("hardware")
+        host("host")
+        cpuAbi("cpu")
+        cpuAbi("cpuAbi")
     }
 }
