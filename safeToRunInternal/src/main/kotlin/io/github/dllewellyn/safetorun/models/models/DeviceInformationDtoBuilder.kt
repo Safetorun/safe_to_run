@@ -40,6 +40,12 @@ class DeviceInformationDtoBuilder internal constructor(
         _signature = signature
     }
 
+    /**
+     * Build a full device information DTO. Will pass
+     * blank items if anything is not provided
+     *
+     * @return a device information object
+     */
     fun buildPartial(): DeviceInformationDto {
         return buildDtoForUnwrappedValues(
             buildPartialOsCheck(),
@@ -48,6 +54,14 @@ class DeviceInformationDtoBuilder internal constructor(
         )
     }
 
+    /**
+     * Build a full device information DTO. Will exception if
+     * there are missing values not added
+     *
+     *
+     * @return a device information object
+     * @throws IllegalArgumentException if any items are null
+     */
     fun build(): DeviceInformationDto {
         return buildDtoForUnwrappedValues(
             buildOsCheck(),
