@@ -24,6 +24,13 @@ class BlacklistedAppConfiguration internal constructor(
         BlacklistedApplicationDetection(blacklistedApplications, blacklistedAppCheck, appStrings)
 }
 
+/**
+ * Create a blacklisted app configuration
+ *
+ * @param blacklistedAppCheck the app check to use
+ * @param appStrings the app strings to use
+ * @param block the block to run for configuration
+ */
 fun blacklistedAppConfiguration(
     blacklistedAppCheck: BlacklistedAppCheck,
     appStrings: BlacklistedAppStrings,
