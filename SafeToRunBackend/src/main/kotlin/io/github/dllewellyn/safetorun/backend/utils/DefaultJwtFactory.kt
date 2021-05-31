@@ -8,7 +8,7 @@ import io.github.dllewellyn.safetorun.backend.repository.JwtSecretRepository
 import javax.inject.Singleton
 
 @Singleton
-class DefaultJwtFactory(private val secretRepository: JwtSecretRepository) : JwtFactory {
+internal class DefaultJwtFactory(private val secretRepository: JwtSecretRepository) : JwtFactory {
 
     override fun verify(decode: String): DecodedJWT {
         return JWT.require(Algorithm.HMAC256(secretRepository.getJwtSecret()))

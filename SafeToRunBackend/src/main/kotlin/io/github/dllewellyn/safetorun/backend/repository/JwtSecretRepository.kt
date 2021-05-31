@@ -1,5 +1,5 @@
 package io.github.dllewellyn.safetorun.backend.repository
 
-interface JwtSecretRepository {
+internal interface JwtSecretRepository {
     fun getJwtSecret(): String
 }

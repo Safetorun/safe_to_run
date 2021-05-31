@@ -8,7 +8,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class DefaultHttpClient(private val url: String) : SafeToRunHttpClient {
+internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient {
 
     override fun <T, O> post(
         path: String,

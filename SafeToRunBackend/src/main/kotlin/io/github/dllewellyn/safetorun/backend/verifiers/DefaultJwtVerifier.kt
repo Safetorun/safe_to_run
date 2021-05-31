@@ -8,7 +8,7 @@ import io.github.dllewellyn.safetorun.backend.utils.JwtFactory
 import io.github.dllewellyn.safetorun.models.models.VerifierResult
 import org.slf4j.LoggerFactory
 
-class DefaultJwtVerifier(
+internal class DefaultJwtVerifier(
     private val apiKey: String,
     private val jwtFactory: JwtFactory
 ) : JwtVerifier {

@@ -44,6 +44,16 @@ private object SafeToRunOffDeviceCache {
     val safeToRunOffDeviceLazy: MutableMap<String, SafeToRunOffDevice> = mutableMapOf()
 }
 
+/**
+ * Build a safe to run off device check
+ *
+ * @param url the url of the backend to send the check to
+ * @param apiKey the api key of the backend service
+ *
+ * @receiver the app context
+ *
+ * @return an instance of [SafeToRunOffDevice]
+ */
 fun Context.safeToRunOffDevice(
     url: String,
     apiKey: String

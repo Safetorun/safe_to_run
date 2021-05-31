@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.models.models
 
-class OsHardwareInformationBuilder : IOsHardwareInformationBuilder {
+internal class OsHardwareInformationBuilder : IOsHardwareInformationBuilder {
     private val _cpuAbis = mutableListOf<String>()
     private var _board: String? = null
     private var _hardware: String? = null

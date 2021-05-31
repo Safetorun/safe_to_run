@@ -33,6 +33,13 @@ class InstallOriginBuilder internal constructor(
         InstallOriginCheck(installOriginStrings, allowedOrigins, installOriginQuery)
 }
 
+/**
+ * Create an install origin check
+ *
+ * @param installOriginQuery the class that can be used to query for install origins
+ * @param installOriginStrings the strings to use for errors and successes
+ * @param installOriginBuilder a block that is used to build the install origin
+ */
 fun installOrigin(
     installOriginQuery: InstallOriginQuery,
     installOriginStrings: InstallOriginStrings,

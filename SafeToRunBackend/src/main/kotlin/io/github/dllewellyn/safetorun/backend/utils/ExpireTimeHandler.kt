@@ -2,6 +2,6 @@ package io.github.dllewellyn.safetorun.backend.utils
 
 import java.util.Date
 
-interface ExpireTimeHandler {
+internal interface ExpireTimeHandler {
     fun getExpiryTime(): Date
 }

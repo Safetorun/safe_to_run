@@ -3,6 +3,9 @@ package io.github.dllewellyn.safetorun.models.models
 import kotlinx.serialization.Serializable
 
 @Serializable
+/**
+ * DTO Containing OS information like version, model, board etc
+ */
 class OsCheckDto {
     var osVersion: String = ""
     var manufacturer: String = ""

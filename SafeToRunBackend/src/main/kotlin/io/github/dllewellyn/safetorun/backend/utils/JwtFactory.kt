@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT
 /**
  * Factory to use to decode a JWT
  */
-interface JwtFactory {
+internal interface JwtFactory {
     /**
      * Decode a JWT token
      *

@@ -5,7 +5,7 @@ import io.micronaut.context.annotation.Value
 import javax.inject.Singleton
 
 @Singleton
-class OffDeviceOSDetectionStrings(
+internal class OffDeviceOSDetectionStrings(
     @Value("\${safe.to.run.os_detection_check_generic_failure}")
     private val genericFailureMessage: String,
     @Value("\${safe.to.run.os_detection_check_generic_pass}")

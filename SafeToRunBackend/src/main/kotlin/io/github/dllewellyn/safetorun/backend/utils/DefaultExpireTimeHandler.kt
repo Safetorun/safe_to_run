@@ -6,7 +6,7 @@ import java.util.Date
 import javax.inject.Singleton
 
 @Singleton
-class DefaultExpireTimeHandler : ExpireTimeHandler {
+internal class DefaultExpireTimeHandler : ExpireTimeHandler {
     override fun getExpiryTime(): Date {
         return DateTime().withPeriodAdded(Hours.ONE, 1)
             .toDate()

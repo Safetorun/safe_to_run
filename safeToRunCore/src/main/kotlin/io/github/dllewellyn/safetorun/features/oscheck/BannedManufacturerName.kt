@@ -16,5 +16,12 @@ internal class BannedManufacturerName(
     }
 }
 
+/**
+ * Use a check to verify that the device is not from a particular manufacturer
+ *
+ * @param manufacturerName the manufacturer you want to check for
+ *
+ * @return a conditional to be used with os check
+ */
 fun OSInformationQuery.notManufacturer(manufacturerName: String): Conditional =
     BannedManufacturerName(manufacturerName, this)

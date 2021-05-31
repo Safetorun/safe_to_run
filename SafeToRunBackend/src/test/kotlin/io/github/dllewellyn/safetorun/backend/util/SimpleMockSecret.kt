@@ -6,7 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import javax.inject.Singleton
 
-val mockkSecretManager = mockk<JwtSecretRepository>()
+internal val mockkSecretManager = mockk<JwtSecretRepository>()
     .apply {
         every { getJwtSecret() } returns "Abcdefhijkasdlasdasdasd"
     }
