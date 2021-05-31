@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import javax.inject.Singleton
 
 @Singleton
-class AWSSecretsManagerJwtSecretRepository : JwtSecretRepository {
+internal class AWSSecretsManagerJwtSecretRepository : JwtSecretRepository {
 
     private val awsSecretsManager by lazy { AWSSecretsManagerClientBuilder.defaultClient() }
     private val objectMapper = ObjectMapper()

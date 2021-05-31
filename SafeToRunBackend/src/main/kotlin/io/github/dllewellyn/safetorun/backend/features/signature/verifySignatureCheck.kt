@@ -9,6 +9,12 @@ import io.micronaut.context.BeanContext
  * Retrieve a safe to run check which will verify that the app has the correct
  * signature as specific in the input
  *
+ * E.g.
+ *
+ * `
+ * verifySignatureCheck(context, "asdbasd==").error()
+ * `
+ *
  * @param context the bean context for micronaut to use for DI
  * @param signatures the list of signatures that you can check against
  */

@@ -2,6 +2,6 @@ package io.github.dllewellyn.safetorun.backend.builder
 
 import io.github.dllewellyn.safetorun.backend.verifiers.JwtVerifier
 
-interface JwtVerifierFactory {
+internal interface JwtVerifierFactory {
     fun verifierForApiKey(apiKey: String): JwtVerifier
 }

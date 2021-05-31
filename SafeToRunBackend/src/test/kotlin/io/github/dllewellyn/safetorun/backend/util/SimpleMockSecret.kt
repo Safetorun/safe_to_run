@@ -6,14 +6,14 @@ import io.mockk.every
 import io.mockk.mockk
 import javax.inject.Singleton
 
-val mockkSecretManager = mockk<JwtSecretRepository>()
+internal val mockkSecretManager = mockk<JwtSecretRepository>()
     .apply {
         every { getJwtSecret() } returns "Abcdefhijkasdlasdasdasd"
     }
 
 @Primary
 @Singleton
-class SimpleMockSecret : JwtSecretRepository {
+internal class SimpleMockSecret : JwtSecretRepository {
     override fun getJwtSecret(): String {
         return "Abcdefhijkasdlasdasdasd"
     }

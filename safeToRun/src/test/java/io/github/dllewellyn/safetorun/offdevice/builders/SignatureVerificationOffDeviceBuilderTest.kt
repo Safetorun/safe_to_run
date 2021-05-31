@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.features.signatureverify.SignatureVerificationQuery
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDtoBuilder
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -20,7 +20,7 @@ internal class SignatureVerificationOffDeviceBuilderTest : TestCase() {
         val signatureVerificationOffDeviceBuilder = SignatureVerificationOffDeviceBuilder(signatureVerificationQuery)
 
         // When
-        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(DeviceInformationDtoBuilder(""))
+        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
         assertThat(result.buildPartial().signatureVerification.signatureVerificationString).isEqualTo(SIGNATURE_SAMPLE)
@@ -32,7 +32,7 @@ internal class SignatureVerificationOffDeviceBuilderTest : TestCase() {
         val signatureVerificationOffDeviceBuilder = SignatureVerificationOffDeviceBuilder(signatureVerificationQuery)
 
         // When
-        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(DeviceInformationDtoBuilder(""))
+        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
         assertThat(result.buildPartial().signatureVerification.signatureVerificationString).isNull()

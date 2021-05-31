@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @MicronautTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SafeToRunSingleRequestHandlerTest {
+internal class SafeToRunSingleRequestHandlerTest {
 
     @Inject
     lateinit var deviceRequestHandler: SafeToRunRequestHandler

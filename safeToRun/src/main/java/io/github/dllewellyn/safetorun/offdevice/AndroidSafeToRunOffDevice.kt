@@ -6,8 +6,9 @@ import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi
 import io.github.dllewellyn.safetorun.api.SafeToRunApi
 import io.github.dllewellyn.safetorun.features.installorigin.AndroidInstallOriginQuery
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQueryAndroid
-import io.github.dllewellyn.safetorun.models.models.deviceInformation
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.github.dllewellyn.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
+import io.github.dllewellyn.safetorun.offdevice.SafeToRunOffDeviceCache.safeToRunOffDeviceLazy
 import io.github.dllewellyn.safetorun.offdevice.builders.BlacklistedAppsOffDeviceBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.CompositeBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.InstallOriginOffDeviceBuilder
@@ -30,7 +31,7 @@ internal class AndroidSafeToRunOffDevice internal constructor(
 
     override fun isSafeToRun(): SafeToRunOffDeviceResult =
         safeToRunApi.postNewDevice(
-            deviceInformation(apiKey) {
+            deviceInformationBuilder(apiKey) {
                 deviceId(deviceId)
                 offDeviceResultBuilder.buildOffDeviceResultBuilder(this)
             }
@@ -39,8 +40,20 @@ internal class AndroidSafeToRunOffDevice internal constructor(
         }
 }
 
-val safeToRunOffDeviceLazy: MutableMap<String, SafeToRunOffDevice> = mutableMapOf()
+private object SafeToRunOffDeviceCache {
+    val safeToRunOffDeviceLazy: MutableMap<String, SafeToRunOffDevice> = mutableMapOf()
+}
 
+/**
+ * Build a safe to run off device check
+ *
+ * @param url the url of the backend to send the check to
+ * @param apiKey the api key of the backend service
+ *
+ * @receiver the app context
+ *
+ * @return an instance of [SafeToRunOffDevice]
+ */
 fun Context.safeToRunOffDevice(
     url: String,
     apiKey: String

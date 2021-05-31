@@ -2,6 +2,9 @@ package io.github.dllewellyn.safetorun.features.oscheck
 
 import io.github.dllewellyn.safetorun.conditional.Conditional
 
+/**
+ * Used to wrap an os configuration with the default OS Information query for the application
+ */
 object OSConfiguration {
 
     internal var osInformationQuery: OSInformationQuery = OSInformationQueryAndroid()

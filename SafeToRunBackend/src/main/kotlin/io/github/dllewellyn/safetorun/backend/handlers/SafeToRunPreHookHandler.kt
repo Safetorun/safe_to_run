@@ -7,11 +7,8 @@ import com.amazonaws.services.lambda.AWSLambdaClientBuilder
 import com.amazonaws.services.lambda.invoke.LambdaFunction
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
-import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
-import io.github.dllewellyn.safetorun.models.models.OsCheckDto
-import io.github.dllewellyn.safetorun.models.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.micronaut.context.annotation.Prototype
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.function.aws.MicronautRequestHandler
@@ -19,6 +16,10 @@ import org.slf4j.LoggerFactory
 
 @Introspected
 @Prototype
+/**
+ * This is run before deployment to verify that we get a JWT in response to a device
+ * check. If this fails, then it will not allow the deployment to proceed.
+ */
 class SafeToRunPreHookHandler : MicronautRequestHandler<Map<String, String>, Unit>() {
 
     override fun execute(input: Map<String, String>) {
@@ -44,22 +45,13 @@ class SafeToRunPreHookHandler : MicronautRequestHandler<Map<String, String>, Uni
             )
     }
 
-    private fun buildDto() = DeviceInformationDto().apply {
-        apiKey = "ApiKey"
-        deviceId = "DeviceId"
-        blacklistedApp = BlacklistedAppsDto().apply {
-            installedPackages = listOf("com.a.b.c")
-        }
-        installOrigin = InstallOriginDto().apply {
-            installOriginPackageName = GooglePlayStore().originPackage
-        }
-        osCheck = OsCheckDto().apply {
-            osVersion = "31"
-            manufacturer = "Google"
-        }
-        signatureVerification = SignatureVerification().apply {
-            signatureVerificationString = ""
-        }
+    private fun buildDto() = deviceInformationBuilder("ApiKey") {
+        deviceId("DeviceId")
+        installedApplication("com.a.b.c")
+        installOrigin(GooglePlayStore().originPackage)
+        osVersion("31")
+        manufacturer("Google")
+        signature("")
     }
 
     private interface LambdaFunctions {

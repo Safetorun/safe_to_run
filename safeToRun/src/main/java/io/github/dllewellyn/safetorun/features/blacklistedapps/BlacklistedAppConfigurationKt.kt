@@ -16,12 +16,8 @@ import android.content.Context
  * @param block builder for configuration
  */
 fun Context.blacklistConfiguration(block: BlacklistedAppConfiguration.() -> Unit) =
-    with(
-        BlacklistedAppConfiguration(
-            AndroidBlacklistedAppCheck(this),
-            AndroidBlacklistedAppStrings(this@blacklistConfiguration)
-        )
-    ) {
-        block()
-        build()
-    }
+    blacklistedAppConfiguration(
+        AndroidBlacklistedAppCheck(this),
+        AndroidBlacklistedAppStrings(this@blacklistConfiguration),
+        block
+    )

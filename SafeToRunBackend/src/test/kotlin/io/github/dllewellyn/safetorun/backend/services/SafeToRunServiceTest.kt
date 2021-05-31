@@ -5,12 +5,8 @@ import io.github.dllewellyn.safetorun.SafeToRunLogic
 import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.generators.JwtGenerator
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
-import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
-import io.github.dllewellyn.safetorun.models.models.OsCheckDto
 import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
-import io.github.dllewellyn.safetorun.models.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
@@ -23,23 +19,23 @@ internal class SafeToRunServiceTest {
     private val safeToRunMock = mockk<SafeToRunLogic>()
     private val safeToRunService = SafeToRunService(safeToRunTokenGenerator, safeToRunAbstractFactory)
 
-    private val easilyAcceptableModel = DeviceInformationDto().apply {
-        apiKey = "ApiKey"
-        deviceId = "DeviceId"
-        blacklistedApp = BlacklistedAppsDto().apply {
-            installedPackages = emptyList()
+    private val easilyAcceptableModel =
+        deviceInformationBuilder("ApiKey") {
+            deviceId("DeviceId")
+            installedApplication("com.a.b.c")
+            installOrigin(GooglePlayStore().originPackage)
+            osVersion("31")
+            manufacturer("Google")
+            signature("")
+            model("model")
+            board("board")
+            bootloader("bootloader")
+            device("device")
+            hardware("hardware")
+            host("host")
+            cpuAbi("cpu")
+            cpuAbi("cpuAbi")
         }
-        installOrigin = InstallOriginDto().apply {
-            installOriginPackageName = GooglePlayStore().originPackage
-        }
-        osCheck = OsCheckDto().apply {
-            osVersion = "31"
-            manufacturer = "Google"
-        }
-        signatureVerification = SignatureVerification().apply {
-            signatureVerificationString = ""
-        }
-    }
 
     @Test
     fun `test that safe to run service will convert and call through to generator`() {

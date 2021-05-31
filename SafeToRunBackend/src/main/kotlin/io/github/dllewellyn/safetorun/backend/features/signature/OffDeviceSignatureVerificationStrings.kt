@@ -5,7 +5,7 @@ import io.micronaut.context.annotation.Value
 import javax.inject.Singleton
 
 @Singleton
-class OffDeviceSignatureVerificationStrings(
+internal class OffDeviceSignatureVerificationStrings(
     @Value("\${safe.to.run.signature_verification}")
     private val verifySignaturePass: String,
     @Value("\${safe.to.run.signature_verification_failure}")

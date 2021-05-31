@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.features.blacklistedapps.InstalledPackagesQuery
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDtoBuilder
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -21,7 +21,7 @@ internal class BlacklistedAppsOffDeviceBuilderTest : TestCase() {
 
         // When
         val result =
-            blacklistedAppOffDeviceBuilder.buildOffDeviceResultBuilder(DeviceInformationDtoBuilder(""))
+            blacklistedAppOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
         assertThat(result.buildPartial().blacklistedApp.installedPackages).isEqualTo(installedPackages)

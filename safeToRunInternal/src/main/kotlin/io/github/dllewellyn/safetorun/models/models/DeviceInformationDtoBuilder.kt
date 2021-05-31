@@ -1,84 +1,82 @@
 package io.github.dllewellyn.safetorun.models.models
 
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.util.UUID
 
-class DeviceInformationDtoBuilder(private val apiKey: String) {
+/**
+ * Device information DTO builder.
+ *
+ * Builds a Device Information object
+ */
+class DeviceInformationDtoBuilder internal constructor(
+    private val apiKey: String,
+    private val osInformation: IOsInformationDtoBuilder = OsInformationDtoBuilder()
+) : IOsInformationDtoBuilder by osInformation {
 
     private var _deviceId = UUID.randomUUID().toString()
-    private var _installOrigin: String? = null
-    private var _osVersion: String? = null
-    private var _manufacturer: String? = null
     private val _installedApplications: MutableList<String> = mutableListOf()
     private var _signature: String? = null
-    private var _model: String? = null
+    private var _installOrigin: String? = null
 
-    fun installOrigin(installOrigin: String?) {
-        _installOrigin = installOrigin
-    }
-
+    /**
+     * Add device ID
+     */
     fun deviceId(deviceId: String) {
         _deviceId = deviceId
     }
 
-    fun osVersion(osVersion: String) {
-        _osVersion = osVersion
-    }
-
-    fun manufacturer(manufacturer: String) {
-        _manufacturer = manufacturer
-    }
-
+    /**
+     * Add installed application
+     */
     fun installedApplication(packageName: String) {
         _installedApplications.add(packageName)
     }
 
+    /**
+     * Add signature
+     */
     fun signature(signature: String?) {
         _signature = signature
     }
 
-    fun model(model: String) {
-        _model = model
-    }
-
+    /**
+     * Build a full device information DTO. Will pass
+     * blank items if anything is not provided
+     *
+     * @return a device information object
+     */
     fun buildPartial(): DeviceInformationDto {
-        val osVersion = _osVersion ?: ""
-        val manufacturer = _manufacturer ?: ""
-        val model = _model ?: ""
-
-        return buildDtoForUnwrappedValues(osVersion, manufacturer, model, _installOrigin, _signature)
+        return buildDtoForUnwrappedValues(
+            buildPartialOsCheck(),
+            _installOrigin,
+            _signature,
+        )
     }
 
+    /**
+     * Build a full device information DTO. Will exception if
+     * there are missing values not added
+     *
+     *
+     * @return a device information object
+     * @throws IllegalArgumentException if any items are null
+     */
     fun build(): DeviceInformationDto {
-        val osVersion = unwrapOrThrow(_osVersion, "Os version")
-        val manufacturer = unwrapOrThrow(_manufacturer, "Manufacturer")
-        val model = unwrapOrThrow(_model, "Model")
-
         return buildDtoForUnwrappedValues(
-            osVersion,
-            manufacturer,
-            model,
+            buildOsCheck(),
             _installOrigin,
             _signature
         )
     }
 
     private fun buildDtoForUnwrappedValues(
-        osVersion: String,
-        manufacturer: String,
-        model: String,
+        osVersionCheck: OsCheckDto,
         installOrigin: String?,
         signature: String?
     ) =
         DeviceInformationDto().apply {
             this.apiKey = this@DeviceInformationDtoBuilder.apiKey
             deviceId = _deviceId
-            osCheck = OsCheckDto().apply {
-                this.osVersion = osVersion
-                this.manufacturer = manufacturer
-                this.model = model
-            }
+            osCheck = osVersionCheck
             this.installOrigin = InstallOriginDto().apply {
                 this.installOriginPackageName = installOrigin
             }
@@ -87,17 +85,35 @@ class DeviceInformationDtoBuilder(private val apiKey: String) {
                 signatureVerificationString = signature
             }
         }
+
+    /**
+     * Add install origin
+     */
+    fun installOrigin(installOrigin: String?) {
+        _installOrigin = installOrigin
+    }
 }
 
 internal fun unwrapOrThrow(field: String?, fieldName: String): String {
     return field ?: throw IllegalArgumentException("$fieldName cannot be null")
 }
 
-fun deviceInformation(apiKey: String, block: DeviceInformationDtoBuilder.() -> Unit): DeviceInformationDto {
+/**
+ * Create a device information class
+ *
+ * @param apiKey apiKey of the backend
+ * @param block builder function to run
+ */
+fun deviceInformationBuilder(apiKey: String, block: DeviceInformationDtoBuilder.() -> Unit): DeviceInformationDto {
     return with(DeviceInformationDtoBuilder(apiKey)) {
         block()
         build()
     }
 }
 
-fun DeviceInformationDto.serialize() = Json.encodeToString(this)
+/**
+ * Create an instance of device information
+ *
+ * @param apiKey api key
+ */
+fun deviceInformationBuilder(apiKey: String) = DeviceInformationDtoBuilder(apiKey)

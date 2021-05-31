@@ -15,4 +15,9 @@ internal class MinOSVersionRule(private val minOSVersion: Int, private val osInf
     }
 }
 
+/**
+ * Add a rule to fail if the os version is lower than the min
+ *
+ * @param minOSVersion
+ */
 fun OSInformationQuery.minOsVersion(minOSVersion: Int): Conditional = MinOSVersionRule(minOSVersion, this)

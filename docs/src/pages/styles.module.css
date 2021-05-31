@@ -34,13 +34,14 @@
 
 .section {
   margin: 10rem;
+  grid-gap: 30px;
 }
 
 .features {
-  flex: 1 1 0px;
   align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 40% 40% 40%;
 }
 
 .featureImage {

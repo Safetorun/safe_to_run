@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.features.installorigin.InstallOriginQuery
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDtoBuilder
+import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -21,7 +21,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
 
         // When
         val result = installOriginQueryOffDeviceBuilder
-            .buildOffDeviceResultBuilder(DeviceInformationDtoBuilder(""))
+            .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
         assertThat(result.buildPartial().installOrigin.installOriginPackageName).isEqualTo(PACKAGE_NAME)
@@ -34,7 +34,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
 
         // When
         val result = installOriginQueryOffDeviceBuilder
-            .buildOffDeviceResultBuilder(DeviceInformationDtoBuilder(""))
+            .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
         assertThat(result.buildPartial().installOrigin.installOriginPackageName).isNull()

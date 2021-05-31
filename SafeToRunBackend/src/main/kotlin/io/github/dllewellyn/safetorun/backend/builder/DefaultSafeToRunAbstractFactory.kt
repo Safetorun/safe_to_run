@@ -6,6 +6,6 @@ import io.micronaut.context.BeanContext
 import javax.inject.Singleton
 
 @Singleton
-class DefaultSafeToRunAbstractFactory(private val beanContext: BeanContext) : SafeToRunAbstractFactory {
+internal class DefaultSafeToRunAbstractFactory(private val beanContext: BeanContext) : SafeToRunAbstractFactory {
     override fun generateSafeToRun(deviceInformation: DeviceInformationDto) = deviceInformation.safeToRun(beanContext)
 }

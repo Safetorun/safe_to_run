@@ -1,5 +1,9 @@
 package io.github.dllewellyn.safetorun.offdevice
 
+/**
+ * Safe to run off device check which can be run by calling to the backend server to
+ * device if the device is safe to run the app on
+ */
 interface SafeToRunOffDevice {
     /**
      * Run an async is safe to run command, this will execute

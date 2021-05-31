@@ -2,6 +2,9 @@ package io.github.dllewellyn.safetorun
 
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 
+/**
+ * Easy access to a safe to run check from anywhere in code
+ */
 object SafeToRun : SafeToRunLogic {
 
     private lateinit var configuration: SafeToRunConfiguration

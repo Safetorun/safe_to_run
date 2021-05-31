@@ -3,7 +3,11 @@ package io.github.dllewellyn.safetorun.models.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DeviceInformationDto {
+/**
+ * The DTO used to send data to the server which can be used to
+ * perform a device check
+ */
+class DeviceInformationDto internal constructor() {
     var apiKey: String = ""
     var deviceId: String = ""
     var osCheck: OsCheckDto = OsCheckDto()
