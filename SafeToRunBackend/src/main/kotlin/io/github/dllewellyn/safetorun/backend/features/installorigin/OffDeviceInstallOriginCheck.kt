@@ -23,7 +23,7 @@ internal class OffDeviceInstallOriginCheck(private val installOriginDto: Install
  * @param allowedOrigins a list of places that it is permissible for your app to
  * have been installed from
  */
-fun DeviceInformationDto.installOriginCheckWithDefaults(
+internal fun DeviceInformationDto.installOriginCheckWithDefaults(
     context: BeanContext,
     vararg allowedOrigins: String
 ): SafeToRunCheck {

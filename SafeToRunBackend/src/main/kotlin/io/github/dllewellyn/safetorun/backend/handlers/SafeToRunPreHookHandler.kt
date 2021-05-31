@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory
 
 @Introspected
 @Prototype
+/**
+ * This is run before deployment to verify that we get a JWT in response to a device
+ * check. If this fails, then it will not allow the deployment to proceed.
+ */
 class SafeToRunPreHookHandler : MicronautRequestHandler<Map<String, String>, Unit>() {
 
     override fun execute(input: Map<String, String>) {

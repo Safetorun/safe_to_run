@@ -1,7 +1,5 @@
 package io.github.dllewellyn.safetorun.models.models
 
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.util.UUID
 
 /**
@@ -113,6 +111,9 @@ fun deviceInformationBuilder(apiKey: String, block: DeviceInformationDtoBuilder.
     }
 }
 
+/**
+ * Create an instance of device information
+ *
+ * @param apiKey api key
+ */
 fun deviceInformationBuilder(apiKey: String) = DeviceInformationDtoBuilder(apiKey)
-
-fun DeviceInformationDto.serialize() = Json.encodeToString(this)

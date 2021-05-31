@@ -6,6 +6,17 @@ import io.github.dllewellyn.safetorun.features.oscheck.OSDetectionStrings
 import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheckConfig
 import io.micronaut.context.BeanContext
 
+/**
+ * Add an os detection check based on a conditional. E.g
+ *
+ * `
+ *  val conditional =  conditionalBuilder {
+ *       with(minOsVersion(MIN_OS_VERSION))
+ *       and(notManufacturer("Abc"))
+ *       }
+ *   osDetectionCheck(context, conditional).error()
+ * `
+ */
 fun osDetectionCheck(context: BeanContext, vararg conditional: Conditional): SafeToRunCheck {
     return osDetectionCheckConfig(
         context.getBean(OSDetectionStrings::class.java),

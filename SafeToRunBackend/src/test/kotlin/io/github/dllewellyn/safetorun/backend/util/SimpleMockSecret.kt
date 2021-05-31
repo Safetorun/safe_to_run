@@ -13,7 +13,7 @@ val mockkSecretManager = mockk<JwtSecretRepository>()
 
 @Primary
 @Singleton
-class SimpleMockSecret : JwtSecretRepository {
+internal class SimpleMockSecret : JwtSecretRepository {
     override fun getJwtSecret(): String {
         return "Abcdefhijkasdlasdasdasd"
     }

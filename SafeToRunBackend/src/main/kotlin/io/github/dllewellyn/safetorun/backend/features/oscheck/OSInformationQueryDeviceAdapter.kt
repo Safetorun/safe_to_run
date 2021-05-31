@@ -4,7 +4,7 @@ import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.models.OsCheckDto
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQuery
 
-class OSInformationQueryDeviceAdapter(private val osCheck: OsCheckDto) : OSInformationQuery {
+internal class OSInformationQueryDeviceAdapter(private val osCheck: OsCheckDto) : OSInformationQuery {
 
     override fun osVersion(): Int {
         return osCheck.osVersion.toInt()
@@ -43,4 +43,4 @@ class OSInformationQueryDeviceAdapter(private val osCheck: OsCheckDto) : OSInfor
     }
 }
 
-fun DeviceInformationDto.osInformation() = OSInformationQueryDeviceAdapter(osCheck)
+internal fun DeviceInformationDto.osInformation() = OSInformationQueryDeviceAdapter(osCheck)

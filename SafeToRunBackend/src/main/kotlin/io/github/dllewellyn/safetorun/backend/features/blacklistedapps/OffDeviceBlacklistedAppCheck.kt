@@ -16,7 +16,16 @@ internal class OffDeviceBlacklistedAppCheck(private val blacklistedAppsDto: Blac
     }
 }
 
-internal fun DeviceInformationDto.blacklistedAppCheck(
+/**
+ * Add a check for a blacklisted app.
+ *
+ * Usage is like this:
+ * `blacklistedAppCheck(context) {
+ *      +"com.illegal.error"
+ * }.error()
+ * `
+ */
+fun DeviceInformationDto.blacklistedAppCheck(
     context: BeanContext,
     block: BlacklistedAppConfiguration.() -> Unit
 ) =

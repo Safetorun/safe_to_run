@@ -6,7 +6,8 @@ import io.github.dllewellyn.safetorun.models.models.VerifierResult
 import javax.inject.Singleton
 
 @Singleton
-class DefaultSafeToRunVerificationService(private val jwtVerifier: JwtVerifierFactory) : SafeToRunVerificationService {
+internal class DefaultSafeToRunVerificationService(private val jwtVerifier: JwtVerifierFactory) :
+    SafeToRunVerificationService {
 
     override fun verify(confirmationVerification: ConfirmVerificationRequestDto): VerifierResult {
         return jwtVerifier

@@ -10,11 +10,16 @@ import javax.inject.Inject
 
 @Introspected
 @Prototype
+/**
+ * Run a check against a specific device. This operates by having the DeviceInformationDto
+ * passed into the safe to run configuration at [DeviceInformationDto.safeToRunConfiguration]
+ *
+ */
 class SafeToRunRequestHandler :
     MicronautRequestHandler<DeviceInformationDto, DeviceSignatureDto>() {
 
     @Inject
-    lateinit var safeToRun: SafeToRunService
+    private lateinit var safeToRun: SafeToRunService
 
     override fun execute(input: DeviceInformationDto): DeviceSignatureDto {
         return DeviceSignatureDto(safeToRun.generateResponseTokenForRequest(input))

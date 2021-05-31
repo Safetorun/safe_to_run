@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 
 @Singleton
-class SafeToRunService(
+internal class SafeToRunService(
     private val safeToRunTokenGenerator: JwtGenerator,
     private val safeToRunAbstractFactory: SafeToRunAbstractFactory
 ) {
