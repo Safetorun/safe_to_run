@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.offdevice.builders
 
 import io.github.dllewellyn.safetorun.features.signatureverify.SignatureVerificationQuery
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDtoBuilder
+import io.github.dllewellyn.safetorun.models.builders.DeviceInformationDtoBuilder
 import io.github.dllewellyn.safetorun.offdevice.OffDeviceResultBuilder
 
 internal class SignatureVerificationOffDeviceBuilder(

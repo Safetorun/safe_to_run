@@ -7,7 +7,7 @@ class FakeSharedPrefs : SharedPreferences {
     private val map = mutableMapOf<String, String>()
 
     override fun getAll(): MutableMap<String, *> {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun getString(p0: String?, p1: String?): String? {
@@ -15,23 +15,23 @@ class FakeSharedPrefs : SharedPreferences {
     }
 
     override fun getStringSet(p0: String?, p1: MutableSet<String>?): MutableSet<String>? {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun getInt(p0: String?, p1: Int): Int {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun getLong(p0: String?, p1: Long): Long {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun getFloat(p0: String?, p1: Float): Float {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun getBoolean(p0: String?, p1: Boolean): Boolean {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun contains(p0: String?): Boolean {
@@ -46,35 +46,35 @@ class FakeSharedPrefs : SharedPreferences {
             }
 
             override fun putStringSet(p0: String?, p1: MutableSet<String>?): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun putInt(p0: String?, p1: Int): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun putLong(p0: String?, p1: Long): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun putFloat(p0: String?, p1: Float): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun putBoolean(p0: String?, p1: Boolean): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun remove(p0: String?): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun clear(): SharedPreferences.Editor {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun commit(): Boolean {
-                TODO("Not yet implemented")
+                TODO(NOT_IMPLEMENTED)
             }
 
             override fun apply() {
@@ -84,10 +84,14 @@ class FakeSharedPrefs : SharedPreferences {
     }
 
     override fun registerOnSharedPreferenceChangeListener(p0: SharedPreferences.OnSharedPreferenceChangeListener?) {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
     }
 
     override fun unregisterOnSharedPreferenceChangeListener(p0: SharedPreferences.OnSharedPreferenceChangeListener?) {
-        TODO("Not yet implemented")
+        TODO(NOT_IMPLEMENTED)
+    }
+
+    companion object {
+        const val NOT_IMPLEMENTED = "Not yet implemented"
     }
 }

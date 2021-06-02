@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQuery
-import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
+import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -15,6 +15,12 @@ internal class OSCheckOffDeviceBuilderTest : TestCase() {
         every { osQuery.osVersion() } returns OS_VERSION
         every { osQuery.manufacturer() } returns MANUFACTURER
         every { osQuery.model() } returns MODEL
+        every { osQuery.board() } returns BOARD
+        every { osQuery.bootloader() } returns BOOTLOADER
+        every { osQuery.cpuAbi() } returns listOf(CPU_ABI)
+        every { osQuery.host() } returns HOST
+        every { osQuery.hardware() } returns HARDWARE
+        every { osQuery.device() } returns DEVICE
     }
 
     fun `test that os check off device adds the device check`() {
@@ -33,5 +39,11 @@ internal class OSCheckOffDeviceBuilderTest : TestCase() {
         const val OS_VERSION = 123
         const val MANUFACTURER = "manufacturer"
         const val MODEL = "model"
+        const val BOARD = "board"
+        const val BOOTLOADER = "bootloader"
+        const val CPU_ABI = "cpu_abi"
+        const val HOST = "host"
+        const val HARDWARE = "hardware"
+        const val DEVICE = "device"
     }
 }

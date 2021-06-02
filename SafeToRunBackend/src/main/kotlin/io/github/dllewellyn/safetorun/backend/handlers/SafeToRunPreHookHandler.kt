@@ -8,7 +8,7 @@ import com.amazonaws.services.lambda.invoke.LambdaFunction
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
+import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
 import io.micronaut.context.annotation.Prototype
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.function.aws.MicronautRequestHandler

@@ -5,6 +5,9 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
 import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
+import io.github.dllewellyn.safetorun.features.oscheck.builders.minOsVersion
+import io.github.dllewellyn.safetorun.features.oscheck.conditionals.BannedManufacturerName
+import io.github.dllewellyn.safetorun.features.oscheck.conditionals.notManufacturer
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
@@ -26,9 +29,8 @@ internal class OSDetectionCheckTest : TestCase() {
 
         // When
         val result = osDetectionCheck(
-            MinOSVersionRule(
-                30,
-                osInformationQuery
+            osInformationQuery.minOsVersion(
+                30
             )
         ).canRun() as SafeToRunReport.MultipleReports
 
@@ -46,10 +48,7 @@ internal class OSDetectionCheckTest : TestCase() {
 
         // When
         val result = osDetectionCheck(
-            MinOSVersionRule(
-                30,
-                osInformationQuery
-            )
+            osInformationQuery.minOsVersion(30)
         ).canRun() as SafeToRunReport.SafeToRunReportSuccess
 
         // Then

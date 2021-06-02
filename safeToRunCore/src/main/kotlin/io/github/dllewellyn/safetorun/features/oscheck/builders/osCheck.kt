@@ -1,7 +1,10 @@
-package io.github.dllewellyn.safetorun.features.oscheck
+package io.github.dllewellyn.safetorun.features.oscheck.builders
 
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
+import io.github.dllewellyn.safetorun.features.oscheck.OSDetectionCheck
+import io.github.dllewellyn.safetorun.features.oscheck.OSDetectionConfig
+import io.github.dllewellyn.safetorun.features.oscheck.OSDetectionStrings
 
 /**
  * Configure an os detection check

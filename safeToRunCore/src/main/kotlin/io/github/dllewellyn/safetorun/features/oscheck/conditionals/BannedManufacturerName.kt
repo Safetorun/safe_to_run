@@ -1,7 +1,8 @@
-package io.github.dllewellyn.safetorun.features.oscheck
+package io.github.dllewellyn.safetorun.features.oscheck.conditionals
 
 import io.github.dllewellyn.safetorun.conditional.Conditional
 import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
+import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQuery
 
 internal class BannedManufacturerName(
     private val manufacturerName: String,

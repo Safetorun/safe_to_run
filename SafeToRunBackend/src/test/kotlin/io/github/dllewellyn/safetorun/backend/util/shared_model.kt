@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.backend.util
 import io.github.dllewellyn.safetorun.backend.util.Constants.ApiKey
 import io.github.dllewellyn.safetorun.backend.util.Constants.DeviceId
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
-import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
+import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
 import java.util.UUID
 
 val easilyAcceptableModel

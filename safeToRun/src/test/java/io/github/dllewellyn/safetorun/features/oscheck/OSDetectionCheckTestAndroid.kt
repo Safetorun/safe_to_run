@@ -3,8 +3,8 @@ package io.github.dllewellyn.safetorun.features.oscheck
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
-import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.minOsVersion
-import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.notManufacturer
+import io.github.dllewellyn.safetorun.features.oscheck.builders.minOsVersion
+import io.github.dllewellyn.safetorun.features.oscheck.conditionals.notManufacturer
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
@@ -24,7 +24,7 @@ internal class OSDetectionCheckTestAndroid : TestCase() {
 
         // When
         val result = mockk<Context>().osDetectionCheck(
-            minOsVersion(
+            osInformationQuery.minOsVersion(
                 30
             )
         ).canRun() as SafeToRunReport.MultipleReports
@@ -43,7 +43,7 @@ internal class OSDetectionCheckTestAndroid : TestCase() {
 
         // When
         val result = mockk<Context>(relaxed = true).osDetectionCheck(
-            minOsVersion(
+            osInformationQuery.minOsVersion(
                 30
             )
         ).canRun() as SafeToRunReport.SafeToRunReportSuccess
@@ -57,7 +57,7 @@ internal class OSDetectionCheckTestAndroid : TestCase() {
         every { osInformationQuery.manufacturer() } returns DODGY_MANUFACTURER
         // When
         val result = mockk<Context>().osDetectionCheck(
-            notManufacturer(
+            osInformationQuery.notManufacturer(
                 DODGY_MANUFACTURER
             )
         ).canRun() as SafeToRunReport.MultipleReports

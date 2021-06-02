@@ -6,7 +6,7 @@ import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi
 import io.github.dllewellyn.safetorun.api.SafeToRunApi
 import io.github.dllewellyn.safetorun.features.installorigin.AndroidInstallOriginQuery
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQueryAndroid
-import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
+import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
 import io.github.dllewellyn.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import io.github.dllewellyn.safetorun.offdevice.SafeToRunOffDeviceCache.safeToRunOffDeviceLazy
 import io.github.dllewellyn.safetorun.offdevice.builders.BlacklistedAppsOffDeviceBuilder

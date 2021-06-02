@@ -15,6 +15,7 @@ import io.github.dllewellyn.safetorun.configure
 import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfiguration
 import io.github.dllewellyn.safetorun.features.debug.debugCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
+import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.bannedModel
 import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.OSConfiguration.notManufacturer
 import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
@@ -65,6 +66,12 @@ class MainActivity : AppCompatActivity() {
                     conditionalBuilder {
                         with(minOsVersion(MIN_OS_VERSION))
                         and(notManufacturer("Abc"))
+                    }
+                ).warn()
+
+                osDetectionCheck(
+                    conditionalBuilder {
+                        with(bannedModel("Pixel 4a (5G)"))
                     }
                 ).warn()
 

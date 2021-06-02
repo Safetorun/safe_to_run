@@ -3,6 +3,7 @@ package io.github.dllewellyn.safetorun.features.oscheck
 import android.content.Context
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 import io.github.dllewellyn.safetorun.conditional.Conditional
+import io.github.dllewellyn.safetorun.features.oscheck.builders.osDetectionCheckConfig
 
 /**
  * Check the OS given the conditionals passed in
