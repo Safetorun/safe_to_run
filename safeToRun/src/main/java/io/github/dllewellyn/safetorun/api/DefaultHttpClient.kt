@@ -74,6 +74,11 @@ internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient 
     }
 }
 
+/**
+ * Get a connection for the URL
+ *
+ * @param url the url to get connection for
+ */
 fun URLConnection.connectionForUrl(url: String) = if (url.startsWith("http://")) {
     this as HttpURLConnection
 } else {

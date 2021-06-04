@@ -49,7 +49,7 @@ internal class DefaultBlacklistedAppCheckTest : TestCase() {
     }
 
     private fun blacklistedConf(block: BlacklistedAppConfiguration.() -> Unit): SafeToRunCheck =
-        blacklistConfig(blacklistedCheck, mockStrings, block)
+        blacklistedAppConfiguration(blacklistedCheck, mockStrings, block)
 
     companion object {
         private const val IS_PRESENT_PACKAGE = "com.abc.com"

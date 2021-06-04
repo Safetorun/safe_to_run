@@ -14,10 +14,6 @@ internal class OSDetectionCheckTestAndroid : TestCase() {
 
     private val osInformationQuery = mockk<OSInformationQuery>()
 
-    override fun setUp() {
-        OSConfiguration.osInformationQuery = osInformationQuery
-    }
-
     fun `test that we can create a os version rule that fails if os is too low`() {
         // Given
         every { osInformationQuery.osVersion() } returns 29

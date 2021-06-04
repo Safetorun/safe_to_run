@@ -11,10 +11,15 @@ internal class SafeToRunSingleReportTest : TestCase() {
         SafeToRunReport.SafeToRunReportFailure("F", "G")
     )
 
-    private val warnings = listOf(
-        SafeToRunReport.SafeToRunWarning("H", "I"),
+    private val multiWarnings = listOf(
         SafeToRunReport.SafeToRunWarning("J", "K"),
         SafeToRunReport.SafeToRunWarning("L", "M")
+    )
+
+    private val warnings = listOf(
+        SafeToRunReport.SafeToRunWarning("H", "I"),
+        SafeToRunReport.MultipleReports(multiWarnings)
+
     )
 
     private val multiSuccess = listOf(
@@ -33,7 +38,12 @@ internal class SafeToRunSingleReportTest : TestCase() {
 
         with(reports) {
             assertThat(failedReports).isEqualTo(failures)
-            assertThat(warningReports).isEqualTo(warnings)
+            assertThat(warningReports).isEqualTo(
+                listOf(
+                    listOf(warnings.first()),
+                    multiWarnings
+                ).flatten()
+            )
             assertThat(successReports).isEqualTo(
                 listOf(
                     listOf(success.first() as SafeToRunReport.SafeToRunReportSuccess),

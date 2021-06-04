@@ -19,7 +19,6 @@ class CompositeSafeToRunSingleCheckTest : TestCase() {
     @MockK
     lateinit var check3: SafeToRunCheck
 
-
     private val result1 = SafeToRunReport.SafeToRunReportSuccess("")
     private val result2 = SafeToRunReport.SafeToRunReportSuccess("")
 
@@ -95,6 +94,40 @@ class CompositeSafeToRunSingleCheckTest : TestCase() {
             SafeToRunReport.MultipleReports(
                 listOf(
                     SafeToRunReport.SafeToRunWarning(failureReason, failureMessage),
+                    SafeToRunReport.SafeToRunWarning(failureReason2, failureMessage2)
+                )
+            )
+        )
+    }
+
+    @Test
+    fun `test that errors passed into warn are converted to warn check when given as a list diff order`() {
+        // Given
+
+        val failureReason = "fr"
+        val failureMessage = "fm"
+
+        val failureReason2 = "fr2"
+        val failureMessage2 = "fm2"
+
+        val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
+        val result4 = SafeToRunReport.SafeToRunReportFailure(failureReason2, failureMessage2)
+
+        val composeCheck = CompositeSafeToRunCheck(listOf(check1, check2), listOf(check3))
+
+        every { check1.canRun() } returns result3
+        every { check3.canRun() } returns SafeToRunReport.MultipleReports(listOf(result1, result4))
+
+        // When
+        val result = composeCheck.canRun() as SafeToRunReport.MultipleReports
+
+        // Then
+        assertThat(result.reports).containsExactly(
+            result3,
+            result2,
+            SafeToRunReport.MultipleReports(
+                listOf(
+                    result1,
                     SafeToRunReport.SafeToRunWarning(failureReason2, failureMessage2)
                 )
             )

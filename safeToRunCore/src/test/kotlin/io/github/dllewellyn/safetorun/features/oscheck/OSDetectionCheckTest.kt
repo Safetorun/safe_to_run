@@ -6,6 +6,7 @@ import io.github.dllewellyn.safetorun.conditional.Conditional
 import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.features.oscheck.builders.minOsVersion
+import io.github.dllewellyn.safetorun.features.oscheck.builders.osDetectionCheckConfig
 import io.github.dllewellyn.safetorun.features.oscheck.conditionals.BannedManufacturerName
 import io.github.dllewellyn.safetorun.features.oscheck.conditionals.notManufacturer
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
@@ -116,7 +117,7 @@ internal class OSDetectionCheckTest : TestCase() {
     }
 
     private fun osDetectionCheck(vararg conditional: Conditional): SafeToRunCheck {
-        return OSDetectionCheck(OSDetectionConfig(conditional.toList()), osInformationStrings)
+        return osDetectionCheckConfig(osInformationStrings, conditional.toList())
     }
 
     companion object {
