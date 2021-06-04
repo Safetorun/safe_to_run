@@ -7,8 +7,8 @@ import com.amazonaws.services.lambda.AWSLambdaClientBuilder
 import com.amazonaws.services.lambda.invoke.LambdaFunction
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.micronaut.context.annotation.Prototype
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.function.aws.MicronautRequestHandler
@@ -25,14 +25,19 @@ class SafeToRunPreHookHandler : MicronautRequestHandler<Map<String, String>, Uni
     override fun execute(input: Map<String, String>) {
         Logger.debug(input.toString())
 
-        val lambdaFunctions = LambdaInvokerFactory.builder()
-            .lambdaClient(AWSLambdaClientBuilder.defaultClient())
-            .build(LambdaFunctions::class.java)
+        val status = try {
+            val lambdaFunctions = LambdaInvokerFactory.builder()
+                .lambdaClient(AWSLambdaClientBuilder.defaultClient())
+                .build(LambdaFunctions::class.java)
 
-        val result = lambdaFunctions.doSomeStuff(buildDto())
-        val status = if (result.signature.isNotEmpty()) {
-            LifecycleEventStatus.Succeeded
-        } else {
+            val result = lambdaFunctions.doSomeStuff(buildDto())
+            if (result.signature.isNotEmpty()) {
+                LifecycleEventStatus.Succeeded
+            } else {
+                LifecycleEventStatus.Failed
+            }
+        } catch (exception: IllegalArgumentException) {
+            Logger.error(exception.message, exception)
             LifecycleEventStatus.Failed
         }
 
@@ -52,6 +57,14 @@ class SafeToRunPreHookHandler : MicronautRequestHandler<Map<String, String>, Uni
         osVersion("31")
         manufacturer("Google")
         signature("")
+        model("model")
+        board("board")
+        bootloader("bootloader")
+        device("device")
+        hardware("hardware")
+        host("host")
+        cpuAbi("cpu")
+        cpuAbi("cpuAbi")
     }
 
     private interface LambdaFunctions {
