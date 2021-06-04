@@ -6,7 +6,6 @@ import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
 import junit.framework.TestCase
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockserver.integration.ClientAndServer
 import org.mockserver.model.HttpRequest.request
@@ -30,7 +29,6 @@ internal class DefaultISafeToRunApiIntegrationTest : TestCase() {
         mockServer.close()
     }
 
-    @Test
     fun `test that response is expected for integration`() {
         mockServer.`when`(
             request()
@@ -47,7 +45,6 @@ internal class DefaultISafeToRunApiIntegrationTest : TestCase() {
         assertThat(httpClient.postNewDevice(deviceInformation)).isEqualTo(response.data)
     }
 
-    @Test
     fun `test that response exception happens if there is a wrong status code`() {
         mockServer.`when`(
             request()

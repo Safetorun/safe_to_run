@@ -5,7 +5,6 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
-import org.junit.Test
 
 internal class AndroidSafeToRunOffDeviceKtTest : TestCase() {
 
@@ -15,7 +14,6 @@ internal class AndroidSafeToRunOffDeviceKtTest : TestCase() {
         }
     }
 
-    @Test
     fun `test device returns as expected and returns the same result if given correct`() {
         val safeToRun = context.safeToRunOffDevice("Url", "ApiKey")
         assertThat(safeToRun).isNotNull()
