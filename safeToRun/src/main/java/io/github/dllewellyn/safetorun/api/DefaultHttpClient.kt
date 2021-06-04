@@ -6,6 +6,7 @@ import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLConnection
 import javax.net.ssl.HttpsURLConnection
 
 internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient {
@@ -43,13 +44,7 @@ internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient 
 
     private fun buildConnection(path: String, headers: Map<String, String>): HttpURLConnection {
         val connection = URL("$url/${path.removePrefix("/")}").openConnection()
-        println(connection.url.toString())
-        val urlConnection =
-            if (url.startsWith("http://")) {
-                connection as HttpURLConnection
-            } else {
-                connection as HttpsURLConnection
-            }
+        val urlConnection = connection.connectionForUrl(url)
 
         urlConnection.doInput = true
         urlConnection.doOutput = true
@@ -77,4 +72,15 @@ internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient 
         private const val CONTENT_TYPE = "application/json"
         private const val ACCEPT_RESPONSE = "application/json"
     }
+}
+
+/**
+ * Get a connection for the URL
+ *
+ * @param url the url to get connection for
+ */
+fun URLConnection.connectionForUrl(url: String) = if (url.startsWith("http://")) {
+    this as HttpURLConnection
+} else {
+    this as HttpsURLConnection
 }

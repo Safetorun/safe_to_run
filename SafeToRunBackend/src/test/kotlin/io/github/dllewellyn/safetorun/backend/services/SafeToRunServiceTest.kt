@@ -6,7 +6,7 @@ import io.github.dllewellyn.safetorun.backend.builder.SafeToRunAbstractFactory
 import io.github.dllewellyn.safetorun.backend.generators.JwtGenerator
 import io.github.dllewellyn.safetorun.features.installorigin.GooglePlayStore
 import io.github.dllewellyn.safetorun.models.models.SafeToRunResult
-import io.github.dllewellyn.safetorun.models.models.deviceInformationBuilder
+import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk

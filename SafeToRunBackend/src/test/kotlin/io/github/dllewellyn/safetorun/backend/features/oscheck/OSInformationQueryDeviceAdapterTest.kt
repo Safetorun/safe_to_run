@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.backend.features.oscheck
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.backend.util.easilyAcceptableModel
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
-import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
+import io.github.dllewellyn.safetorun.features.oscheck.builders.minOsVersion
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.micronaut.context.BeanContext
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
@@ -26,6 +26,8 @@ internal class OSInformationQueryDeviceAdapterTest {
             assertThat(device()).isEqualTo(easilyAcceptableModel.osCheck.device)
             assertThat(hardware()).isEqualTo(easilyAcceptableModel.osCheck.hardware)
             assertThat(host()).isEqualTo(easilyAcceptableModel.osCheck.host)
+            assertThat(manufacturer()).isEqualTo(easilyAcceptableModel.osCheck.manufacturer)
+            assertThat(model()).isEqualTo(easilyAcceptableModel.osCheck.model)
         }
     }
 

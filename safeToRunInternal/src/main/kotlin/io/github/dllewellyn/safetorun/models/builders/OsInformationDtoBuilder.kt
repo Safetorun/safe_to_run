@@ -1,4 +1,7 @@
-package io.github.dllewellyn.safetorun.models.models
+package io.github.dllewellyn.safetorun.models.builders
+
+import io.github.dllewellyn.safetorun.models.models.OsCheckDto
+import io.github.dllewellyn.safetorun.models.models.OsHardwareInformation
 
 internal class OsInformationDtoBuilder : IOsInformationDtoBuilder,
     IOsHardwareInformationBuilder by OsHardwareInformationBuilder() {

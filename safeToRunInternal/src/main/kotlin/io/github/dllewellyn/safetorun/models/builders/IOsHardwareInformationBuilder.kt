@@ -1,4 +1,6 @@
-package io.github.dllewellyn.safetorun.models.models
+package io.github.dllewellyn.safetorun.models.builders
+
+import io.github.dllewellyn.safetorun.models.models.OsHardwareInformation
 
 /**
  * OS Hardware information builder. Use to generate a [OsHardwareInformation]

@@ -1,6 +1,7 @@
 package io.github.dllewellyn.safetorun.features.oscheck
 
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.features.oscheck.conditionals.notManufacturer
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

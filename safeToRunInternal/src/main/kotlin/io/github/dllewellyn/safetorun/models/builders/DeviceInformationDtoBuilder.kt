@@ -1,5 +1,10 @@
-package io.github.dllewellyn.safetorun.models.models
+package io.github.dllewellyn.safetorun.models.builders
 
+import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
+import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
+import io.github.dllewellyn.safetorun.models.models.OsCheckDto
+import io.github.dllewellyn.safetorun.models.models.SignatureVerification
 import java.util.UUID
 
 /**

@@ -9,8 +9,8 @@ import io.github.dllewellyn.safetorun.backend.features.oscheck.osInformation
 import io.github.dllewellyn.safetorun.backend.features.signature.verifySignatureCheck
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.configure
-import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
-import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
+import io.github.dllewellyn.safetorun.features.oscheck.builders.minOsVersion
+import io.github.dllewellyn.safetorun.features.oscheck.conditionals.notManufacturer
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.micronaut.context.BeanContext
 
@@ -22,15 +22,15 @@ internal fun DeviceInformationDto.safeToRunConfiguration(context: BeanContext): 
             +"com.example.abc"
         }.warn()
 
-        osDetectionCheck(
-            context,
-            with(osInformation()) {
+        with(osInformation()) {
+            osDetectionCheck(
+                context,
                 conditionalBuilder {
                     with(minOsVersion(MIN_OS_VERSION))
                     and(notManufacturer("Abc"))
                 }
-            }
-        ).error()
+            ).error()
+        }
 
         verifySignatureCheck(context, "Abc").warn()
 
