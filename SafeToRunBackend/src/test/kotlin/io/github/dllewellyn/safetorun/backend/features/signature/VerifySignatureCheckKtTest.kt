@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun.backend.features.signature
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.backend.util.easilyAcceptableModel
-import io.github.dllewellyn.safetorun.models.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.SignatureVerificationDto
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.micronaut.context.BeanContext
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
@@ -26,7 +26,7 @@ internal class VerifySignatureCheckKtTest {
     fun `test that we can retrieve a response based on a missing signature`() {
         // Given
         val model = easilyAcceptableModel.apply {
-            signatureVerification = SignatureVerification().apply {
+            signatureVerification = SignatureVerificationDto().apply {
                 signatureVerificationString = null
             }
         }
@@ -42,7 +42,7 @@ internal class VerifySignatureCheckKtTest {
     fun `test that we can retrieve a response based on a correct signature`() {
         // Given
         val model = easilyAcceptableModel.apply {
-            signatureVerification = SignatureVerification().apply {
+            signatureVerification = SignatureVerificationDto().apply {
                 signatureVerificationString = "correct"
             }
         }
@@ -58,7 +58,7 @@ internal class VerifySignatureCheckKtTest {
     fun `test that we can retrieve a response based on a incorrect signature`() {
         // Given
         val model = easilyAcceptableModel.apply {
-            signatureVerification = SignatureVerification().apply {
+            signatureVerification = SignatureVerificationDto().apply {
                 signatureVerificationString = "abc"
             }
         }

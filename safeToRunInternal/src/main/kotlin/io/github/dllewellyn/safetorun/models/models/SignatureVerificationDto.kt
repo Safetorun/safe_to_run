@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 /**
  * DTO To use for signature verification
  */
-data class SignatureVerification(var signatureVerificationString: String? = null)
+data class SignatureVerificationDto(var signatureVerificationString: String? = null)

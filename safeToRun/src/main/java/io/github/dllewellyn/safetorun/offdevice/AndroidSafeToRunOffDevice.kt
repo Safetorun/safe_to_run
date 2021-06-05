@@ -4,10 +4,12 @@ import android.content.Context
 import io.github.dllewellyn.safetorun.api.DefaultHttpClient
 import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi
 import io.github.dllewellyn.safetorun.api.SafeToRunApi
+import io.github.dllewellyn.safetorun.exploration.DeviceInformation
+import io.github.dllewellyn.safetorun.exploration.toDeviceInformation
+import io.github.dllewellyn.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import io.github.dllewellyn.safetorun.features.installorigin.AndroidInstallOriginQuery
 import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQueryAndroid
 import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
-import io.github.dllewellyn.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import io.github.dllewellyn.safetorun.offdevice.SafeToRunOffDeviceCache.safeToRunOffDeviceLazy
 import io.github.dllewellyn.safetorun.offdevice.builders.BlacklistedAppsOffDeviceBuilder
 import io.github.dllewellyn.safetorun.offdevice.builders.CompositeBuilder
@@ -60,15 +62,19 @@ fun Context.safeToRunOffDevice(
 ) = safeToRunOffDevice(
     url,
     apiKey,
-    CompositeBuilder(
-        listOf(
-            OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
-            InstallOriginOffDeviceBuilder(AndroidInstallOriginQuery(this)),
-            BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this))
-        )
-    ),
+    offDeviceResultBuilder(),
     AndroidDeviceIdRepository(this).getOrCreateDeviceIdSync()
 )
+
+/**
+ * Get a device informatio DTO with information about the currently
+ * running device. This can be useful to help deciding on where to set
+ * your OS rules
+ */
+fun Context.deviceInformation(): DeviceInformation = offDeviceResultBuilder()
+    .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
+    .build()
+    .toDeviceInformation()
 
 internal fun safeToRunOffDevice(
     url: String,
@@ -90,3 +96,11 @@ internal fun safeToRunOffDevice(
         deviceId
     ).also { safeToRunOffDeviceLazy[apiKey] = it }
 }
+
+internal fun Context.offDeviceResultBuilder(): OffDeviceResultBuilder = CompositeBuilder(
+    listOf(
+        OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
+        InstallOriginOffDeviceBuilder(AndroidInstallOriginQuery(this)),
+        BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this))
+    )
+)

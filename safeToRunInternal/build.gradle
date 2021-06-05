@@ -10,7 +10,7 @@ plugins {
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
 group 'io.github.dllewellyn.safetorun'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()

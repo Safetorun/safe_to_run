@@ -5,7 +5,7 @@ import io.github.dllewellyn.safetorun.backend.features.signature.OffDeviceSignat
 import io.github.dllewellyn.safetorun.backend.features.signature.verifySignatureCheck
 import io.github.dllewellyn.safetorun.backend.util.easilyAcceptableModel
 import io.github.dllewellyn.safetorun.configure
-import io.github.dllewellyn.safetorun.models.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.SignatureVerificationDto
 import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
 import io.micronaut.context.BeanContext
 import io.mockk.every
@@ -35,7 +35,7 @@ internal class SafeToRunOffDeviceTest {
                 easilyAcceptableModel.apply {
                     verifySignatureCheck(beanContext, "signaturesample").error()
                     signatureVerification =
-                        SignatureVerification().apply { signatureVerificationString = "signaturesample" }
+                        SignatureVerificationDto().apply { signatureVerificationString = "signaturesample" }
                 }
             }
         )
