@@ -13,5 +13,5 @@ data class DeviceInformationDto(
     var osCheck: OsCheckDto = OsCheckDto(),
     var installOrigin: InstallOriginDto = InstallOriginDto(),
     var blacklistedApp: BlacklistedAppsDto = BlacklistedAppsDto(),
-    var signatureVerification: SignatureVerification = SignatureVerification(),
+    var signatureVerification: SignatureVerificationDto = SignatureVerificationDto(),
 )

@@ -4,7 +4,7 @@ import io.github.dllewellyn.safetorun.models.models.BlacklistedAppsDto
 import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
 import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
 import io.github.dllewellyn.safetorun.models.models.OsCheckDto
-import io.github.dllewellyn.safetorun.models.models.SignatureVerification
+import io.github.dllewellyn.safetorun.models.models.SignatureVerificationDto
 import java.util.UUID
 
 /**
@@ -86,7 +86,7 @@ class DeviceInformationDtoBuilder internal constructor(
                 this.installOriginPackageName = installOrigin
             }
             blacklistedApp = BlacklistedAppsDto().apply { installedPackages = _installedApplications }
-            signatureVerification = SignatureVerification().apply {
+            signatureVerification = SignatureVerificationDto().apply {
                 signatureVerificationString = signature
             }
         }

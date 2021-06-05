@@ -19,6 +19,7 @@ import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
 import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
+import io.github.dllewellyn.safetorun.offdevice.deviceInformation
 import io.github.dllewellyn.safetorun.offdevice.safeToRunOffDevice
 import io.github.dllewellyn.safetorun.reporting.toGrouped
 import java.util.Date
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+
+        Log.v("Device information", deviceInformation().toString())
 
         safeToRunOffDevice(BuildConfig.SERVER_URL, BuildConfig.API_KEY).isSafeToRun {
             // Send this result to the server for verification.
