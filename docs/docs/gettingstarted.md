@@ -7,8 +7,8 @@ slug: /gettingstarted
 Gradle:
 
 ```groovy
-implementation "io.github.dllewellyn.safetorun:safetorun:1.0.0"
-implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.0"
+implementation "io.github.dllewellyn.safetorun:safetorun:1.0.1"
+implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.1"
 ```
 
 An example of a configuration, done in App class:

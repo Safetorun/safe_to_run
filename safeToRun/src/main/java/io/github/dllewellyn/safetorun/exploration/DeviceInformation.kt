@@ -13,6 +13,9 @@ data class DeviceInformation(
     val signatureVerification: SignatureInformation
 )
 
+/**
+ * Convert device information DTO to a Core object
+ */
 fun DeviceInformationDto.toDeviceInformation() =
     DeviceInformation(
         osCheck = OsCheck(
