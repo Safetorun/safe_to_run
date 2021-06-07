@@ -14,8 +14,8 @@ internal class AvdEmulatorKtTest : TestCase() {
     fun `test that avd emulator works as correctly if os type is unknown`() {
         // Given
         every { osInformation.bootloader() } returns OsCheckConstants.UNKNOWN
-        every { osInformation.device() } returns "Not banned"
-        every { osInformation.board() } returns "Not banned"
+        every { osInformation.device() } returns NOT_BANNED
+        every { osInformation.board() } returns NOT_BANNED
 
         // When Then
         assertThat(osInformation.banAvdEmulator()().failed).isTrue()
@@ -23,8 +23,8 @@ internal class AvdEmulatorKtTest : TestCase() {
 
     fun `test that avd emulator works as correctly if os type is device is generic`() {
         // Given
-        every { osInformation.bootloader() } returns "Not banned"
-        every { osInformation.board() } returns "Not banned"
+        every { osInformation.bootloader() } returns NOT_BANNED
+        every { osInformation.board() } returns NOT_BANNED
         every { osInformation.device() } returns OsCheckConstants.AVD_DEVICE_TYPE
 
         // When Then
@@ -33,8 +33,8 @@ internal class AvdEmulatorKtTest : TestCase() {
 
     fun `test that avd emulator works as correctly if board is goldfish`() {
         // Given
-        every { osInformation.bootloader() } returns "Not banned"
-        every { osInformation.device() } returns "Not banned"
+        every { osInformation.bootloader() } returns NOT_BANNED
+        every { osInformation.device() } returns NOT_BANNED
         every { osInformation.board() } returns OsCheckConstants.AVD_EMULATOR_BOARD
 
         // When Then
@@ -43,11 +43,15 @@ internal class AvdEmulatorKtTest : TestCase() {
 
     fun `test that avd emulator works as correctly if nothing is banned`() {
         // Given
-        every { osInformation.bootloader() } returns "Not banned"
-        every { osInformation.device() } returns "Not banned"
-        every { osInformation.board() } returns "Not banned"
+        every { osInformation.bootloader() } returns NOT_BANNED
+        every { osInformation.device() } returns NOT_BANNED
+        every { osInformation.board() } returns NOT_BANNED
 
         // When Then
         assertThat(osInformation.banAvdEmulator()().failed).isFalse()
+    }
+
+    companion object {
+        const val NOT_BANNED = "Not banned"
     }
 }
