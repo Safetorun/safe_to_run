@@ -13,6 +13,7 @@ import io.github.dllewellyn.safetorun.configure
 import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfiguration
 import io.github.dllewellyn.safetorun.features.debug.debugCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
+import io.github.dllewellyn.safetorun.features.oscheck.banAvdEmulator
 import io.github.dllewellyn.safetorun.features.oscheck.bannedModel
 import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
 
                 installOriginCheckWithDefaults().warn()
 
+                osDetectionCheck(banAvdEmulator()).error()
                 debugCheck().warn()
             }
         )

@@ -6,7 +6,11 @@ package io.github.dllewellyn.safetorun.conditional
  */
 class ConditionalBuilder internal constructor() {
 
+    // And passes only if all the 'ands' pass
     private val ands = mutableListOf<Conditional>()
+
+    // If a single or passes, then the whole thing passes
+    // If all 'ors' fail, it only fails if all the 'ands' fail
     private val ors = mutableListOf<Conditional>()
 
     /**

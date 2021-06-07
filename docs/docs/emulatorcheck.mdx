@@ -1,0 +1,26 @@
+---
+id: emulatorcheck
+title: Emulator check
+slug: /emulatorcheck
+---
+
+The emulator checks are done using OS Configuration. For example:
+
+
+```kotlin
+osDetectionCheck(banAvdEmulator()).error()
+```
+
+Here are the checks supported so far:
+
+```kotlin
+// The default android emulator
+banAvdEmulator()
+
+// Ban genymotion emulators
+banGenymotionEmulator()
+```
+
+More information, including the motivation for emulator detection can be found in this article:
+
+[Emulator detection on android](https://danielllewellyn.medium.com/emulator-detection-in-android-350efba44048)
