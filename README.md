@@ -28,37 +28,44 @@ implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.1"
 In Activity, fragment or app 
 
 ```kotlin
-SafeToRun.init(
-    configure {
+ SafeToRun.init(
+            configure {
 
-        // Root beer (detect root)
-        rootDetection {
-            tolerateRoot = false
-            tolerateBusyBox = true
-        }.error()
+                // Root beer (detect root)
+                rootDetection {
+                    tolerateBusyBox = true
+                }.error()
 
-        // Black list certain apps
-        blacklistConfiguration {
-            +"com.abc.def"
-            +"com.google.earth"
-        }.error()
+                // Black list certain apps
+                blacklistConfiguration {
+                    +"com.abc.def"
+                    +packageName
+                }.error()
 
-        verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
-            .error()
+                verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+                    .error()
 
-        // OS Blacklist version
-        osDetectionCheck(
-            conditionalBuilder {
-                with(minOsVersion(22))
-                and(notManufacturer("Abc"))
+                // OS Blacklist version
+                osDetectionCheck(
+                    conditionalBuilder {
+                        with(minOsVersion(MIN_OS_VERSION))
+                        and(notManufacturer("Abc"))
+                        and(bannedModel("bannedModel"))
+                    }
+                ).warn()
+
+                osDetectionCheck(
+                    conditionalBuilder {
+                        with(bannedModel("Pixel 4a (5G)"))
+                    }
+                ).warn()
+
+                installOriginCheckWithDefaults().warn()
+
+                osDetectionCheck(banAvdEmulator()).error()
+                debugCheck().warn()
             }
-        ).warn()
-
-        debugCheck().warn()
-
-        installOriginCheckWithDefaults().error()
-    }
-)
+        )
 ```
 
 Usage:
