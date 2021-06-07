@@ -1,5 +1,9 @@
 package io.github.dllewellyn.safetorun.features.oscheck
 
+/**
+ * Constants file for OS Check providing static strings that are used
+ * when doing OS Checks - primarily these are checks for emulator detection
+ */
 object OsCheckConstants {
     /** Type of board used on emulators */
     const val AVD_EMULATOR_BOARD = "goldfish_x86"
