@@ -1,3 +1,3 @@
-![LINE](https://img.shields.io/badge/line--coverage-94%25-brightgreen.svg)
-![BRANCH](https://img.shields.io/badge/branch--coverage-88%25-brightgreen.svg)
-![COMPLEXITY](https://img.shields.io/badge/complexity-1.36-brightgreen.svg)
+![LINE](https://img.shields.io/badge/line--coverage-97%25-brightgreen.svg)
+![BRANCH](https://img.shields.io/badge/branch--coverage-91%25-brightgreen.svg)
+![COMPLEXITY](https://img.shields.io/badge/complexity-1.28-brightgreen.svg)

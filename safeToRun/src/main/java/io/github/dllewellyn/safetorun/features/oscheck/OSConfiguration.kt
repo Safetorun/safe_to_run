@@ -10,6 +10,7 @@ import io.github.dllewellyn.safetorun.features.oscheck.builders.bannedHost
 import io.github.dllewellyn.safetorun.features.oscheck.builders.bannedModel
 import io.github.dllewellyn.safetorun.features.oscheck.builders.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.conditionals.notManufacturer
+import io.github.dllewellyn.safetorun.features.oscheck.emulators.banAvdEmulator
 
 /**
  * Used to wrap an os configuration with the default OS Information query for the application
@@ -92,3 +93,9 @@ fun bannedHardware(hardware: String): Conditional =
  */
 fun bannedHost(host: String): Conditional =
     OSConfiguration.bannedHost(host)
+
+/**
+ * Ban the default AVD emulator from running
+ */
+fun banAvdEmulator(): Conditional =
+    OSConfiguration.banAvdEmulator()
