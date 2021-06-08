@@ -4,6 +4,12 @@ title: Off device setup
 slug: /offdevicesetup
 ---
 
+:::danger
+
+Off device is currently in beta
+
+:::
+
 :::note
 
 If you don't intend on running 'Off device' you can skip this section.

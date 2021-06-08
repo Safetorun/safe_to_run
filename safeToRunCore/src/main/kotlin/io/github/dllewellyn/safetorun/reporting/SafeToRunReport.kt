@@ -35,3 +35,12 @@ sealed class SafeToRunReport {
      */
     data class SafeToRunWarning(val warnReason: String, val warningMessage: String) : SafeToRunReport()
 }
+
+/**
+ * Determine if there are any failures
+ *
+ * @receiver a safe to run report
+ *
+ * @return true if there are any failures, false otherwise
+ */
+fun SafeToRunReport.anyFailures() = toGrouped().failedReports.isNotEmpty()

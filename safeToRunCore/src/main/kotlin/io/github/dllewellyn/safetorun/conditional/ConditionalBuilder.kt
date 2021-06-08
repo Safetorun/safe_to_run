@@ -24,6 +24,24 @@ class ConditionalBuilder internal constructor() {
     }
 
     /**
+     * Fail if this condition fails
+     *
+     * @param conditional which will fail if this conditional fails
+     */
+    infix fun failIf(conditional: Conditional) {
+        and(conditional)
+    }
+
+    /**
+     * If this conditional passes, then ignore any other fail-ifs
+     *
+     * @param conditional pass if this conditional passes
+     */
+    infix fun unless(conditional: Conditional) {
+        or(conditional)
+    }
+
+    /**
      * And. As in, and other conditions and this one
      * needs to be true to pass
      *

@@ -25,20 +25,21 @@ The gist of the configuration is to build a 'Conditional'. We have two rules
 ```kotlin
 // This adds a rule so that both minOsVersion and notManufacturer
 // are failable rules
-with(minOsVersion(22))
-and(notManufacturer("Abc"))
+failIf(minOsVersion(22))
+failIf(notManufacturer("Abc"))
 
 // This rule will not fail if the notManufacturer rule passes
-// because if a single 'or' passes, it doesn't matter how many
-// ands fail
+// because if a single 'unless' passes, it doesn't matter how many
+// failIfs fail
 
 // This will fail if the minOsVersion is 22, or if the
 // manufacturer is "Def" unless the manufacturer is NOT
 // "ABC" in which case it'll pass every time
 
-with(minOsVersion(22))
-and(notManufacturer("Def"))
-or(notManufacturer("Abc")
+failIf(minOsVersion(22))
+failIf(notManufacturer("Def"))
+unless(notManufacturer("Abc")
+
 
 ```
 
