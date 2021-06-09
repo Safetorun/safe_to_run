@@ -14,8 +14,6 @@ internal class OSConfigurationTest : TestCase() {
         assertThat(bannedDevice("")).isNotNull()
         assertThat(bannedHardware("")).isNotNull()
         assertThat(bannedHost("")).isNotNull()
-        assertThat(banAvdEmulator()).isNotNull()
         assertThat(bannedModel("")).isNotNull()
-        assertThat(banBluestacksEmulator()).isNotNull()
     }
 }
