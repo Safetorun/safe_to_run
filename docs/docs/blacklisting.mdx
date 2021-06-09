@@ -25,6 +25,9 @@ Or, declare all. That's not suggested
 <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 ```
 
+We also have a utility function `blacklistRootingApps()` in order to detect apps that are used
+for rooting an application
+
 ## Configuration 
 
 import Tabs from '@theme/Tabs';
@@ -41,8 +44,10 @@ import TabItem from '@theme/TabItem';
 <TabItem value="ondevice">
 
 ```kotlin
- blacklistConfiguration(blacklistedAppCheck) {
+blacklistConfiguration {
     +"com.abc.def"
+    +packageName
+    blacklistRootingApps()
 }.error()
 ```
 

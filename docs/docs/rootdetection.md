@@ -1,6 +1,6 @@
 ---
-id: rootdetection
-title: Root detection
+id: rootdetection 
+title: Root detection 
 slug: /rootdetection
 ---
 
@@ -17,4 +17,16 @@ rootDetection {
     tolerateRoot = false
     tolerateBusyBox = true
 }
+```
+
+We also have an additional option (see blacklisting apps for more information) to deny running if we are able to see
+blacklisted apps
+
+For example:
+
+```kotlin
+ blacklistConfiguration {
+    +"com.abc.def"
+    blacklistRootingApps()
+}.error()
 ```

@@ -11,6 +11,7 @@ import io.github.dllewellyn.safetorun.SafeToRun
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.configure
 import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfiguration
+import io.github.dllewellyn.safetorun.features.blacklistedapps.rooting.blacklistRootingApps
 import io.github.dllewellyn.safetorun.features.debug.debugCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.features.oscheck.banAvdEmulator
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                 blacklistConfiguration {
                     +"com.abc.def"
                     +packageName
+                    blacklistRootingApps()
                 }.error()
 
                 verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
