@@ -37,7 +37,7 @@ internal class OSInformationQueryDeviceAdapterTest {
             osDetectionCheck(
                 beanContext,
                 conditionalBuilder {
-                    with(minOsVersion(32))
+                    failIf(minOsVersion(32))
                 }
             )
         }.canRun()

@@ -171,6 +171,7 @@ Resources:
            Stage: Prod
        Description: Usage plan for the deployment
        UsagePlanName: UsagePlan
+     DependsOn: SafeToRunGateway
 
   UsagePlanKeyProd:
      Type: AWS::ApiGateway::UsagePlanKey
@@ -178,6 +179,8 @@ Resources:
        KeyId: !Ref ApiKeyProd
        KeyType: API_KEY
        UsagePlanId: !Ref UsagePlan
+     DependsOn: SafeToRunGateway
+
 Outputs:
   ApiEndpoint:
     Description: "API Endpoint"

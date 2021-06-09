@@ -14,6 +14,7 @@ import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfigur
 import io.github.dllewellyn.safetorun.features.debug.debugCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.features.oscheck.banAvdEmulator
+import io.github.dllewellyn.safetorun.features.oscheck.banBluestacksEmulator
 import io.github.dllewellyn.safetorun.features.oscheck.bannedModel
 import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
@@ -76,6 +77,8 @@ class MainActivity : AppCompatActivity() {
                         with(bannedModel("Pixel 4a (5G)"))
                     }
                 ).warn()
+
+                osDetectionCheck(banBluestacksEmulator()).error()
 
                 installOriginCheckWithDefaults().warn()
 

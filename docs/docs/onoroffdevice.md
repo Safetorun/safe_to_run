@@ -4,6 +4,12 @@ title: On or off device?
 slug: /onoroffdevice
 ---
 
+:::danger
+
+Off device is currently in beta
+
+:::
+
 # Two modes
 
 Safe to run offers two modes of operation, it is

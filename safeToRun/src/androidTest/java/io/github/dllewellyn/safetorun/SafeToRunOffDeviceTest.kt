@@ -11,19 +11,24 @@ import org.junit.Test
 
 class SafeToRunOffDeviceTest {
 
+    companion object {
+        const val URL = "https://qm37a5nppe.execute-api.eu-west-1.amazonaws.com/Prod/"
+        const val API_KEY = "cGYypq1epDguXVB6qDvJ5noPCZyMv9W4wB6t64Gf"
+    }
+
     @Test
     fun testThatWeCanDoAnOffDeviceTest() {
         val result =
             with(
                 InstrumentationRegistry.getInstrumentation().context.safeToRunOffDevice(
-                    "https://rygl69bpz0.execute-api.eu-west-1.amazonaws.com/Prod",
-                    "5bzdwZ8Drs1AIsmJAx0M37bndOeEkwbv6pI5fjx1"
+                    URL,
+                    API_KEY
                 )
             ) {
                 isSafeToRun().let {
                     DefaultSafeToRunApi(
-                        DefaultHttpClient("https://rygl69bpz0.execute-api.eu-west-1.amazonaws.com/Prod"),
-                        "5bzdwZ8Drs1AIsmJAx0M37bndOeEkwbv6pI5fjx1",
+                        DefaultHttpClient(URL),
+                        API_KEY,
                     ).verifyDataResult(DeviceSignatureDto(it.signedResult))
                 }
             }

@@ -123,6 +123,27 @@ internal class SignatureVerificationCheckTest : TestCase() {
         assertThat(reportResult.failureMessage).contains(SIGNATURE)
     }
 
+    fun `test that if we throw an exception then we get a null signature`() {
+        // Given
+        val mockStrings = mockk<SignatureVerificationStrings>().apply {
+            every { signatureNotFoundMessage() } returns NOT_FOUND_MESSAGE
+        }
+
+        every { mockContext.packageManager } answers { throw NoSuchFieldError() }
+
+        // When
+        val reportResult =
+            verifySignatureConfiguration(
+                mockStrings,
+                AndroidSignatureVerificationQuery(mockContext, 27),
+                SIGNATURE,
+            )
+                .canRun() as SafeToRunReport.SafeToRunReportFailure
+
+        // Then
+        assertThat(reportResult.failureMessage).isEqualTo(NOT_FOUND_MESSAGE)
+    }
+
     fun `test that we verify a signature given expected input_lower_sdk`() {
         // Given
         val mockStrings = mockk<SignatureVerificationStrings>().apply {

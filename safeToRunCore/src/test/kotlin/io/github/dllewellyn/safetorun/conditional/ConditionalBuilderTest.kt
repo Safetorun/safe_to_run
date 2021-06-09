@@ -40,8 +40,8 @@ class ConditionalBuilderTest : TestCase() {
         val failMessage = "failure message"
 
         val builtResult = conditionalBuilder {
-            and { ConditionalResponse(true, failMessage) }
-            or { ConditionalResponse(true) }
+            failIf { ConditionalResponse(true, failMessage) }
+            unless { ConditionalResponse(true) }
         }
 
         // When

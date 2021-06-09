@@ -18,8 +18,15 @@ internal class AndroidSignatureVerificationQuery(
         return context.getAppSignature()?.string()
     }
 
+    @Suppress("SwallowedException")
+    private fun Context.getAppSignature(): Signature? = try {
+        retrieveSignature()
+    } catch (exception: NoSuchFieldError) {
+        null
+    }
+
     @SuppressLint("NewApi", "PackageManagerGetSignatures")
-    private fun Context.getAppSignature(): Signature? = if (sdkVersion < Build.VERSION_CODES.P) {
+    private fun Context.retrieveSignature() = if (sdkVersion < Build.VERSION_CODES.P) {
         packageManager.getPackageInfo(
             packageName,
             PackageManager.GET_SIGNATURES
