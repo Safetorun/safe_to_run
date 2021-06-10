@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.features.installorigin
 /**
  * Query for which app installed this app (e.g. playstore or amazon app store)
  */
-interface InstallOriginQuery {
+fun interface InstallOriginQuery {
     /**
      * Get the install package name
      *

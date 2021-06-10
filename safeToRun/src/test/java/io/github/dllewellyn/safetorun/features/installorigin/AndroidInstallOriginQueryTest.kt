@@ -45,7 +45,7 @@ internal class AndroidInstallOriginQueryTest : TestCase() {
             every { packageManager.getInstallSourceInfo(any()) } returns mockk<InstallSourceInfo>().apply {
                 every { installingPackageName } returns null
             }
-            val installOriginQuery = AndroidInstallOriginQuery(context, version)
+            val installOriginQuery = InstallOriginQuery { context.getInstaller(version) }
 
             // When
             val result = installOriginQuery.getInstallPackageName()
@@ -58,7 +58,7 @@ internal class AndroidInstallOriginQueryTest : TestCase() {
     fun `test that if the package returns a different package to allowed it will return an error`() {
         // Given
         versions.forEach { version ->
-            val installOriginQuery = AndroidInstallOriginQuery(context, version)
+            val installOriginQuery = InstallOriginQuery { context.getInstaller(version) }
 
             // When
             val result = installOriginQuery.getInstallPackageName()
