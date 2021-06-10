@@ -30,7 +30,6 @@ internal class DebuggableCheckKtTest : TestCase() {
         every { Debug.isDebuggerConnected() } returns false
         every { Debug.waitingForDebugger() } returns false
 
-
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
 
@@ -47,7 +46,6 @@ internal class DebuggableCheckKtTest : TestCase() {
         applicationInfo.flags = ApplicationInfo.FLAG_DEBUGGABLE
         every { Debug.isDebuggerConnected() } returns false
         every { Debug.waitingForDebugger() } returns false
-
 
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
@@ -68,7 +66,6 @@ internal class DebuggableCheckKtTest : TestCase() {
         every { Debug.isDebuggerConnected() } returns false
         every { Debug.waitingForDebugger() } returns true
 
-
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
 
@@ -87,7 +84,6 @@ internal class DebuggableCheckKtTest : TestCase() {
         applicationInfo.flags = 0
         every { Debug.isDebuggerConnected() } returns true
         every { Debug.waitingForDebugger() } returns false
-
 
         // When
         val result = check.canRun() as SafeToRunReport.MultipleReports
