@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.features.blacklistedapps
 /**
  * Check for a blacklisted app installed on device
  */
-interface BlacklistedAppCheck {
+fun interface BlacklistedAppCheck {
 
     /**
      * Check for a blacklisted app installed on device

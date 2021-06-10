@@ -1,6 +1,7 @@
 package io.github.dllewellyn.safetorun.features.rootdetection
 
 import android.content.Context
+import com.scottyab.rootbeer.RootBeer
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 
 /**
@@ -33,3 +34,18 @@ fun Context.rootDetection(config: RootDetectionConfig.() -> Unit): SafeToRunChec
             AndroidRootDetectionStrings(this@rootDetection)
         )
     }
+
+/**
+ * Check for root (defers to rootbeer)
+ *
+ * @param tolerateBusyBox whether or not to tolerate busybox
+ */
+inline fun Context.rootDetectionCheck(tolerateBusyBox: Boolean): Boolean {
+    return RootBeer(this).run {
+        if (tolerateBusyBox) {
+            isRooted
+        } else {
+            isRootedWithBusyBoxCheck
+        }
+    }
+}
