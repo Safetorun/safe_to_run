@@ -17,7 +17,36 @@ import android.content.Context
  */
 fun Context.blacklistConfiguration(block: BlacklistedAppConfiguration.() -> Unit) =
     blacklistedAppConfiguration(
-        AndroidBlacklistedAppCheck(this),
+        { containsPackage(it) },
         AndroidBlacklistedAppStrings(this@blacklistConfiguration),
         block
     )
+
+/**
+ * Configure application blacklisting by specifying an application(s) which you want
+ * to warn about
+ *
+ * Example
+ * ```safeToRun(
+ *      buildSafeToRunCheckList {
+ *          add {
+ *              blacklistConfigurationRule(packageName)
+ *          }
+ *      }
+ * )```
+ *
+ * @return has the rule been breaches
+ */
+inline fun Context.blacklistConfigurationRule(vararg blacklistedApp: String): Boolean =
+    blacklistedApp.isNotEmpty() && blacklistedApp.toList()
+        .any { containsPackage(it) }
+
+/**
+ * Check if the specific package exists on the device
+ *
+ * @param packageName the package we're looking for
+ */
+inline fun Context.containsPackage(packageName: String): Boolean =
+    packageManager.getInstalledPackages(0)
+        .map { it.packageName }
+        .contains(packageName)
