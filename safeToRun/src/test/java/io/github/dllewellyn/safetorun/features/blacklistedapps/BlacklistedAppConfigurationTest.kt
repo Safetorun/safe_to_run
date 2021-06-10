@@ -7,7 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
 
-internal class BlacklistedAppConfigurationKtKtTest : TestCase() {
+internal class BlacklistedAppConfigurationTest : TestCase() {
 
     private val mockContext = mockk<Context>(relaxed = true)
     private val mockPackageManager = mockk<PackageManager>()
