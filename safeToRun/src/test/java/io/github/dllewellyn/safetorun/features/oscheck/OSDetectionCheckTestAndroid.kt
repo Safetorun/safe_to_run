@@ -20,9 +20,7 @@ internal class OSDetectionCheckTestAndroid : TestCase() {
 
         // When
         val result = mockk<Context>().osDetectionCheck(
-            osInformationQuery.minOsVersion(
-                30
-            )
+            osInformationQuery.minOsVersion(30)
         ).canRun() as SafeToRunReport.MultipleReports
 
         // Then

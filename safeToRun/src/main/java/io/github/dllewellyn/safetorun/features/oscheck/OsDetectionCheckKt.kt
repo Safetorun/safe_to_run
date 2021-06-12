@@ -17,3 +17,15 @@ import io.github.dllewellyn.safetorun.features.oscheck.builders.osDetectionCheck
 fun Context.osDetectionCheck(vararg conditional: Conditional): SafeToRunCheck {
     return osDetectionCheckConfig(AndroidOSDetectionStrings(this), conditional.toList())
 }
+
+typealias FailIf = () -> Boolean
+typealias Unless = () -> Boolean
+
+inline fun safeToRunCombinedCheck(failIfs: List<FailIf>, unless: List<Unless>) =
+    unless.asSequence()
+        .map { it() }
+        .any { it.not() } ||
+            failIfs
+                .asSequence()
+                .map { it() }
+                .any { it }
