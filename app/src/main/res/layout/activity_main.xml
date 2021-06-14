@@ -7,6 +7,14 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+    <Button
+            android:id="@+id/runSensitiveAction"
+            android:text="Run sensitive action"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     <com.airbnb.epoxy.EpoxyRecyclerView
             tools:listitem="@layout/safe_to_run_failed_report"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

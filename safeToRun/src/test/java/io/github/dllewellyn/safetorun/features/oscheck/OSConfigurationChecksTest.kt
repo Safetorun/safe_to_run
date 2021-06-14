@@ -2,10 +2,9 @@ package io.github.dllewellyn.safetorun.features.oscheck
 
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.utils.mockBuildField
 import io.mockk.mockkStatic
 import junit.framework.TestCase
-import java.lang.reflect.Field
-import java.lang.reflect.Modifier
 
 internal class OSConfigurationChecksTest : TestCase() {
     override fun setUp() {
@@ -96,16 +95,6 @@ internal class OSConfigurationChecksTest : TestCase() {
 
     fun `test that banned host check does fail if banned`() {
         assertThat(bannedHostCheck(CURRENT_HOST)).isTrue()
-    }
-
-    private fun <T> mockBuildField(v: T, fieldName: String, clazz: Class<*>) {
-        val sdkIntField = clazz.getField(fieldName)
-        sdkIntField.isAccessible = true
-        Field::class.java.getDeclaredField("modifiers").also {
-            it.isAccessible = true
-            it.set(sdkIntField, sdkIntField.modifiers and Modifier.FINAL.inv())
-        }
-        sdkIntField.set(null, v)
     }
 
     companion object {

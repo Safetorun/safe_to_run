@@ -21,7 +21,21 @@ fun Context.osDetectionCheck(vararg conditional: Conditional): SafeToRunCheck {
 typealias FailIf = () -> Boolean
 typealias Unless = () -> Boolean
 
-inline fun safeToRunCombinedCheck(failIfs: List<FailIf>, unless: List<Unless>) =
+/**
+ * Combine a safe to run check (to form another safe to run check)
+ *
+ * For example, if any 'fail if' is true, we'll fail UNLESS and 'Unless' is
+ * false.
+ *
+ * @param failIfs fail if any of these are true
+ * @param unless unless any of these checks are false
+ *
+ * @return fail or not
+ */
+inline fun safeToRunCombinedCheck(
+    failIfs: List<FailIf> = emptyList(),
+    unless: List<Unless> = emptyList()
+) =
     unless.asSequence()
         .map { it() }
         .any { it.not() } ||
