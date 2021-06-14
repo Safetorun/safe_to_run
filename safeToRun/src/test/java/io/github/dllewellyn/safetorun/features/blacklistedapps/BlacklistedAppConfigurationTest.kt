@@ -7,7 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
 
-internal class BlacklistedAppConfigurationKtKtTest : TestCase() {
+internal class BlacklistedAppConfigurationTest : TestCase() {
 
     private val mockContext = mockk<Context>(relaxed = true)
     private val mockPackageManager = mockk<PackageManager>()
@@ -22,15 +22,15 @@ internal class BlacklistedAppConfigurationKtKtTest : TestCase() {
     }
 
     fun `test that we get a failure rule if package is installed`() {
-        assertTrue(mockContext.blacklistConfigurationRule(IS_PRESENT_PACKAGE))
+        assertTrue(mockContext.blacklistedAppCheck(IS_PRESENT_PACKAGE))
     }
 
     fun `test that we get a pass rule if package is installed`() {
-        assertFalse(mockContext.blacklistConfigurationRule(NOT_PRESENT_PACKAGE))
+        assertFalse(mockContext.blacklistedAppCheck(NOT_PRESENT_PACKAGE))
     }
 
     fun `test that we get a pass rule if empty package list provided`() {
-        assertFalse(mockContext.blacklistConfigurationRule())
+        assertFalse(mockContext.blacklistedAppCheck())
     }
 
     companion object {

@@ -9,7 +9,7 @@ import io.github.dllewellyn.safetorun.features.oscheck.baseOsCheck
  *
  * @param hardware hardware to ban
  */
-fun OSInformationQuery.bannedHardware(hardware: String): Conditional =
+inline fun OSInformationQuery.bannedHardware(hardware: String): Conditional =
     baseOsCheck({ "Banned hardware: ${hardware()}" }) {
         hardware == hardware()
     }

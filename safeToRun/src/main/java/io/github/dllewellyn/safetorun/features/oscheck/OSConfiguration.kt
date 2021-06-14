@@ -21,7 +21,7 @@ object OSConfiguration : OSInformationQuery by OSInformationQueryAndroid()
  *
  * @param minOSVersion minimum os version
  */
-fun minOsVersion(minOSVersion: Int): Conditional {
+inline fun minOsVersion(minOSVersion: Int): Conditional {
     return OSConfiguration.minOsVersion(minOSVersion)
 }
 
@@ -31,7 +31,7 @@ fun minOsVersion(minOSVersion: Int): Conditional {
  *
  * @param manufacturerName name of the manufacturer
  */
-fun notManufacturer(manufacturerName: String): Conditional {
+inline fun notManufacturer(manufacturerName: String): Conditional {
     return OSConfiguration.notManufacturer(manufacturerName)
 }
 
@@ -41,7 +41,7 @@ fun notManufacturer(manufacturerName: String): Conditional {
  *
  * @param bannedModel the model to ban
  */
-fun bannedModel(bannedModel: String): Conditional {
+inline fun bannedModel(bannedModel: String): Conditional {
     return OSConfiguration.bannedModel(bannedModel)
 }
 
@@ -50,7 +50,7 @@ fun bannedModel(bannedModel: String): Conditional {
  *
  * @param bannedBoard the model to ban
  */
-fun bannedBoard(bannedBoard: String): Conditional =
+inline fun bannedBoard(bannedBoard: String): Conditional =
     OSConfiguration.bannedBoard(bannedBoard)
 
 /**
@@ -58,7 +58,7 @@ fun bannedBoard(bannedBoard: String): Conditional =
  *
  * @param bannedBootloader the model to ban
  */
-fun bannedBootloader(bannedBootloader: String): Conditional =
+inline fun bannedBootloader(bannedBootloader: String): Conditional =
     OSConfiguration.bannedBootloader(bannedBootloader)
 
 /**
@@ -66,7 +66,7 @@ fun bannedBootloader(bannedBootloader: String): Conditional =
  *
  * @param cpuAbis the model to ban
  */
-fun bannedCpus(cpuAbis: String): Conditional =
+inline fun bannedCpus(cpuAbis: String): Conditional =
     OSConfiguration.bannedCpus(cpuAbis)
 
 /**
@@ -74,7 +74,7 @@ fun bannedCpus(cpuAbis: String): Conditional =
  *
  * @param device device to ban
  */
-fun bannedDevice(device: String): Conditional =
+inline fun bannedDevice(device: String): Conditional =
     OSConfiguration.bannedDevice(device)
 
 /**
@@ -82,7 +82,7 @@ fun bannedDevice(device: String): Conditional =
  *
  * @param hardware hardware to ban
  */
-fun bannedHardware(hardware: String): Conditional =
+inline fun bannedHardware(hardware: String): Conditional =
     OSConfiguration.bannedHardware(hardware)
 
 /**
@@ -90,5 +90,5 @@ fun bannedHardware(hardware: String): Conditional =
  *
  * @param host the model to ban
  */
-fun bannedHost(host: String): Conditional =
+inline fun bannedHost(host: String): Conditional =
     OSConfiguration.bannedHost(host)
