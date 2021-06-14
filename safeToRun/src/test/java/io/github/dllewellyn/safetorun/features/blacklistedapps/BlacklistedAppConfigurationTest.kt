@@ -22,15 +22,15 @@ internal class BlacklistedAppConfigurationTest : TestCase() {
     }
 
     fun `test that we get a failure rule if package is installed`() {
-        assertTrue(mockContext.blacklistConfigurationRule(IS_PRESENT_PACKAGE))
+        assertTrue(mockContext.blacklistedAppCheck(IS_PRESENT_PACKAGE))
     }
 
     fun `test that we get a pass rule if package is installed`() {
-        assertFalse(mockContext.blacklistConfigurationRule(NOT_PRESENT_PACKAGE))
+        assertFalse(mockContext.blacklistedAppCheck(NOT_PRESENT_PACKAGE))
     }
 
     fun `test that we get a pass rule if empty package list provided`() {
-        assertFalse(mockContext.blacklistConfigurationRule())
+        assertFalse(mockContext.blacklistedAppCheck())
     }
 
     companion object {

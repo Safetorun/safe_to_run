@@ -3,6 +3,7 @@ package com.andro.secure
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.databinding.ActivityMainBinding
 import com.auth0.jwt.JWT
@@ -11,25 +12,77 @@ import io.github.dllewellyn.safetorun.SafeToRun
 import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
 import io.github.dllewellyn.safetorun.configure
 import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfiguration
+import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistedAppCheck
 import io.github.dllewellyn.safetorun.features.blacklistedapps.rooting.blacklistRootingApps
 import io.github.dllewellyn.safetorun.features.debug.debugCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
+import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaultsCheck
 import io.github.dllewellyn.safetorun.features.oscheck.banAvdEmulator
 import io.github.dllewellyn.safetorun.features.oscheck.banBluestacksEmulator
+import io.github.dllewellyn.safetorun.features.oscheck.bannedBoardCheck
+import io.github.dllewellyn.safetorun.features.oscheck.bannedHardwareCheck
 import io.github.dllewellyn.safetorun.features.oscheck.bannedModel
+import io.github.dllewellyn.safetorun.features.oscheck.emulator.banAvdEmulatorCheck
+import io.github.dllewellyn.safetorun.features.oscheck.emulator.banBluestacksEmulatorCheck
+import io.github.dllewellyn.safetorun.features.oscheck.emulator.banGenymotionEmulatorCheck
 import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
 import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
 import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
+import io.github.dllewellyn.safetorun.features.oscheck.safeToRunCombinedCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
+import io.github.dllewellyn.safetorun.features.rootdetection.rootDetectionCheck
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
+import io.github.dllewellyn.safetorun.inline.buildSafeToRunCheckList
+import io.github.dllewellyn.safetorun.inline.safeToRun
 import io.github.dllewellyn.safetorun.offdevice.deviceInformation
 import io.github.dllewellyn.safetorun.offdevice.safeToRunOffDevice
+import io.github.dllewellyn.safetorun.reporting.anyFailures
 import io.github.dllewellyn.safetorun.reporting.toGrouped
 import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 
     private val reportsController = ResultEpoxyController()
+
+    private inline fun canIRun(actionOnFailure: () -> Unit) {
+        if (safeToRun(buildSafeToRunCheckList {
+                add {
+                    banAvdEmulatorCheck()
+                }
+
+                add {
+                    blacklistedAppCheck(packageName)
+                }
+
+                add {
+                    rootDetectionCheck()
+                }
+
+                add {
+                    banGenymotionEmulatorCheck()
+                }
+
+                add {
+                    banBluestacksEmulatorCheck()
+                }
+
+                add {
+                    safeToRunCombinedCheck(
+                        listOf(
+                            { bannedHardwareCheck("hardware") },
+                            { bannedBoardCheck("board") }
+                        )
+                    )
+                }
+
+                add {
+                    installOriginCheckWithDefaultsCheck()
+                }
+
+            })()) {
+            actionOnFailure()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +100,28 @@ class MainActivity : AppCompatActivity() {
             reportsController.setData(reportsController.reports, JWT.decode(it.signedResult).verifierResult())
         }
 
+        binding.runSensitiveAction.setOnClickListener {
+            canIRun {
+                throw RuntimeException("Def")
+            }
+            if (SafeToRun.isSafeToRun().anyFailures()) {
+                Toast.makeText(it.context, "Not safe to run", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                Toast.makeText(it.context, "Performed sensitive action!!", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+        configureSafeToRunReporting()
+        binding.reportList.setController(reportsController)
+
+        canIRun { Log.v("Failure", "Failure") }
+
+        reportsController.setData(SafeToRun.isSafeToRun().toGrouped(), mapOf())
+    }
+
+    private fun configureSafeToRunReporting() {
         SafeToRun.init(
             configure {
 
@@ -88,8 +163,6 @@ class MainActivity : AppCompatActivity() {
                 debugCheck().warn()
             }
         )
-        binding.reportList.setController(reportsController)
-        reportsController.setData(SafeToRun.isSafeToRun().toGrouped(), mapOf())
     }
 
     private fun DecodedJWT.verifierResult(): Map<String, String> =

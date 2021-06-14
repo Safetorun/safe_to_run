@@ -40,7 +40,7 @@ fun Context.rootDetection(config: RootDetectionConfig.() -> Unit): SafeToRunChec
  *
  * @param tolerateBusyBox whether or not to tolerate busybox
  */
-inline fun Context.rootDetectionCheck(tolerateBusyBox: Boolean): Boolean {
+inline fun Context.rootDetectionCheck(tolerateBusyBox: Boolean = true): Boolean {
     return RootBeer(this).run {
         if (tolerateBusyBox) {
             isRooted

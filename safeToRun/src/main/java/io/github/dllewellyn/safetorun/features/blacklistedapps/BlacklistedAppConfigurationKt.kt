@@ -37,7 +37,7 @@ fun Context.blacklistConfiguration(block: BlacklistedAppConfiguration.() -> Unit
  *
  * @return has the rule been breaches
  */
-inline fun Context.blacklistConfigurationRule(vararg blacklistedApp: String): Boolean =
+inline fun Context.blacklistedAppCheck(vararg blacklistedApp: String): Boolean =
     blacklistedApp.isNotEmpty() && blacklistedApp.toList()
         .any { containsPackage(it) }
 

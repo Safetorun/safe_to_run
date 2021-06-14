@@ -36,10 +36,19 @@ inline fun safeToRunCombinedCheck(
     failIfs: List<FailIf> = emptyList(),
     unless: List<Unless> = emptyList()
 ) =
+    doAnyUnlessesPass(unless).not() && failIfs
+        .asSequence()
+        .map { it() }
+        .any { it }
+
+/**
+ * Do any unlesses pass?
+ *
+ * @param unless unlesses
+ *
+ * @return are there any unlesses that pass (e.g. return false)
+ */
+inline fun doAnyUnlessesPass(unless: List<Unless>) =
     unless.asSequence()
         .map { it() }
-        .any { it.not() } ||
-            failIfs
-                .asSequence()
-                .map { it() }
-                .any { it }
+        .any { it.not() }

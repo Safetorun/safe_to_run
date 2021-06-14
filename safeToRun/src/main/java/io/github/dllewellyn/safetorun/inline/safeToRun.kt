@@ -33,7 +33,7 @@ inline fun safeToRun(
  *
  * @param builder a list builder. Add all checks you want to the list
  */
-fun buildSafeToRunCheckList(builder: MutableList<SafeToRunCheck>.() -> Unit): List<SafeToRunCheck> =
+inline fun buildSafeToRunCheckList(builder: MutableList<SafeToRunCheck>.() -> Unit): List<SafeToRunCheck> =
     mutableListOf<SafeToRunCheck>().apply {
         builder()
     }
