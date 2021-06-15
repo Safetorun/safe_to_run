@@ -1,6 +1,5 @@
 package com.andro.secure
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,12 +31,12 @@ import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.features.oscheck.safeToRunCombinedCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetectionCheck
+import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureCheck
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
 import io.github.dllewellyn.safetorun.inline.buildSafeToRunCheckList
 import io.github.dllewellyn.safetorun.inline.safeToRun
 import io.github.dllewellyn.safetorun.offdevice.deviceInformation
 import io.github.dllewellyn.safetorun.offdevice.safeToRunOffDevice
-import io.github.dllewellyn.safetorun.reporting.anyFailures
 import io.github.dllewellyn.safetorun.reporting.toGrouped
 import java.util.Date
 
@@ -81,7 +80,10 @@ class MainActivity : AppCompatActivity() {
                         listOf { installOriginCheckWithDefaultsCheck() },
                         listOf { !BuildConfig.DEBUG }
                     )
+                }
 
+                add {
+                    verifySignatureCheck("Abc")
                 }
 
             })()) {

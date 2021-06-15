@@ -25,7 +25,66 @@ implementation "io.github.dllewellyn.safetorun:safetorun:1.0.1"
 implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.1"
 ```
 
-In Activity, fragment or app 
+
+### Safe to run 
+
+Safe to run uses inline functions as an added level over protection against reverse engineering. It is
+recommended that you use the inline implementation *in many places* throughout the application in 
+order to harden against reverse engineering.
+
+```kotlin
+ private inline fun canIRun(actionOnFailure: () -> Unit) {
+      if (safeToRun(buildSafeToRunCheckList {
+              add {
+                  banAvdEmulatorCheck()
+              }
+
+              add {
+                  blacklistedAppCheck()
+              }
+
+              add {
+                  rootDetectionCheck()
+              }
+
+              add {
+                  banGenymotionEmulatorCheck()
+              }
+
+              add {
+                  banBluestacksEmulatorCheck()
+              }
+
+              add {
+                  safeToRunCombinedCheck(
+                      listOf(
+                          { bannedHardwareCheck("hardware") },
+                          { bannedBoardCheck("board") }
+                      )
+                  )
+              }
+
+              add {
+                  safeToRunCombinedCheck(
+                      listOf { installOriginCheckWithDefaultsCheck() },
+                      listOf { !BuildConfig.DEBUG }
+                  )
+
+              }
+        
+              add {
+               verifySignatureCheck("Abc")
+              }
+          })()) {
+          actionOnFailure()
+      }
+  }
+```
+
+### Safe to run reporting 
+
+Safe to run reporting gives give a similar configuration step, but a more detailed report
+for the errors than the above example
 
 ```kotlin
 SafeToRun.init(
