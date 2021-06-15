@@ -1,6 +1,8 @@
 package io.github.dllewellyn.safetorun.features.signatureverify
 
 import android.content.Context
+import android.os.Build
+import io.github.dllewellyn.safetorun.BuildConfig
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 
 /**
@@ -14,18 +16,46 @@ import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 fun Context.verifySignatureConfig(vararg signature: String): SafeToRunCheck {
     return verifySignatureConfiguration(
         signatureVerificationStrings = AndroidSignatureVerificationStringsImpl(this),
-        signatureVerificationQuery = AndroidSignatureVerificationQuery(this),
+        signatureVerificationQuery = { getAppSignature()?.string() },
         *signature
     )
 }
 
+/**
+ * Verify signature configuration override SDK version
+ *
+ * @param sdkVersion the sdk version
+ * @param signature signatures to allow
+ */
 internal fun Context.verifySignatureConfigOverrideSdkVersion(
     sdkVersion: Int,
     vararg signature: String
 ): SafeToRunCheck {
     return verifySignatureConfiguration(
         AndroidSignatureVerificationStringsImpl(this),
-        AndroidSignatureVerificationQuery(this, sdkVersion),
+        { getAppSignature(sdkVersion)?.string() },
         *signature
     )
 }
+
+
+/**
+ * Verify signature configuration override SDK version
+ * @param signature signatures to allow
+ */
+inline fun Context.verifySignatureCheck(
+    vararg signature: String
+) = getAppSignature()?.string()?.let {
+    signature.toList().contains(it).not()
+} ?: true
+
+/**
+ * Verify signature configuration override SDK version
+ * @param signature signatures to allow
+ */
+inline fun Context.verifySignatureCheckOverrideVersion(
+    versionNumber: Int = Build.VERSION.SDK_INT,
+    vararg signature: String
+) = getAppSignature(versionNumber)?.string()?.let {
+    signature.toList().contains(it).not()
+} ?: true

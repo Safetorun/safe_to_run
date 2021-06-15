@@ -31,12 +31,12 @@ import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
 import io.github.dllewellyn.safetorun.features.oscheck.safeToRunCombinedCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetectionCheck
+import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureCheck
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureConfig
 import io.github.dllewellyn.safetorun.inline.buildSafeToRunCheckList
 import io.github.dllewellyn.safetorun.inline.safeToRun
 import io.github.dllewellyn.safetorun.offdevice.deviceInformation
 import io.github.dllewellyn.safetorun.offdevice.safeToRunOffDevice
-import io.github.dllewellyn.safetorun.reporting.anyFailures
 import io.github.dllewellyn.safetorun.reporting.toGrouped
 import java.util.Date
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 add {
-                    blacklistedAppCheck(packageName)
+                    blacklistedAppCheck()
                 }
 
                 add {
@@ -76,7 +76,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 add {
-                    installOriginCheckWithDefaultsCheck()
+                    safeToRunCombinedCheck(
+                        listOf { installOriginCheckWithDefaultsCheck() },
+                        listOf { !BuildConfig.DEBUG }
+                    )
+                }
+
+                add {
+                    verifySignatureCheck("Abc")
                 }
 
             })()) {
@@ -104,13 +111,10 @@ class MainActivity : AppCompatActivity() {
             canIRun {
                 throw RuntimeException("Def")
             }
-            if (SafeToRun.isSafeToRun().anyFailures()) {
-                Toast.makeText(it.context, "Not safe to run", Toast.LENGTH_LONG)
-                    .show()
-            } else {
-                Toast.makeText(it.context, "Performed sensitive action!!", Toast.LENGTH_LONG)
-                    .show()
-            }
+
+            Toast.makeText(it.context, "Performed sensitive action!!", Toast.LENGTH_LONG)
+                .show()
+
         }
 
         configureSafeToRunReporting()

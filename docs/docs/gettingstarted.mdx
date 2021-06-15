@@ -1,17 +1,89 @@
 ---
-id: gettingstarted 
-title: Getting started 
+id: gettingstarted
+title: Getting started
 slug: /gettingstarted
 ---
 
 Gradle:
 
 ```groovy
-implementation "io.github.dllewellyn.safetorun:safetorun:1.0.1"
-implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.1"
+implementation "io.github.dllewellyn.safetorun:safetorun:$latest_version"
+implementation "io.github.dllewellyn.safetorun:safeToRunCore:$latest_version"
 ```
 
 An example of a configuration, done in App class:
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+defaultValue="default"
+values={[
+    { label: 'Safe to run (Default)', value: 'default', },
+{ label: 'Safe to run reporting', value: 'reporting', }
+]
+}>
+
+<TabItem value="default">
+
+```kotlin
+private inline fun canIRun(actionOnFailure: () -> Unit) {
+    if (safeToRun(buildSafeToRunCheckList {
+    add {
+        banAvdEmulatorCheck()
+    }
+
+    add {
+        blacklistedAppCheck()
+    }
+
+    add {
+        rootDetectionCheck()
+    }
+
+    add {
+        banGenymotionEmulatorCheck()
+    }
+
+    add {
+        banBluestacksEmulatorCheck()
+    }
+
+    add {
+        safeToRunCombinedCheck(
+            listOf(
+                { bannedHardwareCheck("hardware") },
+                { bannedBoardCheck("board") }
+            )
+        )
+    }
+
+    add {
+        safeToRunCombinedCheck(
+            listOf { installOriginCheckWithDefaultsCheck() },
+            listOf { !BuildConfig.DEBUG }
+        )
+    }
+
+    add {
+        verifySignatureCheck("Abc")
+    }
+    }).invoke()) {
+        actionOnFailure()
+    }
+}
+```
+
+Then use like this
+
+```kotlin
+canIRun {
+    throw RuntimeException("Def")
+}
+```
+</TabItem>
+<TabItem value="reporting">
 
 ```kotlin
 SafeToRun.init(
@@ -58,7 +130,7 @@ SafeToRun.safeToRun()
 The syntax above allows you to configure an 'error' or a 'warn' this simply impacts to type of response that is returned
 from safe to run. In practice, a response that would return an error message if configure to 'errorIf' will return
 
-```kotlin 
+```kotlin
 data class SafeToRunReportFailure(val failureReason: String, val failureMessage: String) : SafeToRunReport()
 ```
 
@@ -69,3 +141,8 @@ data class SafeToRunWarning(val warnReason: String, val warningMessage: String) 
 ```
 
 The difference is simply to help your app to distinguish between the two
+
+</TabItem>
+
+</Tabs>
+
