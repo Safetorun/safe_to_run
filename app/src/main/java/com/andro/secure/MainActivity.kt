@@ -1,5 +1,6 @@
 package com.andro.secure
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 add {
-                    blacklistedAppCheck(packageName)
+                    blacklistedAppCheck()
                 }
 
                 add {
@@ -76,7 +77,11 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 add {
-                    installOriginCheckWithDefaultsCheck()
+                    safeToRunCombinedCheck(
+                        listOf { installOriginCheckWithDefaultsCheck() },
+                        listOf { !BuildConfig.DEBUG }
+                    )
+
                 }
 
             })()) {
@@ -104,13 +109,10 @@ class MainActivity : AppCompatActivity() {
             canIRun {
                 throw RuntimeException("Def")
             }
-            if (SafeToRun.isSafeToRun().anyFailures()) {
-                Toast.makeText(it.context, "Not safe to run", Toast.LENGTH_LONG)
-                    .show()
-            } else {
-                Toast.makeText(it.context, "Performed sensitive action!!", Toast.LENGTH_LONG)
-                    .show()
-            }
+
+            Toast.makeText(it.context, "Performed sensitive action!!", Toast.LENGTH_LONG)
+                .show()
+
         }
 
         configureSafeToRunReporting()

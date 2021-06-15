@@ -15,10 +15,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
     <com.airbnb.epoxy.EpoxyRecyclerView
+            app:layout_constraintTop_toBottomOf="@id/runSensitiveAction"
             tools:listitem="@layout/safe_to_run_failed_report"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/reportList"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

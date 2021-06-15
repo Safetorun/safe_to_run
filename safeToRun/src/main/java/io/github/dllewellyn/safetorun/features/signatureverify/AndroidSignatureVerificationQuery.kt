@@ -15,18 +15,30 @@ internal class AndroidSignatureVerificationQuery(
     SignatureVerificationQuery {
 
     override fun retrieveSignatureForApplication(): String? {
-        return context.getAppSignature()?.string()
+        return context.getAppSignature(sdkVersion)?.string()
     }
+}
 
-    @Suppress("SwallowedException")
-    private fun Context.getAppSignature(): Signature? = try {
-        retrieveSignature()
-    } catch (exception: NoSuchFieldError) {
-        null
-    }
+@Suppress("SwallowedException")
+/**
+ * Get app signature
+ *
+ * @param sdkVersion the version of the sdk
+ */
+inline fun Context.getAppSignature(sdkVersion: Int = Build.VERSION_CODES.P): Signature? = try {
+    retrieveSignature(sdkVersion)
+} catch (exception: NoSuchFieldError) {
+    null
+}
 
-    @SuppressLint("NewApi", "PackageManagerGetSignatures")
-    private fun Context.retrieveSignature() = if (sdkVersion < Build.VERSION_CODES.P) {
+@SuppressLint("NewApi", "PackageManagerGetSignatures")
+/**
+ * Retrieve the applications signature
+ *
+ * @param sdkVersion the version of the sdk
+ */
+inline fun Context.retrieveSignature(sdkVersion: Int) =
+    if (sdkVersion < Build.VERSION_CODES.P) {
         packageManager.getPackageInfo(
             packageName,
             PackageManager.GET_SIGNATURES
@@ -38,10 +50,14 @@ internal class AndroidSignatureVerificationQuery(
         ).signingInfo.apkContentsSigners.firstOrNull()
     }
 
-    private fun Signature.string(): String? {
-        val signatureBytes = toByteArray() ?: return null
-        val digest = MessageDigest.getInstance("SHA")
-        val hash = digest.digest(signatureBytes)
-        return Base64.encodeToString(hash, Base64.NO_WRAP)
-    }
+/**
+ * Convert a signature to a string
+ *
+ * @return a string representation of the signature
+ */
+inline fun Signature.string(): String? {
+    val signatureBytes = toByteArray() ?: return null
+    val digest = MessageDigest.getInstance("SHA")
+    val hash = digest.digest(signatureBytes)
+    return Base64.encodeToString(hash, Base64.NO_WRAP)
 }
