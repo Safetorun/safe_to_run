@@ -12,6 +12,31 @@ Root detection is only available on device
 
 Root detection is mostly deferred to RootBeer. The configuration looks like this:
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="default"
+    values={[
+        { label: 'Safe to run (Default)', value: 'default', },
+        { label: 'Reporting', value: 'reporting', },
+    ]
+    }>
+
+<TabItem value="default">
+
+```kotlin
+safeToRun(buildSafeToRunCheckList {
+    add {
+        rootDetectionCheck()
+    }
+})
+```
+
+</TabItem>
+
+<TabItem value="reporting">
+
 ```kotlin
 rootDetection {
     tolerateRoot = false
@@ -30,3 +55,6 @@ For example:
     blacklistRootingApps()
 }.error()
 ```
+
+</TabItem>
+</Tabs>

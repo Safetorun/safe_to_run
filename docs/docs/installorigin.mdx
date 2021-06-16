@@ -21,14 +21,30 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
-defaultValue="ondevice"
+defaultValue="default"
 values={[
-{ label: 'On device', value: 'ondevice', },
+    {label: 'Default', value: 'default'},
+{ label: 'Reporting', value: 'reporting', },
 { label: 'Off device', value: 'offdevice', },
 ]
 }>
 
-<TabItem value="ondevice">
+<TabItem value="default">
+
+```kotlin
+
+// With amazon and google play store configured
+
+installOriginCheckWithDefaultsCheck("com.example.installer")
+
+// Without amazon and google play store configured by default
+installOriginCheckWithoutDefaultsCheck("com.example.installer")
+
+```
+
+</TabItem>
+
+<TabItem value="reporting">
 
 ```kotlin
 

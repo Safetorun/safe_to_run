@@ -15,6 +15,7 @@ import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistConfigur
 import io.github.dllewellyn.safetorun.features.blacklistedapps.blacklistedAppCheck
 import io.github.dllewellyn.safetorun.features.blacklistedapps.rooting.blacklistRootingApps
 import io.github.dllewellyn.safetorun.features.debug.debugCheck
+import io.github.dllewellyn.safetorun.features.debug.isDebuggableCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaultsCheck
 import io.github.dllewellyn.safetorun.features.oscheck.banAvdEmulator
@@ -51,6 +52,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 add {
+                    banGenymotionEmulatorCheck()
+                }
+
+                add {
+                    banBluestacksEmulatorCheck()
+                }
+
+                add {
                     blacklistedAppCheck()
                 }
 
@@ -59,11 +68,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 add {
-                    banGenymotionEmulatorCheck()
-                }
-
-                add {
-                    banBluestacksEmulatorCheck()
+                    isDebuggableCheck()
                 }
 
                 add {

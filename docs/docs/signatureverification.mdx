@@ -11,14 +11,23 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
-defaultValue="ondevice"
+defaultValue="default"
 values={[
-{ label: 'On device', value: 'ondevice', },
+    {label: 'Default', value:'default'},
+{ label: 'Reporting', value: 'reporting', },
 { label: 'Off device', value: 'offdevice', },
 ]
 }>
+<TabItem value="default">
 
-<TabItem value="ondevice">
+```kotlin
+add {
+    verifySignatureCheck("Abc")
+}
+```
+
+</TabItem>
+<TabItem value="reporting">
 
 ```kotlin
 verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=").error()
