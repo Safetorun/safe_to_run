@@ -10,7 +10,7 @@ plugins {
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
 group 'io.github.dllewellyn.safetorun'
-version '1.0.1'
+version '1.0.3'
 
 repositories {
     mavenCentral()
@@ -23,7 +23,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 }
 
 jacocoBadgeGenSetting {
