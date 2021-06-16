@@ -4,9 +4,47 @@ title: Emulator check
 slug: /emulatorcheck
 ---
 
+More information, including the motivation for emulator detection can be found in this article:
+
+[Emulator detection on android](https://danielllewellyn.medium.com/emulator-detection-in-android-350efba44048)
+
+
 The emulator checks are done using OS Configuration. For example:
 
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="default"
+    values={[
+        {label: 'Default', value: 'default'},
+        { label: 'Reporting', value: 'reporting', },
+    ]
+    }>
+<TabItem value="default">
+
+```kotlin
+safeToRun(buildSafeToRunCheckList {
+    add {
+        // The default android emulator
+        banAvdEmulatorCheck()
+    }
+
+    add {
+        // Ban genymotion emulators
+        banGenymotionEmulatorCheck()
+    }
+
+    add {
+        // Ban bluestacks
+        banBluestacksEmulatorCheck()
+    }
+})
+```
+
+</TabItem>
+<TabItem value="reporting">
 ```kotlin
 osDetectionCheck(banAvdEmulator()).error()
 ```
@@ -24,6 +62,6 @@ banGenymotionEmulator()
 banBluestacksEmulator()
 ```
 
-More information, including the motivation for emulator detection can be found in this article:
+</TabItem>
+</Tabs>
 
-[Emulator detection on android](https://danielllewellyn.medium.com/emulator-detection-in-android-350efba44048)

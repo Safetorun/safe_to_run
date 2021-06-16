@@ -1,13 +1,12 @@
 ---
-id: why
-title: Why Safe to Run?
+id: why 
+title: Why Safe to Run? 
 slug: /
 ---
 :::caution
 
-No solution to tamper detection is foolproof, if someone is
-able to decompile your application and push it onto an unsuspecting
-device, it is possible remove the functionality of safe to run.
+No solution to tamper detection is foolproof, if someone is able to decompile your application and push it onto an
+unsuspecting device, it is possible remove the functionality of safe to run.
 
 This just makes it that much harder...
 
@@ -15,52 +14,26 @@ This just makes it that much harder...
 
 ## Motivation
 
-Safe to run has been developed in order to simplify 
-development of secure android applications. In particular
-the goal of the project is to provide a simple, configurable
-way for app developers to define when an app should or
-should not run and a simple way of calling that check.
+Safe to run has been developed in order to simplify development of secure android applications. In particular the goal
+of the project is to provide a simple, configurable way for app developers to define when an app should or should not
+run and a simple way of calling that check.
 
-## Terms
+Following are a list of things that Safe to run can help protect against and the checks that can help with them
 
-### Checks
+|                   | Hardening against de & recompilation | Harden against reverse engineers and pentesters | Harden against insecure devices |
+|-------------------|--------------------------------------|-------------------------------------------------|---------------------------------|
+| Signature check   | [x]                                  | [x]                                             |                                 |
+| Root detection    |                                      | [x]                                             | [x]                             |
+| OS Check          |                                      |                                                 | [x]                             |
+| Blacklisting apps |                                      | [x]                                             |                                 |
+| Debug check       |                                      | [x]                                             |                                 |
+| Install origin    |                                      | [x]                                             |                                 |
+| Emulator check    | [x]                                  | [x]                                             |                                 |
 
-Safe to run consists of a number of 'checks' which are detailed
-in the documentation. These checks can be configured to 'error' or 
-'warn'. What you do in response to a 'failed' check is up to you - for example
-you might want to throw a runtime exception, or else disable certain features
-of your app
+## Checks
 
-### Reports 
-
-Safe to run checks return a report. This is a sealed class with the following
-definition 
-
-
-```kotlin
-
-sealed class SafeToRunReport {
-    data class SafeToRunReportFailure(val failureReason: String, val failureMessage: String) : SafeToRunReport()
-    data class SafeToRunReportSuccess(val successMessage: String) : SafeToRunReport()
-    data class MultipleReports(val reports: List<SafeToRunReport>) : SafeToRunReport()
-    data class SafeToRunWarning(val warnReason: String, val warningMessage: String) : SafeToRunReport()
-}
-```
-
-You can check the result with something like this:
+Safe to run consists of a number of 'checks' which are detailed in the documentation. The purpose of these checks is to
+ensure that the app is 'safe to run' i.e. it meets the pre-conditions you have set.
 
 
-```kotlin
-val safeToRun = SafeToRun.isSafeToRun()
-throwIfSomethingFailed(safeToRun)
-
-fun throwIfSomethingFailed(safeToRunReport: SafeToRunReport) {
-    when (safeToRunReport) {
-        is SafeToRunReport.MultipleReports -> safeToRunReport.reports.forEach(::throwIfSomethingFailed)
-        is SafeToRunReport.SafeToRunReportFailure -> throw RuntimeException(safeToRunReport.failureMessage)
-        is SafeToRunReport.SafeToRunReportSuccess ->{} // Nothing
-        is SafeToRunReport.SafeToRunWarning -> {} // It's a good idea to log
-    }
-}
-```
 

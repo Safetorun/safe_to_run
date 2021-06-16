@@ -28,20 +28,30 @@ Or, declare all. That's not suggested
 We also have a utility function `blacklistRootingApps()` in order to detect apps that are used
 for rooting an application
 
-## Configuration 
+## Configuration
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs
-  defaultValue="ondevice"
+  defaultValue="default"
   values={[
-    { label: 'On device', value: 'ondevice', },
+      {label: 'Default', value: 'default'},
+    { label: 'Reporting', value: 'reporting', },
     { label: 'Off device', value: 'offdevice', },
   ]
 }>
 
-<TabItem value="ondevice">
+<TabItem value="default">
+
+```kotlin
+safeToRun(buildSafeToRunCheckList {
+    add { blacklistedAppCheck("com.blacklisted.package1", "com.blacklisted.package2") }
+})
+```
+</TabItem>
+
+<TabItem value="reporting">
 
 ```kotlin
 blacklistConfiguration {
@@ -52,7 +62,7 @@ blacklistConfiguration {
 ```
 
 </TabItem>
-    
+
 <TabItem value="offdevice">
 
 ```kotlin
@@ -62,7 +72,7 @@ blacklistedAppCheck(context) {
 ```
 
 </TabItem>
-    
+
 </Tabs>
 
 

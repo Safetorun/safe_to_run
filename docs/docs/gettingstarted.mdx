@@ -55,14 +55,14 @@ private inline fun canIRun(actionOnFailure: () -> Unit) {
             listOf(
                 { bannedHardwareCheck("hardware") },
                 { bannedBoardCheck("board") }
-            )
+            ) // Only one list to the combined check - fail if either condition is true
         )
     }
 
     add {
         safeToRunCombinedCheck(
-            listOf { installOriginCheckWithDefaultsCheck() },
-            listOf { !BuildConfig.DEBUG }
+            listOf { installOriginCheckWithDefaultsCheck() }, // Fail if the install origin check fails
+            listOf { !BuildConfig.DEBUG } // Unless this is a debug application
         )
     }
 
