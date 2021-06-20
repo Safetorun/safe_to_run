@@ -103,14 +103,14 @@ class MainActivity : AppCompatActivity() {
 
         Log.v("Device information", deviceInformation().toString())
 
-        safeToRunOffDevice(BuildConfig.SERVER_URL, BuildConfig.API_KEY).isSafeToRun {
-            // Send this result to the server for verification.
-            // This sample is for demonstration purposes only
-            Log.v("IsSafeToRun", it.signedResult)
-
-            // In reality, you need to use JWT.verify() with your secret
-            reportsController.setData(reportsController.reports, JWT.decode(it.signedResult).verifierResult())
-        }
+//        safeToRunOffDevice(BuildConfig.SERVER_URL, BuildConfig.API_KEY).isSafeToRun {
+//            // Send this result to the server for verification.
+//            // This sample is for demonstration purposes only
+//            Log.v("IsSafeToRun", it.signedResult)
+//
+//            // In reality, you need to use JWT.verify() with your secret
+//            reportsController.setData(reportsController.reports, JWT.decode(it.signedResult).verifierResult())
+//        }
 
         binding.runSensitiveAction.setOnClickListener {
             canIRun {

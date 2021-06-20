@@ -1,0 +1,80 @@
+plugins {
+    id("org.jetbrains.dokka")
+    id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
+    id "com.diffplug.spotless"
+    id "io.gitlab.arturbosch.detekt"
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: "com.vanniktech.android.junit.jacoco"
+
+ext {
+    PUBLISH_GROUP_ID = 'io.github.dllewellyn.safetorun'
+    PUBLISH_VERSION = '1.0.3'
+    PUBLISH_ARTIFACT_ID = 'intentverification'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+
+    defaultConfig {
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':safeToRunCore')
+    implementation project(':safeToRunInternal')
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation "com.scottyab:rootbeer-lib:$rootbeerVersion"
+    implementation "androidx.security:security-crypto:1.0.0"
+
+    testImplementation 'androidx.test:core:1.3.0'
+    testImplementation "org.mock-server:mockserver-netty:$mockHttpVersion"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "com.google.truth:truth:$googleTruth"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    testImplementation "org.robolectric:robolectric:4.4"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+jacocoBadgeGenSetting {
+    jacocoReportPath "$buildDir/reports/jacoco/debug/jacoco.xml"
+    readmePath "$projectDir/README.md"
+    // since v0.2.0, percentage limitation (0-100) for different type of coverage
+    limit = ['instruction': 0, 'branch': 0, 'line': 0, 'method': 0, 'class': 0]
+}
