@@ -73,7 +73,7 @@ internal class IntentVerificationBuilderTest {
     @Test
     fun `test that intent verify fails if there are any urls and urls are banned`() {
         // Given
-        every { intent.extras } returns Bundle().apply { putString("url", "http://abc.com") }
+        every { intent.extras } returns Bundle().apply { putString("url", URL) }
 
         assertThat(intent.verify { }).isFalse()
     }
@@ -81,7 +81,7 @@ internal class IntentVerificationBuilderTest {
     @Test
     fun `test that intent verify passes if there are any urls and urls are not banned`() {
         // Given
-        every { intent.extras } returns Bundle().apply { putString("url", "https://abc.com") }
+        every { intent.extras } returns Bundle().apply { putString("url", URL) }
 
         assertThat(intent.verify {
             allowAnyUrls = true
@@ -91,7 +91,7 @@ internal class IntentVerificationBuilderTest {
     @Test
     fun `test that intent verify passes if there are any urls in a list and urls are not banned`() {
         // Given
-        every { intent.extras } returns Bundle().apply { putStringArrayList("url", arrayListOf("https://abc.com")) }
+        every { intent.extras } returns Bundle().apply { putStringArrayList("url", arrayListOf(URL)) }
 
         assertThat(intent.verify {
             allowAnyUrls = true
@@ -101,7 +101,7 @@ internal class IntentVerificationBuilderTest {
     @Test
     fun `test that intent verify passes if there are any urls in a array list and urls are not banned`() {
         // Given
-        every { intent.extras } returns Bundle().apply { putStringArray("url", arrayOf("https://abc.com")) }
+        every { intent.extras } returns Bundle().apply { putStringArray("url", arrayOf(URL)) }
 
         assertThat(intent.verify {
             allowAnyUrls = true
@@ -112,4 +112,7 @@ internal class IntentVerificationBuilderTest {
         every { intent.extras } returns Bundle().apply { putParcelable("Intent", Intent()) }
     }
 
+    companion object {
+        const val URL = "https://abc.com"
+    }
 }
