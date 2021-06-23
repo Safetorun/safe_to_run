@@ -9,7 +9,6 @@ module.exports = {
     favicon: 'img/favicon.ico',
     organizationName: 'safetorun',
     projectName: 'safe_to_run',
-    plugins: ['@docusaurus/plugin-google-analytics', '@docusaurus/plugin-google-gtag'],
     themeConfig: {
         googleAnalytics: {
             trackingID: 'UA-158023887-2',
@@ -55,7 +54,7 @@ module.exports = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl:
-                        'https://github.com/dllewellyn/safe_to_run/edit/master/docs/',
+                        'https://github.com/safetorun/safe_to_run/edit/master/docs/',
                 },
             },
         ],
