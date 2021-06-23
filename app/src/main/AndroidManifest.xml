@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.andro.secure">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
@@ -10,14 +12,36 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-                  android:exported="true"
-                  android:permission="">
+        <activity android:name=".intents.WebViewActivity">
+            <intent-filter>
+                <action android:name="com.andro.secure.webview"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".intents.BouncableActivity">
+            <intent-filter>
+                <action android:name="com.andro.secure.bouncy"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:exported="true"
+                android:permission="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <receiver
+                android:name=".intents.SensitiveBroadcastReceiver"
+                tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.andro.secure.sensitive-action"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -2,14 +2,22 @@
 module.exports = {
     title: 'Safe to run',
     tagline: 'Secure your mobile apps',
-    url: 'https://dllewellyn.github.io/safe_to_run',
+    url: 'https://safetorun.github.io/safe_to_run',
     baseUrl: '/safe_to_run/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
-    organizationName: 'dllewellyn',
+    organizationName: 'safetorun',
     projectName: 'safe_to_run',
     themeConfig: {
+        googleAnalytics: {
+            trackingID: 'UA-158023887-2',
+            anonymizeIP: true,
+        },
+        gtag: {
+            trackingID: 'UA-158023887-2',
+            anonymizeIP: true
+        },
         navbar: {
             title: 'Safe to run',
             logo: {
@@ -24,7 +32,7 @@ module.exports = {
                     position: 'left',
                 },
                 {
-                    href: 'https://github.com/dllewellyn/safe_to_run/',
+                    href: 'https://github.com/safetorun/safe_to_run/',
                     label: 'GitHub',
                     position: 'right',
                 },
@@ -32,8 +40,7 @@ module.exports = {
         },
         footer: {
             style: 'dark',
-            links: [
-            ],
+            links: [],
             copyright: `Copyright © ${new Date().getFullYear()} Daniel Llewellyn, Inc. Built with Docusaurus.`,
         },
         prism: {
@@ -47,7 +54,7 @@ module.exports = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl:
-                        'https://github.com/facebook/docusaurus/edit/master/website/',
+                        'https://github.com/safetorun/safe_to_run/edit/master/docs/',
                 },
             },
         ],
