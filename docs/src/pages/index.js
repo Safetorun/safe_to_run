@@ -10,49 +10,34 @@ import styles from './styles.module.css';
 const features = [
     {
         title: 'Easy to Use',
-        // imageUrl: 'img/undraw_docusaurus_mountain.svg',
+        imageUrl: "img/simple.png",
         description: (
             <>
-                Safe to run is a simple to use, tool to help with Android security.
+               Android security is hard, safe to run is a simple to use tool to help protect your app from hackers.
             </>
         ),
     },
     {
-        title: 'Off device',
-        // imageUrl: 'img/undraw_docusaurus_tree.svg',
+        title: 'Check it\'s safe',
+        imageUrl: 'img/secure.jpg',
         description: (
             <>
-                Safe to run can run on and off device - perform your checks where it makes
-                sense to you
-            </>
-        ),
-    },
-    {
-        title: 'Root detection', description: (
-            <>
-                Detect rooted devices
+                The premise of safe to run is a simple question - is it safe to run my app or function.
+                With everything from root detection, to blacklisted apps and signature verification - safe to
+                run gives you confidence
             </>)
     },
     {
-        title: 'Signature check', description: (
+        title: 'Robust recompilation protection',
+        imageUrl: 'img/robust.jpg',
+        description: (
             <>
-                Verify the signature of your application
+                Safe to run provides an interface to protect against attackers modifying and recompiling
+                your binary
             </>)
     },
-    {title: 'Blacklisted apps', description: (<>Stop running if known malicious applications are running </>)},
-    {title: 'Install origin', description: (<>Enforce how your app is installed)</>)},
-    {title: 'Os configuration check', description: (<>enforce min OS versions, avoid certain manufacturers etc</>)},
-    {title: 'Debug check', description: (<>Added protection against reverse engineering</>)},
 ];
 
-const secondRow = [
-
-
-];
-
-const thirdRow = [
-
-]
 
 function Feature({imageUrl, title, description}) {
     const imgUrl = useBaseUrl(imageUrl);
@@ -90,26 +75,6 @@ export default function Home() {
                         <section className={styles.section}>
                             <div className={styles.features}>
                                 {features.map((props, idx) => (
-                                    <Feature key={idx} {...props} />
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    {secondRow && secondRow.length > 0 && (
-                        <section className={styles.section}>
-                            <div className={styles.features}>
-                                {secondRow.map((props, idx) => (
-                                    <Feature key={idx} {...props} />
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    {thirdRow && thirdRow.length > 0 && (
-                        <section className={styles.section}>
-                            <div className={styles.features}>
-                                {thirdRow.map((props, idx) => (
                                     <Feature key={idx} {...props} />
                                 ))}
                             </div>

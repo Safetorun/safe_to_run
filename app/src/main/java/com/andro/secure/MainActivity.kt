@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         configureSafeToRunReporting()
         binding.reportList.setController(reportsController)
 
-        canIRun { Log.v("Failure", "Failure") }
+        canIRun {  Log.v("Failure", "Failure") }
 
         reportsController.setData(SafeToRun.isSafeToRun().toGrouped(), mapOf())
     }
