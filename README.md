@@ -1,7 +1,7 @@
 # Safe to Run
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ee63330045749fba264c69f0c796993)](https://app.codacy.com/gh/dllewellyn/safe_to_run?utm_source=github.com&utm_medium=referral&utm_content=dllewellyn/safe_to_run&utm_campaign=Badge_Grade_Settings)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run) [![codecov](https://codecov.io/gh/dllewellyn/safe_to_run/branch/master/graph/badge.svg?token=WUGLW5ALWB)](https://codecov.io/gh/dllewellyn/safe_to_run)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run) 
 
 Core
  ![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safetorun/badge.svg)
