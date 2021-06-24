@@ -4,43 +4,29 @@
         <title>Safe to run Blog</title>
         <link>https://safetorun.github.io/safe_to_run/blog</link>
         <description>Safe to run Blog</description>
-        <lastBuildDate>Tue, 14 Apr 2020 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 24 Jun 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
-            <title><![CDATA[Blog Plugin]]></title>
-            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/2020/04/14/blog-plugin</link>
-            <guid>Blog Plugin</guid>
-            <pubDate>Tue, 14 Apr 2020 00:00:00 GMT</pubDate>
-            <description><![CDATA[You can use our blog plugin to do your posts]]></description>
+            <title><![CDATA[Secure against de/recompiling android apps]]></title>
+            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/inline-functions</link>
+            <guid>inline-functions</guid>
+            <pubDate>Thu, 24 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Using kotlin Inline functions to help secure against de/recompiling android apps]]></description>
         </item>
         <item>
-            <title><![CDATA[A large blog post]]></title>
-            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/2020/04/14/large-blog-post</link>
-            <guid>A large blog post</guid>
-            <pubDate>Tue, 14 Apr 2020 00:00:00 GMT</pubDate>
-            <description><![CDATA[Hello, this is an example]]></description>
+            <title><![CDATA[Emulator detection]]></title>
+            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/emulator-detection</link>
+            <guid>emulator-detection</guid>
+            <pubDate>Wed, 23 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[What?]]></description>
         </item>
         <item>
-            <title><![CDATA[Welcome]]></title>
-            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/welcome</link>
-            <guid>welcome</guid>
-            <pubDate>Thu, 30 May 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[Blog features are powered by the blog plugin. Simply add files to the blog directory. It supports tags as well!]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hello]]></title>
-            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/hello-world</link>
-            <guid>hello-world</guid>
-            <pubDate>Wed, 29 May 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[Welcome to this blog. This blog is created with Docusaurus 2 alpha.]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hola]]></title>
-            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/hola</link>
-            <guid>hola</guid>
-            <pubDate>Tue, 28 May 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet]]></description>
+            <title><![CDATA[Secure android apps with Safe to run]]></title>
+            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/emulator-detection</link>
+            <guid>emulator-detection</guid>
+            <pubDate>Tue, 22 Jun 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[No library or app can guarantee not running on a rooted phone because of the nature of rooted phones, and any tamper detection could be removed or changed in reality — this app should work with most attackers, and make it hard enough to make it not worth it for many others.]]></description>
         </item>
     </channel>
 </rss>
