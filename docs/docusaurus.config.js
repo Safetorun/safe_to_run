@@ -31,6 +31,7 @@ module.exports = {
                     label: 'Docs',
                     position: 'left',
                 },
+                {to: 'blog', label: 'Blog', position: 'left'},
                 {
                     href: 'https://github.com/safetorun/safe_to_run/',
                     label: 'GitHub',
