@@ -2,6 +2,11 @@ package io.github.dllewellyn.safetorun.intents
 
 import android.os.Bundle
 
+/**
+ * Gather all strings inside a bundle
+ *
+ * @return list of strings that are found in the bundle
+ */
 fun Bundle?.gatherAllStrings(): List<String> {
     val returnList = mutableListOf<String>()
 

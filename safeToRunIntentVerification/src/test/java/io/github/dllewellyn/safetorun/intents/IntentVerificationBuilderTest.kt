@@ -23,7 +23,6 @@ internal class IntentVerificationBuilderTest {
     @Test
     fun `test that intent verifies correctly if there are no containing intents`() {
         assertThat(intent.verify {
-            allowAnyUrls = true
         }).isTrue()
     }
 
