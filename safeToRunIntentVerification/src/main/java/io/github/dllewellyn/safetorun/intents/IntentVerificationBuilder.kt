@@ -1,6 +1,8 @@
 package io.github.dllewellyn.safetorun.intents
 
 import android.content.Intent
+import io.github.dllewellyn.safetorun.intents.url.AllowUrlsBuilder
+import io.github.dllewellyn.safetorun.intents.url.AllowUrlsBuilderImpl
 
 /**
  * Class for building a verification builder use
@@ -9,27 +11,20 @@ import android.content.Intent
  * Intent.verify()
  * ```
  */
-class IntentVerificationBuilder internal constructor(private val intent: Intent) {
+class IntentVerificationBuilder internal constructor(
+    private val intent: Intent
+) : AllowUrlsBuilder by AllowUrlsBuilderImpl() {
 
     /**
      * Whether to allow an 'intent' inside this bundle
      */
     var allowContainingIntents: Boolean = false
 
-    /**
-     * Whether to allow any urls inside the bundle
-     */
-    var allowAnyUrls: Boolean = false
-
-    private val urlRegex by lazy {
-        "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]".toRegex()
-    }
-
-    private var actionOnSuccess: (() -> Unit)? = null
-    private var actionOnFailure: (() -> Unit)? = null
+    var actionOnSuccess: (() -> Unit)? = null
+    var actionOnFailure: (() -> Unit)? = null
 
     internal fun verify() =
-        (handleContainingIntents() && handleUrlStrings())
+        (doesIntentCheckPass() && doesUrlCheckPass(intent))
             .also {
                 if (it) {
                     actionOnSuccess?.invoke()
@@ -38,24 +33,28 @@ class IntentVerificationBuilder internal constructor(private val intent: Intent)
                 }
             }
 
-    private fun handleContainingIntents() = if (!allowContainingIntents) {
+    private fun doesIntentCheckPass() = if (!allowContainingIntents) {
         intent.extras?.gatherAllIntents()?.isEmpty() == true
     } else {
         true
     }
 
-    private fun handleUrlStrings() = if (!allowAnyUrls) {
-        intent.extras?.gatherAllStrings()?.any {
-            urlRegex.matches(it)
-        }?.not() ?: true
-    } else {
-        true
-    }
 }
 
 /**
  * Verify an intent based on the configuration
  *
+ * Sample:
+ * ```
+ * verify {
+ *  actionOnSuccess = { // Use intent }
+ *  actionOnFailure = { // Log error }
+ *  allowContainingIntents = true // Use me to permit intents being passed as an argument
+ *  "mysafehost".allowHost() // Allow a specific
+ *  allowAnyUrls = true // Not recommended, you should try to whitelist all URLs if possible to avoid opening
+ *                      // malicious intents
+ * }
+ * ```
  * @param builderBlock the configuration to use
  */
 fun Intent.verify(builderBlock: IntentVerificationBuilder.() -> Unit) = IntentVerificationBuilder(this).run {
