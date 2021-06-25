@@ -10,16 +10,19 @@ internal class AllowUrlsBuilderImpl(
     override var allowAnyUrls: Boolean = false
 
     private val allowedHosts = mutableListOf<String>()
+    private val allowSpecificUrl = mutableListOf<String>()
 
     override fun doesUrlCheckPass(intent: Intent) =
         allowAnyUrls ||
                 gatherAllStrings(intent)
                     .run {
-                        thereArentAnyUrls() || urlsAreInAllowedHost()
+                        thereArentAnyUrls() || urlsAreInAllowedLists()
                     }
 
-    private fun List<String>.urlsAreInAllowedHost() = map(hostNameMatcher::getHostName)
-        .filterNot { allowedHosts.contains(it) }.isEmpty()
+    private fun List<String>.urlsAreInAllowedLists() =
+        filterNot { allowSpecificUrl.contains(it) }
+            .map(hostNameMatcher::getHostName)
+            .filterNot { allowedHosts.contains(it) }.isEmpty()
 
     private fun List<String>.thereArentAnyUrls() =
         any(urlMatcher::isUrl).not()
@@ -28,5 +31,9 @@ internal class AllowUrlsBuilderImpl(
 
     override fun String.allowHost() {
         allowedHosts.add(this)
+    }
+
+    override fun String.allowUrl() {
+        allowSpecificUrl.add(this)
     }
 }

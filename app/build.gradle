@@ -51,7 +51,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":safeToRun")
     implementation project(":safeToRunCore")
-    implementation project(":safeToRunIntentVerification")
+    implementation project(":safeToRunInputValidation")
     implementation("com.auth0:java-jwt:$jwtVersion")
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
     implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"

@@ -18,7 +18,14 @@ internal interface AllowUrlsBuilder {
     /**
      * Host to allow
      *
-     * @receiverthe host to allow
+     * @receiver the host to allow
      */
     fun String.allowHost()
+
+    /**
+     * Allow a specific URL
+     *
+     * @receiver the url to allow
+     */
+    fun String.allowUrl()
 }

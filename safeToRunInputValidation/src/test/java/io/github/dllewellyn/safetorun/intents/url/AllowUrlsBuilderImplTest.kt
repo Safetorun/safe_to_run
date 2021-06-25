@@ -69,6 +69,19 @@ internal class AllowUrlsBuilderImplTest {
         assertThat(urlsBuilder.doesUrlCheckPass(intent)).isTrue()
     }
 
+    @Test
+    fun `test that adding a specific exemption for a URL allows the exemption`() {
+        with(urlsBuilder) {
+            URL.allowUrl()
+        }
+
+        every { intent.extras } returns Bundle().apply {
+            putString(URL_KEY, URL)
+        }
+
+        assertThat(urlsBuilder.doesUrlCheckPass(intent)).isTrue()
+    }
+
     companion object {
         private const val HOST = "abc.com"
         const val URL = "https://$HOST"
