@@ -1,8 +1,6 @@
 name: AutoPR
 
-on:
-  push:
-    branches: [ * ]
+on: [push]
 
 jobs:
   build:
