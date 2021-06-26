@@ -18,6 +18,9 @@ module.exports = {
             trackingID: 'UA-158023887-2',
             anonymizeIP: true
         },
+        twitter: true,
+        twitterUsername: "safe_run",
+        twitterImage: "https://pbs.twimg.com/profile_images/1408694411215638530/81oDI0da_400x400.jpg",
         navbar: {
             title: 'Safe to run',
             logo: {
