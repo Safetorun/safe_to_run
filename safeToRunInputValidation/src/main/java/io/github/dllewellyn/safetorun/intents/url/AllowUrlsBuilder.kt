@@ -1,8 +1,6 @@
 package io.github.dllewellyn.safetorun.intents.url
 
-import android.content.Intent
-
-internal interface AllowUrlsBuilder {
+interface AllowUrlsBuilder {
     /**
      * Allow any URLS at all in the intent
      */
@@ -13,7 +11,7 @@ internal interface AllowUrlsBuilder {
      *
      * @param listOfStrings list of strings
      */
-    fun doesUrlCheckPass(listOfStrings : List<String>): Boolean
+    fun doesUrlCheckPass(listOfStrings: List<String>): Boolean
 
     /**
      * Host to allow

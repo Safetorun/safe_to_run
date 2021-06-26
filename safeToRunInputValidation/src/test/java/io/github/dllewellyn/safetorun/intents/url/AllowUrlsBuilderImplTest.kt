@@ -1,10 +1,6 @@
 package io.github.dllewellyn.safetorun.intents.url
 
-import android.content.Intent
-import android.os.Bundle
 import com.google.common.truth.Truth.assertThat
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -13,7 +9,6 @@ import org.robolectric.RobolectricTestRunner
 internal class AllowUrlsBuilderImplTest {
 
     private val urlsBuilder = AllowUrlsBuilderImpl()
-    private val intent = mockk<Intent>()
 
     @Test
     fun `test that url check passes if any is set to true`() {
