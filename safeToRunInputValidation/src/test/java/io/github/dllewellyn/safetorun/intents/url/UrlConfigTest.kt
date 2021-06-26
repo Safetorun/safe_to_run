@@ -51,10 +51,10 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if parameters are allowed`() {
         assertThat(
-            "$URL?queryparam=false".urlVerification {
+            "$URL?$QUERY_PARAM=false".urlVerification {
                 HOST.allowHost()
                 allowParameter {
-                    parameterName = "queryparam"
+                    parameterName = QUERY_PARAM
                 }
             }
         ).isTrue()
@@ -63,7 +63,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if parameters and type is allowed`() {
         assertThat(
-            "$URL?queryparam=false".urlVerification {
+            "$URL?$QUERY_PARAM=false".urlVerification {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = "queryparam"
@@ -76,10 +76,10 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will fail if parameters and type is not allowed`() {
         assertThat(
-            "$URL?queryparam=false".urlVerification {
+            "$URL?$QUERY_PARAM=false".urlVerification {
                 HOST.allowHost()
                 allowParameter {
-                    parameterName = "queryparam"
+                    parameterName = QUERY_PARAM
                     allowedType = AllowedType.Double
                 }
             }
@@ -89,7 +89,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will fail if parameters are not allowed`() {
         assertThat(
-            "$URL?queryparam=false".urlVerification {
+            "$URL?$QUERY_PARAM=false".urlVerification {
                 HOST.allowHost()
             }
         ).isFalse()
@@ -98,7 +98,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if all parameters are  allowed`() {
         assertThat(
-            "$URL?queryparam=false".urlVerification {
+            "$URL?$QUERY_PARAM=false".urlVerification {
                 HOST.allowHost()
                 allowAnyParameter()
             }
@@ -108,5 +108,6 @@ internal class UrlConfigTest {
     companion object {
         private const val HOST = "abc.com"
         const val URL = "https://$HOST"
+        const val QUERY_PARAM = "queryparam"
     }
 }
