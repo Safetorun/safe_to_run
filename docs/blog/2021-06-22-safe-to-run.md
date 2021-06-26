@@ -1,5 +1,5 @@
 ---
-slug: emulator-detection
+slug: safe-to-run
 title: "Secure android apps with Safe to run"
 author: Daniel Llewellyn
 author_url: https://github.com/dllewellyn
