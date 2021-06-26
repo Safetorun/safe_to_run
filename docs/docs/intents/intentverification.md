@@ -1,5 +1,7 @@
 ---
-id: intentverification title: Intent verification slug: /intentverification
+id: intentverification 
+title: Intent verification 
+slug: /intentverification
 ---
 
 
