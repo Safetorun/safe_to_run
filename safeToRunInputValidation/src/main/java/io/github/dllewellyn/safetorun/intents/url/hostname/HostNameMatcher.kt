@@ -1,4 +1,4 @@
-package io.github.dllewellyn.safetorun.intents.url
+package io.github.dllewellyn.safetorun.intents.url.hostname
 
 import android.net.Uri
 

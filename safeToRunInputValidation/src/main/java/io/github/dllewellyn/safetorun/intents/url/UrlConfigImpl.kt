@@ -1,6 +1,7 @@
 package io.github.dllewellyn.safetorun.intents.url
 
 import android.net.Uri
+import io.github.dllewellyn.safetorun.intents.url.hostname.hostNameMatcher
 import io.github.dllewellyn.safetorun.intents.url.params.ParameterConfig
 import io.github.dllewellyn.safetorun.intents.url.params.ParameterConfigBuilder
 import io.github.dllewellyn.safetorun.intents.url.params.matchesAllowedType
@@ -67,6 +68,17 @@ internal class UrlConfigImpl : UrlConfig {
                 allowedHost.contains(hostNameMatcher.getHostName(this))
 
 }
+
+/**
+ * Create a URL configuration
+ *
+ * @param config the url configuration
+ *
+ * @return a URL Config
+ */
+fun urlConfiguration(config: UrlConfig.() -> Unit) =
+    (UrlConfigImpl() as UrlConfig).apply(config)
+
 
 /**
  * Verify a URL matches the configuration

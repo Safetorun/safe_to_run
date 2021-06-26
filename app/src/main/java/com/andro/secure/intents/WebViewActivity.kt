@@ -8,6 +8,7 @@ import android.webkit.WebViewClient
 import com.andro.secure.R
 import com.andro.secure.databinding.ActivityWebViewBinding
 import io.github.dllewellyn.safetorun.intents.url.params.AllowedType
+import io.github.dllewellyn.safetorun.intents.url.urlConfiguration
 import io.github.dllewellyn.safetorun.intents.url.urlVerification
 import io.github.dllewellyn.safetorun.intents.verify
 import java.lang.RuntimeException
@@ -39,7 +40,7 @@ class WebViewActivity : AppCompatActivity() {
 
             intent.verify {
 
-                "safetorun.com".allowHost()
+                urlConfiguration { "safetorun.com".allowHost() }
 
                 actionOnSuccess = {
                     intent?.extras?.getString("url")

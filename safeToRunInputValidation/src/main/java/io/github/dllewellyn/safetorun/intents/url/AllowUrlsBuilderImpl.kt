@@ -4,33 +4,25 @@ internal class AllowUrlsBuilderImpl internal constructor(
     private val urlMatcher: UrlMatcher = UrlMatcherImpl()
 ) : AllowUrlsBuilder {
 
-    private val allowedHosts = mutableListOf<String>()
-    private val allowSpecificUrl = mutableListOf<String>()
+    private val allowedHosts = mutableListOf<UrlConfig>()
     override var allowAnyUrls: Boolean = false
 
     override fun doesUrlCheckPass(listOfStrings: List<String>): Boolean {
         return allowAnyUrls ||
                 listOfStrings
                     .run {
-                        thereArentAnyUrls() || urlsAreInAllowedLists()
+                        thereArentAnyUrls() ||
+                                filter(urlMatcher::isUrl)
+                                    .all { allowedHosts.any { host -> host.verify(it) } }
                     }
     }
 
-    private fun List<String>.urlsAreInAllowedLists() =
-        filterNot { allowSpecificUrl.contains(it) }
-            .map(hostNameMatcher::getHostName)
-            .filterNot { allowedHosts.contains(it) }.isEmpty()
-
-    private fun List<String>.thereArentAnyUrls() =
-        any(urlMatcher::isUrl).not()
-
-    override fun String.allowHost() {
+    override fun UrlConfig.addConfiguration() {
         allowedHosts.add(this)
     }
 
-    override fun String.allowUrl() {
-        allowSpecificUrl.add(this)
-    }
+    private fun List<String>.thereArentAnyUrls() =
+        any(urlMatcher::isUrl).not()
 }
 
 /**

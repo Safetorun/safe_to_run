@@ -32,7 +32,9 @@ internal class AllowUrlsBuilderImplTest {
     fun `test that url check fails if a host is not allowed`() {
         // Given
         with(urlsBuilder) {
-            "somethingelse".allowHost()
+            urlConfiguration {
+                "somethingelse".allowHost()
+            }.addConfiguration()
         }
 
         // When then
@@ -43,7 +45,9 @@ internal class AllowUrlsBuilderImplTest {
     fun `test that url check passes if a host is allowed`() {
         // Given
         with(urlsBuilder) {
-            HOST.allowHost()
+            urlConfiguration {
+                HOST.allowHost()
+            }.addConfiguration()
         }
 
         // When then
@@ -53,7 +57,9 @@ internal class AllowUrlsBuilderImplTest {
     @Test
     fun `test that adding a specific exemption for a URL allows the exemption`() {
         with(urlsBuilder) {
-            URL.allowUrl()
+            urlConfiguration {
+                URL.allowUrl()
+            }.addConfiguration()
         }
 
         assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()

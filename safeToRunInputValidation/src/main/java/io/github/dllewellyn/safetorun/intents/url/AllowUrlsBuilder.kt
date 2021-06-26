@@ -18,12 +18,5 @@ interface AllowUrlsBuilder {
      *
      * @receiver the host to allow
      */
-    fun String.allowHost()
-
-    /**
-     * Allow a specific URL
-     *
-     * @receiver the url to allow
-     */
-    fun String.allowUrl()
+    fun UrlConfig.addConfiguration()
 }
