@@ -3,8 +3,12 @@ slug: emulator-detection
 title: "Emulator detection"
 author: Daniel Llewellyn
 author_url: https://github.com/dllewellyn
+description: Use safe to run to detect emulators on Android
+image: img/emulator.png
 tags: [security, android, safetorun, emulator detection, kotlin]
 ---
+
+## Emulator detection with safe to run
 
 ### What?
 
