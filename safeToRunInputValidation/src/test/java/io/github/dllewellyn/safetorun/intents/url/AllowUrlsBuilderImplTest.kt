@@ -19,12 +19,9 @@ internal class AllowUrlsBuilderImplTest {
     fun `test that url check passes if any is set to true`() {
         // Given
         urlsBuilder.allowAnyUrls = true
-        every { intent.extras } returns Bundle().apply {
-            putString(URL_KEY, URL)
-        }
 
         // When then
-        assertThat(urlsBuilder.doesUrlCheckPass(intent)).isTrue()
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()
     }
 
     @Test
@@ -32,12 +29,8 @@ internal class AllowUrlsBuilderImplTest {
         // Given
         urlsBuilder.allowAnyUrls = false
 
-        every { intent.extras } returns Bundle().apply {
-            putString(URL_KEY, URL)
-        }
-
         // When then
-        assertThat(urlsBuilder.doesUrlCheckPass(intent)).isFalse()
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isFalse()
     }
 
     @Test
@@ -46,12 +39,9 @@ internal class AllowUrlsBuilderImplTest {
         with(urlsBuilder) {
             "somethingelse".allowHost()
         }
-        every { intent.extras } returns Bundle().apply {
-            putString(URL_KEY, URL)
-        }
 
         // When then
-        assertThat(urlsBuilder.doesUrlCheckPass(intent)).isFalse()
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isFalse()
     }
 
     @Test
@@ -61,12 +51,8 @@ internal class AllowUrlsBuilderImplTest {
             HOST.allowHost()
         }
 
-        every { intent.extras } returns Bundle().apply {
-            putString(URL_KEY, URL)
-        }
-
         // When then
-        assertThat(urlsBuilder.doesUrlCheckPass(intent)).isTrue()
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()
     }
 
     @Test
@@ -75,16 +61,11 @@ internal class AllowUrlsBuilderImplTest {
             URL.allowUrl()
         }
 
-        every { intent.extras } returns Bundle().apply {
-            putString(URL_KEY, URL)
-        }
-
-        assertThat(urlsBuilder.doesUrlCheckPass(intent)).isTrue()
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()
     }
 
     companion object {
         private const val HOST = "abc.com"
         const val URL = "https://$HOST"
-        const val URL_KEY = "url"
     }
 }

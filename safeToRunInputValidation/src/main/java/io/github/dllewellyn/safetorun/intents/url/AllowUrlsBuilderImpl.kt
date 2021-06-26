@@ -1,23 +1,21 @@
 package io.github.dllewellyn.safetorun.intents.url
 
-import android.content.Intent
-import io.github.dllewellyn.safetorun.intents.gatherAllStrings
-
 internal class AllowUrlsBuilderImpl(
     private val urlMatcher: UrlMatcher = UrlMatcherImpl()
 ) : AllowUrlsBuilder {
 
     override var allowAnyUrls: Boolean = false
 
-    private val allowedHosts = mutableListOf<String>()
-    private val allowSpecificUrl = mutableListOf<String>()
-
-    override fun doesUrlCheckPass(intent: Intent) =
-        allowAnyUrls ||
-                gatherAllStrings(intent)
+    override fun doesUrlCheckPass(listOfStrings: List<String>): Boolean {
+        return allowAnyUrls ||
+                listOfStrings
                     .run {
                         thereArentAnyUrls() || urlsAreInAllowedLists()
                     }
+    }
+
+    private val allowedHosts = mutableListOf<String>()
+    private val allowSpecificUrl = mutableListOf<String>()
 
     private fun List<String>.urlsAreInAllowedLists() =
         filterNot { allowSpecificUrl.contains(it) }
@@ -26,8 +24,6 @@ internal class AllowUrlsBuilderImpl(
 
     private fun List<String>.thereArentAnyUrls() =
         any(urlMatcher::isUrl).not()
-
-    private fun gatherAllStrings(intent: Intent) = intent.extras?.gatherAllStrings() ?: emptyList()
 
     override fun String.allowHost() {
         allowedHosts.add(this)
