@@ -1,6 +1,4 @@
 include ':exploiting-app'
-include ':safeToRun', ':app', ':safeToRunCore', ':SafeToRunBackend'
+include ':safeToRun', ':app', ':safeToRunCore', ':SafeToRunBackend', ':safeToRunInternal', ':safeToRunInputValidation'
 rootProject.name = "Safe to run"
-include 'safeToRunInternal'
-include 'safeToRunIntentVerification'
 

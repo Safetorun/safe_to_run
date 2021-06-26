@@ -7,6 +7,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.andro.secure.R
 import com.andro.secure.databinding.ActivityWebViewBinding
+import io.github.dllewellyn.safetorun.intents.verify
 
 class WebViewActivity : AppCompatActivity() {
 
@@ -15,9 +16,17 @@ class WebViewActivity : AppCompatActivity() {
 
         ActivityWebViewBinding.inflate(LayoutInflater.from(this)).apply {
             setContentView(root)
-            intent?.extras?.getString("url")
-                ?.let { "${it}?sensitive_token=pleasekeepmesecret" }
-                ?.let(webView::loadUrl)
+
+            intent.verify {
+
+                "safetorun.com".allowHost()
+
+                actionOnSuccess = {
+                    intent?.extras?.getString("url")
+                        ?.let { "${it}?sensitive_token=pleasekeepmesecret" }
+                        ?.let(webView::loadUrl)
+                }
+            }
         }
     }
 }
