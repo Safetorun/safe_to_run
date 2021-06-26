@@ -19,12 +19,12 @@
             <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/emulator-detection</link>
             <guid>emulator-detection</guid>
             <pubDate>Wed, 23 Jun 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[What?]]></description>
+            <description><![CDATA[Use safe to run to detect emulators on Android]]></description>
         </item>
         <item>
             <title><![CDATA[Secure android apps with Safe to run]]></title>
-            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/emulator-detection</link>
-            <guid>emulator-detection</guid>
+            <link>https://safetorun.github.io/safe_to_run/safe_to_run/blog/safe-to-run</link>
+            <guid>safe-to-run</guid>
             <pubDate>Tue, 22 Jun 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[No library or app can guarantee not running on a rooted phone because of the nature of rooted phones, and any tamper detection could be removed or changed in reality — this app should work with most attackers, and make it hard enough to make it not worth it for many others.]]></description>
         </item>
