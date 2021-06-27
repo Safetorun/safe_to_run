@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[23],{94:function(n){n.exports=JSON.parse('{"allTagsPath":"/safe_to_run/blog/tags","slug":"inline","name":"inline","count":2,"permalink":"/safe_to_run/blog/tags/inline"}')}}]);
