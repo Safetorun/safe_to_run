@@ -102,3 +102,10 @@ Any URL will also allow parameters:
 "https://safetorun.com?param=abc".urlVerification {
     allowAnyUrl()
 } == true
+```
+
+### Samples
+
+A sample of protecting your webview from 3rd party websites:
+
+[3rd party website protection](https://github.com/Safetorun/safe_to_run/blob/feature/adding_intent_verification/app/src/main/java/com/andro/secure/webview/WebViewSample.kt)
