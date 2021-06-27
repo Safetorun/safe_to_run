@@ -1,5 +1,8 @@
 package io.github.dllewellyn.safetorun.intents.url
 
+/**
+ * The builder for allowing URLs to pass the verifiation service
+ */
 interface AllowUrlsBuilder {
     /**
      * Allow any URLS at all in the intent

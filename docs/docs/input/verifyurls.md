@@ -4,6 +4,15 @@ title: URL verification
 slug: /verifyurls
 ---
 
+### Verify URLs
+
+URLs input from external sources are a subtle, yet common source of vulnerabilities. 
+The key capability provided by safe to run in respect of insecure URLs is the ability
+to call `urlVerification` on a string. 
+
+The return value is `true` if the URL verification is safe, and false if not
+
+### Configuration 
 
 By default, no URLs are allowed:
 

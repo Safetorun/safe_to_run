@@ -1,8 +1,16 @@
 package io.github.dllewellyn.safetorun.intents.url.params
 
-import io.github.dllewellyn.safetorun.intents.url.params.AllowedType
-
+/**
+ * Build a configuration which will allow a URL parameter to be allowed
+ */
 class ParameterConfigBuilder {
+    /**
+     * Parameter name to allow
+     */
     var parameterName: String? = null
+
+    /**
+     * The type that is allowed is for this parameter
+     */
     var allowedType = AllowedType.Any
 }
