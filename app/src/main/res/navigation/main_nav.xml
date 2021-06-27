@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/main_nav" app:startDestination="@id/reportFragment">
+
+
+    <fragment android:id="@+id/reportFragment" android:name="com.andro.secure.report.ReportFragment"
+              android:label="ReportFragment">
+        <action android:id="@+id/action_reportFragment_to_webViewSample" app:destination="@id/webViewSample"/>
+    </fragment>
+
+    <fragment android:id="@+id/webViewSample" android:name="com.andro.secure.webview.WebViewSample"
+              android:label="WebViewSample"/>
+
+
+</navigation>
