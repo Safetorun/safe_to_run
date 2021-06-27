@@ -108,4 +108,8 @@ Any URL will also allow parameters:
 
 A sample of protecting your webview from 3rd party websites:
 
-[3rd party website protection](https://github.com/Safetorun/safe_to_run/blob/feature/adding_intent_verification/app/src/main/java/com/andro/secure/webview/WebViewSample.kt)
+[3rd party website protection](https://github.com/Safetorun/safe_to_run/blob/app/src/main/java/com/andro/secure/webview/WebViewSample.kt)
+
+A sample of protecting your app from third party intents:
+
+[3rd party intent protection](https://github.com/Safetorun/safe_to_run/blob/app/src/main/java/com/andro/secure/intents/WebViewActivity.kt)
