@@ -26,7 +26,7 @@ implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.3"
 ```
 
 
-### Safe to run 
+### Recompilation protection 
 
 Safe to run uses inline functions as an added level over protection against reverse engineering. It is
 recommended that you use the inline implementation *in many places* throughout the application in 

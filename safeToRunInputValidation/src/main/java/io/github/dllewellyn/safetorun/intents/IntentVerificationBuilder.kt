@@ -24,7 +24,7 @@ class IntentVerificationBuilder internal constructor(
     var actionOnFailure: (() -> Unit)? = null
 
     internal fun verify() =
-        (doesIntentCheckPass() && doesUrlCheckPass(intent))
+        (doesIntentCheckPass() && doesUrlCheckPass(gatherAllStrings(intent)))
             .also {
                 if (it) {
                     actionOnSuccess?.invoke()
@@ -39,6 +39,7 @@ class IntentVerificationBuilder internal constructor(
         true
     }
 
+    private fun gatherAllStrings(intent: Intent) = intent.extras?.gatherAllStrings() ?: emptyList()
 }
 
 /**

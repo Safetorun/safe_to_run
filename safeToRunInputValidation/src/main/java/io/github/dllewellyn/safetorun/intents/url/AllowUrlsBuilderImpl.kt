@@ -1,39 +1,41 @@
 package io.github.dllewellyn.safetorun.intents.url
 
-import android.content.Intent
-import io.github.dllewellyn.safetorun.intents.gatherAllStrings
-
-internal class AllowUrlsBuilderImpl(
+internal class AllowUrlsBuilderImpl internal constructor(
     private val urlMatcher: UrlMatcher = UrlMatcherImpl()
 ) : AllowUrlsBuilder {
 
+    private val allowedHosts = mutableListOf<UrlConfig>()
     override var allowAnyUrls: Boolean = false
 
-    private val allowedHosts = mutableListOf<String>()
-    private val allowSpecificUrl = mutableListOf<String>()
-
-    override fun doesUrlCheckPass(intent: Intent) =
-        allowAnyUrls ||
-                gatherAllStrings(intent)
+    override fun doesUrlCheckPass(listOfStrings: List<String>): Boolean {
+        return allowAnyUrls ||
+                listOfStrings
                     .run {
-                        thereArentAnyUrls() || urlsAreInAllowedLists()
+                        thereArentAnyUrls() ||
+                                filter(urlMatcher::isUrl)
+                                    .all { allowedHosts.any { host -> host.verify(it) } }
                     }
+    }
 
-    private fun List<String>.urlsAreInAllowedLists() =
-        filterNot { allowSpecificUrl.contains(it) }
-            .map(hostNameMatcher::getHostName)
-            .filterNot { allowedHosts.contains(it) }.isEmpty()
-
-    private fun List<String>.thereArentAnyUrls() =
-        any(urlMatcher::isUrl).not()
-
-    private fun gatherAllStrings(intent: Intent) = intent.extras?.gatherAllStrings() ?: emptyList()
-
-    override fun String.allowHost() {
+    override fun UrlConfig.addConfiguration() {
         allowedHosts.add(this)
     }
 
-    override fun String.allowUrl() {
-        allowSpecificUrl.add(this)
-    }
+    private fun List<String>.thereArentAnyUrls() =
+        any(urlMatcher::isUrl).not()
 }
+
+/**
+ * Verify URLs
+ *
+ * @param allowUrlsBuilder a builder configuration
+ *
+ * @receiver a list of strings to check
+ *
+ * @return true if this URL is ok, false otherwise
+ */
+fun List<String>.verifyUrls(allowUrlsBuilder: AllowUrlsBuilder.() -> Unit) =
+    (AllowUrlsBuilderImpl() as AllowUrlsBuilder).apply {
+        allowUrlsBuilder()
+        doesUrlCheckPass(this@verifyUrls)
+    }

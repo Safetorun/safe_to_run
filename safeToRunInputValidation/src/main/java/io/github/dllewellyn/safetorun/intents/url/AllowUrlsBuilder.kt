@@ -1,8 +1,9 @@
 package io.github.dllewellyn.safetorun.intents.url
 
-import android.content.Intent
-
-internal interface AllowUrlsBuilder {
+/**
+ * The builder for allowing URLs to pass the verifiation service
+ */
+interface AllowUrlsBuilder {
     /**
      * Allow any URLS at all in the intent
      */
@@ -11,21 +12,14 @@ internal interface AllowUrlsBuilder {
     /**
      * Returns if we pass the URL Check based on the config
      *
-     * @param intent the intent we're checking
+     * @param listOfStrings list of strings
      */
-    fun doesUrlCheckPass(intent: Intent): Boolean
+    fun doesUrlCheckPass(listOfStrings: List<String>): Boolean
 
     /**
      * Host to allow
      *
      * @receiver the host to allow
      */
-    fun String.allowHost()
-
-    /**
-     * Allow a specific URL
-     *
-     * @receiver the url to allow
-     */
-    fun String.allowUrl()
+    fun UrlConfig.addConfiguration()
 }
