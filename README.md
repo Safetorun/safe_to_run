@@ -21,8 +21,8 @@ phone you're running on is safe to run your application.
 ## Quickstart
 
 ```groovy
-implementation "io.github.dllewellyn.safetorun:safetorun:1.0.3"
-implementation "io.github.dllewellyn.safetorun:safeToRunCore:1.0.3"
+implementation "io.github.dllewellyn.safetorun:safetorun:$safeToRunVersion"
+implementation "io.github.dllewellyn.safetorun:safeToRunCore:$safeToRunVersion"
 ```
 
 
