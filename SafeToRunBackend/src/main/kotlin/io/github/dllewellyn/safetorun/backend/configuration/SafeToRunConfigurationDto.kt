@@ -9,6 +9,9 @@ data class SafeToRunConfigurationDto(
     val installOriginCheck: InstallOriginCheckDto
 ) {
     companion object {
+        /**
+         * Create an empty configuration
+         */
         fun empty() = SafeToRunConfigurationDto(
             BlacklistedAppConfigurationDto(emptyList(), Severity.None),
             VerifySignatureConfigurationDto(emptyList(), Severity.None),
