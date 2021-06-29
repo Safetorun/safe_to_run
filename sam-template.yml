@@ -181,6 +181,20 @@ Resources:
        UsagePlanId: !Ref UsagePlan
      DependsOn: SafeToRunGateway
 
+  StrConfigurationDb:
+     Type: AWS::DynamoDB::Table
+     UpdateReplacePolicy: Delete
+     DeletionPolicy: Delete
+     Properties:
+       BillingMode:
+         PAY_PER_REQUEST
+       AttributeDefinitions:
+         - AttributeName: ApiKey
+           AttributeType: S
+       KeySchema:
+         - AttributeName: ApiKey
+           KeyType: "HASH"
+
 Outputs:
   ApiEndpoint:
     Description: "API Endpoint"

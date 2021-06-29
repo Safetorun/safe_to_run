@@ -51,6 +51,7 @@ module.exports = {
             additionalLanguages: ['kotlin', 'groovy'],
         }
     },
+
     presets: [
         [
             '@docusaurus/preset-classic',
@@ -62,5 +63,13 @@ module.exports = {
                 },
             },
         ],
+        [
+            '@docusaurus/plugin-sitemap',
+            {
+                changefreq: 'weekly',
+                priority: 0.5,
+                trailingSlash: false,
+            }
+        ]
     ],
 };
