@@ -9,7 +9,7 @@ import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue
 import org.junit.Test
 
-class SafeToRunOffDeviceTest {
+internal class SafeToRunOffDeviceTest {
 
     companion object {
         const val URL = "https://qm37a5nppe.execute-api.eu-west-1.amazonaws.com/Prod/"

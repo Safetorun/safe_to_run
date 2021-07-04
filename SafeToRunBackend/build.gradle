@@ -34,11 +34,17 @@ dependencies {
     implementation project(':safeToRunInternal')
     implementation("com.auth0:java-jwt:$jwtVersion")
     implementation("joda-time:joda-time:$jodaTime")
+
+    // AWS
+    implementation("com.amazonaws:aws-java-sdk-dynamodb:$awsVersion")
     implementation("com.amazonaws:aws-lambda-java-core:1.2.1")
     implementation("com.amazonaws:aws-java-sdk-codedeploy:$awsVersion")
     implementation("com.amazonaws:aws-java-sdk-lambda:$awsVersion")
     implementation("com.amazonaws:aws-java-sdk-secretsmanager:$awsVersion")
-    implementation("com.amazonaws:aws-lambda-java-events:3.1.0")
+    testImplementation "org.testcontainers:testcontainers:1.15.3"
+
+
+    implementation("com.amazonaws:aws-lambda-java-events:3.8.0")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
@@ -52,7 +58,7 @@ dependencies {
     implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.aws:micronaut-function-aws")
-    kapt "io.micronaut:micronaut-inject-java:2.5.3"
+    kapt "io.micronaut:micronaut-inject-java:2.5.5"
 
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"

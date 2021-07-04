@@ -186,6 +186,7 @@ Resources:
      UpdateReplacePolicy: Delete
      DeletionPolicy: Delete
      Properties:
+       TableName: SafeToRun-Configuration
        BillingMode:
          PAY_PER_REQUEST
        AttributeDefinitions:

@@ -4,8 +4,16 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import {ReactMailchimpEmailSignupForm} from 'react-mailchimp-email-signup-form';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import styles from './styles.module.css';
+import {CardHeader, CardMedia} from "@material-ui/core";
 
 const features = [
     {
@@ -13,7 +21,7 @@ const features = [
         imageUrl: "img/simple.png",
         description: (
             <>
-               Android security is hard, safe to run is a simple to use tool to help protect your app from hackers.
+                Android security is hard, safe to run is a simple to use tool to help protect your app from hackers.
             </>
         ),
     },
@@ -42,17 +50,30 @@ const features = [
 function Feature({imageUrl, title, description}) {
     const imgUrl = useBaseUrl(imageUrl);
     return (
-        <div className={classnames('col', styles.feature)}>
-            {imgUrl && (
-                <div className="text--center">
-                    <img className={styles.featureImage} src={imgUrl} alt={title}/>
-                </div>
-            )}
-            <h3>{title}</h3>
-            <p>{description}</p>
-        </div>
+        <Card>
+            <CardHeader title={title}/>
+            <CardMedia
+                className={styles.featureImage}
+                image={imgUrl}
+                title={title}
+            />
+            <CardContent>
+                <Typography  color="textSecondary">
+                    {description}
+                </Typography>
+            </CardContent>
+        </Card>
     );
 }
+
+const SignupForm = () => (
+    <ReactMailchimpEmailSignupForm
+        elementId="first-email-signup-form"
+        url="https://github.us6.list-manage.com/subscribe/post?u=70d44300a9cc26801ede69842&amp;id=8d2000cee2"
+        title="Subscribe for Safe to run updates"
+        subtitle="We take privacy seriously and we'll never spam or sell your information."
+    />
+);
 
 export default function Home() {
     const context = useDocusaurusContext();
@@ -71,6 +92,9 @@ export default function Home() {
                     </div>
                 </header>
                 <main>
+                    <div className={styles.mailChimpContainer}>
+                        {SignupForm()}
+                    </div>
                     {features && features.length > 0 && (
                         <section className={styles.section}>
                             <div className={styles.features}>

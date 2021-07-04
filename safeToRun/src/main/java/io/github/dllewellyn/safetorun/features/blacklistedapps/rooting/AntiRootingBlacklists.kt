@@ -9,6 +9,10 @@ import io.github.dllewellyn.safetorun.features.blacklistedapps.rooting.RootingAp
 import io.github.dllewellyn.safetorun.features.blacklistedapps.rooting.RootingAppConstants.SUPER_USER
 import io.github.dllewellyn.safetorun.features.blacklistedapps.rooting.RootingAppConstants.SUPER_USER_2
 
+/**
+ * Create a blacklisting configuration based on a list of apps
+ * which are used for rooting
+ */
 fun BlacklistedAppConfiguration.blacklistRootingApps() {
     +SUPER_USER
     +SUPER_SU
