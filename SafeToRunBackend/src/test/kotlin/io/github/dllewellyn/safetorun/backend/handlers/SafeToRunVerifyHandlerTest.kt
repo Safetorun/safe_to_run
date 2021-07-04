@@ -2,6 +2,7 @@ package io.github.dllewellyn.safetorun.backend.handlers
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.backend.repository.JwtSecretRepository
+import io.github.dllewellyn.safetorun.backend.repository.SafeToRunConfigurationRepository
 import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
 import io.github.dllewellyn.safetorun.backend.services.SafeToRunVerificationService
 import io.github.dllewellyn.safetorun.backend.util.mockkSecretManager
@@ -32,6 +33,9 @@ internal class SafeToRunVerifyHandlerTest {
 
     @MockBean(JwtSecretRepository::class)
     fun mockSecretRepository(): JwtSecretRepository = mockkSecretManager
+
+    @MockBean(SafeToRunConfigurationRepository::class)
+    fun mockSafeToRunConfigurationRepository() : SafeToRunConfigurationRepository = mockk()
 
     @Test
     fun `test that service calls through to verify`() {
