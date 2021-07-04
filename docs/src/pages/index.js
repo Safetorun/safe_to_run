@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -7,9 +6,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import {ReactMailchimpEmailSignupForm} from 'react-mailchimp-email-signup-form';
 
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import styles from './styles.module.css';
