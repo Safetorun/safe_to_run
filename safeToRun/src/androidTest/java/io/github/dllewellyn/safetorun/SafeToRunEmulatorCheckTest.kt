@@ -9,7 +9,7 @@ import io.github.dllewellyn.safetorun.reporting.anyFailures
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 
-class SafeToRunEmulatorCheckTest {
+internal class SafeToRunEmulatorCheckTest {
 
     @Test
     fun testThatRunningDeviceWillFailTheEmulatorChecks() {

@@ -24,6 +24,14 @@
   justify-content: center;
 }
 
+.mailChimpContainer {
+  position: absolute;
+  right: 20px;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -41,13 +49,13 @@
   align-items: center;
   display: grid;
   grid-gap: 30px;
-  grid-template-columns: 40% 40% 40%;
+  grid-template-columns: 33% 33% 33%;
 }
 
 .featureImage {
   height: 200px;
-  width: 200px;
-  border-radius: 50%;
+  /*width: 200px;*/
+  /*border-radius: 50%;*/
 }
 
 .mainImage {
