@@ -10,7 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 import styles from './styles.module.css';
-import {CardHeader, CardMedia} from "@material-ui/core";
+import {CardHeader, CardMedia, Grid} from "@material-ui/core";
 
 const features = [
     {
@@ -47,19 +47,23 @@ const features = [
 function Feature({imageUrl, title, description}) {
     const imgUrl = useBaseUrl(imageUrl);
     return (
-        <Card>
-            <CardHeader title={title}/>
-            <CardMedia
-                className={styles.featureImage}
-                image={imgUrl}
-                title={title}
-            />
-            <CardContent>
-                <Typography  color="textSecondary">
-                    {description}
-                </Typography>
-            </CardContent>
-        </Card>
+        <Grid item xs={12} sm={4} >
+            <Card>
+                <CardMedia
+                    className={styles.featureImage}
+                    image={imgUrl}
+                    title={title}
+                />
+                <CardContent>
+                    <Typography variant="h6">
+                        {title}
+                    </Typography>
+                    <Typography color="textSecondary">
+                        {description}
+                    </Typography>
+                </CardContent>
+            </Card>
+        </Grid>
     );
 }
 
@@ -89,16 +93,16 @@ export default function Home() {
                     </div>
                 </header>
                 <main>
-                    <div className={styles.mailChimpContainer}>
-                        {SignupForm()}
-                    </div>
+                    {/*<div className={styles.mailChimpContainer}>*/}
+                    {/*    {SignupForm()}*/}
+                    {/*</div>*/}
                     {features && features.length > 0 && (
                         <section className={styles.section}>
-                            <div className={styles.features}>
+                            <Grid container spacing={3}>
                                 {features.map((props, idx) => (
                                     <Feature key={idx} {...props} />
                                 ))}
-                            </div>
+                            </Grid>
                         </section>
                     )}
 
