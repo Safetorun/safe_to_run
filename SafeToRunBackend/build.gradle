@@ -20,6 +20,8 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+
 micronaut {
     runtime("lambda")
     testRuntime("junit5")
@@ -94,7 +96,12 @@ jacocoBadgeGenSetting {
 task wrapper(type: Wrapper) {
     gradleVersion = '4.1.2'
 }
-
+test {
+    reports {
+        junitXml.enabled = true
+        html.enabled = true
+    }
+}
 jacocoTestReport {
     reports {
         xml.enabled = true
