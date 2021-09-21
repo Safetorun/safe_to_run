@@ -21,6 +21,7 @@ import org.junit.jupiter.api.TestInstance
 import javax.inject.Inject
 
 @MicronautTest
+@Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class SafeToRunSingleRequestHandlerTest {
 
@@ -51,7 +52,6 @@ internal class SafeToRunSingleRequestHandlerTest {
     }
 
     @Test
-    @Disabled
     fun `test that the result of execution is correct`() {
         // Given
         every { safeToRun.isSafeToRun() } returns SafeToRunReport.MultipleReports(
