@@ -6,11 +6,17 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument
  * Safe to run configuration
  */
 @DynamoDBDocument
-internal data class SafeToRunConfigurationDto(
-    val blacklistedAppCheck: BlacklistedAppConfigurationDto,
-    val verifySignatureConfiguration: VerifySignatureConfigurationDto,
-    val installOriginCheck: InstallOriginCheckDto,
-    val osCheckConfiguration: OSCheckConfigurationDto
+data class SafeToRunConfigurationDto(
+    var blacklistedAppCheck: BlacklistedAppConfigurationDto = BlacklistedAppConfigurationDto(
+        emptyList(),
+        Severity.None
+    ),
+    var verifySignatureConfiguration: VerifySignatureConfigurationDto = VerifySignatureConfigurationDto(
+        emptyList(),
+        Severity.None
+    ),
+    var installOriginCheck: InstallOriginCheckDto = InstallOriginCheckDto(emptyList(), Severity.None),
+    var osCheckConfiguration: OSCheckConfigurationDto = OSCheckConfigurationDto(emptyList(), Severity.None)
 ) {
     companion object {
         /**

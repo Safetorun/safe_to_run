@@ -1,6 +1,7 @@
 package io.github.dllewellyn.safetorun.intents
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -17,6 +18,7 @@ internal class IntentVerificationBuilderTest {
 
     @Before
     fun setUp() {
+        every { intent.data } returns null
         every { intent.extras } returns Bundle()
     }
 
@@ -105,6 +107,20 @@ internal class IntentVerificationBuilderTest {
         assertThat(intent.verify {
             allowAnyUrls = true
         }).isTrue()
+    }
+
+    @Test
+    fun `test that intent verify fails if there is a URL as URI`() {
+        every { intent.extras } returns Bundle().apply { putParcelable("url", Uri.parse(URL)) }
+
+        assertThat(intent.verify { }).isFalse()
+    }
+
+    @Test
+    fun `test that intent verify fails if there is a URL as data`() {
+        every { intent.data } returns Uri.parse(URL)
+
+        assertThat(intent.verify { }).isFalse()
     }
 
     private fun putDummyIntentIntoExtras() {

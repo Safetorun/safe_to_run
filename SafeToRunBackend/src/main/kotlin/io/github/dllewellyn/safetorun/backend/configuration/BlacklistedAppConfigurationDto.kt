@@ -7,6 +7,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum
  * Blacklisted app configuration
  */
 @DynamoDBDocument
-data class BlacklistedAppConfigurationDto(val blacklistedApps: List<String>,
+data class BlacklistedAppConfigurationDto(var blacklistedApps: List<String>,
                                           @DynamoDBTypeConvertedEnum
-                                          val severity: Severity)
+                                          var severity: Severity)

@@ -123,7 +123,8 @@ Resources:
             SecretArn:
               Ref:
                 JwtSecret
-
+        - DynamoDBCrudPolicy:
+            TableName: SafeToRun-Configuration
   LambdaInvokePermission:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -132,6 +133,7 @@ Resources:
       Principal: 'apigateway.amazonaws.com'
       SourceAccount: !Sub ${AWS::AccountId}
       SourceArn: !Join [ "", [ "arn:aws:execute-api:", !Ref AWS::Region, ":",  !Ref AWS::AccountId, ":", !Ref SafeToRunGateway,"/Prod/POST/deviceCheck"] ]
+
 
   LambdaInvokePermissionVerify:
     Type: 'AWS::Lambda::Permission'
@@ -143,15 +145,6 @@ Resources:
       SourceArn: !Join [ "", [ "arn:aws:execute-api:", !Ref AWS::Region, ":",  !Ref AWS::AccountId, ":", !Ref SafeToRunGateway,"/Prod/POST/verifyCheck"] ]
 
 
-  ApiKeyProd:
-     Type: AWS::ApiGateway::ApiKey
-     Properties:
-       Name: ApiKeyProd
-       Enabled: 'true'
-       StageKeys:
-         - RestApiId: !Ref SafeToRunGateway
-           StageName: Prod
-
   JwtSecret:
     Type: 'AWS::SecretsManager::Secret'
     Properties:
@@ -162,6 +155,15 @@ Resources:
         GenerateStringKey: "JwtSecret"
         PasswordLength: 30
         ExcludeCharacters: '"@/\'
+
+  ApiKeyProd:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Name: ApiKeyProd
+      Enabled: 'true'
+      StageKeys:
+        - RestApiId: !Ref SafeToRunGateway
+          StageName: Prod
 
   UsagePlan:
      Type: AWS::ApiGateway::UsagePlan

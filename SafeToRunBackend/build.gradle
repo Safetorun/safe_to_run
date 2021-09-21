@@ -71,6 +71,9 @@ java {
     sourceCompatibility = JavaVersion.toVersion("11")
 }
 
+task prepareKotlinBuildScriptModel {
+}
+
 tasks {
     compileKotlin {
         kotlinOptions {

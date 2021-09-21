@@ -8,6 +8,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum
  */
 @DynamoDBDocument
 data class InstallOriginCheckDto(
-    val allowedInstallOrigins: List<String>,
-    @DynamoDBTypeConvertedEnum val severity: Severity
+    var allowedInstallOrigins: List<String>,
+    @DynamoDBTypeConvertedEnum var severity: Severity
 )

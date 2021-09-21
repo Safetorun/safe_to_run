@@ -105,6 +105,16 @@ internal class UrlConfigTest {
         ).isTrue()
     }
 
+    @Test
+    fun `test that url config will fail with @ if all parameters are  allowed`() {
+        assertThat(
+            "$URL@def.com".urlVerification {
+                HOST.allowHost()
+                allowAnyParameter()
+            }
+        ).isFalse()
+    }
+
     companion object {
         private const val HOST = "abc.com"
         const val URL = "https://$HOST"

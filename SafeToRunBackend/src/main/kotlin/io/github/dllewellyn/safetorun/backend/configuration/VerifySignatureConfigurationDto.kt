@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum
  */
 @DynamoDBDocument
 data class VerifySignatureConfigurationDto(
-    val allowedSignatures: List<String>,
+    var allowedSignatures: List<String>,
     @DynamoDBTypeConvertedEnum
-    val severity: Severity
+    var severity: Severity
 )

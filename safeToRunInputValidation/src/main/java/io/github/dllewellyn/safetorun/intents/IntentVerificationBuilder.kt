@@ -39,7 +39,7 @@ class IntentVerificationBuilder internal constructor(
         true
     }
 
-    private fun gatherAllStrings(intent: Intent) = intent.extras?.gatherAllStrings() ?: emptyList()
+    private fun gatherAllStrings(intent: Intent) = intent.gatherAllStrings() ?: emptyList()
 }
 
 /**

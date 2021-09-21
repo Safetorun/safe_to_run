@@ -28,7 +28,7 @@ internal class DefaultSafeToRunConfigurationRepository : SafeToRunConfigurationR
     @DynamoDBTable(tableName = "SafeToRun-Configuration")
     data class SafeToRunConfigurationDb(
         @DynamoDBHashKey(attributeName = "ApiKey")
-        val apiKey: String,
-        val safeToRunConfigurationDto: SafeToRunConfigurationDto
+        var apiKey: String = "",
+        var safeToRunConfigurationDto: SafeToRunConfigurationDto = SafeToRunConfigurationDto.empty()
     )
 }
