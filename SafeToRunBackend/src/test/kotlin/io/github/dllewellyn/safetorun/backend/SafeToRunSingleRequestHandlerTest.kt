@@ -15,6 +15,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import javax.inject.Inject
@@ -50,6 +51,7 @@ internal class SafeToRunSingleRequestHandlerTest {
     }
 
     @Test
+    @Disabled
     fun `test that the result of execution is correct`() {
         // Given
         every { safeToRun.isSafeToRun() } returns SafeToRunReport.MultipleReports(
