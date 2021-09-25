@@ -9,6 +9,15 @@ plugins {
 
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
+ext {
+    PUBLISH_GROUP_ID = 'io.github.dllewellyn.safetorun'
+    PUBLISH_VERSION = project['safeToRunVersion']
+    PUBLISH_ARTIFACT_ID = 'safeToRunInternal'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
+
 group 'io.github.dllewellyn.safetorun'
 version project['safeToRunVersion']
 
