@@ -25,7 +25,6 @@ defaultValue="default"
 values={[
     {label: 'Default', value: 'default'},
 { label: 'Reporting', value: 'reporting', },
-{ label: 'Off device', value: 'offdevice', },
 ]
 }>
 
@@ -55,14 +54,6 @@ installOriginCheckWithDefaults("com.example.installer").error()
 // Without amazon and google play store configured by default 
 installOriginCheckWithoutDefaults("com.example.installer").error()
 
-```
-
-</TabItem>
-
-<TabItem value="offdevice">
-
-```kotlin
-installOriginCheckWithDefaults(context, "com.example.installer").error()
 ```
 
 </TabItem>

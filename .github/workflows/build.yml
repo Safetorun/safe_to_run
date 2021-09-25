@@ -22,11 +22,6 @@ jobs:
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
-      - name: Publish Unit Test Results
-        if: always()
-        uses: EnricoMi/publish-unit-test-result-action@v1.19
-        with:
-          files: SafeToRunBackend/build/test-results/**/*.xml
       - name: Upload coverage data
         run: bash <(curl -s https://codecov.io/bash)
         env:

@@ -38,7 +38,6 @@ import TabItem from '@theme/TabItem';
   values={[
       {label: 'Default', value: 'default'},
     { label: 'Reporting', value: 'reporting', },
-    { label: 'Off device', value: 'offdevice', },
   ]
 }>
 
@@ -58,16 +57,6 @@ blacklistConfiguration {
     +"com.abc.def"
     +packageName
     blacklistRootingApps()
-}.error()
-```
-
-</TabItem>
-
-<TabItem value="offdevice">
-
-```kotlin
-blacklistedAppCheck(context) {
-    +"com.example.abc"
 }.error()
 ```
 

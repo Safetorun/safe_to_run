@@ -15,7 +15,6 @@ defaultValue="default"
 values={[
     {label: 'Default', value:'default'},
 { label: 'Reporting', value: 'reporting', },
-{ label: 'Off device', value: 'offdevice', },
 ]
 }>
 <TabItem value="default">
@@ -31,14 +30,6 @@ add {
 
 ```kotlin
 verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=").error()
-```
-
-</TabItem>
-
-<TabItem value="offdevice">
-
-```kotlin
-verifySignatureCheck(context, "cSP1O3JN/8+Ag14WAOeOEnwAnpY=").error()
 ```
 
 </TabItem>
