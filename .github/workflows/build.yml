@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run build & testSafeToRunVerifyHandlerTest
-        run: ./gradlew detekt build test shadowJar && bash scripts/coverage.sh
+        run: ./gradlew detekt build test && bash scripts/coverage.sh
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
