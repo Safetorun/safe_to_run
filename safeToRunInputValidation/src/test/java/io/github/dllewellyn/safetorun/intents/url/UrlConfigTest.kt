@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-internal class UrlConfigTest {
+internal class UrlConfigTest  {
 
     @Test
     fun `test that allow any url will pass`() {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
+import junit.framework.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,8 +25,7 @@ internal class IntentVerificationBuilderTest {
 
     @Test
     fun `test that intent verifies correctly if there are no containing intents`() {
-        assertThat(intent.verify {
-        }).isTrue()
+        assertThat(intent.verify {}).isTrue()
     }
 
     @Test

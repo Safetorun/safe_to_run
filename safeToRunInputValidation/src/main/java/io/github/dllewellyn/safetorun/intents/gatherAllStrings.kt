@@ -35,7 +35,7 @@ fun Bundle?.gatherAllStrings(): List<String> {
             is String -> returnList.add(containingKey)
             is List<*> -> {
                 returnList.addAll(containingKey.filterIsInstance<String>())
-                returnList.addAll(containingKey.filterIsInstance<Uri>().map { it.toString() })
+                returnList.addAll(containingKey.filterIsInstance<Uri>().map { uri -> uri.toString() })
             }
             is Parcelable -> if ((containingKey is Uri)) {
                 returnList.add(containingKey.toString())
