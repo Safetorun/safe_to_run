@@ -6,7 +6,6 @@ import android.os.Bundle
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -122,6 +121,38 @@ internal class IntentVerificationBuilderTest {
 
         assertThat(intent.verify { }).isFalse()
     }
+
+    @Test
+    fun `test that actions on failure is triggered`() {
+        every { intent.data } returns Uri.parse(URL)
+
+        var triggered = false
+
+        assertThat(intent.verify {
+            actionOnFailure = {
+                triggered = true
+            }
+        }).isFalse()
+
+        assertThat(triggered).isTrue()
+    }
+
+    @Test
+    fun `test that actions on success is triggered`() {
+        every { intent.data } returns Uri.parse(URL)
+
+        var triggered = false
+
+        assertThat(intent.verify {
+            allowAnyUrls = true
+            actionOnSuccess = {
+                triggered = true
+            }
+        }).isTrue()
+
+        assertThat(triggered).isTrue()
+    }
+
 
     private fun putDummyIntentIntoExtras() {
         every { intent.extras } returns Bundle().apply { putParcelable("Intent", Intent()) }

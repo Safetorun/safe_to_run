@@ -1,6 +1,8 @@
 package io.github.dllewellyn.safetorun.intents.url
 
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.intents.utils.assertFalse
+import io.github.dllewellyn.safetorun.intents.utils.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -65,8 +67,34 @@ internal class AllowUrlsBuilderImplTest {
         assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()
     }
 
+    @Test
+    fun `test that check fails if there is one allowed URL and one disallowed URL`() {
+        listOf(URL, ANOTHER_URL)
+            .verifyUrls {
+                urlConfiguration {
+                    URL.allowUrl()
+                }.addConfiguration()
+            }.assertFalse()
+    }
+
+    @Test
+    fun `test that check passes if there is one allowed URL and an irrelevant string`() {
+        listOf(URL, "not a url")
+            .verifyUrls {
+                urlConfiguration {
+                    URL.allowUrl()
+                }.addConfiguration()
+            }.assertTrue()
+    }
+
+    @Test
+    fun `test that check passes if there is only an irrelevant string `() {
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf("not a url"))).isTrue()
+    }
+
     companion object {
         private const val HOST = "abc.com"
         const val URL = "https://$HOST"
+        const val ANOTHER_URL = "https://bannedhost.co.uk"
     }
 }

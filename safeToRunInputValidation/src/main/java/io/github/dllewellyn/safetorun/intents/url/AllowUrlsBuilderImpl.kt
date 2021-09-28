@@ -8,18 +8,19 @@ internal class AllowUrlsBuilderImpl internal constructor(
     override var allowAnyUrls: Boolean = false
 
     override fun doesUrlCheckPass(listOfStrings: List<String>): Boolean {
-        return allowAnyUrls ||
-                listOfStrings
-                    .run {
-                        thereArentAnyUrls() ||
-                                filter(urlMatcher::isUrl)
-                                    .all { allowedHosts.any { host -> host.verify(it) } }
-                    }
+        return allowAnyUrls
+                || listOfStrings.thereArentAnyUrls()
+                || listOfStrings.filterUrls().areAllUrlsInAllowedHosts()
     }
 
     override fun UrlConfig.addConfiguration() {
         allowedHosts.add(this)
     }
+
+    private fun List<String>.areAllUrlsInAllowedHosts() = all { allowedHosts.any { host -> host.verify(it) } }
+
+    private fun List<String>.filterUrls() =
+        filter(urlMatcher::isUrl)
 
     private fun List<String>.thereArentAnyUrls() =
         any(urlMatcher::isUrl).not()
@@ -35,7 +36,7 @@ internal class AllowUrlsBuilderImpl internal constructor(
  * @return true if this URL is ok, false otherwise
  */
 fun List<String>.verifyUrls(allowUrlsBuilder: AllowUrlsBuilder.() -> Unit) =
-    (AllowUrlsBuilderImpl() as AllowUrlsBuilder).apply {
+    (AllowUrlsBuilderImpl() as AllowUrlsBuilder).run {
         allowUrlsBuilder()
         doesUrlCheckPass(this@verifyUrls)
     }

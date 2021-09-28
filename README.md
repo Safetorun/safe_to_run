@@ -1,5 +1,6 @@
 # Safe to Run
 
+[![Known Vulnerabilities](https://snyk.io/test/github/safetorun/safe_to_run/badge.svg)](https://snyk.io/test/github/safetorun/safe_to_run)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/64152443e1fa4a30b17a2739294d3d47)](https://www.codacy.com/gh/Safetorun/safe_to_run/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Safetorun/safe_to_run&amp;utm_campaign=Badge_Grade)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run) 
 [![codecov](https://codecov.io/gh/Safetorun/safe_to_run/branch/master/graph/badge.svg?token=2CUARL5E6B)](https://codecov.io/gh/Safetorun/safe_to_run)
