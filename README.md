@@ -4,16 +4,20 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/64152443e1fa4a30b17a2739294d3d47)](https://www.codacy.com/gh/Safetorun/safe_to_run/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Safetorun/safe_to_run&amp;utm_campaign=Badge_Grade)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run) 
 [![codecov](https://codecov.io/gh/Safetorun/safe_to_run/branch/master/graph/badge.svg?token=2CUARL5E6B)](https://codecov.io/gh/Safetorun/safe_to_run)
-Core
- ![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safetorun/badge.svg)
 
 Safe to run (android library)
+![Maven central - SafeToRun](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safetorun/badge.svg)
+
+Core
 ![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safeToRunCore/badge.svg)
 
+Input validation
+![Maven central - Input validation](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/inputverification/badge.svg)
 
 
-The purpose of this configuration is to provide a simple and extensible framework you can use in order to check the
-phone you're running on is safe to run your application.
+
+The purpose of this library is to provide a simple and extensible framework you can use in order to check your app
+is safe to run, and provide you with a way to verify data from intents or deep links is safe.  
 
 ## Documentation
 
@@ -24,6 +28,7 @@ phone you're running on is safe to run your application.
 ```groovy
 implementation "io.github.dllewellyn.safetorun:safetorun:$safeToRunVersion"
 implementation "io.github.dllewellyn.safetorun:safeToRunCore:$safeToRunVersion"
+implementation "io.github.dllewellyn.safetorun:inputverification:$safeToRunVersion"
 ```
 
 
@@ -82,57 +87,32 @@ order to harden against reverse engineering.
   }
 ```
 
-### Safe to run reporting 
+### Safe to run input verification
 
-Safe to run reporting gives give a similar configuration step, but a more detailed report
-for the errors than the above example
+A fuller discussion can be found here:
 
-```kotlin
- SafeToRun.init(
-            configure {
+[Verify URL](https://safetorun.github.io/safe_to_run/docs/verifyurls)
 
-                // Root beer (detect root)
-                rootDetection {
-                    tolerateBusyBox = true
-                }.error()
-
-                // Black list certain apps
-                blacklistConfiguration {
-                    +"com.abc.def"
-                    +packageName
-                }.error()
-
-                verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
-                    .error()
-
-                // OS Blacklist version
-                osDetectionCheck(
-                    conditionalBuilder {
-                        with(minOsVersion(MIN_OS_VERSION))
-                        and(notManufacturer("Abc"))
-                        and(bannedModel("bannedModel"))
-                    }
-                ).warn()
-
-                osDetectionCheck(
-                    conditionalBuilder {
-                        with(bannedModel("Pixel 4a (5G)"))
-                    }
-                ).warn()
-
-                installOriginCheckWithDefaults().warn()
-
-                osDetectionCheck(banAvdEmulator()).error()
-                debugCheck().warn()
-            }
-        )
-```
-
-Usage:
+Here's a sample which will only allow safetorun.com as the host, and only
+allowed the parameterName with the name "param" of type string.
 
 ```kotlin
-SafeToRun.safeToRun(this)
+"https://safetorun.com?param=abc".urlVerification {
+    "safetorun.com".allowHost()
+    allowParameter {
+        allowedType = AllowedType.String
+        parameterName = "param"
+    }
+} == true 
 ```
 
+We are able to provide more permissive options, for example:
+
+```kotlin
+"https://safetorun.com?param=abc".urlVerification {
+    "safetorun.com".allowHost()
+    allowAnyParameter()
+} == true
+```
 
 See docs for full information, and "app" for an example
