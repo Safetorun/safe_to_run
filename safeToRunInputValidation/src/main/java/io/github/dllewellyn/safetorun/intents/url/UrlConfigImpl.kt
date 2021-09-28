@@ -37,8 +37,8 @@ internal class UrlConfigImpl : UrlConfig {
     override fun allowParameter(parameter: ParameterConfigBuilder.() -> Unit) {
         ParameterConfigBuilder()
             .apply(parameter)
-            .run { parameterName?.let { ParameterConfig(it, allowedType) } }
-            ?.also { allowParameters.add(it) }
+            .toConfig()
+            ?.also { allowParameter(it) }
     }
 
     override fun verify(url: String): Boolean {
@@ -67,6 +67,8 @@ internal class UrlConfigImpl : UrlConfig {
         allowedUrls.contains(this) ||
                 allowedHost.contains(hostNameMatcher.getHostName(this))
 
+    private fun ParameterConfigBuilder.toConfig() =
+        parameterName?.let { ParameterConfig(it, allowedType) }
 }
 
 /**

@@ -40,9 +40,6 @@ fun Bundle?.gatherAllStrings(): List<String> {
             is Parcelable -> if ((containingKey is Uri)) {
                 returnList.add(containingKey.toString())
             }
-            is Serializable -> if (containingKey is Uri) {
-                returnList.add(containingKey.toString())
-            }
             is Array<*> -> returnList.addAll(containingKey.filterIsInstance<String>())
         }
     }

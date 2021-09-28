@@ -3,6 +3,7 @@ package io.github.dllewellyn.safetorun.intents
 import android.content.Intent
 import android.os.Bundle
 import com.google.common.truth.Truth.assertThat
+import io.github.dllewellyn.safetorun.intents.utils.assertContains
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -34,10 +35,6 @@ internal class IntentVerificationKtTest  {
             }
             .gatherAllIntents()
             .assertContains(nestedInBundle, insideIntent, insideBundle)
-
     }
-
-    fun <T> List<T>.assertContains(vararg args: T) = assertThat(this).containsExactly(*args)
-
 }
 
