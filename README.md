@@ -34,7 +34,7 @@ implementation "io.github.dllewellyn.safetorun:inputverification:$safeToRunVersi
 
 ### Recompilation protection 
 
-Safe to run uses inline functions as an added level over protection against reverse engineering. It is
+Safe to run uses inline functions as an added level of protection against reverse engineering. It is
 recommended that you use the inline implementation *in many places* throughout the application in 
 order to harden against reverse engineering.
 
@@ -87,7 +87,7 @@ order to harden against reverse engineering.
   }
 ```
 
-### Safe to run input verification
+## Safe to run input verification
 
 A fuller discussion can be found here:
 
@@ -108,7 +108,7 @@ allowed the parameterName with the name "param" of type string.
 
 We are able to provide more permissive options, for example:
 
-```kotlin
+```kotlin§
 "https://safetorun.com?param=abc".urlVerification {
     "safetorun.com".allowHost()
     allowAnyParameter()

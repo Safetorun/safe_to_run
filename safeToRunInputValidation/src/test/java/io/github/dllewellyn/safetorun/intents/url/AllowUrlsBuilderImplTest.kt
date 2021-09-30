@@ -6,6 +6,7 @@ import io.github.dllewellyn.safetorun.intents.utils.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
 internal class AllowUrlsBuilderImplTest {
@@ -90,6 +91,15 @@ internal class AllowUrlsBuilderImplTest {
     @Test
     fun `test that check passes if there is only an irrelevant string `() {
         assertThat(urlsBuilder.doesUrlCheckPass(listOf("not a url"))).isTrue()
+    }
+
+    @Test
+    fun `test that checks pass if there is a file passed in a URI format`() {
+        File("abc")
+            .toURI()
+            .toString()
+            .urlVerification { }
+            .assertTrue()
     }
 
     companion object {

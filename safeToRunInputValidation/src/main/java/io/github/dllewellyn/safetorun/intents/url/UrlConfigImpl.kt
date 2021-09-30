@@ -44,13 +44,15 @@ internal class UrlConfigImpl : UrlConfig {
     override fun verify(url: String): Boolean {
         val uri = Uri.parse(url)
 
-        return allowAnyUrl || (url.urlsAreInAllowedLists()
+        return uri.shouldHandle().not() || allowAnyUrl || (url.urlsAreInAllowedLists()
                 && (
                 uri.queryParameterNames.isEmpty()
                         || allowAnyParameter
                         || uri.allParametersAccountFor()
                 ))
     }
+
+    private fun Uri.shouldHandle() = host != null
 
     private fun Uri.allParametersAccountFor(): Boolean {
         return queryParameterNames.map { actualParam ->
