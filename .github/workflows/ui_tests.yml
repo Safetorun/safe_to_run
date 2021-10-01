@@ -1,0 +1,40 @@
+name: UI tests
+
+on:
+  push:
+    branches: [ * ]
+  pull_request:
+    branches: [ * ]
+
+  workflow_dispatch:
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Assemble Android Instrumentation Tests
+          run: bash ./gradlew assembleDebugAndroidTest
+          env:
+            SERVER_URL: 'http://example.com'
+            API_KEY: 'apikey'
+        - name: Upload Android Test APK
+          uses: actions/upload-artifact@v1
+          with:
+            name: app-debug-androidTest
+            path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+
+    firebaseTest:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Login to Google Cloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '270.0.0'
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Set current project
+        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+      - name: Run Instrumentation Tests in Firebase Test Lab
+        run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk --device model=Pixel2,version=28,locale=pl,orientation=portrait
