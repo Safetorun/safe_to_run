@@ -49,8 +49,8 @@ jobs:
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: ${{ secrets.FIREBASE_PROJECT_ID }}
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
       - name: Set project id
         run : gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
       - name: Run Instrumentation Tests in Firebase Test Lab
