@@ -28,6 +28,7 @@ jobs:
 
   firebaseTest:
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - name: Login to Google Cloud
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
