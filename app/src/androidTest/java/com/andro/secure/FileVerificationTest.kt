@@ -9,9 +9,9 @@ import androidx.core.content.FileProvider
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.andro.secure.intents.DisplayFileActivity
-import com.andro.secure.util.waitForView
 import org.junit.Test
 import java.io.File
 
