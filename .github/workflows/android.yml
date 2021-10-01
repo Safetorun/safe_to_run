@@ -30,7 +30,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-    - name: Login to Google Cloud
+      - uses: actions/checkout@v1
+
+      - name: Download app APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-debug
+
+      - name: Download Android test APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-debug-androidTest
+
+      - name: Login to Google Cloud
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '270.0.0'
