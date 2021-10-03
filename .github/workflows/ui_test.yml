@@ -1,4 +1,4 @@
-name: UI tests
+name: Tests
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Assemble Android Instrumentation Tests
-        run: bash ./gradlew assembleDebugAndroidTest
+        run: ./gradlew detekt build test assembleDebugAndroidTest
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
