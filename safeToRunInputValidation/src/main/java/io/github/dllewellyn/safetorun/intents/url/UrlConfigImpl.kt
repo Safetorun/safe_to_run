@@ -52,8 +52,8 @@ internal class UrlConfigImpl : UrlConfig {
                 ))
     }
 
-    private fun Uri.allParametersAccountFor(): Boolean {
-        return queryParameterNames.map { actualParam ->
+    private fun Uri.allParametersAccountFor(): Boolean =
+        queryParameterNames.map { actualParam ->
             Pair(
                 actualParam,
                 allowParameters.firstOrNull { it.parameterName == actualParam })
@@ -61,7 +61,6 @@ internal class UrlConfigImpl : UrlConfig {
             .any {
                 it.second?.allowedType?.matchesAllowedType(getQueryParameter(it.first)) == true
             }
-    }
 
     private fun String.urlsAreInAllowedLists() =
         allowedUrls.contains(this) ||

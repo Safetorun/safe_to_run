@@ -13,7 +13,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.andro.secure.intents.DisplayFileActivity
-import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import java.io.File
 
@@ -44,7 +44,7 @@ class FileVerificationTest {
         onView(withId(R.id.testTextView))
             .check { view, _ ->
                 view as TextView
-                assertEquals( "We should NOT stand for this being visible!", view.text.toString())
+                assertNotEquals( "We should NOT stand for this being visible!", view.text.toString())
             }
     }
 
