@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
+import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.espresso.Espresso.onView
@@ -12,6 +13,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.andro.secure.intents.DisplayFileActivity
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.io.File
 
@@ -39,7 +41,11 @@ class FileVerificationTest {
         }
 
         Thread.sleep(1000)
-        onView(withId(R.id.testTextView)).check(ViewAssertions.matches(withText("We should NOT stand for this being visible!")))
+        onView(withId(R.id.testTextView))
+            .check { view, _ ->
+                view as TextView
+                assertEquals( "We should NOT stand for this being visible!", view.text.toString())
+            }
     }
 
     @Test
@@ -73,7 +79,11 @@ class FileVerificationTest {
                         Intent(Intent.ACTION_SEND).apply {
                             putExtra(
                                 Intent.EXTRA_STREAM,
-                                FileProvider.getUriForFile(it, "com.example.myapp.fileprovider", createFile(it))
+                                FileProvider.getUriForFile(
+                                    it,
+                                    "com.example.myapp.fileprovider",
+                                    createFile(it)
+                                )
                             )
                         })
                 }.start()
