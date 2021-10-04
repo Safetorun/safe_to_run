@@ -1,5 +1,8 @@
 package io.github.dllewellyn.safetorun.intents.url
 
+import io.github.dllewellyn.safetorun.intents.url.util.UrlMatcher
+import io.github.dllewellyn.safetorun.intents.url.util.UrlMatcherImpl
+
 internal class AllowUrlsBuilderImpl internal constructor(
     private val urlMatcher: UrlMatcher = UrlMatcherImpl()
 ) : AllowUrlsBuilder {

@@ -20,7 +20,36 @@ import java.io.File
 class FileVerificationTest {
 
     @Test
-    fun testThatRequestForFilesAreAcceptedIfEverythingIsOk() {
+    fun testThatRequestForFilesIsDeniedIfTryingToDirectoryTraverse() {
+        disableDeathOfFileUriExposure()
+        launch(MainActivity::class.java).apply {
+            onActivity {
+                File(it.filesDir, "../def.txt").apply {
+                    writeText("We should NOT stand for this being visible!")
+                }
+
+                Thread {
+                    launch<DisplayFileActivity>(
+                        Intent(Intent.ACTION_SEND).apply {
+                            putExtra(
+                                Intent.EXTRA_STREAM,
+                                Uri.parse("file:///data/data/../data/${it.packageName}/def.txt")
+                            )
+                        })
+                }.start()
+            }
+        }
+
+        Thread.sleep(1000)
+        onView(withId(R.id.testTextView))
+            .check { view, _ ->
+                view as TextView
+                assertNotEquals( "We should NOT stand for this being visible!", view.text.toString())
+            }
+    }
+
+    @Test
+    fun testThatRequestForFilesAreRejectedIfInPrivateFolder() {
         disableDeathOfFileUriExposure()
         launch(MainActivity::class.java).apply {
             onActivity {
@@ -49,7 +78,7 @@ class FileVerificationTest {
     }
 
     @Test
-    fun testThatRequestForFilesAreRejectedIfInPrivateFolder() {
+    fun testThatRequestForFilesAreAcceptedIfEverythingIsOk() {
         getFileAndStartActivity {
             File(it.filesDir, "abc.txt").apply {
                 writeText("Hello world")

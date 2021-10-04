@@ -1,7 +1,6 @@
-package io.github.dllewellyn.safetorun.intents.url
+package io.github.dllewellyn.safetorun.intents.url.util
 
 import android.webkit.URLUtil
-
 
 internal class UrlMatcherImpl : UrlMatcher {
     override fun isUrl(potentialUrl: String): Boolean {
