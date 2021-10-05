@@ -24,9 +24,7 @@ class FileVerificationTest {
         disableDeathOfFileUriExposure()
         launch(MainActivity::class.java).apply {
             onActivity {
-                File(it.filesDir, "../def.txt").apply {
-                    writeText("We should NOT stand for this being visible!")
-                }
+                it.createFileWeShouldntFind()
 
                 Thread {
                     launch<DisplayFileActivity>(
@@ -40,12 +38,7 @@ class FileVerificationTest {
             }
         }
 
-        Thread.sleep(1000)
-        onView(withId(R.id.testTextView))
-            .check { view, _ ->
-                view as TextView
-                assertNotEquals( "We should NOT stand for this being visible!", view.text.toString())
-            }
+        checkWeCantSeePrivateFile()
     }
 
     @Test
@@ -53,29 +46,21 @@ class FileVerificationTest {
         disableDeathOfFileUriExposure()
         launch(MainActivity::class.java).apply {
             onActivity {
-                File(it.filesDir, "../def.txt").apply {
-                    writeText("We should NOT stand for this being visible!")
-                }
+                it.createFileWeShouldntFind()
 
-                Thread {
-                    launch<DisplayFileActivity>(
-                        Intent(Intent.ACTION_SEND).apply {
-                            putExtra(
-                                Intent.EXTRA_STREAM,
-                                Uri.parse("file:///data/data/${it.packageName}/def.txt")
-                            )
-                        })
-                }.start()
+                launchWithIntent(
+                    Intent(Intent.ACTION_SEND).apply {
+                        putExtra(
+                            Intent.EXTRA_STREAM,
+                            Uri.parse("file:///data/data/${it.packageName}/def.txt")
+                        )
+                    })
             }
         }
 
-        Thread.sleep(1000)
-        onView(withId(R.id.testTextView))
-            .check { view, _ ->
-                view as TextView
-                assertNotEquals( "We should NOT stand for this being visible!", view.text.toString())
-            }
+        checkWeCantSeePrivateFile()
     }
+
 
     @Test
     fun testThatRequestForFilesAreAcceptedIfEverythingIsOk() {
@@ -88,6 +73,13 @@ class FileVerificationTest {
         Thread.sleep(1000)
         onView(withId(R.id.testTextView)).check(ViewAssertions.matches(withText("Hello world")))
     }
+
+
+    private fun launchWithIntent(intent: Intent) =
+        Thread {
+            launch<DisplayFileActivity>(intent)
+        }.start()
+
 
     private fun disableDeathOfFileUriExposure() {
         if (Build.VERSION.SDK_INT >= 24) {
@@ -118,6 +110,23 @@ class FileVerificationTest {
                 }.start()
             }
         }
+    }
+
+    private fun Context.createFileWeShouldntFind() = File(filesDir, "../def.txt").apply {
+        writeText(SHOULD_NOT_SEE)
+    }
+
+    private fun checkWeCantSeePrivateFile() {
+        Thread.sleep(1000)
+        onView(withId(R.id.testTextView))
+            .check { view, _ ->
+                view as TextView
+                assertNotEquals(SHOULD_NOT_SEE, view.text.toString())
+            }
+    }
+
+    companion object {
+        const val SHOULD_NOT_SEE = "We should NOT stand for this being visible!"
     }
 
 }
