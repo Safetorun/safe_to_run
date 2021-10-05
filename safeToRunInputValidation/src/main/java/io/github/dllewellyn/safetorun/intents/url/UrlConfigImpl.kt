@@ -44,7 +44,7 @@ internal class UrlConfigImpl : UrlConfig {
     override fun verify(url: String): Boolean {
         val uri = Uri.parse(url)
 
-        return allowAnyUrl || (url.urlsAreInAllowedLists()
+        return uri.host == null || allowAnyUrl || (url.urlsAreInAllowedLists()
                 && (
                 uri.queryParameterNames.isEmpty()
                         || allowAnyParameter
@@ -52,8 +52,8 @@ internal class UrlConfigImpl : UrlConfig {
                 ))
     }
 
-    private fun Uri.allParametersAccountFor(): Boolean {
-        return queryParameterNames.map { actualParam ->
+    private fun Uri.allParametersAccountFor(): Boolean =
+        queryParameterNames.map { actualParam ->
             Pair(
                 actualParam,
                 allowParameters.firstOrNull { it.parameterName == actualParam })
@@ -61,7 +61,6 @@ internal class UrlConfigImpl : UrlConfig {
             .any {
                 it.second?.allowedType?.matchesAllowedType(getQueryParameter(it.first)) == true
             }
-    }
 
     private fun String.urlsAreInAllowedLists() =
         allowedUrls.contains(this) ||

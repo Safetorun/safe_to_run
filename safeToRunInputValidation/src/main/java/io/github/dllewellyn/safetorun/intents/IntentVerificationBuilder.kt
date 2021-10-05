@@ -25,8 +25,8 @@ class IntentVerificationBuilder internal constructor(
 
     internal fun verify() =
         (doesIntentCheckPass() && doesUrlCheckPass(gatherAllStrings(intent)))
-            .also {
-                if (it) {
+            .also { passed ->
+                if (passed) {
                     actionOnSuccess?.invoke()
                 } else {
                     actionOnFailure?.invoke()
