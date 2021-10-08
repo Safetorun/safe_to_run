@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[46],{117:function(e){e.exports=JSON.parse('{"allTagsPath":"/safe_to_run/blog/tags","slug":"emulator-detection","name":"emulator detection","count":1,"permalink":"/safe_to_run/blog/tags/emulator-detection"}')}}]);
