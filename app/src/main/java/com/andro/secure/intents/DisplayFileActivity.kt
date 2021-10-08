@@ -8,11 +8,8 @@ import android.os.Parcelable
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toFile
 import com.andro.secure.R
-import io.github.dllewellyn.safetorun.intents.file.allowDirectory
 import io.github.dllewellyn.safetorun.intents.file.verifyFile
-import java.io.File
 import java.nio.charset.Charset
 
 class DisplayFileActivity : AppCompatActivity() {
@@ -39,7 +36,7 @@ class DisplayFileActivity : AppCompatActivity() {
                 }
             })?.let {
                 val fileCheckResult = it.verifyFile(this@DisplayFileActivity) {
-                    addAllowedParentDirectory(context.filesDir.allowDirectory())
+                    context.filesDir.allowDirectory()
                 }
 
                 if (fileCheckResult) {

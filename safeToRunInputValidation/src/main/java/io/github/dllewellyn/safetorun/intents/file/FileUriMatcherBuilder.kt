@@ -30,9 +30,23 @@ interface FileUriMatcherBuilder {
     fun addAllowedParentDirectory(parentDirectory: FileUriMatcherCheck)
 
     /**
+     * Allow a file to be opened
+     *
+     * @param file the file you want to allow
+     */
+    fun addAllowedExactFile(file : File)
+
+    /**
+     * Allow a file to be opened
+     *
+     * @receiver the file you want to allow
+     */
+    fun File.allowExactFile()
+
+    /**
      * @see addAllowedParentDirectory
      */
-    fun FileUriMatcherCheck.addAllowedParentDir()
+    fun FileUriMatcherCheck.allowParentDir()
 
     /**
      * Does file check pass
@@ -52,6 +66,24 @@ interface FileUriMatcherBuilder {
      */
     fun doesFileCheckPass(uri: Uri): Boolean
 
+    /**
+     * Convert a file to a allow directory check
+     *
+     * @param allowSubdirectories whether or not to allow subdirectories
+     *
+     * @receiver File the file to allow
+     */
+    fun File.allowDirectory(allowSubdirectories: Boolean = false) =
+        FileUriMatcherCheck(this, allowSubdirectories)
+            .allowParentDir()
+
+    /**
+     * Convert a file to allow directory check
+     *
+     * @receiver File the file to allow
+     */
+    fun File.allowDirectoryAndSubdirectories() =
+        allowDirectory(true)
 
     /**
      * Create a check for URI matcher
@@ -63,12 +95,4 @@ interface FileUriMatcherBuilder {
 }
 
 
-/**
- * Convert a file to a allow directory check
- *
- * @param allowSubdirectories whether or not to allow subdirectories
- *
- * @receiver File the file to allow
- */
-fun File.allowDirectory(allowSubdirectories: Boolean = false) =
-    FileUriMatcherBuilder.FileUriMatcherCheck(this, allowSubdirectories)
+
