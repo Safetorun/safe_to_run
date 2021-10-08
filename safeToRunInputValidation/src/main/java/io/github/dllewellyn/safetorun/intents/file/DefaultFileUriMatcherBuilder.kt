@@ -8,6 +8,7 @@ import java.io.File
 internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {
 
     private val allowedDirectories = mutableListOf<FileUriMatcherBuilder.FileUriMatcherCheck>()
+    private val allowExactFile = mutableListOf<File>()
 
     override var allowAnyFile: Boolean = false
 
@@ -15,15 +16,24 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
         allowedDirectories.add(parentDirectory)
     }
 
-    override fun FileUriMatcherBuilder.FileUriMatcherCheck.addAllowedParentDir() {
-        allowedDirectories.add(this)
+    override fun addAllowedExactFile(file: File) {
+        allowExactFile.add(file)
+    }
+
+    override fun File.allowExactFile() {
+        addAllowedExactFile(this)
+    }
+
+    override fun FileUriMatcherBuilder.FileUriMatcherCheck.allowParentDir() {
+        addAllowedParentDirectory(this)
+
     }
 
     override fun doesFileCheckPass(file: File): Boolean {
         return !file.isPrivateDirectory(context) ||
                 allowAnyFile ||
-                allowedDirectories.firstOrNull {
-                    it.directoryToAllow.canonicalPath == file.canonicalPath
+                allowExactFile.firstOrNull {
+                    it.canonicalPath == file.canonicalPath
                 } != null ||
                 allowedDirectories.firstOrNull {
                     it.directoryToAllow.canonicalPath == file.parent?.let { parentDirectoryPath ->
@@ -41,8 +51,8 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
         return uri.path?.let { doesFileCheckPass(File(it)) } ?: false
     }
 
-    private fun recursivelyCheckDirectory(parent: File, fileWereLookingFor: File) : Boolean =
-       fileWereLookingFor.canonicalPath.startsWith(parent.canonicalPath)
+    private fun recursivelyCheckDirectory(parent: File, fileWereLookingFor: File): Boolean =
+        fileWereLookingFor.canonicalPath.startsWith(parent.canonicalPath)
 }
 
 @SuppressLint("SdCardPath")

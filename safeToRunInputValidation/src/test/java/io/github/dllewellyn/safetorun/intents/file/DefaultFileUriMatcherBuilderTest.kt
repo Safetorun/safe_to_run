@@ -1,7 +1,6 @@
 package io.github.dllewellyn.safetorun.intents.file
 
 import android.content.Context
-import android.net.Uri
 import io.github.dllewellyn.safetorun.intents.utils.assertFalse
 import io.github.dllewellyn.safetorun.intents.utils.assertTrue
 import io.mockk.every
@@ -38,12 +37,7 @@ internal class DefaultFileUriMatcherBuilderTest : TestCase() {
     fun `test that we do allow a file in a directory that has been added`() {
         File("/data/data/$PACKAGE/files/abc.txt")
             .verifyFile(context) {
-                addAllowedParentDirectory(
-                    FileUriMatcherBuilder.FileUriMatcherCheck(
-                        File("/data/data/$PACKAGE/files/"),
-                        false
-                    )
-                )
+                File("/data/data/$PACKAGE/files/").allowDirectory()
             }
             .assertTrue()
     }
@@ -51,12 +45,7 @@ internal class DefaultFileUriMatcherBuilderTest : TestCase() {
     fun `test that we do allow a file in a directory that has been added as an exact match`() {
         File("/data/data/$PACKAGE/files/abc.txt")
             .verifyFile(context) {
-                addAllowedParentDirectory(
-                    FileUriMatcherBuilder.FileUriMatcherCheck(
-                        File("/data/data/$PACKAGE/files/abc.txt"),
-                        false
-                    )
-                )
+                File("/data/data/$PACKAGE/files/abc.txt").allowExactFile()
             }
             .assertTrue()
     }
