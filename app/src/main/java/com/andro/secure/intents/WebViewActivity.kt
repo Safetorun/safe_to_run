@@ -1,18 +1,14 @@
 package com.andro.secure.intents
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import com.andro.secure.R
+import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.databinding.ActivityWebViewBinding
 import io.github.dllewellyn.safetorun.intents.url.params.AllowedType
 import io.github.dllewellyn.safetorun.intents.url.urlConfiguration
 import io.github.dllewellyn.safetorun.intents.url.urlVerification
 import io.github.dllewellyn.safetorun.intents.verify
-import java.lang.RuntimeException
 
 class WebViewActivity : AppCompatActivity() {
 
@@ -39,7 +35,7 @@ class WebViewActivity : AppCompatActivity() {
 
             // Or do it with intent verification
 
-            val result = intent.verify {
+            val result = intent.verify(baseContext) {
 
                 urlConfiguration {
                     "safetorun.com".allowHost()

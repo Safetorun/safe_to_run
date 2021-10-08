@@ -18,7 +18,6 @@ internal class IntentVerificationKtTest  {
         val insideBundle = Intent()
         val nestedInBundle = Intent()
 
-
         val doubleInnerBundle = Bundle().apply {
             putParcelable("nestedInBundle", nestedInBundle)
         }

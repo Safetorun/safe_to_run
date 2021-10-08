@@ -11,7 +11,7 @@ class BouncableActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bouncable)
 
-        intent.verify {
+        intent.verify(this) {
 //            allowContainingIntents = true
 
             actionOnSuccess = {

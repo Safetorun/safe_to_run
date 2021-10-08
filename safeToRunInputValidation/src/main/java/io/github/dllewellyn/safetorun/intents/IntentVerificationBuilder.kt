@@ -1,8 +1,11 @@
 package io.github.dllewellyn.safetorun.intents
 
+import android.content.Context
 import android.content.Intent
+import io.github.dllewellyn.safetorun.intents.file.DefaultFileUriMatcherBuilder
+import io.github.dllewellyn.safetorun.intents.file.FileUriMatcherBuilder
 import io.github.dllewellyn.safetorun.intents.url.AllowUrlsBuilder
-import io.github.dllewellyn.safetorun.intents.url.AllowUrlsBuilderImpl
+import io.github.dllewellyn.safetorun.intents.url.DefaultAllowUrlsBuilder
 
 /**
  * Class for building a verification builder use
@@ -12,8 +15,10 @@ import io.github.dllewellyn.safetorun.intents.url.AllowUrlsBuilderImpl
  * ```
  */
 class IntentVerificationBuilder internal constructor(
-    private val intent: Intent
-) : AllowUrlsBuilder by AllowUrlsBuilderImpl() {
+    private val intent: Intent,
+    private val context: Context
+) : AllowUrlsBuilder by DefaultAllowUrlsBuilder(),
+    FileUriMatcherBuilder by DefaultFileUriMatcherBuilder(context) {
 
     /**
      * Whether to allow an 'intent' inside this bundle
@@ -39,7 +44,7 @@ class IntentVerificationBuilder internal constructor(
         true
     }
 
-    private fun gatherAllStrings(intent: Intent) = intent.gatherAllStrings() ?: emptyList()
+    private fun gatherAllStrings(intent: Intent) = intent.gatherAllStrings()
 }
 
 /**
@@ -57,8 +62,10 @@ class IntentVerificationBuilder internal constructor(
  * }
  * ```
  * @param builderBlock the configuration to use
+ * @param context android context
  */
-fun Intent.verify(builderBlock: IntentVerificationBuilder.() -> Unit) = IntentVerificationBuilder(this).run {
-    builderBlock()
-    verify()
-}
+fun Intent.verify(context: Context, builderBlock: IntentVerificationBuilder.() -> Unit) =
+    IntentVerificationBuilder(this, context).run {
+        builderBlock()
+        verify()
+    }
