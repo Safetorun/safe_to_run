@@ -3,6 +3,7 @@ package io.github.dllewellyn.safetorun.intents.file
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import java.io.File
 
 internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {
@@ -30,13 +31,15 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
     }
 
     override fun doesFileCheckPass(file: File): Boolean {
+        Log.v("File", file.absolutePath)
+        Log.v("Absoloute", file.canonicalPath)
         return !file.isPrivateDirectory(context) ||
                 allowAnyFile ||
                 allowExactFile.firstOrNull {
                     it.canonicalPath == file.canonicalPath
                 } != null ||
                 allowedDirectories.firstOrNull {
-                    it.directoryToAllow.canonicalPath == file.parent?.let { parentDirectoryPath ->
+                    it.directoryToAllow.canonicalPath == file.canonicalFile.parent?.let { parentDirectoryPath ->
                         File(
                             parentDirectoryPath
                         ).canonicalPath

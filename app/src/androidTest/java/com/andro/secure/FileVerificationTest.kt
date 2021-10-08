@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.test.core.app.ActivityScenario.launch
@@ -14,6 +15,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.andro.secure.intents.DisplayFileActivity
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.fail
 import org.junit.Test
 import java.io.File
 
@@ -72,6 +74,41 @@ class FileVerificationTest {
 
         Thread.sleep(1000)
         onView(withId(R.id.testTextView)).check(ViewAssertions.matches(withText("Hello world")))
+    }
+
+    @Test
+    fun testThatCheckIsNotVulnerableToSymlinkAttachs() {
+        disableDeathOfFileUriExposure()
+        launch(MainActivity::class.java).apply {
+            onActivity {
+                it.createFileWeShouldntFind()
+                val builder = VmPolicy.Builder()
+                StrictMode.setVmPolicy(builder.build())
+                // Set readable / writable / executable
+                File(it.filesDir, "file.txt").setReadable(true,false);
+                File(it.filesDir, "file.txt").setWritable(true,false);
+                File(it.filesDir, "file.txt").setExecutable(true,false);
+
+                try {
+                    Runtime.getRuntime()
+                        .exec("ln -s /data/data/${it.packageName}/def.txt  ${it.filesDir.absolutePath}/file.txt")
+                        .waitFor()
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                    fail()
+                }
+
+                launchWithIntent(
+                    Intent(Intent.ACTION_SEND).apply {
+                        putExtra(
+                            Intent.EXTRA_STREAM,
+                            Uri.parse("file:///${it.filesDir.absolutePath}/file.txt")
+                        )
+                    })
+            }
+        }
+
+        checkWeCantSeePrivateFile()
     }
 
 
