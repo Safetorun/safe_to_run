@@ -31,6 +31,71 @@ implementation "io.github.dllewellyn.safetorun:safeToRunCore:$safeToRunVersion"
 implementation "io.github.dllewellyn.safetorun:inputverification:$safeToRunVersion"
 ```
 
+## Safe to run input verification
+
+A fuller discussion can be found here:
+
+[Verify URL](https://safetorun.github.io/safe_to_run/docs/verifyurls)
+
+### Urls 
+
+Here's a sample which will only allow safetorun.com as the host, and only
+allowed the parameterName with the name "param" of type string.
+
+```kotlin
+"https://safetorun.com?param=abc".urlVerification {
+    "safetorun.com".allowHost()
+    allowParameter {
+        allowedType = AllowedType.String
+        parameterName = "param"
+    }
+} == true 
+```
+
+We are able to provide more permissive options, for example:
+
+```kotlin§
+"https://safetorun.com?param=abc".urlVerification {
+    "safetorun.com".allowHost()
+    allowAnyParameter()
+} == true
+```
+
+### Files
+
+### Allow specific private file
+
+We can use safe to run for files too: 
+
+Allowing a specific file 
+
+```kotlin
+val isFileSafeToOpen = uri.verifyFile(this) {
+    // This
+    File(context.filesDir + "files/", "safe_to_read.txt").allowExactFile()
+
+    // Is the same as this:
+    addAllowedExactFile(File(context.filesDir + "files/", "safe_to_read.txt"))
+}
+```
+
+or maybe adding a directory 
+
+```kotlin
+val isFileSafeToOpen = uri.verifyFile(this) {
+    // This
+    addAllowedParentDirectory(context.filesDir.allowDirectory())
+
+    // Is the same as this:
+    FileUriMatcherBuilder.FileUriMatcherCheck(
+        context.filesDir,
+        false
+    )
+}
+```
+
+See docs for full information, and "app" for an example
+
 
 ### Recompilation protection 
 
@@ -86,33 +151,3 @@ order to harden against reverse engineering.
       }
   }
 ```
-
-## Safe to run input verification
-
-A fuller discussion can be found here:
-
-[Verify URL](https://safetorun.github.io/safe_to_run/docs/verifyurls)
-
-Here's a sample which will only allow safetorun.com as the host, and only
-allowed the parameterName with the name "param" of type string.
-
-```kotlin
-"https://safetorun.com?param=abc".urlVerification {
-    "safetorun.com".allowHost()
-    allowParameter {
-        allowedType = AllowedType.String
-        parameterName = "param"
-    }
-} == true 
-```
-
-We are able to provide more permissive options, for example:
-
-```kotlin§
-"https://safetorun.com?param=abc".urlVerification {
-    "safetorun.com".allowHost()
-    allowAnyParameter()
-} == true
-```
-
-See docs for full information, and "app" for an example
