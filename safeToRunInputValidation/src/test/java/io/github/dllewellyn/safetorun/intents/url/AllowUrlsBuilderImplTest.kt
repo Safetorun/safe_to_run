@@ -11,7 +11,7 @@ import java.io.File
 @RunWith(RobolectricTestRunner::class)
 internal class AllowUrlsBuilderImplTest {
 
-    private val urlsBuilder = AllowUrlsBuilderImpl()
+    private val urlsBuilder = DefaultAllowUrlsBuilder()
 
     @Test
     fun `test that url check passes if any is set to true`() {

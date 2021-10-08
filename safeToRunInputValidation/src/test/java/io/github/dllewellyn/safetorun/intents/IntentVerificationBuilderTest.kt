@@ -1,5 +1,6 @@
 package io.github.dllewellyn.safetorun.intents
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +16,7 @@ import org.robolectric.RobolectricTestRunner
 internal class IntentVerificationBuilderTest {
 
     private val intent = mockk<Intent>()
+    private val context = mockk<Context>()
 
     @Before
     fun setUp() {
@@ -24,7 +26,7 @@ internal class IntentVerificationBuilderTest {
 
     @Test
     fun `test that intent verifies correctly if there are no containing intents`() {
-        assertThat(intent.verify {}).isTrue()
+        assertThat(intent.verify(context) {}).isTrue()
     }
 
     @Test
@@ -35,7 +37,7 @@ internal class IntentVerificationBuilderTest {
 
         // When Then
         assertThat(intent
-            .verify {
+            .verify(context) {
                 allowContainingIntents = true
             }).isTrue()
     }
@@ -53,7 +55,7 @@ internal class IntentVerificationBuilderTest {
 
         // When Then
         assertThat(intent
-            .verify {
+            .verify(context) {
                 allowContainingIntents = false
             }).isFalse()
     }
@@ -65,7 +67,7 @@ internal class IntentVerificationBuilderTest {
 
         // When Then
         assertThat(intent
-            .verify {
+            .verify(context) {
                 allowContainingIntents = false
             }).isFalse()
     }
@@ -75,7 +77,7 @@ internal class IntentVerificationBuilderTest {
         // Given
         every { intent.extras } returns Bundle().apply { putString("url", URL) }
 
-        assertThat(intent.verify { }).isFalse()
+        assertThat(intent.verify(context) { }).isFalse()
     }
 
     @Test
@@ -83,7 +85,7 @@ internal class IntentVerificationBuilderTest {
         // Given
         every { intent.extras } returns Bundle().apply { putString("url", URL) }
 
-        assertThat(intent.verify {
+        assertThat(intent.verify(context) {
             allowAnyUrls = true
         }).isTrue()
     }
@@ -93,7 +95,7 @@ internal class IntentVerificationBuilderTest {
         // Given
         every { intent.extras } returns Bundle().apply { putStringArrayList("url", arrayListOf(URL)) }
 
-        assertThat(intent.verify {
+        assertThat(intent.verify(context) {
             allowAnyUrls = true
         }).isTrue()
     }
@@ -103,7 +105,7 @@ internal class IntentVerificationBuilderTest {
         // Given
         every { intent.extras } returns Bundle().apply { putStringArray("url", arrayOf(URL)) }
 
-        assertThat(intent.verify {
+        assertThat(intent.verify(context) {
             allowAnyUrls = true
         }).isTrue()
     }
@@ -112,14 +114,14 @@ internal class IntentVerificationBuilderTest {
     fun `test that intent verify fails if there is a URL as URI`() {
         every { intent.extras } returns Bundle().apply { putParcelable("url", Uri.parse(URL)) }
 
-        assertThat(intent.verify { }).isFalse()
+        assertThat(intent.verify(context) { }).isFalse()
     }
 
     @Test
     fun `test that intent verify fails if there is a URL as data`() {
         every { intent.data } returns Uri.parse(URL)
 
-        assertThat(intent.verify { }).isFalse()
+        assertThat(intent.verify(context) { }).isFalse()
     }
 
     @Test
@@ -128,7 +130,7 @@ internal class IntentVerificationBuilderTest {
 
         var triggered = false
 
-        assertThat(intent.verify {
+        assertThat(intent.verify(context) {
             actionOnFailure = {
                 triggered = true
             }
@@ -143,7 +145,7 @@ internal class IntentVerificationBuilderTest {
 
         var triggered = false
 
-        assertThat(intent.verify {
+        assertThat(intent.verify(context) {
             allowAnyUrls = true
             actionOnSuccess = {
                 triggered = true

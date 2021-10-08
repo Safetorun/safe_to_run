@@ -1,17 +1,14 @@
 package com.andro.secure.intents
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import com.andro.secure.R
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.databinding.ActivityWebViewBinding
 import io.github.dllewellyn.safetorun.intents.url.params.AllowedType
 import io.github.dllewellyn.safetorun.intents.url.urlConfiguration
 import io.github.dllewellyn.safetorun.intents.url.urlVerification
 import io.github.dllewellyn.safetorun.intents.verify
-import java.lang.RuntimeException
 
 class WebViewActivity : AppCompatActivity() {
 
@@ -30,7 +27,7 @@ class WebViewActivity : AppCompatActivity() {
         }
 
         if (isUrlOk != true) {
-            throw RuntimeException("Failed validation!!")
+            // Do something
         }
 
         ActivityWebViewBinding.inflate(LayoutInflater.from(this)).apply {
@@ -38,15 +35,27 @@ class WebViewActivity : AppCompatActivity() {
 
             // Or do it with intent verification
 
-            intent.verify {
+            val result = intent.verify(baseContext) {
 
-                urlConfiguration { "safetorun.com".allowHost() }
+                urlConfiguration {
+                    "safetorun.com".allowHost()
+                    allowParameter {
+                        allowedType = AllowedType.String
+                        parameterName = "a_token"
+                    }
+                }
 
                 actionOnSuccess = {
+                    errorMessage.visibility = View.GONE
                     intent?.extras?.getString("url")
                         ?.let { "${it}?sensitive_token=pleasekeepmesecret" }
                         ?.let(webView::loadUrl)
                 }
+            }
+
+            if (result.not()) {
+                errorMessage.visibility = View.VISIBLE
+                errorMessage.text = "Error with URL"
             }
         }
     }

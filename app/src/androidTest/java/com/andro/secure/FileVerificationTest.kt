@@ -117,7 +117,7 @@ class FileVerificationTest {
     }
 
     private fun checkWeCantSeePrivateFile() {
-        Thread.sleep(1000)
+        Thread.sleep(100)
         onView(withId(R.id.testTextView))
             .check { view, _ ->
                 view as TextView

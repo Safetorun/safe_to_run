@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun.intents.url
 import io.github.dllewellyn.safetorun.intents.url.util.UrlMatcher
 import io.github.dllewellyn.safetorun.intents.url.util.UrlMatcherImpl
 
-internal class AllowUrlsBuilderImpl internal constructor(
+internal class DefaultAllowUrlsBuilder internal constructor(
     private val urlMatcher: UrlMatcher = UrlMatcherImpl()
 ) : AllowUrlsBuilder {
 
@@ -39,7 +39,7 @@ internal class AllowUrlsBuilderImpl internal constructor(
  * @return true if this URL is ok, false otherwise
  */
 fun List<String>.verifyUrls(allowUrlsBuilder: AllowUrlsBuilder.() -> Unit) =
-    (AllowUrlsBuilderImpl() as AllowUrlsBuilder).run {
+    (DefaultAllowUrlsBuilder() as AllowUrlsBuilder).run {
         allowUrlsBuilder()
         doesUrlCheckPass(this@verifyUrls)
     }
