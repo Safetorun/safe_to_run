@@ -85,13 +85,13 @@ class FileVerificationTest {
                 val builder = VmPolicy.Builder()
                 StrictMode.setVmPolicy(builder.build())
                 // Set readable / writable / executable
-                File(it.filesDir, "file.txt").setReadable(true,false);
-                File(it.filesDir, "file.txt").setWritable(true,false);
-                File(it.filesDir, "file.txt").setExecutable(true,false);
+                File(it.filesDir, "$FILE").setReadable(true,false);
+                File(it.filesDir, "$FILE").setWritable(true,false);
+                File(it.filesDir, "$FILE").setExecutable(true,false);
 
                 try {
                     Runtime.getRuntime()
-                        .exec("ln -s /data/data/${it.packageName}/def.txt  ${it.filesDir.absolutePath}/file.txt")
+                        .exec("ln -s /data/data/${it.packageName}/def.txt  ${it.filesDir.absolutePath}/$FILE")
                         .waitFor()
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -102,7 +102,7 @@ class FileVerificationTest {
                     Intent(Intent.ACTION_SEND).apply {
                         putExtra(
                             Intent.EXTRA_STREAM,
-                            Uri.parse("file:///${it.filesDir.absolutePath}/file.txt")
+                            Uri.parse("file:///${it.filesDir.absolutePath}/$FILE")
                         )
                     })
             }
@@ -164,6 +164,7 @@ class FileVerificationTest {
 
     companion object {
         const val SHOULD_NOT_SEE = "We should NOT stand for this being visible!"
+        const val FILE = "file.txt"
     }
 
 }
