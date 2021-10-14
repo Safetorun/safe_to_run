@@ -31,8 +31,6 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
     }
 
     override fun doesFileCheckPass(file: File): Boolean {
-        Log.v("File", file.absolutePath)
-        Log.v("Absoloute", file.canonicalPath)
         return !file.isPrivateDirectory(context) ||
                 allowAnyFile ||
                 allowExactFile.firstOrNull {

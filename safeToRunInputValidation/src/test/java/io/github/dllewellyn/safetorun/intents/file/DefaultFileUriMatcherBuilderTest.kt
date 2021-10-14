@@ -45,6 +45,16 @@ internal class DefaultFileUriMatcherBuilderTest {
     }
 
     @Test
+    fun `test that we are blocked from a file being available if not in the right directory`() {
+        Uri.parse("file:///data/data/$PACKAGE/abc.txt")
+            .verifyFile(context) {
+                File("/data/data/$PACKAGE/files").allowDirectory()
+            }
+            .assertFalse()
+    }
+
+
+    @Test
     fun `test that by default we dont allow a file in private directory userdata`() {
         File("/user/data/$PACKAGE/files/abc.txt")
             .verifyFile(context) {}

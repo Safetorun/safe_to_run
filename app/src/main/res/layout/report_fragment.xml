@@ -8,9 +8,18 @@
         tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/startProtectedActivity"
+        android:text="Start protected activity"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
             android:id="@+id/runSensitiveAction"
             android:text="Run sensitive action"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/startProtectedActivity"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"

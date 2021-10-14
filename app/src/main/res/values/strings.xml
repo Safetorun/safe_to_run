@@ -2,4 +2,6 @@
     <string name="app_name">Safe to run</string>
     <string name="safe_to_run_result">Safe to run %b</string>
     <string name="web_view_sample">Web view sample</string>
+    <string name="this_is_a_protected_activity">This is a protected activity!!</string>
+    <string name="oops_couldn_t_bounce">Oops, couldn\'t bounce..</string>
 </resources>

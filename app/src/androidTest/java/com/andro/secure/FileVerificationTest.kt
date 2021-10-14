@@ -85,9 +85,9 @@ class FileVerificationTest {
                 val builder = VmPolicy.Builder()
                 StrictMode.setVmPolicy(builder.build())
                 // Set readable / writable / executable
-                File(it.filesDir, "$FILE").setReadable(true,false);
-                File(it.filesDir, "$FILE").setWritable(true,false);
-                File(it.filesDir, "$FILE").setExecutable(true,false);
+                File(it.filesDir, FILE).setReadable(true, false)
+                File(it.filesDir, FILE).setWritable(true, false)
+                File(it.filesDir, FILE).setExecutable(true, false)
 
                 try {
                     Runtime.getRuntime()
@@ -104,7 +104,8 @@ class FileVerificationTest {
                             Intent.EXTRA_STREAM,
                             Uri.parse("file:///${it.filesDir.absolutePath}/$FILE")
                         )
-                    })
+                    }
+                )
             }
         }
 
@@ -166,5 +167,4 @@ class FileVerificationTest {
         const val SHOULD_NOT_SEE = "We should NOT stand for this being visible!"
         const val FILE = "file.txt"
     }
-
 }

@@ -1,6 +1,7 @@
 package com.andro.secure.report
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.andro.secure.BuildConfig
+import com.andro.secure.ProtectedActivity
 import com.andro.secure.ResultEpoxyController
 import com.andro.secure.databinding.ReportFragmentBinding
 import com.auth0.jwt.interfaces.DecodedJWT
@@ -47,7 +49,11 @@ class ReportFragment : Fragment() {
 
     private val reportsController = ResultEpoxyController()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         ReportFragmentBinding.inflate(inflater, container, false)
             .apply { setup(this) }
             .root
@@ -60,7 +66,10 @@ class ReportFragment : Fragment() {
 
             Toast.makeText(it.context, "Performed sensitive action!!", Toast.LENGTH_LONG)
                 .show()
+        }
 
+        binding.startProtectedActivity.setOnClickListener {
+            startActivity(Intent(requireContext(), ProtectedActivity::class.java))
         }
 
         configureSafeToRunReporting()
