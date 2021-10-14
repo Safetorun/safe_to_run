@@ -3,6 +3,7 @@ package io.github.dllewellyn.safetorun.intents.file
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import java.io.File
 
 internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {
@@ -36,7 +37,7 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
                     it.canonicalPath == file.canonicalPath
                 } != null ||
                 allowedDirectories.firstOrNull {
-                    it.directoryToAllow.canonicalPath == file.parent?.let { parentDirectoryPath ->
+                    it.directoryToAllow.canonicalPath == file.canonicalFile.parent?.let { parentDirectoryPath ->
                         File(
                             parentDirectoryPath
                         ).canonicalPath
