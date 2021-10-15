@@ -1,5 +1,7 @@
 ---
-id: why title: Why Safe to Run? slug: /
+id: why 
+title: Why Safe to Run? 
+slug: /
 ---
 :::caution
 
