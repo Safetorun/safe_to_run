@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.andro.secure"
-        minSdkVersion 24
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

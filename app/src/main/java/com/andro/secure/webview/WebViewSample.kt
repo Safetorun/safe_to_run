@@ -34,7 +34,7 @@ class WebViewSample : Fragment() {
 
     class WebViewClientSample : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            val result = request?.url?.toString()?.urlVerification {
+            val result = request?.toString()?.urlVerification {
                 "file:///android_asset/index.html".allowUrl()
             }
 

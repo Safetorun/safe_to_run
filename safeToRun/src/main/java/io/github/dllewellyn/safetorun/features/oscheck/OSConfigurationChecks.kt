@@ -42,7 +42,11 @@ inline fun bannedBoardCheck(bannedBoard: String) =
  * @param cpuAbi the model to ban
  */
 inline fun bannedCpusCheck(cpuAbi: String) =
-    Build.SUPPORTED_ABIS.contains(cpuAbi)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        Build.SUPPORTED_ABIS.contains(cpuAbi)
+    } else {
+        false
+    }
 
 /**
  * Add a banned bootloader to the list
