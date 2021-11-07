@@ -45,7 +45,7 @@ module.exports = {
         footer: {
             style: 'dark',
             links: [],
-            copyright: `Copyright © ${new Date().getFullYear()} Daniel Llewellyn, Inc. Built with Docusaurus.`,
+            copyright: `Copyright © ${new Date().getFullYear()} Safe to run. Built with Docusaurus.`,
         },
         prism: {
             additionalLanguages: ['kotlin', 'groovy'],
