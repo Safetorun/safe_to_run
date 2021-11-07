@@ -32,8 +32,6 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -70,7 +68,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation "org.mock-server:mockserver-netty:$mockHttpVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "junit:junit:$junitVersion"
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'

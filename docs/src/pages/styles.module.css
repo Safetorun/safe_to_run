@@ -1,10 +1,32 @@
-/* stylelint-disable docusaurus/copyright-header */
+.parallaxBackgroundImage {
+  height: 50%;
+  width: auto;
+}
 
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
+.securityHeader {
+  background-image: url("../../static/img/security.jpg");
+  height: 600px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  padding: 70px 0;
+  
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.headerText {
+  padding-top: 5%;
+  padding-right: 1rem;
+  font-size: 2em;
+  color: white;
+}
 
+.headerSubtitle {
+  font-size: 1em;
+  color: white;
+}
 .heroBanner {
   padding: 4rem 0;
   text-align: center;

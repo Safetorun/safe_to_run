@@ -29,7 +29,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "junit:junit:$junitVersion"
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'

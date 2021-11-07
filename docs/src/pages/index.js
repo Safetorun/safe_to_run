@@ -1,16 +1,55 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
+
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import {ReactMailchimpEmailSignupForm} from 'react-mailchimp-email-signup-form';
-
+import { ReactMailchimpEmailSignupForm } from 'react-mailchimp-email-signup-form';
+import { ThemeProvider } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
 import styles from './styles.module.css';
-import {CardHeader, CardMedia, Grid} from "@material-ui/core";
+import { Box, CardMedia, Grid } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles'
+import Link from '@docusaurus/Link';
+import Button from '@material-ui/core/Button'
+import Microlink from '@microlink/react'
+
+
+
+const theme = createTheme({
+    palette: {
+        primary: { 500: '#467fcf' },
+    },
+});
+
+const mediumArticles = [
+    'https://danielllewellyn.medium.com/secure-against-urls-attacks-on-android-6cffc19b62a5',
+    'https://danielllewellyn.medium.com/android-attacks-information-leakage-from-file-intents-3c4f8ac9dc7',
+    'https://danielllewellyn.medium.com/securing-android-apps-with-safe-to-run-32852729f0d7'
+];
+
+const HeaderImage = () => (
+    <div className={styles.securityHeader}>
+        <div className={styles.headerText}>
+            <Grid container>
+                <Grid xs={6}></Grid>
+                <Grid xs={5}>
+                    <h1 className={styles.headerText}>
+                        Android security is hard
+                    </h1>
+                    <p className={styles.headerSubtitle}>
+                        Safe to run makes it easy
+                    </p>
+                </Grid>
+                <Grid xs={1}></Grid>
+            </Grid>
+            <Link to={useBaseUrl('docs/')}>
+                <Button sx={{ p: 4 }} color="primary" variant="contained">Get started</Button>
+            </Link>
+        </div>
+    </div>
+);
 
 const features = [
     {
@@ -18,7 +57,8 @@ const features = [
         imageUrl: "img/simple.png",
         description: (
             <>
-                Android security is hard, safe to run is a simple to use tool to help protect your app from hackers.
+                Safe to run makes it simple to protect against the most common android vulnerabilities, from
+                checking for malicous URLs to preventing unsafe file access
             </>
         ),
     },
@@ -27,9 +67,8 @@ const features = [
         imageUrl: 'img/secure.jpg',
         description: (
             <>
-                The premise of safe to run is a simple question - is it safe to run my app or function.
-                With everything from root detection, to blacklisted apps and signature verification - safe to
-                run gives you confidence
+                The premise of safe to run is a simple question - is it safe to run my function.
+                We focus on the device and user input.
             </>)
     },
     {
@@ -38,13 +77,15 @@ const features = [
         description: (
             <>
                 Safe to run provides an interface to protect against attackers modifying and recompiling
-                your binary
+                your binary to slow down attackers.
             </>)
     },
 ];
 
 
-function Feature({imageUrl, title, description}) {
+
+
+function Feature({ imageUrl, title, description }) {
     const imgUrl = useBaseUrl(imageUrl);
     return (
         <Grid item xs={12} sm={4} >
@@ -67,54 +108,51 @@ function Feature({imageUrl, title, description}) {
     );
 }
 
-const SignupForm = () => (
-    <ReactMailchimpEmailSignupForm
-        elementId="first-email-signup-form"
-        url="https://github.us6.list-manage.com/subscribe/post?u=70d44300a9cc26801ede69842&amp;id=8d2000cee2"
-        title="Subscribe for Safe to run updates"
-        subtitle="We take privacy seriously and we'll never spam or sell your information."
-    />
+const Features = () => (
+    features && features.length > 0 && (
+        <section className={styles.section}>
+            <Box sx={{ m: 4 }}>
+                <h2>Features</h2>
+                <Grid container spacing={3}>
+                    {features.map((props, idx) => (
+                        <Feature key={idx} {...props} />
+                    ))}
+                </Grid>
+            </Box>
+        </section>
+    )
+);
+
+const Articles = () => (
+    <section>
+        <Box sx={{ m: 4 }}>
+            <h2>How safe to run can make your app more secure</h2>
+            <Grid container>
+                {mediumArticles.map((link) => (<Grid item xs={4}>
+                    <Box sx={{ p: 2 }}>
+                        <Microlink size="large" url={link} />
+                    </Box>
+                </Grid>))}
+            </Grid>
+        </Box>
+    </section>
 );
 
 export default function Home() {
     const context = useDocusaurusContext();
-    const {siteConfig = {}} = context;
+    const { siteConfig = {} } = context;
 
     return (
-        <Layout
-            title={`${siteConfig.title}`}
-            description="Safe to run is a tool for developers to develop secure mobile apps">
-            <div className={styles.hero}>
-                <header>
-                    <h1>{siteConfig.title}</h1>
-                    <p>{siteConfig.tagline}</p>
-                    <div className={styles.buttons}>
-                        <Link to={useBaseUrl('docs/')}>Get Started</Link>
-                    </div>
-                </header>
-                <main>
-                    {/*<div className={styles.mailChimpContainer}>*/}
-                    {/*    {SignupForm()}*/}
-                    {/*</div>*/}
-                    {features && features.length > 0 && (
-                        <section className={styles.section}>
-                            <Grid container spacing={3}>
-                                {features.map((props, idx) => (
-                                    <Feature key={idx} {...props} />
-                                ))}
-                            </Grid>
-                        </section>
-                    )}
-
-                    <h3 className="text--center">Gallery</h3>
-                    <section>
-                        <div className="text--center">
-                            <img className={styles.mainImage} src="img/android_sample.png" alt={siteConfig.title}/>
-                        </div>
-                    </section>
-
-                </main>
-            </div>
-        </Layout>
+        <ThemeProvider theme={theme}>
+            <Layout
+                title={`${siteConfig.title}`}
+                description="Safe to run is a tool for developers to develop secure mobile apps">
+                <div className={styles.hero}>
+                    <HeaderImage />
+                    <Features />
+                    <Articles />
+                </div>
+            </Layout>
+        </ThemeProvider>
     );
 }
