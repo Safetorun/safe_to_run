@@ -1,0 +1,40 @@
+---
+id: debugcheck
+title: Debug check
+slug: /debugcheck
+---
+
+Debug check is the simplest to configure.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    defaultValue="default"
+    values={[
+        {label: 'Default', value: 'default'},
+        { label: 'Reporting', value: 'reporting', },
+    ]
+    }>
+
+<TabItem value="default">
+
+```kotlin
+add {
+    isDebuggableCheck()
+}
+```
+
+</TabItem>
+
+<TabItem value="reporting">
+
+```kotlin
+debugCheck().error()
+```
+
+</TabItem>
+</Tabs>
+
+
+

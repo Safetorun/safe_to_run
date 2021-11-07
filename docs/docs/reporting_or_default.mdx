@@ -1,0 +1,107 @@
+---
+id: reporting_or_default
+title: Reporting or default?
+slug: /reportingordefault
+---
+
+Safe to run supports two modes of operation. Default and reporting.
+
+The recommended approach is to use the default option. I.e.
+
+```kotlin
+safeToRun(buildSafeToRunCheckList {
+     add {
+        banAvdEmulatorCheck()
+     }
+})
+```
+
+It also recommended that if you create a function for this check, that function should also be inlined. E.g.
+
+```kotlin
+private inline fun Context.canIRun(actionOnFailure: () -> Unit) =
+      if (safeToRun(buildSafeToRunCheckList {
+              add {
+                  banAvdEmulatorCheck()
+              }
+       }).invoke()) {
+          actionOnFailure()
+      }
+```
+
+And then call this function, e.g. from your fragments or activities:
+
+```kotlin
+canIRun { throw RuntimeException() }
+```
+
+It is also recommended that you call this check more than once, in order to make it harder for attackers to reverse
+engineer the application and remove safe to run checks.
+
+### Reporting
+Another approach is to use the SafeToRun reporting API. This provides a 'Safe to run report' which contains extra
+information about any failures, and is particularly useful for providing error messages to developers about why
+a check has failed. For example:
+
+
+```kotlin
+SafeToRun.init(
+    configure {
+
+        // Root beer (detect root)
+        rootDetection {
+            tolerateBusyBox = true
+        }.error()
+
+        // Black list certain apps
+        blacklistConfiguration {
+            +"com.abc.def"
+            +packageName
+            blacklistRootingApps()
+        }.error()
+
+        verifySignatureConfig("cSP1O3JN/8+Ag14WAOeOEnwAnpY=")
+            .error()
+
+        // OS Blacklist version
+        osDetectionCheck(
+            conditionalBuilder {
+                with(minOsVersion(MIN_OS_VERSION))
+                and(notManufacturer("Abc"))
+                and(bannedModel("bannedModel"))
+            }
+        ).warn()
+
+        osDetectionCheck(
+            conditionalBuilder {
+                with(bannedModel("Pixel 4a (5G)"))
+            }
+        ).warn()
+
+        osDetectionCheck(banBluestacksEmulator()).error()
+
+        installOriginCheckWithDefaults().warn()
+
+        osDetectionCheck(banAvdEmulator()).error()
+        debugCheck().warn()
+    }
+)
+```
+
+Then you can run a check from anywhere:
+
+```kotlin
+SafeToRun.isSafeToRun()
+```
+
+Whilst this is easier to use and easier to configure, it is also easier for reverse engineers to
+bypass the checks no matter how many times you call `isSafeToRun` an attacker would only need to change
+one bit of code to remove all checks
+
+
+::: tip
+
+Rule of thumb: Use the default check when using SafeToRun.
+
+:::
+
