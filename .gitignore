@@ -6,3 +6,4 @@ local.properties
 /docs/.docusaurus/
 /docs/build
 signature.json
+/**/bin/
