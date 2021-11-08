@@ -63,18 +63,17 @@ dependencies {
     implementation project(':safeToRunInternal')
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
 
-    testImplementation 'androidx.test:core:1.3.0'
+    testImplementation "androidx.test:core:$androidXTest"
     testImplementation "org.mock-server:mockserver-netty:$mockHttpVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-    testImplementation "org.robolectric:robolectric:4.4"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation "org.junit.jupiter:junit-jupiter:$jupiterVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidXJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$expressoCore"
 }
 
 project.afterEvaluate { project ->
