@@ -23,14 +23,12 @@ repositories {
     mavenCentral()
 }
 
+def directory = "$rootProject.projectDir/scripts/dependencies/"
+apply from: "$directory/test_dependencies.gradle"
+
 dependencies {
     implementation project(':safeToRunInternal')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "com.google.truth:truth:$googleTruth"
-    testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation "org.junit.jupiter:junit-jupiter:$jupiterVersion"
 }
 
 jacocoBadgeGenSetting {

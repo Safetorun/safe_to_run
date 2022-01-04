@@ -1,0 +1,6 @@
+dependencies {
+
+    androidTestImplementation "androidx.test.ext:junit:$androidXJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$expressoCore"
+    androidTestImplementation "com.google.truth:truth:$googleTruth"
+}

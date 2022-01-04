@@ -46,6 +46,10 @@ android {
     }
 }
 
+def directory = "$rootProject.projectDir/scripts/dependencies/"
+apply from: "$directory/test_dependencies.gradle"
+apply from: "$directory/android_test_dependencies.gradle"
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':safeToRunCore')
@@ -53,17 +57,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.scottyab:rootbeer-lib:$rootbeerVersion"
-
-    testImplementation "androidx.test:core:$androidXTest"
-    testImplementation "org.mock-server:mockserver-netty:$mockHttpVersion"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "com.google.truth:truth:$googleTruth"
-    testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation "org.junit.jupiter:junit-jupiter:$jupiterVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    androidTestImplementation "androidx.test.ext:junit:$androidXJunit"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$expressoCore"
 }
 
 jacocoBadgeGenSetting {
