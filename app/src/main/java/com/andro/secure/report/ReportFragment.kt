@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -24,18 +23,10 @@ import io.github.dllewellyn.safetorun.features.debug.debugCheck
 import io.github.dllewellyn.safetorun.features.debug.isDebuggableCheck
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaults
 import io.github.dllewellyn.safetorun.features.installorigin.installOriginCheckWithDefaultsCheck
-import io.github.dllewellyn.safetorun.features.oscheck.banAvdEmulator
-import io.github.dllewellyn.safetorun.features.oscheck.banBluestacksEmulator
-import io.github.dllewellyn.safetorun.features.oscheck.bannedBoardCheck
-import io.github.dllewellyn.safetorun.features.oscheck.bannedHardwareCheck
-import io.github.dllewellyn.safetorun.features.oscheck.bannedModel
+import io.github.dllewellyn.safetorun.features.oscheck.*
 import io.github.dllewellyn.safetorun.features.oscheck.emulator.banAvdEmulatorCheck
 import io.github.dllewellyn.safetorun.features.oscheck.emulator.banBluestacksEmulatorCheck
 import io.github.dllewellyn.safetorun.features.oscheck.emulator.banGenymotionEmulatorCheck
-import io.github.dllewellyn.safetorun.features.oscheck.minOsVersion
-import io.github.dllewellyn.safetorun.features.oscheck.notManufacturer
-import io.github.dllewellyn.safetorun.features.oscheck.osDetectionCheck
-import io.github.dllewellyn.safetorun.features.oscheck.safeToRunCombinedCheck
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetection
 import io.github.dllewellyn.safetorun.features.rootdetection.rootDetectionCheck
 import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureCheck
@@ -43,7 +34,7 @@ import io.github.dllewellyn.safetorun.features.signatureverify.verifySignatureCo
 import io.github.dllewellyn.safetorun.inline.buildSafeToRunCheckList
 import io.github.dllewellyn.safetorun.inline.safeToRun
 import io.github.dllewellyn.safetorun.reporting.toGrouped
-import java.util.Date
+import java.util.*
 
 class ReportFragment : Fragment() {
 

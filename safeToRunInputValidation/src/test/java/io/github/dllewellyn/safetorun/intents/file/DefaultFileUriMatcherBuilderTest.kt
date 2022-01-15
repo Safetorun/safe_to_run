@@ -6,7 +6,6 @@ import io.github.dllewellyn.safetorun.intents.utils.assertFalse
 import io.github.dllewellyn.safetorun.intents.utils.assertTrue
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.TestCase
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

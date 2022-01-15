@@ -3,7 +3,6 @@ package io.github.dllewellyn.safetorun.intents.file
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import java.io.File
 
 internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {

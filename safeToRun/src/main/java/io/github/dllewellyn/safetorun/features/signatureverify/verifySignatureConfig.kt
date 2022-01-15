@@ -2,7 +2,6 @@ package io.github.dllewellyn.safetorun.features.signatureverify
 
 import android.content.Context
 import android.os.Build
-import io.github.dllewellyn.safetorun.BuildConfig
 import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
 
 /**

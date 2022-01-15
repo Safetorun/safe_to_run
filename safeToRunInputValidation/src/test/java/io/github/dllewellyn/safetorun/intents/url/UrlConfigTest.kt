@@ -51,7 +51,7 @@ internal class UrlConfigTest  {
     @Test
     fun `test that url config will pass if parameters are allowed`() {
         assertThat(
-            "$URL_WITH_QUERY_PARAM".urlVerification {
+            URL_WITH_QUERY_PARAM.urlVerification {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = QUERY_PARAM
@@ -63,7 +63,7 @@ internal class UrlConfigTest  {
     @Test
     fun `test that url config will pass if parameters and type is allowed`() {
         assertThat(
-            "$URL_WITH_QUERY_PARAM".urlVerification {
+            URL_WITH_QUERY_PARAM.urlVerification {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = "queryparam"
@@ -76,7 +76,7 @@ internal class UrlConfigTest  {
     @Test
     fun `test that url config will fail if parameters and type is not allowed`() {
         assertThat(
-            "$URL_WITH_QUERY_PARAM".urlVerification {
+            URL_WITH_QUERY_PARAM.urlVerification {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = QUERY_PARAM
@@ -89,7 +89,7 @@ internal class UrlConfigTest  {
     @Test
     fun `test that url config will fail if parameters are not allowed`() {
         assertThat(
-            "$URL_WITH_QUERY_PARAM".urlVerification {
+            URL_WITH_QUERY_PARAM.urlVerification {
                 HOST.allowHost()
             }
         ).isFalse()
@@ -98,7 +98,7 @@ internal class UrlConfigTest  {
     @Test
     fun `test that url config will pass if all parameters are  allowed`() {
         assertThat(
-            "$URL_WITH_QUERY_PARAM".urlVerification {
+            URL_WITH_QUERY_PARAM.urlVerification {
                 HOST.allowHost()
                 allowAnyParameter()
             }

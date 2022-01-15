@@ -20,7 +20,12 @@ internal class DefaultSafeToRunApiTest : TestCase() {
     private val deviceSignatureDto = DeviceSignatureDto("signature")
     private val dataWrapperSignatureResult = DataWrappedSignatureResult(deviceSignatureDto)
     private val deviceSignatureVerification = DataWrappedVerifyResult(
-        VerifierResult(false, false, false, false)
+        VerifierResult(
+            correctIssuer = false,
+            anyFailures = false,
+            correctSignature = false,
+            expired = false
+        )
     )
 
     fun `test that call through has correct parameters for device check from client`() {

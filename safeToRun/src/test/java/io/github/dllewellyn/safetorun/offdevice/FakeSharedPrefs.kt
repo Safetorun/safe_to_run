@@ -41,7 +41,7 @@ class FakeSharedPrefs : SharedPreferences {
     override fun edit(): SharedPreferences.Editor {
         return object : SharedPreferences.Editor {
             override fun putString(p0: String?, p1: String?): SharedPreferences.Editor {
-                map.put(p0!!, p1!!)
+                map[p0!!] = p1!!
                 return this
             }
 
