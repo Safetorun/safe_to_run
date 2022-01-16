@@ -13,6 +13,7 @@ buildscript {
         classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.8.0.0'
         classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0"
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+        classpath("org.jetbrains.kotlinx:kover:0.5.0-RC2")
     }
 }
 
@@ -34,3 +35,4 @@ allprojects {
 
 apply from: "${rootDir}/scripts/publish-root.gradle"
 apply plugin: 'org.owasp.dependencycheck'
+apply plugin: 'kover'
