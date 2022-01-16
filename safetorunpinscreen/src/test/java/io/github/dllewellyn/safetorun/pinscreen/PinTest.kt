@@ -121,7 +121,7 @@ class PinTest {
             coEvery { retrieveAttempts() } coAnswers { Attempts(1) }
 
             assertThat(
-                validatePinCommand({ "not pin" }, retryStrategy)
+                validatePinCommand({ NOT_PIN }, retryStrategy)
             ).isEqualTo(PinCheckResult.PinCheckError.PinIncorrect(1))
 
             verifyExpectedAttempts(2)
@@ -141,7 +141,7 @@ class PinTest {
 
             // When Then
             assertThat(
-                validatePinCommand({ "not pin" }, retryStrategy)
+                validatePinCommand({ NOT_PIN }, retryStrategy)
             ).isEqualTo(PinCheckResult.PinCheckError.PinIncorrect(1))
             verifyExpectedAttempts(2)
         }
@@ -163,7 +163,7 @@ class PinTest {
 
             // When Then
             assertThat(
-                validatePinCommand({ "not pin" }, retryStrategy)
+                validatePinCommand({ NOT_PIN }, retryStrategy)
             ).isEqualTo(PinCheckResult.PinCheckError.PermanentLockout(2))
         }
 
@@ -184,7 +184,7 @@ class PinTest {
 
             // When Then
             assertThat(
-                validatePinCommand({ "not pin" }, retryStrategy)
+                validatePinCommand({ NOT_PIN }, retryStrategy)
             ).isEqualTo(
                 PinCheckResult.PinCheckError.TooManyAttempts(
                     2,
@@ -220,4 +220,8 @@ class PinTest {
 
         }
     )
+    
+    companion object {
+        const val NOT_PIN = "not pin"
+    }
 }
