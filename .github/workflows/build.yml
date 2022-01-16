@@ -11,14 +11,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    timeout-minutes: 30
+  detekt:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Run build
-        run: ./gradlew detekt build test && bash scripts/coverage.sh
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+  test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: ./gradlew test && bash scripts/coverage.sh
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
@@ -26,8 +34,50 @@ jobs:
         run: bash <(curl -s https://codecov.io/bash)
         env:
           CODECOV_TOKEN: ${{ secrets.CODE_COV_TOKEN }}
-      - name: Send GitHub Action trigger data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.14.0
+
+  build:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run build
+        run: ./gradlew build assembleDebug assembleDebugAndroidTest
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SERVER_URL: 'http://example.com'
+          API_KEY: 'apikey'
+      - name: Upload Android Test APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug-androidTest
+          path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+      - name: Upload app APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+  firebaseTest:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download app APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-debug
+
+      - name: Download Android test APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-debug-androidTest
+
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Set project id
+        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+      - name: Run Instrumentation Tests in Firebase Test Lab
+        run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
