@@ -15,10 +15,10 @@ internal class InstallOriginBuilderKtKtTest : TestCase() {
 
     override fun setUp() {
         every { context.packageManager } returns packageManager
-        every { packageManager.getInstallerPackageName(any()) } returns SharedInstallOrigin.PACKAGE_NAME_RETURNS
+        every { packageManager.getInstallerPackageName(any()) } returns PACKAGE_NAME_RETURNS
         every { context.packageName } returns "com.anything"
         every { packageManager.getInstallSourceInfo(any()) } returns mockk<InstallSourceInfo>().apply {
-            every { installingPackageName } returns SharedInstallOrigin.PACKAGE_NAME_RETURNS
+            every { installingPackageName } returns PACKAGE_NAME_RETURNS
         }
 
         every { context.resources } returns SharedInstallOrigin.setupAMockResources()

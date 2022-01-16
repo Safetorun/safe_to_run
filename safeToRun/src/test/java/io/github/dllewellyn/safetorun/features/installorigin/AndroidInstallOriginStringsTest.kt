@@ -5,9 +5,6 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class AndroidInstallOriginStringsTest : TestCase() {
 

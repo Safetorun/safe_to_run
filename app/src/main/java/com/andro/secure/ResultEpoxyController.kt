@@ -5,7 +5,7 @@ import io.github.dllewellyn.safetorun.reporting.GroupedSafeToRunReports
 
 class ResultEpoxyController : Typed2EpoxyController<GroupedSafeToRunReports, Map<String, String>>() {
 
-    var reports: GroupedSafeToRunReports? = null
+    private var reports: GroupedSafeToRunReports? = null
 
     override fun buildModels(data: GroupedSafeToRunReports, result: Map<String, String>) {
 

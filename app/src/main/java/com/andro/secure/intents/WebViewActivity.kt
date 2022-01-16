@@ -1,6 +1,7 @@
 package com.andro.secure.intents
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,7 @@ class WebViewActivity : AppCompatActivity() {
 
         if (isUrlOk != true) {
             // Do something
+            Log.v("WebViewActivity", "Do something")
         }
 
         ActivityWebViewBinding.inflate(LayoutInflater.from(this)).apply {
