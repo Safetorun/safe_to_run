@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[8797],{6659:function(e){e.exports=JSON.parse('{"allTagsPath":"/safe_to_run/blog/tags","slug":"/safe_to_run/blog/tags/emulator-detection","name":"emulator detection","count":1,"permalink":"/safe_to_run/blog/tags/emulator-detection"}')}}]);

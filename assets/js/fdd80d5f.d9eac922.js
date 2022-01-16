@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[2581],{7668:function(s){s.exports=JSON.parse('{"allTagsPath":"/safe_to_run/blog/tags","slug":"/safe_to_run/blog/tags/kotlin","name":"kotlin","count":3,"permalink":"/safe_to_run/blog/tags/kotlin"}')}}]);

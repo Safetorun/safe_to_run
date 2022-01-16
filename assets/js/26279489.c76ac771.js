@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[2591],{8349:function(a){a.exports=JSON.parse('{"allTagsPath":"/safe_to_run/blog/tags","slug":"/safe_to_run/blog/tags/android","name":"android","count":3,"permalink":"/safe_to_run/blog/tags/android"}')}}]);
