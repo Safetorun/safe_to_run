@@ -7,10 +7,11 @@ import io.github.dllewellyn.safetorun.pinscreen.models.PinCheckResult
 import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
 import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategyBuilder
 
-suspend fun haveSetPin(retrievePin: suspend () -> String?) =
+
+internal suspend fun haveSetPin(retrievePin: suspend () -> String?) =
     retrievePin() != null
 
-suspend fun setPin(
+internal suspend fun setPin(
     pin: String,
     storePin: suspend (String) -> Unit,
     preStorageHasher: suspend (String) -> String
@@ -18,7 +19,7 @@ suspend fun setPin(
     storePin(preStorageHasher(pin))
 }
 
-suspend fun validatePin(
+internal suspend fun validatePin(
     pin: String,
     retryStrategy: RetryStrategy,
     retrievePin: suspend () -> String?,
@@ -58,5 +59,19 @@ private fun pinCheckError(
     )
 }
 
+/**
+ * Build a retry strategy
+ *
+ * @param bloc your configuration e.g.
+ * ```
+ * retryStrategy {
+ *  attemptsBeforeLockout = 3
+ *   maxAttemptsBehaviour = MaxAttemptsBehaviour.PermanentLockout
+ * }
+ * ```
+ *
+ * @see RetryStrategyBuilder for full information
+ *
+ */
 fun retryStrategy(bloc: RetryStrategyBuilder.() -> Unit) =
     RetryStrategyBuilder().apply(bloc).build()

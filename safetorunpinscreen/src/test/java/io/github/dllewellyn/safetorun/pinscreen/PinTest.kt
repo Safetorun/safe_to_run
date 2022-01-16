@@ -15,7 +15,7 @@ import org.junit.Test
 import java.util.Date
 
 @ExperimentalCoroutinesApi
-class PinTest {
+internal class PinTest {
     private val numberOfAttempts = 3
     private val backOffTime = 100L
     private val pin = "1234"
