@@ -2,17 +2,18 @@ package io.github.dllewellyn.safetorun.pinscreen
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.pinscreen.models.Attempts
-import io.github.dllewellyn.safetorun.pinscreen.models.AttemptsLogger
 import io.github.dllewellyn.safetorun.pinscreen.models.MaxAttemptsBehaviour
 import io.github.dllewellyn.safetorun.pinscreen.models.PinCheckResult
 import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
+import io.github.dllewellyn.safetorun.pinscreen.storage.AttemptsLogger
+import io.github.dllewellyn.safetorun.pinscreen.storage.PinStorage
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
-import java.util.Date
+import java.util.*
 
 @ExperimentalCoroutinesApi
 internal class PinTest {
@@ -25,11 +26,21 @@ internal class PinTest {
     private val retrieveAttempts = mockk<suspend () -> Attempts>()
     private val storePin = mockk<suspend (String) -> Unit>(relaxed = true)
 
+    private fun pinStorage(getterFn: () -> String?) = object : PinStorage {
+        override suspend fun savePin(pin: String) {
+            this@PinTest.storePin(pin)
+        }
+
+        override suspend fun retrievePin(): String? {
+            return getterFn()
+        }
+    }
+
     @Test
     fun `test that we are able to store a pin`() {
         runTest {
             // Given When
-            setPin(pin, storePin, prePinHasher)
+            setPin(pin, pinStorage { "" }, prePinHasher)
 
             // Then
             coVerify { storePin(pin) }
@@ -39,14 +50,14 @@ internal class PinTest {
     @Test
     fun `test that if the storage returns no pin then does have pin returns false`() {
         runTest {
-            assertThat(haveSetPin(retrievePin = { null })).isFalse()
+            assertThat(haveSetPin(pinStorage = pinStorage { null })).isFalse()
         }
     }
 
     @Test
     fun `test that if the storage returns a pin then does have pin returns true`() {
         runTest {
-            assertThat(haveSetPin(retrievePin = { "null" })).isTrue()
+            assertThat(haveSetPin(pinStorage = pinStorage { "abc" })).isTrue()
         }
     }
 
@@ -206,7 +217,7 @@ internal class PinTest {
     ) = validatePin(
         pin,
         retryStrategy,
-        getPinFn,
+        pinStorage { getPinFn() },
         prePinHasher,
         object : AttemptsLogger {
             override suspend fun logAttempt(attempts: Attempts) {
@@ -214,13 +225,13 @@ internal class PinTest {
 
             }
 
-            override suspend fun getAttempts(): Attempts? {
+            override suspend fun getAttempts(): Attempts {
                 return retrieveAttempts()
             }
 
         }
     )
-    
+
     companion object {
         const val NOT_PIN = "not pin"
     }

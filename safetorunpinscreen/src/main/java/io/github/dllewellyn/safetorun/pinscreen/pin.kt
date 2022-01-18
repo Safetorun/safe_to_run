@@ -1,32 +1,33 @@
 package io.github.dllewellyn.safetorun.pinscreen
 
+import io.github.dllewellyn.safetorun.pinscreen.storage.AttemptsLogger
 import io.github.dllewellyn.safetorun.pinscreen.models.Attempts
-import io.github.dllewellyn.safetorun.pinscreen.models.AttemptsLogger
 import io.github.dllewellyn.safetorun.pinscreen.models.MaxAttemptsBehaviour
 import io.github.dllewellyn.safetorun.pinscreen.models.PinCheckResult
 import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
-import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategyBuilder
+import io.github.dllewellyn.safetorun.pinscreen.builders.RetryStrategyBuilder
+import io.github.dllewellyn.safetorun.pinscreen.storage.PinStorage
 
 
-internal suspend fun haveSetPin(retrievePin: suspend () -> String?) =
-    retrievePin() != null
+internal suspend fun haveSetPin(pinStorage: PinStorage) =
+    pinStorage.retrievePin() != null
 
 internal suspend fun setPin(
     pin: String,
-    storePin: suspend (String) -> Unit,
+    pinStorage: PinStorage,
     preStorageHasher: suspend (String) -> String
 ) {
-    storePin(preStorageHasher(pin))
+   pinStorage.savePin(preStorageHasher(pin))
 }
 
 internal suspend fun validatePin(
     pin: String,
     retryStrategy: RetryStrategy,
-    retrievePin: suspend () -> String?,
+    pinStorage: PinStorage,
     preStorageHasher: suspend (String) -> String,
     attemptsLogger: AttemptsLogger
 ): PinCheckResult {
-    return retrievePin()?.let {
+    return pinStorage.retrievePin()?.let {
         val attempts = attemptsLogger.getAttempts()?.attempts ?: 0
 
         if (attempts >= retryStrategy.attemptsBeforeLockout) {
