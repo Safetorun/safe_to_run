@@ -2,3 +2,4 @@ codecov:
   require_ci_to_pass: yes
 ignore:
   - "app/**/*"
+  - "safetorunpinscreen/src/main/java/io/github/dllewellyn/safetorun/pinscreen/SafeToRunStorage.kt"

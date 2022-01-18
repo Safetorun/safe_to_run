@@ -8,7 +8,7 @@ import io.github.dllewellyn.safetorun.pinscreen.storage.AttemptsLogger
 import io.github.dllewellyn.safetorun.pinscreen.storage.PinStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.Calendar
 
 internal class SafeToRunStorage(private val context: Context) : PinStorage,
     AttemptsLogger {
