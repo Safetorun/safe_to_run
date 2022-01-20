@@ -2,6 +2,7 @@ package io.github.dllewellyn.safetorun.pinscreen
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.pinscreen.models.Attempts
+import io.github.dllewellyn.safetorun.pinscreen.models.HashedPin
 import io.github.dllewellyn.safetorun.pinscreen.models.MaxAttemptsBehaviour
 import io.github.dllewellyn.safetorun.pinscreen.models.PinCheckResult
 import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
@@ -21,18 +22,26 @@ internal class PinTest {
     private val backOffTime = 100L
     private val pin = "1234"
 
-    private val prePinHasher: suspend (String) -> String = { it }
+    private val prePinHasher: suspend (HashedPin) -> String = { (pin, _) -> pin }
     private val logAttempts = mockk<suspend (Attempts) -> Unit>(relaxed = true)
     private val retrieveAttempts = mockk<suspend () -> Attempts>()
     private val storePin = mockk<suspend (String) -> Unit>(relaxed = true)
 
     private fun pinStorage(getterFn: () -> String?) = object : PinStorage {
+        override suspend fun clear() {
+            // Nothing to do
+        }
+
         override suspend fun savePin(pin: String) {
             this@PinTest.storePin(pin)
         }
 
         override suspend fun retrievePin(): String? {
             return getterFn()
+        }
+
+        override suspend fun retrieveOrCreateSalt(): String {
+            return "SALT"
         }
     }
 

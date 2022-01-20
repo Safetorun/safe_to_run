@@ -8,3 +8,4 @@ local.properties
 signature.json
 /**/bin/
 node_modules
+google-service-key.json

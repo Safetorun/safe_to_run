@@ -55,6 +55,16 @@ jobs:
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload Android Test APK (Pin screen)
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug-androidTest-pin
+          path: safetorunpinscreen/build/outputs/apk/androidTest/debug/safetorunpinscreen-debug-androidTest.apk
+      - name: Upload app APK (Pin screen)
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-debug-pin
+          path: app/build/outputs/apk/debug/app-debug.apk
 
   firebaseTest:
     runs-on: ubuntu-latest
@@ -75,7 +85,12 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
         with:
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
+      - name: print secrets
+        run: |
+          echo $AUTH_KEY >> google-service-key.json
+        shell: bash
+        env:
+          AUTH_KEY : ${{secrets.GCLOUD_AUTH}}
       - name: Set project id
         run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
 

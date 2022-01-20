@@ -38,6 +38,13 @@ internal class SafeToRunStorage(private val context: Context) : PinStorage,
             sharedPreferences.getString(PIN_STORAGE, null)
         }
 
+    override suspend fun retrieveOrCreateSalt(): String =
+         withContext(Dispatchers.IO) {
+            sharedPreferences.getString(SALT, null)
+                .generateSaltIfNullOrReturn()
+        }
+
+
     override suspend fun logAttempt(attempts: Attempts) {
         withContext(Dispatchers.IO) {
             sharedPreferences.edit()
@@ -62,16 +69,25 @@ internal class SafeToRunStorage(private val context: Context) : PinStorage,
             }
         }
 
-    suspend fun clear() = withContext(Dispatchers.IO) {
+    override suspend fun clear() = withContext(Dispatchers.IO) {
         sharedPreferences.edit()
             .clear()
             .apply()
     }
 
+    private fun String?.generateSaltIfNullOrReturn() : String =
+        this
+            ?: secureRandomString().apply {
+                sharedPreferences.edit()
+                    .putString(SALT, this)
+                    .apply()
+            }
+
     companion object {
         const val PIN_STORAGE = "pin"
         const val LAST_ATTEMPT_TIME = "last_attempts"
         const val ATTEMPTS = "attempts_number"
+        const val SALT = "salt"
     }
 
 }

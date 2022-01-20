@@ -6,8 +6,10 @@ import io.github.dllewellyn.safetorun.pinscreen.models.MaxAttemptsBehaviour
 import io.github.dllewellyn.safetorun.pinscreen.models.PinCheckResult
 import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
 import io.github.dllewellyn.safetorun.pinscreen.builders.RetryStrategyBuilder
+import io.github.dllewellyn.safetorun.pinscreen.models.HashedPin
 import io.github.dllewellyn.safetorun.pinscreen.storage.PinStorage
 
+internal typealias PinHashFn = suspend (HashedPin) -> String
 
 internal suspend fun haveSetPin(pinStorage: PinStorage) =
     pinStorage.retrievePin() != null
@@ -15,16 +17,17 @@ internal suspend fun haveSetPin(pinStorage: PinStorage) =
 internal suspend fun setPin(
     pin: String,
     pinStorage: PinStorage,
-    preStorageHasher: suspend (String) -> String
+    preStorageHasher: PinHashFn
 ) {
-   pinStorage.savePin(preStorageHasher(pin))
+    pinStorage.clear()
+    pinStorage.savePin(preStorageHasher(HashedPin(pin, pinStorage.retrieveOrCreateSalt())))
 }
 
 internal suspend fun validatePin(
     pin: String,
     retryStrategy: RetryStrategy,
     pinStorage: PinStorage,
-    preStorageHasher: suspend (String) -> String,
+    preStorageHasher: PinHashFn,
     attemptsLogger: AttemptsLogger
 ): PinCheckResult {
     return pinStorage.retrievePin()?.let {
@@ -32,7 +35,7 @@ internal suspend fun validatePin(
 
         if (attempts >= retryStrategy.attemptsBeforeLockout) {
             pinCheckError(retryStrategy, attempts)
-        } else if (preStorageHasher(pin) == it) {
+        } else if (preStorageHasher(HashedPin(pin, pinStorage.retrieveOrCreateSalt())) == it) {
             attemptsLogger.logAttempt(Attempts(0))
             return PinCheckResult.PinAccepted
         } else {
