@@ -22,7 +22,7 @@ is safe to run, and provide you with a way to verify data from intents or deep l
 
 ## Documentation
 
-[Documentation website](http://dllewellyn.github.io/safe_to_run/)
+[Documentation website](http://safetorun.github.io/)
 
 ## Quickstart
 
@@ -36,7 +36,7 @@ implementation "io.github.dllewellyn.safetorun:inputverification:$safeToRunVersi
 
 A fuller discussion can be found here:
 
-[Verify URL](https://safetorun.github.io/safe_to_run/docs/verifyurls)
+[Verify URL](https://safetorun.github.io/docs/verifyurls)
 
 ### Urls 
 
