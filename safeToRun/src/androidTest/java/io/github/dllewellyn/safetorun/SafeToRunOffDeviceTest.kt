@@ -3,7 +3,7 @@ package io.github.dllewellyn.safetorun
 import androidx.test.platform.app.InstrumentationRegistry
 import io.github.dllewellyn.safetorun.api.DefaultHttpClient
 import io.github.dllewellyn.safetorun.api.DefaultSafeToRunApi
-import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.models.models.DeviceSignatureDto
 import io.github.dllewellyn.safetorun.offdevice.safeToRunOffDevice
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue

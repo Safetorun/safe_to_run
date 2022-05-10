@@ -2,8 +2,8 @@ package io.github.dllewellyn.safetorun.exploration
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.api.deviceInformation
-import io.github.dllewellyn.safetorun.models.models.InstallOriginDto
-import io.github.dllewellyn.safetorun.models.models.SignatureVerificationDto
+import com.safetorun.models.models.InstallOriginDto
+import com.safetorun.models.models.SignatureVerificationDto
 import junit.framework.TestCase
 
 internal class DeviceInformationKtTest : TestCase() {

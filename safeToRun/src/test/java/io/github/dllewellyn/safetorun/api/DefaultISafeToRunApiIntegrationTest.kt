@@ -1,8 +1,8 @@
 package io.github.dllewellyn.safetorun.api
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.models.models.DataWrappedSignatureResult
-import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.models.models.DataWrappedSignatureResult
+import com.safetorun.models.models.DeviceSignatureDto
 import junit.framework.TestCase
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

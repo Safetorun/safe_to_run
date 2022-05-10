@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.offdevice
 
-import io.github.dllewellyn.safetorun.models.builders.DeviceInformationDtoBuilder
+import com.safetorun.models.builders.DeviceInformationDtoBuilder
 
 /**
  * Builder for an off device result

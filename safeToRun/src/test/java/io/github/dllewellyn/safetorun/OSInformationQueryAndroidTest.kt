@@ -2,7 +2,7 @@ package io.github.dllewellyn.safetorun
 
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.features.oscheck.OSInformationQueryAndroid
+import com.safetorun.features.oscheck.OSInformationQueryAndroid
 import io.mockk.mockkStatic
 import junit.framework.TestCase
 import java.lang.reflect.Field

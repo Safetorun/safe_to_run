@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
+import com.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

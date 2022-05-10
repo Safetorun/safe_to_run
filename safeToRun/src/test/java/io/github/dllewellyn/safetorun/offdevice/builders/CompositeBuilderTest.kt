@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.models.builders.deviceInformationBuilder
 import io.github.dllewellyn.safetorun.offdevice.OffDeviceResultBuilder
 import junit.framework.TestCase
 

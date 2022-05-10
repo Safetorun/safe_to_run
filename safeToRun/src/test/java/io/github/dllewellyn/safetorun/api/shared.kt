@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.api
 
-import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.models.builders.deviceInformationBuilder
 
 val deviceInformation by lazy {
     deviceInformationBuilder("5bzdwZ8Drs1AIsmJAx0M37bndOeEkwbv6pI5fjx1") {

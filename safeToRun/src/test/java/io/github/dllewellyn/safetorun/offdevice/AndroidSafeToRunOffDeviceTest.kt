@@ -2,9 +2,9 @@ package io.github.dllewellyn.safetorun.offdevice
 
 import com.google.common.truth.Truth.assertThat
 import io.github.dllewellyn.safetorun.api.SafeToRunApi
-import io.github.dllewellyn.safetorun.models.builders.DeviceInformationDtoBuilder
-import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
-import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.models.builders.DeviceInformationDtoBuilder
+import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.models.builders.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

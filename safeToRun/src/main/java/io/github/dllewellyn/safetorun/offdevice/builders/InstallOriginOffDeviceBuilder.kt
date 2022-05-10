@@ -1,7 +1,7 @@
 package io.github.dllewellyn.safetorun.offdevice.builders
 
-import io.github.dllewellyn.safetorun.features.installorigin.InstallOriginQuery
-import io.github.dllewellyn.safetorun.models.builders.DeviceInformationDtoBuilder
+import com.safetorun.features.installorigin.InstallOriginQuery
+import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import io.github.dllewellyn.safetorun.offdevice.OffDeviceResultBuilder
 
 internal class InstallOriginOffDeviceBuilder(private val installOriginQuery: InstallOriginQuery) :

@@ -1,11 +1,11 @@
 package io.github.dllewellyn.safetorun.api
 
-import io.github.dllewellyn.safetorun.models.models.ConfirmVerificationRequestDto
-import io.github.dllewellyn.safetorun.models.models.DataWrappedSignatureResult
-import io.github.dllewellyn.safetorun.models.models.DataWrappedVerifyResult
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
-import io.github.dllewellyn.safetorun.models.models.DeviceSignatureDto
-import io.github.dllewellyn.safetorun.models.models.VerifierResult
+import com.safetorun.models.models.ConfirmVerificationRequestDto
+import com.safetorun.models.models.DataWrappedSignatureResult
+import com.safetorun.models.models.DataWrappedVerifyResult
+import com.safetorun.models.models.DeviceInformationDto
+import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.models.models.VerifierResult
 
 internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, private val apiKey: String) :
     SafeToRunApi {

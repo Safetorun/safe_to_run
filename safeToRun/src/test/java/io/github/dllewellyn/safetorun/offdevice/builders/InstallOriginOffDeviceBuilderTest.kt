@@ -1,8 +1,8 @@
 package io.github.dllewellyn.safetorun.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.features.installorigin.InstallOriginQuery
-import io.github.dllewellyn.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.features.installorigin.InstallOriginQuery
+import com.safetorun.models.builders.deviceInformationBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

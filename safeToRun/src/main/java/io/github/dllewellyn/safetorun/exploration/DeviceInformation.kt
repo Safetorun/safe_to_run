@@ -1,6 +1,6 @@
 package io.github.dllewellyn.safetorun.exploration
 
-import io.github.dllewellyn.safetorun.models.models.DeviceInformationDto
+import com.safetorun.models.models.DeviceInformationDto
 
 /**
  * @param osCheck results of the os check
