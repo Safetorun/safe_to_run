@@ -8,10 +8,6 @@ import com.safetorun.pinscreen.models.PinCheckResult
 import com.safetorun.pinscreen.models.RetryStrategy
 import com.safetorun.pinscreen.storage.AttemptsLogger
 import com.safetorun.pinscreen.storage.PinStorage
-import io.github.dllewellyn.safetorun.pinscreen.haveSetPin
-import io.github.dllewellyn.safetorun.pinscreen.retryStrategy
-import io.github.dllewellyn.safetorun.pinscreen.setPin
-import io.github.dllewellyn.safetorun.pinscreen.validatePin
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

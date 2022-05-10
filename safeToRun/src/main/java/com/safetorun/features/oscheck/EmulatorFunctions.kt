@@ -1,6 +1,6 @@
 package com.safetorun.features.oscheck
 
-import io.github.dllewellyn.safetorun.conditional.Conditional
+import com.safetorun.conditional.Conditional
 import com.safetorun.features.oscheck.emulators.banAvdEmulator
 import com.safetorun.features.oscheck.emulators.banBluestacksEmulator
 import com.safetorun.features.oscheck.emulators.banGenymotionEmulator

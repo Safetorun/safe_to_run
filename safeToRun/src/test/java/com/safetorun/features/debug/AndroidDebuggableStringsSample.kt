@@ -1,8 +1,8 @@
 package com.safetorun.features.debug
 
 import android.content.res.Resources
-import io.github.dllewellyn.safetorun.R
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.R
+import com.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
 

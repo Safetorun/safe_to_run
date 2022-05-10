@@ -5,7 +5,7 @@ import android.content.pm.ApplicationInfo
 import android.os.Debug
 import com.safetorun.features.debug.AndroidDebuggableStringsSample.mapReportsToMessages
 import com.safetorun.features.debug.AndroidDebuggableStringsSample.setupAMockResources
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth
 import io.mockk.every
 import io.mockk.mockk

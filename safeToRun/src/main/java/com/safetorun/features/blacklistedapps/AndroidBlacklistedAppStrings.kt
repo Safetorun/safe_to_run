@@ -2,7 +2,7 @@ package com.safetorun.features.blacklistedapps
 
 import android.content.Context
 import android.content.res.Resources
-import io.github.dllewellyn.safetorun.R
+import com.safetorun.R
 
 internal class AndroidBlacklistedAppStrings(private val context : Context) : BlacklistedAppStrings {
 

@@ -1,7 +1,7 @@
 package com.safetorun.features.oscheck.builders
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.conditional.Conditional
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.conditional.Conditional
 import com.safetorun.features.oscheck.OSDetectionCheck
 import com.safetorun.features.oscheck.OSDetectionConfig
 import com.safetorun.features.oscheck.OSDetectionStrings

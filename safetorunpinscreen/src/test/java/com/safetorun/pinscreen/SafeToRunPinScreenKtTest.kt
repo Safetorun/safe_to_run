@@ -1,9 +1,6 @@
 package com.safetorun.pinscreen
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.pinscreen.SafeToRunPinScreen
-import io.github.dllewellyn.safetorun.pinscreen.retryStrategy
-import io.github.dllewellyn.safetorun.pinscreen.safeToRunPinScreen
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

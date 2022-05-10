@@ -1,6 +1,6 @@
 package com.safetorun.features.blacklistedapps
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Create a blacklisted config

@@ -3,7 +3,7 @@ package com.safetorun.features.installorigin
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Retrieve a safe to run check which will verify that the app was installed

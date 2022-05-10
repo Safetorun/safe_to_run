@@ -2,10 +2,10 @@ package com.safetorun.features.oscheck
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
+import com.safetorun.conditional.conditionalBuilder
 import com.safetorun.features.oscheck.builders.minOsVersion
 import com.safetorun.features.oscheck.conditionals.notManufacturer
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

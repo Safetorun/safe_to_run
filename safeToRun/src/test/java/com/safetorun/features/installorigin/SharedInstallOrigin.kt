@@ -1,7 +1,7 @@
 package com.safetorun.features.installorigin
 
 import android.content.res.Resources
-import io.github.dllewellyn.safetorun.R
+import com.safetorun.R
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.every
 import io.mockk.mockk

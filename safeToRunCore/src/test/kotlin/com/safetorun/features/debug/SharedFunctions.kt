@@ -1,6 +1,6 @@
 package com.safetorun.features.debug
 
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 
 object SharedFunctions {
     const val DEBUGGER_ATTACHED = "Debugger attached"

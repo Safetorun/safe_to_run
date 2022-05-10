@@ -1,7 +1,7 @@
 package com.safetorun.features.oscheck
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
+import com.safetorun.conditional.ConditionalResponse
 import junit.framework.TestCase
 
 internal class MessageIfFailedKtTest : TestCase() {

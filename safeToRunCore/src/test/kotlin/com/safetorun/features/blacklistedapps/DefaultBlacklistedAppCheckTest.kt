@@ -1,9 +1,9 @@
 package com.safetorun.features.blacklistedapps
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
-import io.github.dllewellyn.safetorun.stringWithoutSuffixForArg
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.reporting.SafeToRunReport
+import com.safetorun.stringWithoutSuffixForArg
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

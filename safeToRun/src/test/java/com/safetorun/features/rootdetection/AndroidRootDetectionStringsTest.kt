@@ -2,7 +2,7 @@ package com.safetorun.features.rootdetection
 
 import android.content.Context
 import android.content.res.Resources
-import io.github.dllewellyn.safetorun.R
+import com.safetorun.R
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk

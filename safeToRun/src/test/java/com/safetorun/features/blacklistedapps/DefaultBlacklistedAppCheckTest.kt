@@ -3,7 +3,7 @@ package com.safetorun.features.blacklistedapps
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk

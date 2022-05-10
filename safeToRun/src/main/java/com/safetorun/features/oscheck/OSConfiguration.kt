@@ -1,6 +1,6 @@
 package com.safetorun.features.oscheck
 
-import io.github.dllewellyn.safetorun.conditional.Conditional
+import com.safetorun.conditional.Conditional
 import com.safetorun.features.oscheck.builders.bannedBoard
 import com.safetorun.features.oscheck.builders.bannedBootloader
 import com.safetorun.features.oscheck.builders.bannedCpus

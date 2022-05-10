@@ -1,9 +1,9 @@
 package com.safetorun.features.oscheck
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
-import io.github.dllewellyn.safetorun.reporting.toMultipleReport
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.conditional.ConditionalResponse
+import com.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.toMultipleReport
 
 internal class OSDetectionCheck(
     private val osDetectionConfig: OSDetectionConfig,

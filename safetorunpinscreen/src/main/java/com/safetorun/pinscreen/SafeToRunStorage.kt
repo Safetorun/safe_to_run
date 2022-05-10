@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.safetorun.pinscreen.models.Attempts
-import io.github.dllewellyn.safetorun.pinscreen.secureRandomString
 import com.safetorun.pinscreen.storage.AttemptsLogger
 import com.safetorun.pinscreen.storage.PinStorage
 import kotlinx.coroutines.Dispatchers

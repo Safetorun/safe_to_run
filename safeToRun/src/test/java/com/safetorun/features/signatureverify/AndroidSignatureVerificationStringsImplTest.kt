@@ -2,7 +2,7 @@ package com.safetorun.features.signatureverify
 
 import android.content.Context
 import android.content.res.Resources
-import io.github.dllewellyn.safetorun.R
+import com.safetorun.R
 import com.google.common.truth.Truth.assertThat
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.every

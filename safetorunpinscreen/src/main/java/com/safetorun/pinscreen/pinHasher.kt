@@ -1,4 +1,4 @@
-package io.github.dllewellyn.safetorun.pinscreen
+package com.safetorun.pinscreen
 
 import android.util.Base64
 import java.security.SecureRandom

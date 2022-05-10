@@ -1,4 +1,4 @@
-package io.github.dllewellyn.safetorun.pinscreen
+package com.safetorun.pinscreen
 
 import com.safetorun.pinscreen.storage.AttemptsLogger
 import com.safetorun.pinscreen.models.Attempts

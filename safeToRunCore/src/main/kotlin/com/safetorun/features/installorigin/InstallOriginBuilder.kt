@@ -1,6 +1,6 @@
 package com.safetorun.features.installorigin
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Builder for an install origin check. Use [installOrigin] to get an instance

@@ -47,11 +47,11 @@ afterEvaluate {
                 pom {
                     name = PUBLISH_ARTIFACT_ID
                     description = 'Safe to run'
-                    url = 'https://github.com/dllewellyn/safe_to_run/'
+                    url = 'https://github.com/Safetorun/safe_to_run/'
                     licenses {
                         license {
                             name = 'Safe to run License'
-                            url = 'https://github.com/dllewellyn/safe_to_run/blob/master/LICENSE'
+                            url = 'https://github.com/Safetorun/safe_to_run/blob/master/LICENSE'
                         }
                     }
                     developers {
@@ -65,9 +65,9 @@ afterEvaluate {
                     // Version control info - if you're using GitHub, follow the
                     // format as seen here
                     scm {
-                        connection = 'scm:git:github.com/dllewellyn/safe_to_run.git'
-                        developerConnection = 'scm:git:ssh://github.com/dllewellyn/safe_to_run.git'
-                        url = 'https://github.com/dllewellyn/safe_to_run/tree/main'
+                        connection = 'scm:git:github.com/Safetorun/safe_to_run.git'
+                        developerConnection = 'scm:git:ssh://github.com/Safetorun/safe_to_run.git'
+                        url = 'https://github.com/Safetorun/safe_to_run/tree/main'
                     }
                 }
             }

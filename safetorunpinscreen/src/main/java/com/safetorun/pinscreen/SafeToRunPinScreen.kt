@@ -1,9 +1,7 @@
-package io.github.dllewellyn.safetorun.pinscreen
+package com.safetorun.pinscreen
 
 import android.content.Context
-import com.safetorun.pinscreen.SafeToRunStorage
 import com.safetorun.pinscreen.models.RetryStrategy
-import com.safetorun.pinscreen.safeToRunPinStorage
 
 /**
  * The safe to run pin screen. Use this class to control your PIN screen functionality

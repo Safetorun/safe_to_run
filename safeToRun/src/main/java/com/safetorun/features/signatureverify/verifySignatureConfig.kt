@@ -2,7 +2,7 @@ package com.safetorun.features.signatureverify
 
 import android.content.Context
 import android.os.Build
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Verify the signature configuration. Can take multiple signatures for different

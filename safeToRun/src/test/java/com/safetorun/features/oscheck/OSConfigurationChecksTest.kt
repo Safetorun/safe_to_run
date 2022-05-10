@@ -2,7 +2,7 @@ package com.safetorun.features.oscheck
 
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.utils.mockBuildField
+import com.safetorun.utils.mockBuildField
 import io.mockk.mockkStatic
 import junit.framework.TestCase
 

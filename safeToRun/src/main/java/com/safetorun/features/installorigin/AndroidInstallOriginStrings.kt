@@ -1,8 +1,8 @@
 package com.safetorun.features.installorigin
 
 import android.content.Context
-import io.github.dllewellyn.safetorun.R
-import io.github.dllewellyn.safetorun.reporting.BaseAndroidStrings
+import com.safetorun.R
+import com.safetorun.reporting.BaseAndroidStrings
 
 internal class AndroidInstallOriginStrings(context: Context) : BaseAndroidStrings(context), InstallOriginStrings {
     override fun couldNotFindPackage(): String {

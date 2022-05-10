@@ -2,7 +2,7 @@ package com.safetorun.features.rootdetection
 
 import android.content.Context
 import android.util.Log
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk

@@ -2,7 +2,7 @@ package com.safetorun.features.rootdetection
 
 import android.content.Context
 import com.scottyab.rootbeer.RootBeer
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Configuration for root detection.

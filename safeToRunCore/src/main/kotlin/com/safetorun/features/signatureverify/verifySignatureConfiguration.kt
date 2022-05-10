@@ -1,6 +1,6 @@
 package com.safetorun.features.signatureverify
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Verify signature configuration

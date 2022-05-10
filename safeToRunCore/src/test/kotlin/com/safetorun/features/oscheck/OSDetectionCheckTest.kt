@@ -1,15 +1,15 @@
 package com.safetorun.features.oscheck
 
 import com.google.common.truth.Truth
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.conditional.Conditional
-import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
-import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.conditional.Conditional
+import com.safetorun.conditional.ConditionalResponse
+import com.safetorun.conditional.conditionalBuilder
 import com.safetorun.features.oscheck.builders.minOsVersion
 import com.safetorun.features.oscheck.builders.osDetectionCheckConfig
 import com.safetorun.features.oscheck.conditionals.BannedManufacturerName
 import com.safetorun.features.oscheck.conditionals.notManufacturer
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

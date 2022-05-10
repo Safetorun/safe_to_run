@@ -1,8 +1,8 @@
 package com.safetorun.features.oscheck
 
 import android.content.Context
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.conditional.Conditional
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.conditional.Conditional
 import com.safetorun.features.oscheck.builders.osDetectionCheckConfig
 
 /**

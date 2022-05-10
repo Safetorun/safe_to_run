@@ -3,7 +3,7 @@ package com.safetorun.features.oscheck.emulator
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.oscheck.OsCheckConstants
-import io.github.dllewellyn.safetorun.utils.mockBuildField
+import com.safetorun.utils.mockBuildField
 import junit.framework.TestCase
 
 internal class EmulatorsKtTest : TestCase() {

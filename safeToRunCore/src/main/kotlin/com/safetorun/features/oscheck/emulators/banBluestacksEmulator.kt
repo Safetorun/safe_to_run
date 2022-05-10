@@ -1,6 +1,6 @@
 package com.safetorun.features.oscheck.emulators
 
-import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
+import com.safetorun.conditional.conditionalBuilder
 import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.features.oscheck.OsCheckConstants
 import com.safetorun.features.oscheck.builders.bannedBootloader

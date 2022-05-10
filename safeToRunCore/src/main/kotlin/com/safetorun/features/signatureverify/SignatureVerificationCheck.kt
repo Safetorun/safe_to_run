@@ -1,7 +1,7 @@
 package com.safetorun.features.signatureverify
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.reporting.SafeToRunReport
 
 internal class SignatureVerificationCheck(
     private val expectedSignature: List<String>,

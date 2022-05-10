@@ -13,9 +13,9 @@ import com.andro.secure.ProtectedActivity
 import com.andro.secure.ResultEpoxyController
 import com.andro.secure.databinding.ReportFragmentBinding
 import com.auth0.jwt.interfaces.DecodedJWT
-import io.github.dllewellyn.safetorun.SafeToRun
-import io.github.dllewellyn.safetorun.conditional.conditionalBuilder
-import io.github.dllewellyn.safetorun.configure
+import com.safetorun.SafeToRun
+import com.safetorun.conditional.conditionalBuilder
+import com.safetorun.configure
 import com.safetorun.features.blacklistedapps.blacklistConfiguration
 import com.safetorun.features.blacklistedapps.blacklistedAppCheck
 import com.safetorun.features.blacklistedapps.rooting.blacklistRootingApps
@@ -31,9 +31,9 @@ import com.safetorun.features.rootdetection.rootDetection
 import com.safetorun.features.rootdetection.rootDetectionCheck
 import com.safetorun.features.signatureverify.verifySignatureCheck
 import com.safetorun.features.signatureverify.verifySignatureConfig
-import io.github.dllewellyn.safetorun.inline.buildSafeToRunCheckList
-import io.github.dllewellyn.safetorun.inline.safeToRun
-import io.github.dllewellyn.safetorun.reporting.toGrouped
+import com.safetorun.inline.buildSafeToRunCheckList
+import com.safetorun.inline.safeToRun
+import com.safetorun.reporting.toGrouped
 import java.util.*
 
 class ReportFragment : Fragment() {

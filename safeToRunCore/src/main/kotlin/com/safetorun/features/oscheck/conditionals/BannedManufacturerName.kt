@@ -1,7 +1,7 @@
 package com.safetorun.features.oscheck.conditionals
 
-import io.github.dllewellyn.safetorun.conditional.Conditional
-import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
+import com.safetorun.conditional.Conditional
+import com.safetorun.conditional.ConditionalResponse
 import com.safetorun.features.oscheck.OSInformationQuery
 
 internal class BannedManufacturerName(

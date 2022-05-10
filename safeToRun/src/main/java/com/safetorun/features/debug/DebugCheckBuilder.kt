@@ -3,7 +3,7 @@ package com.safetorun.features.debug
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.os.Debug
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Add a debug check to warn or error if there is a debugger attached or if the app is debuggable

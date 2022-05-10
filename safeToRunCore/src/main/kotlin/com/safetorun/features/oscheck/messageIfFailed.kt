@@ -1,6 +1,6 @@
 package com.safetorun.features.oscheck
 
-import io.github.dllewellyn.safetorun.conditional.ConditionalResponse
+import com.safetorun.conditional.ConditionalResponse
 
 /**
  * Message to display if response is a failure

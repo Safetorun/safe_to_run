@@ -3,7 +3,7 @@ package com.safetorun.features.blacklistedapps.rooting
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.blacklistedapps.BlacklistedAppCheck
 import com.safetorun.features.blacklistedapps.blacklistConfig
-import io.github.dllewellyn.safetorun.reporting.anyFailures
+import com.safetorun.reporting.anyFailures
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

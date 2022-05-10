@@ -6,7 +6,7 @@ import com.safetorun.features.debug.SharedFunctions.DEBUGGER_ATTACHED
 import com.safetorun.features.debug.SharedFunctions.DEBUGGER_NOT_ATTACHED
 import com.safetorun.features.debug.SharedFunctions.NOT_DEBUGGABLE
 import com.safetorun.features.debug.SharedFunctions.mapReportsToMessages
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase

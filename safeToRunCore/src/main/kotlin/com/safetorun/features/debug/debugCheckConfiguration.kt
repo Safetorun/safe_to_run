@@ -1,6 +1,6 @@
 package com.safetorun.features.debug
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
+import com.safetorun.checks.SafeToRunCheck
 
 /**
  * Create a debug check

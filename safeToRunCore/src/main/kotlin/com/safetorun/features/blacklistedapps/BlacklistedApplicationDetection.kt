@@ -1,8 +1,8 @@
 package com.safetorun.features.blacklistedapps
 
-import io.github.dllewellyn.safetorun.checks.SafeToRunCheck
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
-import io.github.dllewellyn.safetorun.reporting.toMultipleReport
+import com.safetorun.checks.SafeToRunCheck
+import com.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.toMultipleReport
 
 
 internal class BlacklistedApplicationDetection(

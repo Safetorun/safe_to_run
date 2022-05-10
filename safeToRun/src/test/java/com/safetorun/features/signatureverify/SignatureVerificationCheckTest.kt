@@ -7,7 +7,7 @@ import android.content.pm.Signature
 import android.content.pm.SigningInfo
 import android.util.Base64
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.reporting.SafeToRunReport
+import com.safetorun.reporting.SafeToRunReport
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.MockKAnnotations
 import io.mockk.every
