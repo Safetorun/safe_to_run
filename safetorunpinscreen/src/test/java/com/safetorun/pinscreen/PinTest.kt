@@ -1,13 +1,17 @@
-package io.github.dllewellyn.safetorun.pinscreen
+package com.safetorun.pinscreen
 
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.pinscreen.models.Attempts
-import io.github.dllewellyn.safetorun.pinscreen.models.HashedPin
-import io.github.dllewellyn.safetorun.pinscreen.models.MaxAttemptsBehaviour
-import io.github.dllewellyn.safetorun.pinscreen.models.PinCheckResult
-import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
-import io.github.dllewellyn.safetorun.pinscreen.storage.AttemptsLogger
-import io.github.dllewellyn.safetorun.pinscreen.storage.PinStorage
+import com.safetorun.pinscreen.models.Attempts
+import com.safetorun.pinscreen.models.HashedPin
+import com.safetorun.pinscreen.models.MaxAttemptsBehaviour
+import com.safetorun.pinscreen.models.PinCheckResult
+import com.safetorun.pinscreen.models.RetryStrategy
+import com.safetorun.pinscreen.storage.AttemptsLogger
+import com.safetorun.pinscreen.storage.PinStorage
+import io.github.dllewellyn.safetorun.pinscreen.haveSetPin
+import io.github.dllewellyn.safetorun.pinscreen.retryStrategy
+import io.github.dllewellyn.safetorun.pinscreen.setPin
+import io.github.dllewellyn.safetorun.pinscreen.validatePin
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

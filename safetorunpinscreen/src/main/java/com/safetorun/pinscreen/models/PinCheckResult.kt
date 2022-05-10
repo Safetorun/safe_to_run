@@ -1,4 +1,4 @@
-package io.github.dllewellyn.safetorun.pinscreen.models
+package com.safetorun.pinscreen.models
 
 /**
  * The result of a pin check

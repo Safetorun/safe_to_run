@@ -1,7 +1,7 @@
-package io.github.dllewellyn.safetorun.pinscreen.builders
+package com.safetorun.pinscreen.builder
 
-import io.github.dllewellyn.safetorun.pinscreen.models.MaxAttemptsBehaviour
-import io.github.dllewellyn.safetorun.pinscreen.models.RetryStrategy
+import com.safetorun.pinscreen.models.MaxAttemptsBehaviour
+import com.safetorun.pinscreen.models.RetryStrategy
 
 /**
  * Build a retry strategy

@@ -1,8 +1,9 @@
-package io.github.dllewellyn.safetorun.pinscreen
+package com.safetorun
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
-import io.github.dllewellyn.safetorun.pinscreen.models.Attempts
+import com.safetorun.pinscreen.models.Attempts
+import com.safetorun.pinscreen.safeToRunPinStorage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -45,5 +46,4 @@ internal class SafeToRunStorageTest {
             assertThat(storage.getAttempts()).isNull()
         }
     }
-
 }

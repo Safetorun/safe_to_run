@@ -1,4 +1,4 @@
-package io.github.dllewellyn.safetorun.pinscreen.storage
+package com.safetorun.pinscreen.storage
 
 internal interface PinStorage {
     suspend fun clear()

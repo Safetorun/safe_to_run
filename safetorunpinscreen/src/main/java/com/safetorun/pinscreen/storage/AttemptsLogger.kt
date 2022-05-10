@@ -1,6 +1,6 @@
-package io.github.dllewellyn.safetorun.pinscreen.storage
+package com.safetorun.pinscreen.storage
 
-import io.github.dllewellyn.safetorun.pinscreen.models.Attempts
+import com.safetorun.pinscreen.models.Attempts
 
 internal interface AttemptsLogger {
     suspend fun logAttempt(attempts: Attempts)
