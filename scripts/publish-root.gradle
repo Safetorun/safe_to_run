@@ -1,6 +1,6 @@
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
-ext["sonatypeStagingProfileId"] = 'io.github.dllewellyn'
+ext["sonatypeStagingProfileId"] = 'com.safetorun'
 ext["signing.keyId"] = ''
 ext["signing.password"] = ''
 ext["signing.secretKeyRingFile"] = ''
@@ -22,10 +22,10 @@ if (secretPropsFile.exists()) {
 
 
 nexusPublishing {
-    packageGroup = "io.github.dllewellyn.safetorun"  //defaults to 'project.group'
+    packageGroup = "com.safetorun"  //defaults to 'project.group'
     repositories {
         sonatype {
-            packageGroup = "io.github.dllewellyn"
+            packageGroup = "com.safetorun"
             username = ossrhUsername
             password = ossrhPassword
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))

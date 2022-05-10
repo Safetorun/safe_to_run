@@ -16,7 +16,7 @@ apply from: "$directory/coroutines.gradle"
 
 
 ext {
-    PUBLISH_GROUP_ID = 'io.github.dllewellyn.safetorun'
+    PUBLISH_GROUP_ID = 'com.safetorun'
     PUBLISH_VERSION = project['safeToRunVersion']
     PUBLISH_ARTIFACT_ID = 'pinscreen'
 }

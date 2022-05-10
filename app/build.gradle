@@ -74,12 +74,12 @@ dependencies {
 apply plugin: 'firebase.test.lab'
 
 firebaseTestLab {
-    keyFile = file("google-service-key.json")
+    keyFile = file("../google-service-key.json")
     googleProjectId = "andro-3982e"
     devices {
         nexusEmulator {
-            deviceIds = ["hammerhead"]
-            androidApiLevels = [23]
+            deviceIds = ["redfin","star2lte","judypn"]
+            androidApiLevels = [28,29,30]
         }
     }
 }

@@ -1,1 +1,1 @@
-./gradlew spotlessApply detekt build test
+./gradlew spotlessApply detekt test

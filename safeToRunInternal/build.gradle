@@ -10,7 +10,7 @@ plugins {
 apply plugin: "com.vanniktech.android.junit.jacoco"
 
 ext {
-    PUBLISH_GROUP_ID = 'io.github.dllewellyn.safetorun'
+    PUBLISH_GROUP_ID = 'com.safetorun'
     PUBLISH_VERSION = project['safeToRunVersion']
     PUBLISH_ARTIFACT_ID = 'safeToRunInternal'
 }
@@ -20,7 +20,7 @@ def directory = "$rootProject.projectDir/scripts/dependencies/"
 apply from: "$directory/test_dependencies.gradle"
 
 
-group 'io.github.dllewellyn.safetorun'
+group 'com.safetorun'
 version project['safeToRunVersion']
 
 repositories {
