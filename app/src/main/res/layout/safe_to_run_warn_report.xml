@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="report" type="io.github.dllewellyn.safetorun.reporting.SafeToRunReport.SafeToRunWarning"/>
+        <variable name="report" type="com.safetorun.reporting.SafeToRunReport.SafeToRunWarning"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:padding="@dimen/padding"

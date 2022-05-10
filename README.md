@@ -7,13 +7,13 @@
 [![codecov](https://codecov.io/gh/Safetorun/safe_to_run/branch/master/graph/badge.svg?token=2CUARL5E6B)](https://codecov.io/gh/Safetorun/safe_to_run)
 
 Safe to run (android library)
-![Maven central - SafeToRun](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safetorun/badge.svg)
+![Maven central - SafeToRun](https://maven-badges.herokuapp.com/maven-central/com.safetorun/safetorun/badge.svg)
 
 Core
-![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/safeToRunCore/badge.svg)
+![Maven central - Core](https://maven-badges.herokuapp.com/maven-central/com.safetorun/safeToRunCore/badge.svg)
 
 Input validation
-![Maven central - Input validation](https://maven-badges.herokuapp.com/maven-central/io.github.dllewellyn.safetorun/inputverification/badge.svg)
+![Maven central - Input validation](https://maven-badges.herokuapp.com/maven-central/com.safetorun/inputverification/badge.svg)
 
 
 
@@ -27,9 +27,9 @@ is safe to run, and provide you with a way to verify data from intents or deep l
 ## Quickstart
 
 ```groovy
-implementation "io.github.dllewellyn.safetorun:safetorun:$safeToRunVersion"
-implementation "io.github.dllewellyn.safetorun:safeToRunCore:$safeToRunVersion"
-implementation "io.github.dllewellyn.safetorun:inputverification:$safeToRunVersion"
+implementation "com.safetorun:safetorun:$safeToRunVersion"
+implementation "com.safetorun:safeToRunCore:$safeToRunVersion"
+implementation "com.safetorun:inputverification:$safeToRunVersion"
 ```
 
 ## Safe to run input verification

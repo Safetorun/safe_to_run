@@ -1,7 +1,7 @@
 package com.andro.secure
 
 import com.airbnb.epoxy.Typed2EpoxyController
-import io.github.dllewellyn.safetorun.reporting.GroupedSafeToRunReports
+import com.safetorun.reporting.GroupedSafeToRunReports
 
 class ResultEpoxyController : Typed2EpoxyController<GroupedSafeToRunReports, Map<String, String>>() {
 

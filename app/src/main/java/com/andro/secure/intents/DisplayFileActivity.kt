@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.R
-import io.github.dllewellyn.safetorun.intents.file.verifyFile
+import com.safetorun.intents.file.verifyFile
 import java.nio.charset.Charset
 
 class DisplayFileActivity : AppCompatActivity() {
