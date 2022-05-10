@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.databinding.ActivityWebViewBinding
-import io.github.dllewellyn.safetorun.intents.url.params.AllowedType
-import io.github.dllewellyn.safetorun.intents.url.urlConfiguration
-import io.github.dllewellyn.safetorun.intents.url.urlVerification
-import io.github.dllewellyn.safetorun.intents.verify
+import com.safetorun.intents.url.params.AllowedType
+import com.safetorun.intents.url.urlConfiguration
+import com.safetorun.intents.url.urlVerification
+import com.safetorun.intents.verify
 
 class WebViewActivity : AppCompatActivity() {
 

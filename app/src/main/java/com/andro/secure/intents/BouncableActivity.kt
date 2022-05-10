@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.R
 import com.andro.secure.databinding.ActivityBouncableBinding
-import io.github.dllewellyn.safetorun.intents.verify
+import com.safetorun.intents.verify
 
 class BouncableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
