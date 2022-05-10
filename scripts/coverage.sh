@@ -1,1 +1,1 @@
-./gradlew spotlessApply detekt test
+./gradlew spotlessApply detekt test jacocoTestReport
