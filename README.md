@@ -55,7 +55,7 @@ allowed the parameterName with the name "param" of type string.
 
 We are able to provide more permissive options, for example:
 
-```kotlin§
+```kotlin
 "https://safetorun.com?param=abc".urlVerification {
     "safetorun.com".allowHost()
     allowAnyParameter()

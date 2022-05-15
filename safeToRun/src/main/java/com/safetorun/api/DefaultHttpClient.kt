@@ -62,7 +62,7 @@ internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient 
     @Throws(ApiException::class)
     private fun HttpURLConnection.checkStatusAndThrowException() {
         if (responseCode !in LOWER_ACCEPTABLE_RESPONSE_CODE..UPPER_ACCEPTABLE_RESPONSE_CODE) {
-            throw ApiException("Failed with code $responseCode")
+            throw ApiException.throwApiException("Failed with code $responseCode")
         }
     }
 

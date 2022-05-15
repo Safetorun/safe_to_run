@@ -48,6 +48,12 @@ class IntentVerificationBuilder internal constructor(
 }
 
 /**
+ * Alias for intent verification builder
+ */
+typealias IntentVerifier = IntentVerificationBuilder.() -> Unit
+
+
+/**
  * Verify an intent based on the configuration
  *
  * Sample:
@@ -64,7 +70,7 @@ class IntentVerificationBuilder internal constructor(
  * @param builderBlock the configuration to use
  * @param context android context
  */
-fun Intent.verify(context: Context, builderBlock: IntentVerificationBuilder.() -> Unit) =
+fun Intent.verify(context: Context, builderBlock: IntentVerifier) =
     IntentVerificationBuilder(this, context).run {
         builderBlock()
         verify()

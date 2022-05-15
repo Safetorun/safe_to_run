@@ -23,10 +23,18 @@ import com.safetorun.features.debug.debugCheck
 import com.safetorun.features.debug.isDebuggableCheck
 import com.safetorun.features.installorigin.installOriginCheckWithDefaults
 import com.safetorun.features.installorigin.installOriginCheckWithDefaultsCheck
-import com.safetorun.features.oscheck.*
+import com.safetorun.features.oscheck.banAvdEmulator
+import com.safetorun.features.oscheck.banBluestacksEmulator
+import com.safetorun.features.oscheck.bannedBoardCheck
+import com.safetorun.features.oscheck.bannedHardwareCheck
+import com.safetorun.features.oscheck.bannedModel
 import com.safetorun.features.oscheck.emulator.banAvdEmulatorCheck
 import com.safetorun.features.oscheck.emulator.banBluestacksEmulatorCheck
 import com.safetorun.features.oscheck.emulator.banGenymotionEmulatorCheck
+import com.safetorun.features.oscheck.minOsVersion
+import com.safetorun.features.oscheck.notManufacturer
+import com.safetorun.features.oscheck.osDetectionCheck
+import com.safetorun.features.oscheck.safeToRunCombinedCheck
 import com.safetorun.features.rootdetection.rootDetection
 import com.safetorun.features.rootdetection.rootDetectionCheck
 import com.safetorun.features.signatureverify.verifySignatureCheck
@@ -102,7 +110,7 @@ class ReportFragment : Fragment() {
 
                     osDetectionCheck(
                         conditionalBuilder {
-                            with(bannedModel("Pixel 4a (5G)"))
+                            with(bannedModel("Pixel 6"))
                         }
                     ).warn()
 
