@@ -27,14 +27,30 @@ private object SafeToRunIntentConfigurator {
             )
 }
 
-
+/**
+ * Initialise configuration. Do not use before this is called
+ *
+ * @param context app context
+ */
 fun initialiseSafeToRunIntentConfigurator(context: Context) =
     SafeToRunIntentConfigurator.initialise(context)
 
+/**
+ * Verify an intent against a particular configuration
+ *
+ * @param configurationName name of the configuration
+ * @param intent intent to verify
+ */
 fun verifyIntent(configurationName: String, intent: Intent) =
     SafeToRunIntentConfigurator.verifyIntent(
         configurationName, intent
     )
 
+/**
+ * Register a configuration for intent verification with a name and verifier
+ *
+ * @param configurationName name of the configuration
+ * @param verifier verifier to assign to the configuration
+ */
 fun registerIntentVerification(configurationName: String, verifier: IntentVerifier) =
     SafeToRunIntentConfigurator.registerIntentConfiguration(configurationName, verifier)
