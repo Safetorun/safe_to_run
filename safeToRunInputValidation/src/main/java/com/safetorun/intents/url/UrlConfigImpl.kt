@@ -47,7 +47,9 @@ internal class UrlConfigImpl : UrlConfig {
 
         return uri.host == null || allowAnyUrl || (url.urlsAreInAllowedLists()
                 && (
+
                 uri.queryParameterNames.isEmpty()
+                        || allowedUrls.contains(url)
                         || allowAnyParameter
                         || uri.allParametersAccountFor()
                 ))

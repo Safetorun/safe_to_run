@@ -106,6 +106,13 @@ internal class UrlConfigTest  {
     }
 
     @Test
+    fun `test that url with config will be ok if the url itself is allowed`() {
+        assertThat(URL_WITH_QUERY_PARAM.urlVerification {
+            URL_WITH_QUERY_PARAM.allowUrl()
+        }).isTrue()
+    }
+
+    @Test
     fun `test that url config will fail with @ if all parameters are  allowed`() {
         assertThat(
             "$URL@def.com".urlVerification {
