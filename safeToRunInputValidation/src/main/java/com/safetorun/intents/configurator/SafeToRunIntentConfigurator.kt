@@ -12,18 +12,18 @@ private object SafeToRunIntentConfigurator {
 
     lateinit var context: Context
 
-    val mp = mutableMapOf<String, IntentVerifier>()
+    val configurationMap = mutableMapOf<String, IntentVerifier>()
 
     fun initialise(context: Context) {
         this.context = context
     }
 
     fun registerIntentConfiguration(configurationName: String, verifier: IntentVerifier) {
-        mp[configurationName] = verifier
+        configurationMap[configurationName] = verifier
     }
 
     fun verifyIntent(configurationName: String, intent: Intent): Boolean =
-        mp[configurationName]?.let { intent.verify(context, it) }
+        configurationMap[configurationName]?.let { intent.verify(context, it) }
             ?: throw ConfigurationNotFoundException.newConfigurationNotFoundException(
                 configurationName
             )
@@ -39,10 +39,44 @@ internal fun initialiseSafeToRunIntentConfigurator(context: Context) =
  * @param configurationName name of the configuration
  * @param intent intent to verify
  */
-fun verifyIntent(configurationName: String, intent: Intent) =
+fun verifyFile(configurationName: String, intent: Intent) =
     SafeToRunIntentConfigurator.verifyIntent(
         configurationName, intent
     )
+
+/**
+ * Verify an intent against a configuration
+ *
+ * @param configurationName name of the configuration
+ * @receiver the intent to verify
+ */
+fun Intent.verifyUrl(configurationName: String) = verifyFile(configurationName, this)
+
+/**
+ * Verify an intent against a configuration
+ *
+ * @param configurationName name of the configuration
+ * @param actionOnFailure the action to execute if a failure occurs
+ * @receiver the intent to verify
+ */
+fun Intent.verifyUrl(configurationName: String, actionOnFailure: () -> Unit) =
+    verifyFile(configurationName, this, actionOnFailure)
+
+/**
+ * Verify an intent against a particular configuration
+ *
+ * @param configurationName name of the configuration
+ * @param intent intent to verify
+ * @param actionOnFailure the action to perform if the check fails
+ */
+fun verifyFile(configurationName: String, intent: Intent, actionOnFailure: () -> Unit) {
+    if (SafeToRunIntentConfigurator.verifyIntent(
+            configurationName, intent
+        ).not()
+    ) {
+        actionOnFailure()
+    }
+}
 
 /**
  * Register a configuration for intent verification with a name and verifier

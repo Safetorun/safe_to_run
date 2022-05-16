@@ -20,6 +20,10 @@ internal class DefaultAllowUrlsBuilder internal constructor(
         allowedHosts.add(this)
     }
 
+    override fun UrlConfig.unaryPlus() {
+        addConfiguration()
+    }
+
     private fun List<String>.areAllUrlsInAllowedHosts() = all { allowedHosts.any { host -> host.verify(it) } }
 
     private fun List<String>.filterUrls() =

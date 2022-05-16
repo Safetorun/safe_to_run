@@ -1,1 +1,1 @@
-./gradlew spotlessApply detekt test jacocoTestReport
+./gradlew spotlessApply detekt test jacocoTestReport :safeToRunInputValidation:jacocoTestReportDebug

@@ -10,4 +10,6 @@ import android.content.Context
  */
 fun initialiseSafeToRunConfigurator(context : Context) {
     initialiseSafeToRunIntentConfigurator(context)
+    initialiseSafeToRunFileConfigurator(context)
+    initialiseSafeToRunUrlConfigurator(context)
 }
