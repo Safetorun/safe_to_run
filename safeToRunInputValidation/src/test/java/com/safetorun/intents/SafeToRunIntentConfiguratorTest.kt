@@ -3,6 +3,9 @@ package com.safetorun.intents
 import android.content.Context
 import android.content.Intent
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
+import com.safetorun.intents.configurator.registerIntentVerification
+import com.safetorun.intents.configurator.verifyIntent
 import com.safetorun.intents.exeptions.ConfigurationNotFoundException
 import com.safetorun.intents.file.DefaultFileUriMatcherBuilderTest
 import io.mockk.every
@@ -22,7 +25,7 @@ internal class SafeToRunIntentConfiguratorTest {
 
     @Before
     fun beforeAll() {
-        initialiseSafeToRunIntentConfigurator(context)
+        initialiseSafeToRunConfigurator(context)
     }
 
     @Test

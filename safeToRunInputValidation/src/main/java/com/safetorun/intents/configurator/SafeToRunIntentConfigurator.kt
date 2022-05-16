@@ -1,9 +1,11 @@
-package com.safetorun.intents
+package com.safetorun.intents.configurator
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import com.safetorun.intents.IntentVerifier
 import com.safetorun.intents.exeptions.ConfigurationNotFoundException
+import com.safetorun.intents.verify
 
 @SuppressLint("StaticFieldLeak")
 private object SafeToRunIntentConfigurator {
@@ -27,12 +29,8 @@ private object SafeToRunIntentConfigurator {
             )
 }
 
-/**
- * Initialise configuration. Do not use before this is called
- *
- * @param context app context
- */
-fun initialiseSafeToRunIntentConfigurator(context: Context) =
+
+internal fun initialiseSafeToRunIntentConfigurator(context: Context) =
     SafeToRunIntentConfigurator.initialise(context)
 
 /**
