@@ -3,7 +3,7 @@ package com.safetorun.intents.exeptions
 /**
  * Exception for when the configuration is looked up in a configuration, and can't be found
  */
-class ConfigurationNotFoundException(name: String) :
+class ConfigurationNotFoundException internal constructor(name: String) :
     Exception("$name not found in configurator") {
     companion object {
         /**
