@@ -6,6 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
 import com.safetorun.intents.configurator.registerIntentVerification
 import com.safetorun.intents.configurator.verifyUrl
+import com.safetorun.intents.configurator.verifyIntent
 import com.safetorun.intents.exeptions.ConfigurationNotFoundException
 import com.safetorun.intents.file.DefaultFileUriMatcherBuilderTest
 import com.safetorun.intents.url.urlConfiguration
@@ -32,7 +33,7 @@ internal class SafeToRunIntentConfiguratorTest {
     @Test
     fun `test that safe to configuration throws exception if it doesn't exist`() {
         assertThrows<ConfigurationNotFoundException> {
-            Intent().verifyUrl("notexist")
+            Intent().verifyIntent("notexist")
         }
     }
 
@@ -44,7 +45,7 @@ internal class SafeToRunIntentConfiguratorTest {
         }
 
         val passed = Intent().putExtra("url", "https://safetorun.com")
-            .verifyUrl(verifierName)
+            .verifyIntent(verifierName)
 
         assertThat(passed).isTrue()
     }
@@ -85,7 +86,7 @@ internal class SafeToRunIntentConfiguratorTest {
         registerIntentVerification(verifierName) {
             // Do nothing - URL should not be allowed in this set up
         }
-        val passed = Intent().putExtra("url", "https://safetorun.com").verifyUrl(
+        val passed = Intent().putExtra("url", "https://safetorun.com").verifyIntent(
             verifierName
         )
         assertThat(passed).isFalse()

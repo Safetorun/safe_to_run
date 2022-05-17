@@ -50,7 +50,8 @@ fun verifyFile(configurationName: String, intent: Intent) =
  * @param configurationName name of the configuration
  * @receiver the intent to verify
  */
-fun Intent.verifyUrl(configurationName: String) = verifyFile(configurationName, this)
+fun Intent.verifyIntent(configurationName: String) =
+    verifyFile(configurationName, this)
 
 /**
  * Verify an intent against a configuration

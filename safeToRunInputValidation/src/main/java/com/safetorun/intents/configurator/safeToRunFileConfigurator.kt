@@ -111,7 +111,7 @@ fun registerFileVerification(configurationName: String, verifier: FileVerifier) 
  * @param actionOnFailure the action to perform if the check fails
  * @receiver file to verify
  */
-fun File.verifyUrl(configurationName: String, actionOnFailure: () -> Unit) =
+fun File.verifyFile(configurationName: String, actionOnFailure: () -> Unit) =
     verifyFile(configurationName, this, actionOnFailure)
 
 /**
@@ -120,7 +120,8 @@ fun File.verifyUrl(configurationName: String, actionOnFailure: () -> Unit) =
  * @param configurationName name of the configuration
  * @receiver file to verify
  */
-fun File.verifyUrl(configurationName: String) = verifyFile(configurationName, this)
+fun File.verifyFile(configurationName: String) =
+    verifyFile(configurationName, this)
 
 /**
  * Verify an file against a particular configuration
@@ -128,7 +129,7 @@ fun File.verifyUrl(configurationName: String) = verifyFile(configurationName, th
  * @param configurationName name of the configuration
  * @receiver uri to verify
  */
-fun Uri.verifyUrl(configurationName: String) = verifyFileUri(configurationName, this)
+fun Uri.verifyFile(configurationName: String) = verifyFileUri(configurationName, this)
 
 /**
  * Verify an file against a particular configuration
@@ -137,5 +138,5 @@ fun Uri.verifyUrl(configurationName: String) = verifyFileUri(configurationName, 
  * @param actionOnFailure the action to perform if the check fails
  * @receiver uri to verify
  */
-fun Uri.verifyUrl(configurationName: String, actionOnFailure: () -> Unit) =
+fun Uri.verifyFile(configurationName: String, actionOnFailure: () -> Unit) =
     verifyFileUri(configurationName, this, actionOnFailure)

@@ -5,7 +5,7 @@ import android.net.Uri
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
 import com.safetorun.intents.configurator.registerFileVerification
-import com.safetorun.intents.configurator.verifyUrl
+import com.safetorun.intents.configurator.verifyFile
 import com.safetorun.intents.exeptions.ConfigurationNotFoundException
 import com.safetorun.intents.file.DefaultFileUriMatcherBuilderTest
 import io.mockk.every
@@ -32,7 +32,7 @@ class SafeToRunFileUriConfiguratorTest {
     fun `test that when a check is not configured it throws an exception`() {
         val notExists = "notexists"
         assertThrows<ConfigurationNotFoundException> {
-            Uri.parse("/sdcard/abc").verifyUrl(notExists)
+            Uri.parse("/sdcard/abc").verifyFile(notExists)
         }
     }
 
@@ -44,7 +44,7 @@ class SafeToRunFileUriConfiguratorTest {
         }
 
         assertThat(
-            privateDirectoryFolder().verifyUrl(verificationConfig)
+            privateDirectoryFolder().verifyFile(verificationConfig)
         ).isTrue()
     }
 
@@ -55,7 +55,7 @@ class SafeToRunFileUriConfiguratorTest {
         }
 
         assertThat(
-            privateDirectoryFolder().verifyUrl(verificationConfig)
+            privateDirectoryFolder().verifyFile(verificationConfig)
         ).isFalse()
     }
 
@@ -67,7 +67,7 @@ class SafeToRunFileUriConfiguratorTest {
             allowAnyFile = true
         }
 
-        privateDirectoryFolder().verifyUrl(verificationConfig) {
+        privateDirectoryFolder().verifyFile(verificationConfig) {
             called = true
         }
         assertThat(called).isFalse()
@@ -80,7 +80,7 @@ class SafeToRunFileUriConfiguratorTest {
         registerFileVerification(verificationConfig) {
         }
 
-        privateDirectoryFolder().verifyUrl(verificationConfig) {
+        privateDirectoryFolder().verifyFile(verificationConfig) {
             called = true
         }
         assertThat(called).isTrue()

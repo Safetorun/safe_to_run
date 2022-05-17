@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
 import com.safetorun.intents.configurator.registerFileVerification
-import com.safetorun.intents.configurator.verifyUrl
+import com.safetorun.intents.configurator.verifyFile
 import com.safetorun.intents.exeptions.ConfigurationNotFoundException
 import com.safetorun.intents.file.DefaultFileUriMatcherBuilderTest
 import io.mockk.every
@@ -32,7 +32,7 @@ class SafeToRunFileConfiguratorTest {
     fun `test that when a check is not configured it throws an exception`() {
         val notExists = "notexists"
         assertThrows<ConfigurationNotFoundException> {
-            File("").verifyUrl(notExists)
+            File("").verifyFile(notExists)
         }
     }
 
@@ -44,7 +44,7 @@ class SafeToRunFileConfiguratorTest {
         }
 
         assertThat(
-            File(privateDirectoryFolder()).verifyUrl(verificationConfig)
+            File(privateDirectoryFolder()).verifyFile(verificationConfig)
         ).isTrue()
     }
 
@@ -55,7 +55,7 @@ class SafeToRunFileConfiguratorTest {
         }
 
         assertThat(
-            File(privateDirectoryFolder()).verifyUrl(verificationConfig)
+            File(privateDirectoryFolder()).verifyFile(verificationConfig)
         ).isFalse()
     }
 
@@ -67,7 +67,7 @@ class SafeToRunFileConfiguratorTest {
             allowAnyFile = true
         }
 
-        File(privateDirectoryFolder()).verifyUrl(verificationConfig) {
+        File(privateDirectoryFolder()).verifyFile(verificationConfig) {
             called = true
         }
         assertThat(called).isFalse()
@@ -80,7 +80,7 @@ class SafeToRunFileConfiguratorTest {
         registerFileVerification(verificationConfig) {
         }
 
-        File(privateDirectoryFolder()).verifyUrl(verificationConfig) {
+        File(privateDirectoryFolder()).verifyFile(verificationConfig) {
             called = true
         }
         assertThat(called).isTrue()
