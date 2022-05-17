@@ -29,7 +29,11 @@ private object SafeToRunIntentConfigurator {
             )
 }
 
-
+/**
+ * Initialise safe to run intent configurator
+ *
+ * @param context the context to use
+ */
 internal fun initialiseSafeToRunIntentConfigurator(context: Context) =
     SafeToRunIntentConfigurator.initialise(context)
 
