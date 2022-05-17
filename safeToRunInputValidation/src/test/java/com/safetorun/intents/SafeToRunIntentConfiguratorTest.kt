@@ -44,7 +44,7 @@ internal class SafeToRunIntentConfiguratorTest {
             +urlConfiguration { "safetorun.com".allowHost() }
         }
 
-        val passed = Intent().putExtra("url", "https://safetorun.com")
+        val passed = Intent().putExtra("url", SAFETORUN)
             .verifyIntent(verifierName)
 
         assertThat(passed).isTrue()
@@ -58,7 +58,7 @@ internal class SafeToRunIntentConfiguratorTest {
             +urlConfiguration { "safetorun.com".allowHost() }
         }
 
-        Intent().putExtra("url", "https://safetorun.com").verifyUrl(verifierName) {
+        Intent().putExtra("url", SAFETORUN).verifyUrl(verifierName) {
             called = true
         }
         assertThat(called).isFalse()
@@ -73,7 +73,7 @@ internal class SafeToRunIntentConfiguratorTest {
             // Do nothing - URL should not be allowed in this set up
         }
 
-        Intent().putExtra("url", "https://safetorun.com").verifyUrl(verifierName) {
+        Intent().putExtra("url", SAFETORUN).verifyUrl(verifierName) {
             called = true
         }
 
@@ -86,9 +86,13 @@ internal class SafeToRunIntentConfiguratorTest {
         registerIntentVerification(verifierName) {
             // Do nothing - URL should not be allowed in this set up
         }
-        val passed = Intent().putExtra("url", "https://safetorun.com").verifyIntent(
+        val passed = Intent().putExtra("url", SAFETORUN).verifyIntent(
             verifierName
         )
         assertThat(passed).isFalse()
+    }
+
+    companion object {
+        const val SAFETORUN = "https://safetorun.com"
     }
 }
