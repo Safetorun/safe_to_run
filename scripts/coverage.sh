@@ -1,4 +1,4 @@
-./gradlew spotlessApply detekt test \
+./gradlew spotlessApply detekt test koverReport \
  :safeToRunInputValidation:jacocoTestReportDebug \
  :safeToRunInternal:jacocoTestReport \
  :safeToRunCore:jacocoTestReport \

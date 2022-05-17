@@ -4,9 +4,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+/**
+ * URL configuration
+ */
 data class UrlConfigurationsDto(val name: String, val configuration: UrlConfigurationDto)
 
 @Serializable
+/**
+ * URL configuration
+ */
 data class UrlConfigurationDto(
     @SerialName("allowed_hosts") val allowedHost: List<String>,
     @SerialName("allowed_urls") val allowedUrls: List<String>,
@@ -16,12 +22,18 @@ data class UrlConfigurationDto(
 )
 
 @Serializable
+/**
+ * Parameter config
+ */
 data class ParameterConfigDto(
     @SerialName("parameter_name") val parameterName: String,
     @SerialName("allowed_type") val allowedType: AllowedTypeDto
 )
 
 @Serializable
+/**
+ * Allowed type
+ */
 enum class AllowedTypeDto {
     /**
      * Any type allowed
