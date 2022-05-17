@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json.Default.decodeFromString
 import org.junit.Test
 import java.lang.NullPointerException
 
-class UrlConfigurationSampleTest {
+internal class UrlConfigurationSampleTest {
 
     @Test
     fun `test that url configuration builds correctly`() {
