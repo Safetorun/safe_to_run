@@ -36,7 +36,7 @@ class SafeToRunUrlConfigurationTest {
 
         }
 
-        val result = "https://safetorun.com".verifyIntent(verifierName)
+        val result = SAFETORUN.verifyIntent(verifierName)
         assertThat(result).isFalse()
     }
 
@@ -47,7 +47,7 @@ class SafeToRunUrlConfigurationTest {
             "safetorun.com".allowHost()
         }
 
-        val result = "https://safetorun.com".verifyIntent(verifierName)
+        val result = SAFETORUN.verifyIntent(verifierName)
         assertThat(result).isTrue()
     }
 
@@ -60,7 +60,7 @@ class SafeToRunUrlConfigurationTest {
             "safetorun.com".allowHost()
         }
 
-        "https://safetorun.com".verifyIntent(verifierName) {
+        SAFETORUN.verifyIntent(verifierName) {
             called = true
         }
         assertThat(called).isFalse()
@@ -73,9 +73,13 @@ class SafeToRunUrlConfigurationTest {
         registerUrlVerification(verifierName) {
         }
 
-        "https://safetorun.com".verifyIntent(verifierName) {
+        SAFETORUN.verifyIntent(verifierName) {
             called = true
         }
         assertThat(called).isTrue()
+    }
+
+    companion object {
+        const val SAFETORUN = "https://safetorun.com"
     }
 }
