@@ -13,12 +13,15 @@ apply(plugin= "com.vanniktech.android.junit.jacoco")
 //    PUBLISH_ARTIFACT_ID = 'safeToRunBuilder'
 //}
 
+dependencies {
+    implementation("com.squareup:kotlinpoet:1.11.0")
+}
 
 gradlePlugin {
     plugins {
         create("safeToRun") {
             id = "com.safetorun.builder"
-            implementationClass = "org.example.GreetingPlugin"
+            implementationClass = "com.safetorun.builder.SafeToRunBuilderPlugin"
         }
     }
 }
