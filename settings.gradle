@@ -1,4 +1,4 @@
-include ':safeToRun', ':app', ':safeToRunCore', ':safeToRunInternal', ':safeToRunInputValidation'
+include ':safeToRun', ':app', ':safeToRunCore', ':safeToRunInternal', ':safeToRunInputValidation', ':safeToRunBuilder'
 rootProject.name = "Safe to run"
 
 include ':safetorunpinscreen'
