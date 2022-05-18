@@ -1,6 +1,7 @@
 package com.safetorun.intents.url
 
 import android.net.Uri
+import com.safetorun.intents.IntentVerificationBuilder
 import com.safetorun.intents.url.hostname.hostNameMatcher
 import com.safetorun.intents.url.params.ParameterConfig
 import com.safetorun.intents.url.params.ParameterConfigBuilder
@@ -46,7 +47,9 @@ internal class UrlConfigImpl : UrlConfig {
 
         return uri.host == null || allowAnyUrl || (url.urlsAreInAllowedLists()
                 && (
+
                 uri.queryParameterNames.isEmpty()
+                        || allowedUrls.contains(url)
                         || allowAnyParameter
                         || uri.allParametersAccountFor()
                 ))
@@ -71,13 +74,18 @@ internal class UrlConfigImpl : UrlConfig {
 }
 
 /**
+ * Alias for url verification builder
+ */
+typealias UrlConfigVerifier = UrlConfig.() -> Unit
+
+/**
  * Create a URL configuration
  *
  * @param config the url configuration
  *
  * @return a URL Config
  */
-fun urlConfiguration(config: UrlConfig.() -> Unit) =
+fun urlConfiguration(config: UrlConfigVerifier) =
     (UrlConfigImpl() as UrlConfig).apply(config)
 
 
@@ -90,7 +98,7 @@ fun urlConfiguration(config: UrlConfig.() -> Unit) =
  *
  * @return true if the check failed, false otherwise
  */
-fun String.urlVerification(config: UrlConfig.() -> Unit) =
+fun String.urlVerification(config: UrlConfigVerifier) =
     (UrlConfigImpl() as UrlConfig)
         .apply(config)
         .verify(this)

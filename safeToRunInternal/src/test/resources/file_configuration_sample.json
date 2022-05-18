@@ -1,0 +1,15 @@
+{
+  "name": "file_verifier",
+  "configuration": {
+    "allow_any_file": false,
+    "allowed_exact_files": [
+      "/data/data/com.blah/abc"
+    ],
+    "allowed_parent_directories": [
+      {
+        "directory": "/data/data/com.blah/parent",
+        "allowSubdirectories": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "example_configuration",
+  "configuration": {
+    "allowed_hosts": [
+      "safetorun.com"
+    ],
+    "allowed_urls": [
+      "https://safetorun.com?abc=def"
+    ],
+    "allowed_parameters": [
+      {
+        "parameter_name": "blah",
+        "allowed_type": "String"
+      }
+    ],
+    "allow_any_parameter": false,
+    "allow_any_url": false
+  }
+}

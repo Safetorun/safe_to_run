@@ -30,22 +30,28 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
     }
 
     override fun doesFileCheckPass(file: File): Boolean {
-        return !file.isPrivateDirectory(context) ||
+        return isDirectoryPublicDirectory(file) ||
                 allowAnyFile ||
-                allowExactFile.firstOrNull {
-                    it.canonicalPath == file.canonicalPath
-                } != null ||
-                allowedDirectories.firstOrNull {
-                    it.directoryToAllow.canonicalPath == file.canonicalFile.parent?.let { parentDirectoryPath ->
-                        File(
-                            parentDirectoryPath
-                        ).canonicalPath
-                    }
-                } != null ||
+                isExactFileAllowed(file) ||
+                isDirectoryAllowed(file) ||
                 allowedDirectories
                     .filter { it.allowSubdirectories }
                     .firstOrNull { recursivelyCheckDirectory(it.directoryToAllow, file) } != null
     }
+
+    private fun isDirectoryAllowed(file: File) = allowedDirectories.firstOrNull {
+        it.directoryToAllow.canonicalPath == file.canonicalFile.parent?.let { parentDirectoryPath ->
+            File(
+                parentDirectoryPath
+            ).canonicalPath
+        }
+    } != null
+
+    private fun isExactFileAllowed(file: File) = allowExactFile.firstOrNull {
+        it.canonicalPath == file.canonicalPath
+    } != null
+
+    private fun isDirectoryPublicDirectory(file: File) = !file.isPrivateDirectory(context)
 
     override fun doesFileCheckPass(uri: Uri): Boolean {
         return uri.path?.let { doesFileCheckPass(File(it)) } ?: false
@@ -60,6 +66,8 @@ private fun File.isPrivateDirectory(context: Context) =
     canonicalPath.contains("/data/data/${context.packageName}") ||
             canonicalPath.contains("/user/data/${context.packageName}")
 
+typealias FileVerifier = FileUriMatcherBuilder.() -> Unit
+
 /**
  * Verify a file to see if it can safely be opened
  *
@@ -68,7 +76,7 @@ private fun File.isPrivateDirectory(context: Context) =
  *
  * @return true if the check passes
  */
-fun File.verifyFile(context: Context, config: FileUriMatcherBuilder.() -> Unit) =
+fun File.verifyFile(context: Context, config: FileVerifier) =
     DefaultFileUriMatcherBuilder(context)
         .apply(config)
         .doesFileCheckPass(this)
@@ -82,7 +90,7 @@ fun File.verifyFile(context: Context, config: FileUriMatcherBuilder.() -> Unit) 
  *
  * @return true if the check passes
  */
-fun Uri.verifyFile(context: Context, config: FileUriMatcherBuilder.() -> Unit) =
+fun Uri.verifyFile(context: Context, config: FileVerifier) =
     DefaultFileUriMatcherBuilder(context)
         .apply(config)
         .doesFileCheckPass(this)

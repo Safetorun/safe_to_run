@@ -22,4 +22,11 @@ interface AllowUrlsBuilder {
      * @receiver the host to allow
      */
     fun UrlConfig.addConfiguration()
+
+    /**
+     * Allow using+ function to add a configuration
+     *
+     * @receiver the URL Config to add
+     */
+    operator fun UrlConfig.unaryPlus()
 }
