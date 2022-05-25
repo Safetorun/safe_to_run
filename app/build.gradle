@@ -1,6 +1,6 @@
-plugins {
-    id "com.safetorun.builder"
-}
+//plugins {
+//    id "com.safetorun.builder"
+//}
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -89,6 +89,6 @@ firebaseTestLab {
     }
 }
 
-safeToRun {
-    configurationPath = "buildSrc/configuration.json"
-}
+//safeToRun {
+//    configurationPath = "buildSrc/configuration.json"
+//}
