@@ -1,13 +1,24 @@
 package com.safetorun.intents.configurator
 
-import com.safetorun.inputverification.builders.AllowedTypeDto
-import com.safetorun.inputverification.builders.FileConfigurationsDto
-import com.safetorun.inputverification.builders.UrlConfigurationsDto
+import com.safetorun.inputverification.builders.model.AllowedTypeCore
+import com.safetorun.inputverification.builders.model.FileConfigurations
+import com.safetorun.inputverification.builders.model.SafeToRunInputVerification
+import com.safetorun.inputverification.builders.model.UrlConfigurations
 import com.safetorun.intents.file.FileUriMatcherBuilder
 import com.safetorun.intents.url.params.AllowedType
 import java.io.File
 
-internal fun FileConfigurationsDto.register() =
+/**
+ * Register all safe to run inputs from a configuration file
+ *
+ * @receiver the verification to register
+ */
+fun SafeToRunInputVerification.register() {
+    urlConfigurations.forEach { it.register() }
+    fileConfiguration.forEach { it.register() }
+}
+
+internal fun FileConfigurations.register() =
     registerFileVerification(name) {
         allowAnyFile = configuration.allowAnyFile
         configuration.allowedParentDirectories.forEach {
@@ -24,7 +35,7 @@ internal fun FileConfigurationsDto.register() =
         }
     }
 
-internal fun UrlConfigurationsDto.register() =
+internal fun UrlConfigurations.register() =
     registerUrlVerification(name) {
         if (configuration.allowAnyParameter) {
             allowAnyParameter()
@@ -44,11 +55,11 @@ internal fun UrlConfigurationsDto.register() =
         }
     }
 
-private fun AllowedTypeDto.toAllowedType() =
+private fun AllowedTypeCore.toAllowedType() =
     when (this) {
-        AllowedTypeDto.Any -> AllowedType.Any
-        AllowedTypeDto.String -> AllowedType.String
-        AllowedTypeDto.Boolean -> AllowedType.Boolean
-        AllowedTypeDto.Int -> AllowedType.Int
-        AllowedTypeDto.Double -> AllowedType.Double
+        AllowedTypeCore.Any -> AllowedType.Any
+        AllowedTypeCore.String -> AllowedType.String
+        AllowedTypeCore.Boolean -> AllowedType.Boolean
+        AllowedTypeCore.Int -> AllowedType.Int
+        AllowedTypeCore.Double -> AllowedType.Double
     }

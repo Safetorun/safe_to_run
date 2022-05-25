@@ -49,7 +49,7 @@ fun verifyUrlStr(configurationName: String, url: String) =
  * @param configurationName name of the configuration
  * @receiver the url to verify
  */
-fun String.verifyIntent(configurationName: String) = verifyUrlStr(configurationName, this)
+fun String.verifyUrl(configurationName: String) = verifyUrlStr(configurationName, this)
 
 /**
  * Verify an intent against a configuration
@@ -58,7 +58,7 @@ fun String.verifyIntent(configurationName: String) = verifyUrlStr(configurationN
  * @param actionOnFailure the action to execute if a failure occurs
  * @receiver the url to verify
  */
-fun String.verifyIntent(configurationName: String, actionOnFailure: () -> Unit) =
+fun String.verifyUrl(configurationName: String, actionOnFailure: () -> Unit) =
     verifyUrlStr(configurationName, this, actionOnFailure)
 
 /**
