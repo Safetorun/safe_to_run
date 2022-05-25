@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Build plugin
+        run: ./gradlew :safeToRunBuilder:shadowJar
       - name: Run Detekt
         run: ./gradlew detekt
 
