@@ -4,8 +4,8 @@ import com.safetorun.inputverification.builders.model.AllowedTypeCore
 import com.safetorun.inputverification.builders.model.FileConfigurations
 import com.safetorun.inputverification.builders.model.SafeToRunInputVerification
 import com.safetorun.inputverification.builders.model.UrlConfigurations
-import com.safetorun.intents.file.FileUriMatcherBuilder
 import com.safetorun.intents.url.params.AllowedType
+import com.safetorun.intents.file.FileUriMatcherBuilder
 import java.io.File
 
 /**
@@ -22,16 +22,11 @@ internal fun FileConfigurations.register() =
     registerFileVerification(name) {
         allowAnyFile = configuration.allowAnyFile
         configuration.allowedParentDirectories.forEach {
-            addAllowedParentDirectory(
-                FileUriMatcherBuilder.FileUriMatcherCheck(
-                    File(it.directory),
-                    it.allowSubdirectories
-                )
-            )
+            File(it.directory).allowDirectory(it.allowSubdirectories)
         }
 
         configuration.allowedExactFiles.forEach {
-            addAllowedExactFile(File(it))
+            File(it).allowExactFile()
         }
     }
 

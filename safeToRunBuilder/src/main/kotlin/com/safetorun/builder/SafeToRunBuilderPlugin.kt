@@ -19,11 +19,10 @@ class SafeToRunBuilderPlugin : Plugin<Project> {
 
         project.task("safeToRun")
             .doLast {
-
-                SafeToRunCodeGenerator(
+                generate(
                     File(project.projectDir, extension.generatedCodePath),
                     configurationParser(File(project.projectDir, extension.configurationPath).toURL())
-                ).generate()
+                )
             }
     }
 }

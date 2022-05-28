@@ -3,6 +3,8 @@ package com.safetorun.intents.file
 import android.net.Uri
 import java.io.File
 
+internal class FileUriMatcherCheck internal constructor(val directoryToAllow: File, val allowSubdirectories: Boolean)
+
 /**
  * The builder for allowing File URIs to pass the verifiation service
  */
@@ -17,19 +19,6 @@ interface FileUriMatcherBuilder {
     var allowAnyFile: Boolean
 
     /**
-     * Allow a file URI to belong to a particular parent directory.
-     *
-     * Example:
-     *
-     * ```addAllowedParentDirectory(File("/data/data/com.my.app/files")```
-     *
-     * Will fail for
-     *
-     * /data/data/com.my.app/databases
-     */
-    fun addAllowedParentDirectory(parentDirectory: FileUriMatcherCheck)
-
-    /**
      * Allow a file to be opened
      *
      * @param file the file you want to allow
@@ -42,11 +31,6 @@ interface FileUriMatcherBuilder {
      * @receiver the file you want to allow
      */
     fun File.allowExactFile()
-
-    /**
-     * @see addAllowedParentDirectory
-     */
-    fun FileUriMatcherCheck.allowParentDir()
 
     /**
      * Does file check pass
@@ -73,9 +57,7 @@ interface FileUriMatcherBuilder {
      *
      * @receiver File the file to allow
      */
-    fun File.allowDirectory(allowSubdirectories: Boolean = false) =
-        FileUriMatcherCheck(this, allowSubdirectories)
-            .allowParentDir()
+    fun File.allowDirectory(allowSubdirectories: Boolean = false)
 
     /**
      * Convert a file to allow directory check
@@ -85,13 +67,6 @@ interface FileUriMatcherBuilder {
     fun File.allowDirectoryAndSubdirectories() =
         allowDirectory(true)
 
-    /**
-     * Create a check for URI matcher
-     *
-     * @param directoryToAllow the directory to allow
-     * @param allowSubdirectories allow subdirectories or not
-     */
-    data class FileUriMatcherCheck(val directoryToAllow: File, val allowSubdirectories: Boolean)
 }
 
 

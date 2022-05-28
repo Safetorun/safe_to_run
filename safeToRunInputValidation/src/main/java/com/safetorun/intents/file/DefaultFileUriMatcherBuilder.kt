@@ -7,12 +7,12 @@ import java.io.File
 
 internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {
 
-    private val allowedDirectories = mutableListOf<FileUriMatcherBuilder.FileUriMatcherCheck>()
+    private val allowedDirectories = mutableListOf<FileUriMatcherCheck>()
     private val allowExactFile = mutableListOf<File>()
 
     override var allowAnyFile: Boolean = false
 
-    override fun addAllowedParentDirectory(parentDirectory: FileUriMatcherBuilder.FileUriMatcherCheck) {
+    fun addAllowedParentDirectory(parentDirectory: FileUriMatcherCheck) {
         allowedDirectories.add(parentDirectory)
     }
 
@@ -24,7 +24,7 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
         addAllowedExactFile(this)
     }
 
-    override fun FileUriMatcherBuilder.FileUriMatcherCheck.allowParentDir() {
+    private fun FileUriMatcherCheck.allowParentDir() {
         addAllowedParentDirectory(this)
 
     }
@@ -55,6 +55,11 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
 
     override fun doesFileCheckPass(uri: Uri): Boolean {
         return uri.path?.let { doesFileCheckPass(File(it)) } ?: false
+    }
+
+    override fun File.allowDirectory(allowSubdirectories: Boolean) {
+        FileUriMatcherCheck(this, allowSubdirectories)
+            .allowParentDir()
     }
 
     private fun recursivelyCheckDirectory(parent: File, fileWereLookingFor: File): Boolean =
