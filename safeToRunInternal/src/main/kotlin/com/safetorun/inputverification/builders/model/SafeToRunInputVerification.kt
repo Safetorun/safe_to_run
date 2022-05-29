@@ -37,15 +37,7 @@ data class UrlConfiguration(
     val allowParameters: List<ParameterConfig>,
     val allowAnyParameter: Boolean,
     val allowAnyUrl: Boolean
-) {
-    companion object {
-        fun empty() = UrlConfiguration(
-            emptyList(), emptyList(), emptyList(),
-            allowAnyParameter = false,
-            allowAnyUrl = false
-        )
-    }
-}
+)
 
 /**
  * Parameter config
@@ -85,6 +77,9 @@ enum class AllowedTypeCore {
     Double
 }
 
+/**
+ * Class to configuration safe to runSafeToRunInputVerificationParserTest input verification
+ */
 data class SafeToRunInputVerification(
     /**
      * List of url verification configurations

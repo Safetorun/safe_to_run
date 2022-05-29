@@ -6,6 +6,11 @@ import com.safetorun.inputverification.builders.model.SafeToRunInputVerification
 import kotlinx.serialization.json.Json
 import java.net.URL
 
+/**
+ * Function to configure files
+ *
+ * @param fileName configuration file url
+ */
 fun configurationParser(fileName: URL) =
     Json.decodeFromString(
         SafeToRunInputVerificationDto.serializer(),

@@ -6,7 +6,7 @@ import com.safetorun.inputverification.builders.model.FileConfigurations
 import com.safetorun.inputverification.builders.model.ParentConfiguration
 import org.junit.Test
 
-class FileConfigurationCodeGeneratorTest {
+internal class FileConfigurationCodeGeneratorTest {
 
     @Test
     fun `test that generating file code generator gives correct output`() {

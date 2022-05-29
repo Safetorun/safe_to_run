@@ -6,7 +6,7 @@ import com.safetorun.inputverification.builders.model.ParameterConfig
 import com.safetorun.inputverification.builders.model.ParentConfiguration
 import org.junit.Test
 
-class SafeToRunInputVerificationParserTest {
+internal class SafeToRunInputVerificationParserTest {
 
     @Test
     fun `test that safe to run verification can be parsed from file`() {

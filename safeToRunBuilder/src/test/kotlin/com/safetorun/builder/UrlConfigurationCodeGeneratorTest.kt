@@ -7,7 +7,7 @@ import com.safetorun.inputverification.builders.model.UrlConfiguration
 import com.safetorun.inputverification.builders.model.UrlConfigurations
 import org.junit.Test
 
-class UrlConfigurationCodeGeneratorTest {
+internal class UrlConfigurationCodeGeneratorTest {
 
     @Test
     fun `test that url code generator will generate correct code`() {
@@ -30,8 +30,9 @@ class UrlConfigurationCodeGeneratorTest {
         val configurationCode = generateUrlConfigurationCode(urlConfigurations).toString()
         val param = urlConfigurations.configuration.allowParameters.first()
 
-        val allowParam = "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
-                "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
+        val allowParam =
+            "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
+                    "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
 
         assertThat(configurationCode).isEqualTo(
             """
@@ -69,8 +70,9 @@ class UrlConfigurationCodeGeneratorTest {
         val configurationCode = generateUrlConfigurationCode(urlConfigurations).toString()
         val param = urlConfigurations.configuration.allowParameters.first()
 
-        val allowParam = "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
-                "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
+        val allowParam =
+            "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
+                    "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
         assertThat(configurationCode).isEqualTo(
             """
  com.safetorun.intents.configurator.registerUrlVerification("${urlConfigurations.name}")

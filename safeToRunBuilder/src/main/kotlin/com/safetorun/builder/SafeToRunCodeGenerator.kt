@@ -9,7 +9,7 @@ import com.squareup.kotlinpoet.ParameterSpec
 import java.io.File
 
 
-fun generate(
+internal fun generate(
     outFile: File,
     inputConfiguration: SafeToRunInputVerification
 ) {
