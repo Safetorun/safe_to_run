@@ -94,7 +94,7 @@ internal class DefaultFileUriMatcherBuilderTest {
         defaultFileUriMatcher
             .apply {
                 addAllowedParentDirectory(
-                    FileUriMatcherBuilder.FileUriMatcherCheck(
+                    FileUriMatcherCheck(
                         File("/data/data/$PACKAGE/files/"),
                         true
                     )
@@ -109,7 +109,7 @@ internal class DefaultFileUriMatcherBuilderTest {
         defaultFileUriMatcher
             .apply {
                 addAllowedParentDirectory(
-                    FileUriMatcherBuilder.FileUriMatcherCheck(
+                    FileUriMatcherCheck(
                         File("/data/data/$PACKAGE/files/"),
                         false
                     )

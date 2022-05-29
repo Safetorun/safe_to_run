@@ -30,6 +30,9 @@ class UrlConfigurationCodeGeneratorTest {
         val configurationCode = generateUrlConfigurationCode(urlConfigurations).toString()
         val param = urlConfigurations.configuration.allowParameters.first()
 
+        val allowParam = "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
+                "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
+
         assertThat(configurationCode).isEqualTo(
             """
  com.safetorun.intents.configurator.registerUrlVerification("${urlConfigurations.name}")
@@ -38,7 +41,7 @@ class UrlConfigurationCodeGeneratorTest {
    allowAnyParameter()
    "${urlConfigurations.configuration.allowedHost.first()}".allowHost()
    "${urlConfigurations.configuration.allowedUrls.first()}".allowUrl()
-   allowParameter(com.safetorun.intents.url.params.ParameterConfig("${param.parameterName}",com.safetorun.intents.url.params.AllowedType.${param.allowedType}))
+   allowParameter($allowParam)
  }
 
         """.trimIndent()
@@ -66,14 +69,16 @@ class UrlConfigurationCodeGeneratorTest {
         val configurationCode = generateUrlConfigurationCode(urlConfigurations).toString()
         val param = urlConfigurations.configuration.allowParameters.first()
 
+        val allowParam = "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
+                "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
         assertThat(configurationCode).isEqualTo(
             """
  com.safetorun.intents.configurator.registerUrlVerification("${urlConfigurations.name}")
   {
    "${urlConfigurations.configuration.allowedHost.first()}".allowHost()
-   "   ${urlConfigurations.configuration.allowedHost.last()}".allowHost()
+   "${urlConfigurations.configuration.allowedHost.last()}".allowHost()
    "${urlConfigurations.configuration.allowedUrls.first()}".allowUrl()
-   allowParameter(com.safetorun.intents.url.params.ParameterConfig("${param.parameterName}",com.safetorun.intents.url.params.AllowedType.${param.allowedType}))
+   allowParameter($allowParam)
  }
 
         """.trimIndent()
