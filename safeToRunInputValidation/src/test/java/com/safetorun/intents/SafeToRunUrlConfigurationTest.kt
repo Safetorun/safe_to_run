@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
 import com.safetorun.intents.configurator.registerUrlVerification
-import com.safetorun.intents.configurator.verifyIntent
+import com.safetorun.intents.configurator.verifyUrl
 import com.safetorun.intents.exeptions.ConfigurationNotFoundException
 import io.mockk.mockk
 import org.junit.Before
@@ -25,7 +25,7 @@ class SafeToRunUrlConfigurationTest {
     @Test
     fun `test that url verification will throw an exception if the configuration doesnt work`() {
         assertThrows<ConfigurationNotFoundException> {
-            "".verifyIntent("notexists")
+            "".verifyUrl("notexists")
         }
     }
 
@@ -36,7 +36,7 @@ class SafeToRunUrlConfigurationTest {
 
         }
 
-        val result = SAFETORUN.verifyIntent(verifierName)
+        val result = SAFETORUN.verifyUrl(verifierName)
         assertThat(result).isFalse()
     }
 
@@ -47,7 +47,7 @@ class SafeToRunUrlConfigurationTest {
             "safetorun.com".allowHost()
         }
 
-        val result = SAFETORUN.verifyIntent(verifierName)
+        val result = SAFETORUN.verifyUrl(verifierName)
         assertThat(result).isTrue()
     }
 
@@ -60,7 +60,7 @@ class SafeToRunUrlConfigurationTest {
             "safetorun.com".allowHost()
         }
 
-        SAFETORUN.verifyIntent(verifierName) {
+        SAFETORUN.verifyUrl(verifierName) {
             called = true
         }
         assertThat(called).isFalse()
@@ -73,7 +73,7 @@ class SafeToRunUrlConfigurationTest {
         registerUrlVerification(verifierName) {
         }
 
-        SAFETORUN.verifyIntent(verifierName) {
+        SAFETORUN.verifyUrl(verifierName) {
             called = true
         }
         assertThat(called).isTrue()

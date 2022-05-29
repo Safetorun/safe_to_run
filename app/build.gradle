@@ -1,8 +1,13 @@
+//plugins {
+//    id "com.safetorun.builder"
+//}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 def directory = "$rootProject.projectDir/scripts/dependencies/"
 apply from: "$directory/android_test_dependencies.gradle"
+
 
 android {
     compileSdkVersion 30
@@ -83,3 +88,7 @@ firebaseTestLab {
         }
     }
 }
+
+//safeToRun {
+//    configurationPath = "buildSrc/configuration.json"
+//}

@@ -7,12 +7,12 @@ import java.io.File
 
 internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {
 
-    private val allowedDirectories = mutableListOf<FileUriMatcherBuilder.FileUriMatcherCheck>()
+    private val allowedDirectories = mutableListOf<FileUriMatcherCheck>()
     private val allowExactFile = mutableListOf<File>()
 
     override var allowAnyFile: Boolean = false
 
-    override fun addAllowedParentDirectory(parentDirectory: FileUriMatcherBuilder.FileUriMatcherCheck) {
+    fun addAllowedParentDirectory(parentDirectory: FileUriMatcherCheck) {
         allowedDirectories.add(parentDirectory)
     }
 
@@ -24,7 +24,7 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
         addAllowedExactFile(this)
     }
 
-    override fun FileUriMatcherBuilder.FileUriMatcherCheck.allowParentDir() {
+    private fun FileUriMatcherCheck.allowParentDir() {
         addAllowedParentDirectory(this)
 
     }
@@ -57,40 +57,18 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
         return uri.path?.let { doesFileCheckPass(File(it)) } ?: false
     }
 
-    private fun recursivelyCheckDirectory(parent: File, fileWereLookingFor: File): Boolean =
-        fileWereLookingFor.canonicalPath.startsWith(parent.canonicalPath)
+    override fun File.allowDirectory(allowSubdirectories: Boolean) {
+        FileUriMatcherCheck(this, allowSubdirectories)
+            .allowParentDir()
+    }
 }
+
+private fun recursivelyCheckDirectory(parent: File, fileWereLookingFor: File): Boolean =
+    fileWereLookingFor.canonicalPath.startsWith(parent.canonicalPath)
+
 
 @SuppressLint("SdCardPath")
 private fun File.isPrivateDirectory(context: Context) =
     canonicalPath.contains("/data/data/${context.packageName}") ||
             canonicalPath.contains("/user/data/${context.packageName}")
 
-typealias FileVerifier = FileUriMatcherBuilder.() -> Unit
-
-/**
- * Verify a file to see if it can safely be opened
- *
- * @param context android context
- * @param config the configuration to use to verify this file
- *
- * @return true if the check passes
- */
-fun File.verifyFile(context: Context, config: FileVerifier) =
-    DefaultFileUriMatcherBuilder(context)
-        .apply(config)
-        .doesFileCheckPass(this)
-
-
-/**
- * Verify a file to see if it can safely be opened
- *
- * @param context android context
- * @param config the configuration to use to verify this file
- *
- * @return true if the check passes
- */
-fun Uri.verifyFile(context: Context, config: FileVerifier) =
-    DefaultFileUriMatcherBuilder(context)
-        .apply(config)
-        .doesFileCheckPass(this)

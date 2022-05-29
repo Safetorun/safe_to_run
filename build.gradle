@@ -1,19 +1,17 @@
 buildscript {
     ext.kotlin_version = "1.5.31"
-    ext.jacocoVersion = '0.8.8'
 
     repositories {
         google()
     }
 
     dependencies {
+        classpath files('safeToRunBuilder/build/libs/safeToRunBuilder-all.jar')
         classpath 'org.owasp:dependency-check-gradle:6.4.1.1'
         classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.8.0.0'
-        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0"
-        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
-        classpath("org.jetbrains.kotlinx:kover:0.5.0-RC2")
+        classpath("org.jetbrains.kotlinx:kover:0.5.1")
         classpath "firebase.test.lab:plugin:2.6.2"
 
     }
@@ -26,6 +24,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.6.10"
     id 'io.codearte.nexus-staging' version '0.11.0'
     id "io.gitlab.arturbosch.detekt" version "1.17.0-RC3"
+    id("org.jetbrains.kotlinx.kover") version "0.5.1"
 }
 
 allprojects {
@@ -37,4 +36,7 @@ allprojects {
 
 apply from: "${rootDir}/scripts/publish-root.gradle"
 apply plugin: 'org.owasp.dependencycheck'
-apply plugin: 'kover'
+
+kover {
+    runAllTestsForProjectTask = true
+}

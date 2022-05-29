@@ -2,16 +2,16 @@ package com.safetorun.intents.configuration
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.inputverification.builders.AllowedTypeDto
-import com.safetorun.inputverification.builders.FileConfigurationDto
-import com.safetorun.inputverification.builders.FileConfigurationsDto
-import com.safetorun.inputverification.builders.ParameterConfigDto
-import com.safetorun.inputverification.builders.ParentConfigurationDto
-import com.safetorun.inputverification.builders.UrlConfigurationDto
-import com.safetorun.inputverification.builders.UrlConfigurationsDto
+import com.safetorun.inputverification.builders.model.AllowedTypeCore
+import com.safetorun.inputverification.builders.model.FileConfiguration
+import com.safetorun.inputverification.builders.model.FileConfigurations
+import com.safetorun.inputverification.builders.model.ParameterConfig
+import com.safetorun.inputverification.builders.model.ParentConfiguration
+import com.safetorun.inputverification.builders.model.UrlConfiguration
+import com.safetorun.inputverification.builders.model.UrlConfigurations
 import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
 import com.safetorun.intents.configurator.register
-import com.safetorun.intents.configurator.verifyIntent
+import com.safetorun.intents.configurator.verifyUrl
 import com.safetorun.intents.configurator.verifyFile
 import com.safetorun.intents.file.DefaultFileUriMatcherBuilderTest
 import io.mockk.every
@@ -37,33 +37,33 @@ class OffDeviceBridgeTest {
     @Test
     fun `test that off device test can load configurations from a dto`() {
         val verifierName = "test_name"
-        UrlConfigurationsDto(
+        UrlConfigurations(
             verifierName,
-            UrlConfigurationDto(
+            UrlConfiguration(
                 listOf("safetorun.com"),
                 listOf("https://safetorun.com?abc=def"),
-                listOf(ParameterConfigDto("def", AllowedTypeDto.String)),
+                listOf(ParameterConfig("def", AllowedTypeCore.String)),
                 allowAnyParameter = false,
                 allowAnyUrl = false
             )
         ).register()
 
-        assertThat("https://safetorun.com".verifyIntent(verifierName)).isTrue()
-        assertThat("https://safetorun.com?blah=def".verifyIntent(verifierName)).isFalse()
-        assertThat("https://safetorun.com?abc=def".verifyIntent(verifierName)).isTrue()
-        assertThat("https://safetorun.com?def=abc".verifyIntent(verifierName)).isTrue()
+        assertThat("https://safetorun.com".verifyUrl(verifierName)).isTrue()
+        assertThat("https://safetorun.com?blah=def".verifyUrl(verifierName)).isFalse()
+        assertThat("https://safetorun.com?abc=def".verifyUrl(verifierName)).isTrue()
+        assertThat("https://safetorun.com?def=abc".verifyUrl(verifierName)).isTrue()
     }
 
     @Test
     fun `test that we can register a file handler from dto`() {
         val verifierName = "test_name"
-        FileConfigurationsDto(
+        FileConfigurations(
             verifierName,
-            FileConfigurationDto(
+            FileConfiguration(
                 false,
                 listOf("/data/data/${DefaultFileUriMatcherBuilderTest.PACKAGE}/def"),
                 listOf(
-                    ParentConfigurationDto(
+                    ParentConfiguration(
                         "/data/data/${DefaultFileUriMatcherBuilderTest.PACKAGE}/parent",
                         false
                     )

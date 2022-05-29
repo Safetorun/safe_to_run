@@ -1,12 +1,9 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id("org.jetbrains.dokka")
-    id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
 }
-
-apply plugin: "com.vanniktech.android.junit.jacoco"
 
 ext {
     PUBLISH_GROUP_ID = 'com.safetorun'
@@ -29,10 +26,4 @@ apply from: "$directory/test_dependencies.gradle"
 dependencies {
     implementation project(':safeToRunInternal')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-
-jacocoBadgeGenSetting {
-    jacocoReportPath "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
-    readmePath "$projectDir/README.md"
-    limit = ['instruction': 0, 'branch': 0, 'line': 0, 'method': 0, 'class': 0]
 }
