@@ -1,6 +1,5 @@
 buildscript {
     ext.kotlin_version = "1.5.31"
-    ext.jacocoVersion = '0.8.8'
 
     repositories {
         google()
@@ -12,8 +11,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.8.0.0'
-        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0"
-        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
         classpath("org.jetbrains.kotlinx:kover:0.5.1")
         classpath "firebase.test.lab:plugin:2.6.2"
 

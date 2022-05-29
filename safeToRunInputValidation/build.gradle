@@ -1,13 +1,11 @@
 plugins {
     id("org.jetbrains.dokka")
-    id 'com.github.dawnwords.jacoco.badge' version '0.2.0'
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: "com.vanniktech.android.junit.jacoco"
 
 def directory = "$rootProject.projectDir/scripts/dependencies/"
 apply from: "$directory/test_dependencies.gradle"
@@ -57,11 +55,3 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
-
-jacocoBadgeGenSetting {
-    jacocoReportPath "$buildDir/reports/jacoco/testReleaseUnitTestCoverage/testReleaseUnitTestCoverage.xml"
-    readmePath "$projectDir/README.md"
-    // since v0.2.0, percentage limitation (0-100) for different type of coverage
-    limit = ['instruction': 0, 'branch': 0, 'line': 0, 'method': 0, 'class': 0]
-}
-

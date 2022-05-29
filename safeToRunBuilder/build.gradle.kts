@@ -6,7 +6,6 @@ plugins {
     `java-gradle-plugin`
 }
 
-apply(plugin = "com.vanniktech.android.junit.jacoco")
 
 //ext {
 //    PUBLISH_GROUP_ID = 'com.safetorun'
