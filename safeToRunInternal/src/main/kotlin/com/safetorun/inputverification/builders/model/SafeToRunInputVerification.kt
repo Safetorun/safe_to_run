@@ -50,31 +50,31 @@ data class ParameterConfig(
 /**
  * Allowed type
  */
-enum class AllowedTypeCore {
+sealed class AllowedTypeCore {
     /**
      * Any type allowed
      */
-    Any,
+    object Any : AllowedTypeCore()
 
     /**
      * Only string allowed
      */
-    String,
+    object String : AllowedTypeCore()
 
     /**
      * Only boolean allowed
      */
-    Boolean,
+    object Boolean : AllowedTypeCore()
 
     /**
      * Only int allowed
      */
-    Int,
+    object Int : AllowedTypeCore()
 
     /**
      * Only double allowed
      */
-    Double
+    object Double : AllowedTypeCore()
 }
 
 /**

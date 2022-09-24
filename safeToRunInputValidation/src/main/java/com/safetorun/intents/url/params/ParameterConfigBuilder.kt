@@ -12,5 +12,5 @@ class ParameterConfigBuilder {
     /**
      * The type that is allowed is for this parameter
      */
-    var allowedType = AllowedType.Any
+    var allowedType: AllowedType = AllowedType.Any
 }
