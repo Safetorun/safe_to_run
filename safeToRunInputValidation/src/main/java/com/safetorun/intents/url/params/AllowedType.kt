@@ -3,31 +3,31 @@ package com.safetorun.intents.url.params
 /**
  * Use to configure a type which is allowed
  */
-enum class AllowedType {
+sealed class AllowedType {
     /**
      * Any type allowed
      */
-    Any,
+    object Any : AllowedType()
 
     /**
      * Only string allowed
      */
-    String,
+    object String : AllowedType()
 
     /**
      * Only boolean allowed
      */
-    Boolean,
+    object Boolean : AllowedType()
 
     /**
      * Only int allowed
      */
-    Int,
+    object Int : AllowedType()
 
     /**
      * Only double allowed
      */
-    Double
+    object Double : AllowedType()
 }
 
 internal fun AllowedType.matchesAllowedType(input: String?) = input?.let {

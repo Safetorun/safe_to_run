@@ -136,52 +136,30 @@ class ReportFragment : Fragment() {
 
 
     private inline fun Context.canIRun(actionOnFailure: () -> Unit) {
-        if (safeToRun(buildSafeToRunCheckList {
-                add {
-                    banAvdEmulatorCheck()
-                }
-
-                add {
-                    banGenymotionEmulatorCheck()
-                }
-
-                add {
-                    banBluestacksEmulatorCheck()
-                }
-
-                add {
-                    blacklistedAppCheck()
-                }
-
-                add {
-                    rootDetectionCheck()
-                }
-
-                add {
-                    isDebuggableCheck()
-                }
-
-                add {
+        if (safeToRun(
+                { banAvdEmulatorCheck() },
+                { banGenymotionEmulatorCheck() },
+                { banBluestacksEmulatorCheck() },
+                { blacklistedAppCheck() },
+                { rootDetectionCheck() },
+                { isDebuggableCheck() },
+                {
                     safeToRunCombinedCheck(
                         listOf(
                             { bannedHardwareCheck("hardware") },
                             { bannedBoardCheck("board") }
                         )
                     )
-                }
-
-                add {
+                },
+                {
                     safeToRunCombinedCheck(
                         listOf { installOriginCheckWithDefaultsCheck() },
                         listOf { !BuildConfig.DEBUG }
                     )
-                }
-
-                add {
-                    verifySignatureCheck("Abc")
-                }
-
-            })()) {
+                },
+                { verifySignatureCheck("Abc") }
+            )()
+        ) {
             actionOnFailure()
         }
     }

@@ -21,6 +21,21 @@ inline fun safeToRun(
 }
 
 /**
+ * Configure
+ *
+ * @param safeToRunChecks list of checks for warnings
+ */
+inline fun safeToRun(
+    vararg safeToRunChecks: SafeToRunCheck
+): SafeToRunCheck {
+    return {
+        safeToRunChecks
+            .map { safeToRunCheck -> safeToRunCheck.invoke() }
+            .any { failed -> failed }
+    }
+}
+
+/**
  * Build a safe to run check list
  * Example:
  * ```
