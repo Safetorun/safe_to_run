@@ -1,5 +1,8 @@
 package com.safetorun.intents.url.params
 
+import com.safetorun.intents.url.UrlConfigVerifier
+import com.safetorun.intents.url.urlVerification
+
 /**
  * Use to configure a type which is allowed
  */
@@ -28,6 +31,11 @@ sealed class AllowedType {
      * Only double allowed
      */
     object Double : AllowedType()
+
+    /**
+     * Allow verification of a URL
+     */
+    class Url(val configuration: UrlConfigVerifier) : AllowedType()
 }
 
 internal fun AllowedType.matchesAllowedType(input: String?) = input?.let {
@@ -38,5 +46,6 @@ internal fun AllowedType.matchesAllowedType(input: String?) = input?.let {
                 input.equals("false", true)
         AllowedType.Int -> input.toIntOrNull() != null
         AllowedType.Double -> input.toDoubleOrNull() != null
+        is AllowedType.Url -> input.urlVerification(configuration)
     }
 } ?: false

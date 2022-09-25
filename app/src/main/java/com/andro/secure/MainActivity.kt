@@ -7,6 +7,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.andro.secure.databinding.ActivityMainBinding
+import com.safetorun.intents.url.params.AllowedType
+import com.safetorun.intents.url.urlVerification
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,5 +31,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun verify(urlToVerify: String) {
+
+        // https://3.basecamp.com/verify?proceed_to=https://dodgywebsite.co.uk
+        urlToVerify.urlVerification {
+            "3.basecamp.com".allowHost()
+            allowParameter {
+                parameterName = "proceed_to"
+                allowedType = AllowedType.Url {
+                    "3.basecamp.com".allowHost()
+                }
+            }
+        }
     }
 }

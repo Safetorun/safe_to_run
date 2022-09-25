@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-internal class UrlConfigTest  {
+internal class UrlConfigTest {
 
     @Test
     fun `test that allow any url will pass`() {
@@ -121,6 +121,40 @@ internal class UrlConfigTest  {
             }
         ).isFalse()
     }
+
+    @Test
+    fun `test that url config will verify the underlying URL configuration (passes)`() {
+        assertThat(
+            "$URL?proceed_to=$URL?blah=blah".urlVerification {
+                HOST.allowHost()
+
+                allowParameter {
+                    parameterName = "proceed_to"
+                    allowedType = AllowedType.Url {
+                        HOST.allowHost()
+                        allowAnyParameter()
+                    }
+                }
+            }
+        ).isTrue()
+    }
+
+    @Test
+    fun `test that url config will verify the underlying URL configuration (fail)`() {
+        assertThat(
+            "$URL?proceed_to=https://google.co.uk".urlVerification {
+                HOST.allowHost()
+
+                allowParameter {
+                    parameterName = "proceed_to"
+                    allowedType = AllowedType.Url {
+                        HOST.allowHost()
+                    }
+                }
+            }
+        ).isFalse()
+    }
+
 
     companion object {
         private const val HOST = "abc.com"
