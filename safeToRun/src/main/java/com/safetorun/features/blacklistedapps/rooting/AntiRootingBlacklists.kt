@@ -1,27 +1,20 @@
 package com.safetorun.features.blacklistedapps.rooting
 
-import com.safetorun.features.blacklistedapps.BlacklistedAppConfiguration
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.APP_QUARANTINE
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.MAGISK
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.ROOT_REMOVE_JB
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.SU
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.SUPER_SU
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.SUPER_USER
-import com.safetorun.features.blacklistedapps.rooting.RootingAppConstants.SUPER_USER_2
 
 /**
  * Create a blacklisting configuration based on a list of apps
  * which are used for rooting
  */
-fun BlacklistedAppConfiguration.blacklistRootingApps() {
-    +SUPER_USER
-    +SUPER_SU
-    +SU
-    +SUPER_USER_2
-    +ROOT_REMOVE_JB
-    +APP_QUARANTINE
-    +MAGISK
-}
+// TODO
+//fun BlacklistedAppConfiguration.blacklistRootingApps() {
+//    +SUPER_USER
+//    +SUPER_SU
+//    +SU
+//    +SUPER_USER_2
+//    +ROOT_REMOVE_JB
+//    +APP_QUARANTINE
+//    +MAGISK
+//}
 
 /**
  * Constants for rooted apps

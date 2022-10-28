@@ -8,17 +8,6 @@ import android.os.Build
 import android.util.Base64
 import java.security.MessageDigest
 
-internal class AndroidSignatureVerificationQuery(
-    private val context: Context,
-    private val sdkVersion: Int = Build.VERSION_CODES.P,
-) :
-    SignatureVerificationQuery {
-
-    override fun retrieveSignatureForApplication(): String? {
-        return context.getAppSignature(sdkVersion)?.string()
-    }
-}
-
 @Suppress("SwallowedException")
 /**
  * Get app signature

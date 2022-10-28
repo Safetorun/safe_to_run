@@ -3,19 +3,7 @@ package com.safetorun.features.debug
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.os.Debug
-import com.safetorun.checks.SafeToRunCheck
 
-/**
- * Add a debug check to warn or error if there is a debugger attached or if the app is debuggable
- *
- * ```
- * debugCheck().warn()
- * ```
- * @receiver Android context - call this from app, fragment or activity
- */
-fun Context.debugCheck(): SafeToRunCheck {
-    return debugCheckConfiguration(AndroidIsDebuggable(this), AndroidDebuggableStrings(this))
-}
 
 /**
  * Check if the app is debuggable
