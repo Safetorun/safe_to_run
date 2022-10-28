@@ -11,13 +11,13 @@ import kotlinx.serialization.Serializable
 /**
  * URL configuration
  */
-internal data class UrlConfigurationsDto(val name: String, val configuration: UrlConfigurationDto)
+data class UrlConfigurationsDto(val name: String, val configuration: UrlConfigurationDto)
 
 @Serializable
 /**
  * URL configuration
  */
-internal data class UrlConfigurationDto(
+data class UrlConfigurationDto(
     @SerialName("allowed_hosts") val allowedHost: List<String>,
     @SerialName("allowed_urls") val allowedUrls: List<String>,
     @SerialName("allowed_parameters") val allowParameters: List<ParameterConfigDto>,
@@ -25,7 +25,10 @@ internal data class UrlConfigurationDto(
     @SerialName("allow_any_url") val allowAnyUrl: Boolean
 ) {
     companion object {
-        fun empty() = UrlConfigurationDto(emptyList(), emptyList(), emptyList(), false, false)
+        fun empty() = UrlConfigurationDto(emptyList(), emptyList(), emptyList(),
+            allowAnyParameter = false,
+            allowAnyUrl = false
+        )
     }
 }
 
@@ -33,7 +36,7 @@ internal data class UrlConfigurationDto(
 /**
  * Parameter config
  */
-internal data class ParameterConfigDto(
+data class ParameterConfigDto(
     @SerialName("parameter_name") val parameterName: String,
     @SerialName("allowed_type") val allowedType: AllowedTypeDto
 )
@@ -42,7 +45,7 @@ internal data class ParameterConfigDto(
 /**
  * Allowed type
  */
-internal enum class AllowedTypeDto {
+enum class AllowedTypeDto {
     /**
      * Any type allowed
      */

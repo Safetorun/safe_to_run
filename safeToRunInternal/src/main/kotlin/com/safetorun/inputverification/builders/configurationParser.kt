@@ -21,3 +21,9 @@ fun configurationParser(fileName: URL) =
             urlConfigurations = it.urlConfigurations.map { conf -> conf.toCore() }
         )
     }
+
+
+class InputVerificationBuilder internal constructor() {
+
+    fun build() = SafeToRunInputVerificationDto()
+}
