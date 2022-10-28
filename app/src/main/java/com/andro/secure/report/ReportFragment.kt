@@ -10,10 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.andro.secure.BuildConfig
 import com.andro.secure.ProtectedActivity
-import com.andro.secure.ResultEpoxyController
 import com.andro.secure.databinding.ReportFragmentBinding
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.safetorun.SafeToRun
 import com.safetorun.features.blacklistedapps.blacklistedAppCheck
 import com.safetorun.features.debug.isDebuggableCheck
 import com.safetorun.features.installorigin.installOriginCheckWithDefaultsCheck
@@ -26,12 +24,10 @@ import com.safetorun.features.oscheck.safeToRunCombinedCheck
 import com.safetorun.features.rootdetection.rootDetectionCheck
 import com.safetorun.features.signatureverify.verifySignatureCheck
 import com.safetorun.inline.safeToRun
-import com.safetorun.reporting.toGrouped
 import java.util.*
 
 class ReportFragment : Fragment() {
 
-    private val reportsController = ResultEpoxyController()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,11 +52,8 @@ class ReportFragment : Fragment() {
             startActivity(Intent(requireContext(), ProtectedActivity::class.java))
         }
 
-        binding.reportList.setController(reportsController)
-
         requireContext().canIRun { Log.v("Failure", "Failure") }
 
-        reportsController.setData(SafeToRun.isSafeToRun().toGrouped(), mapOf())
     }
 
     private fun DecodedJWT.verifierResult(): Map<String, String> =
