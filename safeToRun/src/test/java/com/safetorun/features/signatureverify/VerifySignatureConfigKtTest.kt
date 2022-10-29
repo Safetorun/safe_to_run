@@ -43,8 +43,6 @@ internal class VerifySignatureConfigKtTest : TestCase() {
     }
 
     fun `test builder function dont return  null`() {
-        assertThat(mockContext.verifySignatureConfig()).isNotNull()
-        assertThat(mockContext.verifySignatureConfigOverrideSdkVersion(1)).isNotNull()
         assertThat(mockContext.verifySignatureCheck()).isNotNull()
     }
 

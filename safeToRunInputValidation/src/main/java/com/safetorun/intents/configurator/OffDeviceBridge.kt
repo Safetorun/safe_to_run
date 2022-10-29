@@ -1,9 +1,9 @@
 package com.safetorun.intents.configurator
 
-import com.safetorun.inputverification.builders.model.AllowedTypeCore
-import com.safetorun.inputverification.builders.model.FileConfigurations
-import com.safetorun.inputverification.builders.model.SafeToRunInputVerification
-import com.safetorun.inputverification.builders.model.UrlConfigurations
+import com.safetorun.inputverification.model.AllowedTypeCore
+import com.safetorun.inputverification.model.FileConfigurations
+import com.safetorun.inputverification.model.SafeToRunInputVerification
+import com.safetorun.inputverification.model.UrlConfigurations
 import com.safetorun.intents.url.params.AllowedType
 import com.safetorun.intents.file.FileUriMatcherBuilder
 import java.io.File

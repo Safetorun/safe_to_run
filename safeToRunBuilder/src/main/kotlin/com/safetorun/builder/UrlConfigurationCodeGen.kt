@@ -1,6 +1,6 @@
 package com.safetorun.builder
 
-import com.safetorun.inputverification.builders.model.UrlConfigurations
+import com.safetorun.inputverification.model.UrlConfigurations
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.MemberName

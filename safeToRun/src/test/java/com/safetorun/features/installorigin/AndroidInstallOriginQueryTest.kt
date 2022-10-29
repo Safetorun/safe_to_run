@@ -8,7 +8,6 @@ import com.safetorun.features.installorigin.SharedInstallOrigin.MATCHED
 import com.safetorun.features.installorigin.SharedInstallOrigin.NOT_FOUND
 import com.safetorun.features.installorigin.SharedInstallOrigin.NOT_MATCHING
 import com.safetorun.features.installorigin.SharedInstallOrigin.PACKAGE_NAME_RETURNS
-import com.safetorun.reporting.SafeToRunReport
 import io.mockk.InternalPlatformDsl.toStr
 import io.mockk.every
 import io.mockk.mockk
@@ -66,15 +65,5 @@ internal class AndroidInstallOriginQueryTest : TestCase() {
             // Then
             assertThat(result).isEqualTo(PACKAGE_NAME_RETURNS)
         }
-    }
-
-    fun `test using builder returns correct`() {
-        // Given // When
-        val result =
-            context.installOriginCheckWithDefaults(PACKAGE_NAME_RETURNS)
-                .canRun() as SafeToRunReport.SafeToRunReportSuccess
-
-        // Then
-        assertThat(result.successMessage).isEqualTo(MATCHED)
     }
 }

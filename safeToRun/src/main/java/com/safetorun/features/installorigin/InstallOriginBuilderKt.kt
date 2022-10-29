@@ -3,40 +3,16 @@ package com.safetorun.features.installorigin
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import com.safetorun.checks.SafeToRunCheck
 
 /**
- * Retrieve a safe to run check which will verify that the app was installed
- * by either google or amazon (plus any parameters passed in)
- *
- * @param allowedOrigins a list of places that it is permissible for your app to
- * have been installed from
+ * Install origin for the google play store
  */
-fun Context.installOriginCheckWithDefaults(vararg allowedOrigins: String): SafeToRunCheck {
-    return installOriginCheckWithoutDefaults(
-        GooglePlayStore().originPackage,
-        AmazonStore().originPackage,
-        *allowedOrigins
-    )
-}
+const val PLAY_STORE = "com.android.vending"
 
 /**
- * Retrieve a safe to run check which will verify that the app was installed
- * by either google or amazon (plus any parameters passed in)
- *
- * @param allowedOrigins a list of places that it is permissible for your app to
- * have been installed from
+ * Install origin for the amazon app store
  */
-fun Context.installOriginCheckWithoutDefaults(vararg allowedOrigins: String): SafeToRunCheck {
-    return installOrigin(
-        ::getInstaller,
-        AndroidInstallOriginStrings(this)
-    ) {
-        allowedOrigins
-            .map(::InstallOrigin)
-            .forEach(::plus)
-    }
-}
+const val AMAZON_STORE = "com.amazon.venezia"
 
 /**
  * Get the installer that installed this application
@@ -68,8 +44,8 @@ inline fun Context.installOriginCheckWithoutDefaultsCheck(vararg allowedOrigins:
  */
 inline fun Context.installOriginCheckWithDefaultsCheck(vararg allowedOrigins: String): Boolean {
     return installOriginCheckWithoutDefaultsCheck(
-        GooglePlayStore().originPackage,
-        AmazonStore().originPackage,
+        PLAY_STORE,
+        AMAZON_STORE,
         *allowedOrigins
     )
 }

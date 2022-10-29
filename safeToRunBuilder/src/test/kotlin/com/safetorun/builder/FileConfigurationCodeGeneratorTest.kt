@@ -1,9 +1,9 @@
 package com.safetorun.builder
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.inputverification.builders.model.FileConfiguration
-import com.safetorun.inputverification.builders.model.FileConfigurations
-import com.safetorun.inputverification.builders.model.ParentConfiguration
+import com.safetorun.inputverification.model.FileConfiguration
+import com.safetorun.inputverification.model.FileConfigurations
+import com.safetorun.inputverification.model.ParentConfiguration
 import org.junit.Test
 
 internal class FileConfigurationCodeGeneratorTest {

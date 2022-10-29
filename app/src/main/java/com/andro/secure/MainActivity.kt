@@ -7,8 +7,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.andro.secure.databinding.ActivityMainBinding
-import com.safetorun.intents.url.params.AllowedType
-import com.safetorun.intents.url.urlVerification
+import com.safetorun.intents.configurator.verifyFile
+import com.safetorun.intents.file.verifyFile
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,17 +34,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun verify(urlToVerify: String) {
+    fun verify(fullFilenameToVerify: String) {
 
-        // https://3.basecamp.com/verify?proceed_to=https://dodgywebsite.co.uk
-        urlToVerify.urlVerification {
-            "3.basecamp.com".allowHost()
-            allowParameter {
-                parameterName = "proceed_to"
-                allowedType = AllowedType.Url {
-                    "3.basecamp.com".allowHost()
-                }
-            }
+        // Full name to verify = /ok/to/downloadto/../../filename.txt - reject!
+        File(fullFilenameToVerify).verifyFile(this) {
+            File("/ok/to/downloadto").allowDirectory(allowSubdirectories = false)
         }
     }
 }

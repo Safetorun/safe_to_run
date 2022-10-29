@@ -1,23 +1,5 @@
 package com.safetorun.features.oscheck
 
-import android.content.Context
-import com.safetorun.checks.SafeToRunCheck
-import com.safetorun.conditional.Conditional
-import com.safetorun.features.oscheck.builders.osDetectionCheckConfig
-
-/**
- * Check the OS given the conditionals passed in
- *
- * @receiver application context
- *
- * @param conditional a list of conditionals
- *
- * @return a safe to run check that we can call `isSafeToRun()` on
- */
-fun Context.osDetectionCheck(vararg conditional: Conditional): SafeToRunCheck {
-    return osDetectionCheckConfig(AndroidOSDetectionStrings(this), conditional.toList())
-}
-
 typealias FailIf = () -> Boolean
 typealias Unless = () -> Boolean
 

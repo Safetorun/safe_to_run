@@ -1,9 +1,9 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Deploy
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
   workflow_dispatch:
@@ -100,3 +100,14 @@ jobs:
 
       - name: Run Instrumentation Tests in Firebase Test Lab
         run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, firebaseTest, test]
+    environment: maven-central
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build deploy
+        run: ./gradlew build test publishToSonatype
+        env:
+          SERVER_URL: 'http://example.com'
+          API_KEY: 'apikey'
