@@ -103,6 +103,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build, firebaseTest, test]
+    environment: maven-central
     steps:
       - uses: actions/checkout@v2
       - name: Build deploy
