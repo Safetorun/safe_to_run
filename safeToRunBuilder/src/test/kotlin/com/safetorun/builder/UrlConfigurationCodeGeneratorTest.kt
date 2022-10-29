@@ -1,10 +1,10 @@
 package com.safetorun.builder
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.inputverification.builders.model.AllowedTypeCore
-import com.safetorun.inputverification.builders.model.ParameterConfig
-import com.safetorun.inputverification.builders.model.UrlConfiguration
-import com.safetorun.inputverification.builders.model.UrlConfigurations
+import com.safetorun.inputverification.model.AllowedTypeCore
+import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.inputverification.model.UrlConfiguration
+import com.safetorun.inputverification.model.UrlConfigurations
 import org.junit.Test
 
 internal class UrlConfigurationCodeGeneratorTest {

@@ -1,8 +1,8 @@
 package com.safetorun.inputverification.builders
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.inputverification.builders.dto.FileConfigurationsDto
-import com.safetorun.inputverification.builders.dto.ParentConfigurationDto
+import com.safetorun.inputverification.dto.FileConfigurationsDto
+import com.safetorun.inputverification.dto.ParentConfigurationDto
 import kotlinx.serialization.json.Json
 import org.junit.Test
 

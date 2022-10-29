@@ -1,9 +1,9 @@
 package com.safetorun.inputverification.builders
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.inputverification.builders.dto.AllowedTypeDto
-import com.safetorun.inputverification.builders.dto.ParameterConfigDto
-import com.safetorun.inputverification.builders.dto.UrlConfigurationsDto
+import com.safetorun.inputverification.dto.AllowedTypeDto
+import com.safetorun.inputverification.dto.ParameterConfigDto
+import com.safetorun.inputverification.dto.UrlConfigurationsDto
 import kotlinx.serialization.json.Json.Default.decodeFromString
 import org.junit.Test
 import java.lang.NullPointerException

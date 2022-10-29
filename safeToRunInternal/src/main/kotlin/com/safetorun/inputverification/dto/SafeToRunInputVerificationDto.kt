@@ -1,4 +1,4 @@
-package com.safetorun.inputverification.builders.dto
+package com.safetorun.inputverification.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

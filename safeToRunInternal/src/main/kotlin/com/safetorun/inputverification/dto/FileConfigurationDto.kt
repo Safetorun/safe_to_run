@@ -1,8 +1,8 @@
-package com.safetorun.inputverification.builders.dto
+package com.safetorun.inputverification.dto
 
-import com.safetorun.inputverification.builders.model.FileConfiguration
-import com.safetorun.inputverification.builders.model.FileConfigurations
-import com.safetorun.inputverification.builders.model.ParentConfiguration
+import com.safetorun.inputverification.model.FileConfiguration
+import com.safetorun.inputverification.model.FileConfigurations
+import com.safetorun.inputverification.model.ParentConfiguration
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,6 +11,7 @@ import kotlinx.serialization.Serializable
  * Configuration from file configurations
  */ 
 data class FileConfigurationsDto(val name: String, val configuration: FileConfigurationDto)
+
 
 @Serializable
 /**

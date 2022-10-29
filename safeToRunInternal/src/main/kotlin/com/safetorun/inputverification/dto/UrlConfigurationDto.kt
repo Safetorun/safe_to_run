@@ -1,9 +1,9 @@
-package com.safetorun.inputverification.builders.dto
+package com.safetorun.inputverification.dto
 
-import com.safetorun.inputverification.builders.model.AllowedTypeCore
-import com.safetorun.inputverification.builders.model.ParameterConfig
-import com.safetorun.inputverification.builders.model.UrlConfiguration
-import com.safetorun.inputverification.builders.model.UrlConfigurations
+import com.safetorun.inputverification.model.AllowedTypeCore
+import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.inputverification.model.UrlConfiguration
+import com.safetorun.inputverification.model.UrlConfigurations
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

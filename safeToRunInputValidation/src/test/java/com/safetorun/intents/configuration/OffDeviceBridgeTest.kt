@@ -2,13 +2,13 @@ package com.safetorun.intents.configuration
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.inputverification.builders.model.AllowedTypeCore
-import com.safetorun.inputverification.builders.model.FileConfiguration
-import com.safetorun.inputverification.builders.model.FileConfigurations
-import com.safetorun.inputverification.builders.model.ParameterConfig
-import com.safetorun.inputverification.builders.model.ParentConfiguration
-import com.safetorun.inputverification.builders.model.UrlConfiguration
-import com.safetorun.inputverification.builders.model.UrlConfigurations
+import com.safetorun.inputverification.model.AllowedTypeCore
+import com.safetorun.inputverification.model.FileConfiguration
+import com.safetorun.inputverification.model.FileConfigurations
+import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.inputverification.model.ParentConfiguration
+import com.safetorun.inputverification.model.UrlConfiguration
+import com.safetorun.inputverification.model.UrlConfigurations
 import com.safetorun.intents.configurator.initialiseSafeToRunConfigurator
 import com.safetorun.intents.configurator.register
 import com.safetorun.intents.configurator.verifyUrl

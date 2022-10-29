@@ -1,6 +1,6 @@
 package com.safetorun.builder
 
-import com.safetorun.inputverification.builders.model.SafeToRunInputVerification
+import com.safetorun.inputverification.model.SafeToRunInputVerification
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec

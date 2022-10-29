@@ -2,8 +2,8 @@ package com.safetorun
 
 import com.safetorun.backendresilience.BackendResilienceBuilder
 import com.safetorun.backendresilience.dto.BackendResilience
-import com.safetorun.inputverification.builders.InputVerificationBuilder
-import com.safetorun.inputverification.builders.dto.SafeToRunInputVerificationDto
+import com.safetorun.inputverification.InputVerificationBuilder
+import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
 
 /**
  * Safe to run configuration

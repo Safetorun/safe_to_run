@@ -1,4 +1,4 @@
-package com.safetorun.inputverification.builders.model
+package com.safetorun.inputverification.model
 
 /**
  * Configuration from file configurations

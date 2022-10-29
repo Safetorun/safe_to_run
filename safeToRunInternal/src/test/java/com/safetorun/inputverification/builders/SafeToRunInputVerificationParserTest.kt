@@ -1,9 +1,10 @@
 package com.safetorun.inputverification.builders
 
 import com.google.common.truth.Truth
-import com.safetorun.inputverification.builders.model.AllowedTypeCore
-import com.safetorun.inputverification.builders.model.ParameterConfig
-import com.safetorun.inputverification.builders.model.ParentConfiguration
+import com.safetorun.inputverification.configurationParser
+import com.safetorun.inputverification.model.AllowedTypeCore
+import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.inputverification.model.ParentConfiguration
 import org.junit.Test
 
 internal class SafeToRunInputVerificationParserTest {

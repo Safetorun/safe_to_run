@@ -1,8 +1,6 @@
 package com.safetorun.builder
 
-import com.safetorun.inputverification.builders.configurationParser
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromStream
+import com.safetorun.inputverification.configurationParser
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File
