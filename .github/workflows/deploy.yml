@@ -102,12 +102,23 @@ jobs:
         run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, firebaseTest, test]
+    needs: [build, firebaseTest, test, detekt]
     environment: maven-central
     steps:
       - uses: actions/checkout@v2
+      - name: Download file
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'oss_signing_key.gpg'
+          fileDir: '.'
+          encodedString: ${{ secrets.SIGNING_KEY }}
       - name: Build deploy
         run: ./gradlew build test publishToSonatype
         env:
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SIGNING_SECRET_KEY_RING_FILE: "oss_signing_key.gpg"
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
