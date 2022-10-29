@@ -1,5 +1,8 @@
 package com.safetorun.backendresilience.dto
 
+/**
+ * Types of check
+ */
 enum class CheckType {
     MinOsCheck,
     BannedBoard,

@@ -20,6 +20,12 @@ class BackendResilienceBuilder internal constructor() {
     private val installOriginCheck = mutableListOf<InstallOriginCheck>()
     private val osCheckConfiguration = mutableListOf<OSCheckConfiguration>()
 
+    /**
+     * Add a signature verification
+     *
+     * @param severity severity of issue
+     * @param configuration configuration for signature
+     */
     fun verifySignature(severity: Severity, configuration: VerifySignatureConfigurationBuilder.() -> Unit) {
         verifySignatureConfiguration.add(
             VerifySignatureConfigurationBuilder(severity)
@@ -28,18 +34,36 @@ class BackendResilienceBuilder internal constructor() {
         )
     }
 
+    /**
+     * Install origin check
+     *
+     * @param severity severity of issue
+     * @param installOrigin configuration of install origin
+     */
     fun installOriginCheck(severity: Severity, installOrigin: InstallOriginBuilder.() -> Unit) {
         installOriginCheck.add(
             InstallOriginBuilder(severity).apply(installOrigin).build()
         )
     }
 
+    /**
+     * Add a os chec
+     *
+     * @param severity severity of issue
+     * @param osCheckConf configuration for os check
+     */
     fun oSCheck(osCheckConf: OSCheckConfigurationBuilder.() -> Unit) {
         osCheckConfiguration.add(
             OSCheckConfigurationBuilder().apply(osCheckConf).build()
         )
     }
 
+    /**
+     * Add a blacklisted app
+     *
+     * @param severity severity of issue
+     * @param blacklistedApp configuration for blacklisted app
+     */
     fun blacklistedApp(severity: Severity, blacklistedApp: BlacklistedAppConfigurationBuilder.() -> Unit) {
         blacklistedAppCheck.add(
             BlacklistedAppConfigurationBuilder(severity).apply(blacklistedApp).build()

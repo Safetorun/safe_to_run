@@ -9,9 +9,15 @@ data class BlacklistedAppConfiguration(
     var severity: Severity = Severity.None
 )
 
+/**
+ * Build a blacklisted app configuration
+ */
 class BlacklistedAppConfigurationBuilder internal constructor(private val severity: Severity) {
     private val blacklistedApps = mutableListOf<String>()
 
+    /**
+     * Add a blacklisted app
+     */
     operator fun String.unaryPlus() {
         blacklistedApps.add(this)
     }

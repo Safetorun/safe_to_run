@@ -23,14 +23,7 @@ data class UrlConfigurationDto(
     @SerialName("allowed_parameters") val allowParameters: List<ParameterConfigDto>,
     @SerialName("allow_any_parameter") val allowAnyParameter: Boolean,
     @SerialName("allow_any_url") val allowAnyUrl: Boolean
-) {
-    companion object {
-        fun empty() = UrlConfigurationDto(emptyList(), emptyList(), emptyList(),
-            allowAnyParameter = false,
-            allowAnyUrl = false
-        )
-    }
-}
+)
 
 @Serializable
 /**
@@ -79,16 +72,35 @@ internal fun UrlConfigurationsDto.toCore() = UrlConfigurations(
         allowedUrls = configuration.allowedUrls,
         allowAnyParameter = configuration.allowAnyParameter,
         allowAnyUrl = configuration.allowAnyUrl,
-        allowParameters = configuration.allowParameters.map {
-            ParameterConfig(
-                it.parameterName, when (it.allowedType) {
-                    AllowedTypeDto.Any -> AllowedTypeCore.Any
-                    AllowedTypeDto.String -> AllowedTypeCore.String
-                    AllowedTypeDto.Boolean -> AllowedTypeCore.Boolean
-                    AllowedTypeDto.Int -> AllowedTypeCore.Int
-                    AllowedTypeDto.Double -> AllowedTypeCore.Double
-                }
-            )
-        }
+        allowParameters = configuration.allowParameters.toCore()
     )
 )
+
+private fun List<ParameterConfigDto>.toCore() =
+    map {
+        ParameterConfig(
+            it.parameterName, when (it.allowedType) {
+                AllowedTypeDto.Any -> AllowedTypeCore.Any
+                AllowedTypeDto.String -> AllowedTypeCore.String
+                AllowedTypeDto.Boolean -> AllowedTypeCore.Boolean
+                AllowedTypeDto.Int -> AllowedTypeCore.Int
+                AllowedTypeDto.Double -> AllowedTypeCore.Double
+            }
+        )
+    }
+
+/**
+ * Convert params to dtos
+ */
+internal fun List<ParameterConfig>.toDto() =
+    map {
+        ParameterConfigDto(
+            it.parameterName, when (it.allowedType) {
+                AllowedTypeCore.Any -> AllowedTypeDto.Any
+                AllowedTypeCore.String -> AllowedTypeDto.String
+                AllowedTypeCore.Boolean -> AllowedTypeDto.Boolean
+                AllowedTypeCore.Int -> AllowedTypeDto.Int
+                AllowedTypeCore.Double -> AllowedTypeDto.Double
+            }
+        )
+    }
