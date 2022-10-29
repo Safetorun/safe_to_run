@@ -9,11 +9,21 @@ import com.safetorun.inputverification.dto.UrlConfigurationsDto
  */
 class UrlConfigurationBuilder internal constructor(val name: String) {
 
-    private val allowedHost: List<String> = emptyList()
-    private val allowedUrls: List<String> = emptyList()
-    private val allowParameters: List<ParameterConfigDto> = emptyList()
+    private val allowedHost: MutableList<String> = mutableListOf()
+    private val allowedUrls: MutableList<String> = mutableListOf()
+    private val allowParameters: MutableList<ParameterConfigDto> = mutableListOf()
     var allowAnyParameter: Boolean = false
     var allowAnyUrl: Boolean = false
+
+    fun String.allowUrl() {
+        allowedUrls.add(this)
+    }
+
+    fun String.allowHost() {
+        allowedHost.add(this)
+    }
+
+
 
     internal fun build() = UrlConfigurationsDto(
         name, UrlConfigurationDto(

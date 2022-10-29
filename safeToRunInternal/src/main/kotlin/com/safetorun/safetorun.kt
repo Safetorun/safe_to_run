@@ -30,7 +30,7 @@ class SafeToRunConfigurationBuilder internal constructor() {
             .build()
     }
 
-    internal fun build() = SafeToRunConfiguration(backendResilience)
+    internal fun build() = SafeToRunConfiguration(backendResilience, inputVerification)
 }
 
 fun safeToRun(builder: SafeToRunConfigurationBuilder.() -> Unit): SafeToRunConfiguration =

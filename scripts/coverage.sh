@@ -1,1 +1,1 @@
-./gradlew spotlessApply detekt test koverReport
+./gradlew test koverReport

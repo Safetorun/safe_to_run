@@ -12,7 +12,6 @@ import kotlinx.serialization.Serializable
  */ 
 data class FileConfigurationsDto(val name: String, val configuration: FileConfigurationDto)
 
-
 @Serializable
 /**
  * Configuration from parent configuration
