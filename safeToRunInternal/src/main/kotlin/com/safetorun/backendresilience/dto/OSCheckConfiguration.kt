@@ -25,6 +25,9 @@ data class SingleCheck(
     var checkUuid: String = ""
 )
 
+/**
+ * Os check configuration
+ */
 @kotlinx.serialization.Serializable
 data class OSCheckConfiguration(var configuration: List<SingleOSCheckConfiguration> = emptyList())
 
