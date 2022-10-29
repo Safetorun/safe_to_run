@@ -15,6 +15,9 @@ enum class CheckType {
 }
 
 @kotlinx.serialization.Serializable
+/**
+ * Single os check
+ */
 data class SingleCheck(
     var intValue: Int? = null,
     var stringValue: String? = null,
@@ -25,6 +28,9 @@ data class SingleCheck(
 @kotlinx.serialization.Serializable
 data class OSCheckConfiguration(var configuration: List<SingleOSCheckConfiguration> = emptyList())
 
+/**
+ * Convert a list of single os checks to a configuration
+ */
 fun List<SingleOSCheckConfiguration>.toCheckConfiguration() = OSCheckConfiguration(this)
 
 /**
@@ -36,6 +42,9 @@ data class SingleOSCheckConfiguration(
     var severity: Severity = Severity.None,
 )
 
+/**
+ * Build a single os check
+ */
 @kotlinx.serialization.Serializable
 class SingleOSCheckBuilder internal constructor() {
     var allChecks: List<SingleCheck> = emptyList()
@@ -45,10 +54,18 @@ class SingleOSCheckBuilder internal constructor() {
     internal fun build() = SingleOSCheckConfiguration(severity = severity)
 }
 
+/**
+ * Build an os check configuration
+ */
 class OSCheckConfigurationBuilder internal constructor() {
     private val allowedInstallOriginCheck = mutableListOf<SingleOSCheckConfiguration>()
 
-    fun add(bloc: (SingleOSCheckBuilder.() -> Unit)) {
+    /**
+     * add a single check
+     *
+     * @param bloc os check
+     */
+    fun osCheck(bloc: (SingleOSCheckBuilder.() -> Unit)) {
         allowedInstallOriginCheck.add(
             SingleOSCheckBuilder()
                 .apply(bloc)

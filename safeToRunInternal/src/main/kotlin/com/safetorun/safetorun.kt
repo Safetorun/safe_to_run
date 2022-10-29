@@ -14,16 +14,29 @@ data class SafeToRunConfiguration internal constructor(
     val inputVerification: SafeToRunInputVerificationDto? = null,
 )
 
+/**
+ * Safe to run configuration builder
+ */
 class SafeToRunConfigurationBuilder internal constructor() {
     private var backendResilience: BackendResilience = BackendResilience()
     private var inputVerification: SafeToRunInputVerificationDto = SafeToRunInputVerificationDto()
 
+    /**
+     * Add backend resilience configuration
+     *
+     * @param builder builder for backend resilience
+     */
     fun backendResilience(builder: BackendResilienceBuilder.() -> Unit) {
         backendResilience = BackendResilienceBuilder()
             .apply(builder)
             .build()
     }
 
+    /**
+     * Add inputVerification configuration
+     *
+     * @param builder builder for input verification
+     */
     fun inputVerification(builder: InputVerificationBuilder.() -> Unit) {
         inputVerification = InputVerificationBuilder()
             .apply(builder)
@@ -33,20 +46,10 @@ class SafeToRunConfigurationBuilder internal constructor() {
     internal fun build() = SafeToRunConfiguration(backendResilience, inputVerification)
 }
 
+/**
+ * Safe to run builder
+ */
 fun safeToRun(builder: SafeToRunConfigurationBuilder.() -> Unit): SafeToRunConfiguration =
     SafeToRunConfigurationBuilder()
         .apply(builder)
         .build()
-
-
-fun main() {
-    safeToRun {
-        inputVerification {
-
-        }
-
-        backendResilience {
-
-        }
-    }
-}

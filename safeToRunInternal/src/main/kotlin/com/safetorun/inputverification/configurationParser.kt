@@ -34,6 +34,12 @@ class InputVerificationBuilder internal constructor() {
     private val urlConfigurations = mutableListOf<UrlConfigurationsDto>()
     private val fileConfiguration = mutableListOf<FileConfigurationsDto>()
 
+    /**
+     * Add a URL configuration
+     *
+     * @param name name of configuration
+     * @param configuration url configuration
+     */
     fun urlConfiguration(name: String, configuration: UrlConfigurationBuilder.() -> Unit) =
         urlConfigurations.add(UrlConfigurationBuilder(name).apply(configuration).build())
 

@@ -31,6 +31,9 @@ data class FileConfigurationsDto(val name: String, val configuration: FileConfig
     @SerialName("allowed_parent_directories") val allowedParentDirectories: List<ParentConfigurationDto>,
 )
 
+/**
+ * Convert DTO to Core object
+ */
  fun FileConfigurationsDto.toCore() = FileConfigurations(
     name,
     FileConfiguration(
