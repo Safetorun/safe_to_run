@@ -50,9 +50,7 @@ apply from: "$directory/android_test_dependencies.gradle"
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-//    implementation project(':safeToRunCore')
     implementation project(':safeToRunInternal')
-//    implementation "com.safetorun.safeToRunConfiguration:2.0.5"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
     implementation "com.scottyab:rootbeer-lib:$rootbeerVersion"
 }
