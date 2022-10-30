@@ -16,11 +16,11 @@ ext {
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
 
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 24
         targetSdkVersion 30
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -54,6 +54,5 @@ dependencies {
     implementation project(':safeToRunInternal')
 //    implementation "com.safetorun.safeToRunConfiguration:2.0.5"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "com.scottyab:rootbeer-lib:$rootbeerVersion"
 }

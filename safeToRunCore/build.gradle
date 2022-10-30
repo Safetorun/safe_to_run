@@ -25,5 +25,4 @@ apply from: "$directory/test_dependencies.gradle"
 
 dependencies {
     implementation project(':safeToRunInternal')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

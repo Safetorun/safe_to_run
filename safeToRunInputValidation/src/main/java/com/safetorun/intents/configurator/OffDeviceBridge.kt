@@ -5,7 +5,6 @@ import com.safetorun.inputverification.model.FileConfigurations
 import com.safetorun.inputverification.model.SafeToRunInputVerification
 import com.safetorun.inputverification.model.UrlConfigurations
 import com.safetorun.intents.url.params.AllowedType
-import com.safetorun.intents.file.FileUriMatcherBuilder
 import java.io.File
 
 /**
