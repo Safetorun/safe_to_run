@@ -25,7 +25,7 @@ class VerifySignatureConfigurationBuilder internal constructor(private val sever
     /**
      * Add allowed signature
      */
-    fun String.allowedSignature() {
+    fun String.allowSignature() {
         allowedSignatures.add(this)
     }
 

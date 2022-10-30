@@ -54,22 +54,22 @@ class SingleOSCheckBuilder internal constructor() {
     var severity: Severity = Severity.None
     var osConfigurationName: String = ""
 
-    internal fun build() = SingleOSCheckConfiguration(severity = severity)
+    internal fun build() = SingleOSCheckConfiguration(allChecks = allChecks, severity = severity)
 }
 
 /**
  * Build an os check configuration
  */
 class OSCheckConfigurationBuilder internal constructor() {
-    private val allowedInstallOriginCheck = mutableListOf<SingleOSCheckConfiguration>()
+    private val osCheckList = mutableListOf<SingleOSCheckConfiguration>()
 
     /**
      * add a single check
      *
      * @param bloc os check
      */
-    fun osCheck(bloc: (SingleOSCheckBuilder.() -> Unit)) {
-        allowedInstallOriginCheck.add(
+    fun add(bloc: (SingleOSCheckBuilder.() -> Unit)) {
+        osCheckList.add(
             SingleOSCheckBuilder()
                 .apply(bloc)
                 .build()
@@ -77,6 +77,6 @@ class OSCheckConfigurationBuilder internal constructor() {
     }
 
     internal fun build(): OSCheckConfiguration {
-        return OSCheckConfiguration(allowedInstallOriginCheck)
+        return OSCheckConfiguration(osCheckList)
     }
 }

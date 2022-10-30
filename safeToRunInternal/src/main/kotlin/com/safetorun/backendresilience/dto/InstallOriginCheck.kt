@@ -22,6 +22,13 @@ class InstallOriginBuilder internal constructor(private val severity: Severity) 
         allowedInstallOriginCheck.add(this)
     }
 
+    /**
+     * Allow install origin
+     */
+    fun String.allowInstallOrigin() {
+        allowedInstallOriginCheck.add(this)
+    }
+
     internal fun build(): InstallOriginCheck {
         return InstallOriginCheck(allowedInstallOriginCheck, severity)
     }
