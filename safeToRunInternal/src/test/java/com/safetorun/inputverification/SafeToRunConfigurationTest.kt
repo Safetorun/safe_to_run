@@ -6,10 +6,12 @@ import com.safetorun.backendresilience.dto.Severity
 import com.safetorun.backendresilience.dto.SingleCheck
 import com.safetorun.inputverification.dto.AllowedTypeDto
 import com.safetorun.inputverification.dto.ParameterConfigDto
+import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
 import com.safetorun.safeToRun
 import org.junit.Test
+import java.io.File
 
 
 internal class SafeToRunConfigurationTest {
@@ -67,9 +69,9 @@ internal class SafeToRunConfigurationTest {
 
         val str = safeToRun {
             backendResilience {
-               verifySignature(Severity.Error) {
-                   allowedSignature.allowSignature()
-               }
+                verifySignature(Severity.Error) {
+                    allowedSignature.allowSignature()
+                }
             }
         }
 
@@ -79,7 +81,6 @@ internal class SafeToRunConfigurationTest {
 
     @Test
     fun `test that input verification builder can build a configuration with various URLs`() {
-        val configurationName = "test name"
         val allowedHost = "safetorun.com"
         val fullUrl = "bbc.co.uk?abc=def"
         val config = ParameterConfig("Test", AllowedTypeCore.Any)
@@ -87,7 +88,7 @@ internal class SafeToRunConfigurationTest {
 
         val str = safeToRun {
             inputVerification {
-                urlConfiguration(configurationName) {
+                urlConfiguration(CONFIGURATION_NAME) {
                     allowAnyParameter = true
                     allowAnyUrl = false
                     allowedHost.allowHost()
@@ -99,7 +100,7 @@ internal class SafeToRunConfigurationTest {
 
         val configuration =
             str.inputVerification?.urlConfigurations?.first() ?: throw IllegalAccessError()
-        assertThat(configuration.name).isEqualTo(configurationName)
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyParameter).isTrue()
         assertThat(configuration.configuration.allowAnyUrl).isFalse()
         assertThat(configuration.configuration.allowedUrls.first()).isEqualTo(fullUrl)
@@ -110,10 +111,9 @@ internal class SafeToRunConfigurationTest {
 
     @Test
     fun `test that input verification builder can build a configuration with allow all urls`() {
-        val configurationName = "test name"
         val str = safeToRun {
             inputVerification {
-                urlConfiguration(configurationName) {
+                urlConfiguration(CONFIGURATION_NAME) {
                     allowAnyParameter = true
                     allowAnyUrl = false
                 }
@@ -122,9 +122,93 @@ internal class SafeToRunConfigurationTest {
 
         val configuration =
             str.inputVerification?.urlConfigurations?.first() ?: throw IllegalAccessError()
-        assertThat(configuration.name).isEqualTo(configurationName)
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyParameter).isTrue()
         assertThat(configuration.configuration.allowAnyUrl).isFalse()
 
     }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow all files`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    allowAnyFile = true
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isTrue()
+
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a specific file with string`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    TEST_FILE.allowFile()
+                    +ABC_FILE
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
+            listOf(TEST_FILE,  ABC_FILE)
+        )
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a specific file`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    File(BLAH_DIR, "testfile.txt").allowFile()
+                    +File(ABC_FILE)
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
+            listOf(TEST_FILE, ABC_FILE)
+        )
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a directory`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    File(BLAH_DIR).allowDirectory { }
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedParentDirectories).contains(
+            ParentConfigurationDto(BLAH_DIR, false)
+        )
+    }
+
+    companion object {
+        const val CONFIGURATION_NAME = "test name"
+        const val BLAH_DIR = "/data/data/blah"
+        const val TEST_FILE = "/data/data/blah/testfile.txt"
+        const val ABC_FILE = "/data/data/blah/abc.txt"
+    }
+
 }

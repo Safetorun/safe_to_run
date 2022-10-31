@@ -1,5 +1,6 @@
 package com.safetorun.inputverification
 
+import com.safetorun.inputverification.builders.FileConfigurationBuilder
 import com.safetorun.inputverification.builders.UrlConfigurationBuilder
 import com.safetorun.inputverification.dto.FileConfigurationsDto
 import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
@@ -33,6 +34,21 @@ class InputVerificationBuilder internal constructor() {
 
     private val urlConfigurations = mutableListOf<UrlConfigurationsDto>()
     private val fileConfiguration = mutableListOf<FileConfigurationsDto>()
+
+    /**
+     * Add a file configuration
+     *
+     * @param name the name of the file configuration
+     * @param configuration the configuration to add
+     */
+    fun fileConfiguration(name: String, configuration: FileConfigurationBuilder.() -> Unit) {
+        fileConfiguration.add(
+            FileConfigurationsDto(
+                name,
+                FileConfigurationBuilder().apply(configuration).build()
+            )
+        )
+    }
 
     /**
      * Add a URL configuration
