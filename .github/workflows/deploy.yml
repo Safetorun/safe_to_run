@@ -9,45 +9,45 @@ on:
   workflow_dispatch:
 
 jobs:
-#  detekt:
-#    timeout-minutes: 5
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Set up JDK 1.8
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: 11
-#          distribution: 'corretto'
-#      - name: Setup Android SDK
-#        uses: android-actions/setup-android@v2
-#      - uses: actions/checkout@v2
-#      - name: Build plugin
-#        run: ./gradlew :safeToRunBuilder:shadowJar
-#      - name: Run Detekt
-#        run: ./gradlew detekt
-#
-#  test:
-#    timeout-minutes: 15
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Set up JDK 1.8
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'corretto'
-#          java-version: 11
-#      - uses: actions/checkout@v2
-#      - name: Build plugin
-#        run: ./gradlew :safeToRunBuilder:shadowJar
-#      - name: Run tests
-#        run: ./gradlew test && bash scripts/coverage.sh
-#        env:
-#          SERVER_URL: 'http://example.com'
-#          API_KEY: 'apikey'
-#      - name: Upload coverage data
-#        uses: codecov/codecov-action@v3.1.1
-#        with:
-#          token: ${{ secrets.CODE_COV_TOKEN }}
+  detekt:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'corretto'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - uses: actions/checkout@v2
+      - name: Build plugin
+        run: ./gradlew :safeToRunBuilder:shadowJar
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+  test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 11
+      - uses: actions/checkout@v2
+      - name: Build plugin
+        run: ./gradlew :safeToRunBuilder:shadowJar
+      - name: Run tests
+        run: ./gradlew test && bash scripts/coverage.sh
+        env:
+          SERVER_URL: 'http://example.com'
+          API_KEY: 'apikey'
+      - name: Upload coverage data
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          token: ${{ secrets.CODE_COV_TOKEN }}
 
   build:
     timeout-minutes: 15
