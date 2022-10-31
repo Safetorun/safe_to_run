@@ -89,62 +89,62 @@ jobs:
           name: app-debug-pin
           path: app/build/outputs/apk/debug/app-debug.apk
 
-#  firebaseTest:
-#    runs-on: ubuntu-latest
-#    needs: build
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Download app APK
-#        uses: actions/download-artifact@v1
-#        with:
-#          name: app-debug
-#
-#      - name: Download Android test APK
-#        uses: actions/download-artifact@v1
-#        with:
-#          name: app-debug-androidTest
-#
-#      - name: Login to Google Cloud
-#        uses: google-github-actions/setup-gcloud@v0
-#        with:
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#      - name: print secrets
-#        run: |
-#          echo $AUTH_KEY >> google-service-key.json
-#        shell: bash
-#        env:
-#          AUTH_KEY : ${{secrets.GCLOUD_AUTH}}
-#      - name: Set project id
-#        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-#
-#      - name: Run Instrumentation Tests in Firebase Test Lab
-#        run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: [build, firebaseTest, test, detekt]
-#    environment: maven-central
-#    steps:
-#      - name: Set up JDK 1.8
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'corretto'
-#          java-version: 11
-#      - name: Setup Android SDK
-#        uses: android-actions/setup-android@v2
-#      - uses: actions/checkout@v2
-#      - name: Download file
-#        uses: timheuer/base64-to-file@v1.1
-#        with:
-#          fileName: 'oss_signing_key.gpg'
-#          fileDir: '.'
-#          encodedString: ${{ secrets.SIGNING_KEY }}
-#      - name: Build deploy
-#        run: ./gradlew build test publishToSonatype
-#        env:
-#          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-#          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-#          SIGNING_SECRET_KEY_RING_FILE: "oss_signing_key.gpg"
-#          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-#          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-#          SERVER_URL: 'http://example.com'
-#          API_KEY: 'apikey'
+  firebaseTest:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download app APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-debug
+
+      - name: Download Android test APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-debug-androidTest
+
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: print secrets
+        run: |
+          echo $AUTH_KEY >> google-service-key.json
+        shell: bash
+        env:
+          AUTH_KEY : ${{secrets.GCLOUD_AUTH}}
+      - name: Set project id
+        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+      - name: Run Instrumentation Tests in Firebase Test Lab
+        run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, firebaseTest, test, detekt]
+    environment: maven-central
+    steps:
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 11
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - uses: actions/checkout@v2
+      - name: Download file
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'oss_signing_key.gpg'
+          fileDir: '.'
+          encodedString: ${{ secrets.SIGNING_KEY }}
+      - name: Build deploy
+        run: ./gradlew build test publishToSonatype
+        env:
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SIGNING_SECRET_KEY_RING_FILE: "oss_signing_key.gpg"
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SERVER_URL: 'http://example.com'
+          API_KEY: 'apikey'
