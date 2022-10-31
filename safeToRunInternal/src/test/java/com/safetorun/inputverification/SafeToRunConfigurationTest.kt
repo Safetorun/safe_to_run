@@ -6,10 +6,12 @@ import com.safetorun.backendresilience.dto.Severity
 import com.safetorun.backendresilience.dto.SingleCheck
 import com.safetorun.inputverification.dto.AllowedTypeDto
 import com.safetorun.inputverification.dto.ParameterConfigDto
+import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
 import com.safetorun.safeToRun
 import org.junit.Test
+import java.io.File
 
 
 internal class SafeToRunConfigurationTest {
@@ -67,9 +69,9 @@ internal class SafeToRunConfigurationTest {
 
         val str = safeToRun {
             backendResilience {
-               verifySignature(Severity.Error) {
-                   allowedSignature.allowSignature()
-               }
+                verifySignature(Severity.Error) {
+                    allowedSignature.allowSignature()
+                }
             }
         }
 
@@ -127,4 +129,85 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.configuration.allowAnyUrl).isFalse()
 
     }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow all files`() {
+        val configurationName = "test name"
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(configurationName) {
+                    allowAnyFile = true
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(configurationName)
+        assertThat(configuration.configuration.allowAnyFile).isTrue()
+
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a specific file with string`() {
+        val configurationName = "test name"
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(configurationName) {
+                    "/data/data/blah/testfile.txt".allowFile()
+                    +"/data/data/blah/abc.txt"
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(configurationName)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
+            listOf("/data/data/blah/testfile.txt", "/data/data/blah/abc.txt")
+        )
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a specific file`() {
+        val configurationName = "test name"
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(configurationName) {
+                    File("/data/data/blah", "testfile.txt").allowFile()
+                    +File("/data/data/blah/abc.txt")
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(configurationName)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
+            listOf("/data/data/blah/testfile.txt", "/data/data/blah/abc.txt")
+        )
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a directory`() {
+        val configurationName = "test name"
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(configurationName) {
+                    File("/data/data/blah").allowDirectory { }
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(configurationName)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedParentDirectories).contains(
+            ParentConfigurationDto("/data/data/blah", false)
+        )
+    }
+
 }
