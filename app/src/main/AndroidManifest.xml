@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".intents.BouncableActivity">
+        <activity android:name=".intents.BouncableActivity" android:exported="true">
             <intent-filter>
                 <action android:name="com.andro.secure.bouncy" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -36,8 +36,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:permission="">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,6 +63,7 @@
         </provider>
 
         <receiver
+            android:exported="true"
             android:name=".intents.SensitiveBroadcastReceiver"
             tools:ignore="ExportedReceiver">
             <intent-filter>
