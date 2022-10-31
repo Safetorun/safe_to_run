@@ -150,8 +150,8 @@ internal class SafeToRunConfigurationTest {
         val str = safeToRun {
             inputVerification {
                 fileConfiguration(CONFIGURATION_NAME) {
-                    "/data/data/blah/testfile.txt".allowFile()
-                    +"/data/data/blah/abc.txt"
+                    TEST_FILE.allowFile()
+                    +ABC_FILE
                 }
             }
         }
@@ -161,7 +161,7 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyFile).isFalse()
         assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
-            listOf("/data/data/blah/testfile.txt", "/data/data/blah/abc.txt")
+            listOf(TEST_FILE,  ABC_FILE)
         )
     }
 
@@ -170,8 +170,8 @@ internal class SafeToRunConfigurationTest {
         val str = safeToRun {
             inputVerification {
                 fileConfiguration(CONFIGURATION_NAME) {
-                    File("/data/data/blah", "testfile.txt").allowFile()
-                    +File("/data/data/blah/abc.txt")
+                    File(BLAH_DIR, "testfile.txt").allowFile()
+                    +File(ABC_FILE)
                 }
             }
         }
@@ -181,7 +181,7 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyFile).isFalse()
         assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
-            listOf("/data/data/blah/testfile.txt", "/data/data/blah/abc.txt")
+            listOf(TEST_FILE, ABC_FILE)
         )
     }
 
@@ -190,7 +190,7 @@ internal class SafeToRunConfigurationTest {
         val str = safeToRun {
             inputVerification {
                 fileConfiguration(CONFIGURATION_NAME) {
-                    File("/data/data/blah").allowDirectory { }
+                    File(BLAH_DIR).allowDirectory { }
                 }
             }
         }
@@ -200,12 +200,15 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyFile).isFalse()
         assertThat(configuration.configuration.allowedParentDirectories).contains(
-            ParentConfigurationDto("/data/data/blah", false)
+            ParentConfigurationDto(BLAH_DIR, false)
         )
     }
 
     companion object {
         const val CONFIGURATION_NAME = "test name"
+        const val BLAH_DIR = "/data/data/blah"
+        const val TEST_FILE = "/data/data/blah/testfile.txt"
+        const val ABC_FILE = "/data/data/blah/abc.txt"
     }
 
 }
