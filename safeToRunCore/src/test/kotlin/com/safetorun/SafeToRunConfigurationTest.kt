@@ -1,4 +1,4 @@
-package com.safetorun.inputverification
+package com.safetorun
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.backendresilience.dto.CheckType
@@ -9,7 +9,6 @@ import com.safetorun.inputverification.dto.ParameterConfigDto
 import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
-import com.safetorun.safeToRun
 import org.junit.Test
 import java.io.File
 
