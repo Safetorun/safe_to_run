@@ -22,6 +22,13 @@ class BlacklistedAppConfigurationBuilder internal constructor(private val severi
         blacklistedApps.add(this)
     }
 
+    /**
+     * Add a blacklisted app
+     */
+    fun String.blacklistApp() {
+        +this
+    }
+
     internal fun build(): BlacklistedAppConfiguration {
         return BlacklistedAppConfiguration(blacklistedApps, severity)
     }

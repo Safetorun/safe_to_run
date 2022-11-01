@@ -14,70 +14,9 @@ import org.junit.Test
 import java.io.File
 
 
-internal class SafeToRunConfigurationTest {
+internal class InputValidationBuilderTests {
 
-    @Test
-    fun `test that blacklisted app builder can build a configuration with an os check`() {
 
-        val singleCheckStrVal = "abc"
-        val checkUuid = "uuid"
-        val confName = "Test name"
-
-        val check = SingleCheck(
-            stringValue = singleCheckStrVal,
-            checkType = CheckType.MinOsCheck,
-            checkUuid = checkUuid
-        )
-
-        val str = safeToRun {
-            backendResilience {
-                oSCheck {
-                    add {
-                        allChecks = listOf(check)
-                        severity = Severity.Error
-                        osConfigurationName = confName
-                    }
-                }
-            }
-        }
-
-        val checks = str.backendResilience?.osCheckConfiguration?.first()?.configuration?.first()
-        assertThat(checks?.allChecks?.first()).isEqualTo(check)
-        assertThat(checks?.severity).isEqualTo(Severity.Error)
-
-    }
-
-    @Test
-    fun `test that blacklisted app builder can build a configuration with an allowed install origin`() {
-        val allowedOrigin = "com.android.vending"
-
-        val str = safeToRun {
-            backendResilience {
-                installOriginCheck(Severity.Error) {
-                    allowedOrigin.allowInstallOrigin()
-                }
-            }
-        }
-
-        assertThat(str.backendResilience?.installOriginCheck?.first()?.allowedInstallOrigins?.first())
-            .isEqualTo(allowedOrigin)
-    }
-
-    @Test
-    fun `test that blacklisted app builder can build a configuration with an allowed signature`() {
-        val allowedSignature = "testsignature"
-
-        val str = safeToRun {
-            backendResilience {
-                verifySignature(Severity.Error) {
-                    allowedSignature.allowSignature()
-                }
-            }
-        }
-
-        assertThat(str.backendResilience?.verifySignatureConfiguration?.first()?.allowedSignatures?.first())
-            .isEqualTo(allowedSignature)
-    }
 
     @Test
     fun `test that input verification builder can build a configuration with various URLs`() {
