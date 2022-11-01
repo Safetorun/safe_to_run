@@ -191,6 +191,7 @@ internal class SafeToRunConfigurationTest {
             inputVerification {
                 fileConfiguration(CONFIGURATION_NAME) {
                     File(BLAH_DIR).allowDirectory { }
+                    ABC_DIR.allowDirectory { allowSubdirectories = true }
                 }
             }
         }
@@ -202,11 +203,15 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.configuration.allowedParentDirectories).contains(
             ParentConfigurationDto(BLAH_DIR, false)
         )
+        assertThat(configuration.configuration.allowedParentDirectories).contains(
+            ParentConfigurationDto(ABC_DIR, true)
+        )
     }
 
     companion object {
         const val CONFIGURATION_NAME = "test name"
         const val BLAH_DIR = "/data/data/blah"
+        const val ABC_DIR = "/data/data/abc"
         const val TEST_FILE = "/data/data/blah/testfile.txt"
         const val ABC_FILE = "/data/data/blah/abc.txt"
     }
