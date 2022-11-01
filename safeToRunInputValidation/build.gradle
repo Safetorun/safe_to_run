@@ -2,6 +2,7 @@ plugins {
     id("org.jetbrains.dokka")
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
+    id("org.jetbrains.kotlinx.kover")
 }
 
 apply plugin: 'com.android.library'

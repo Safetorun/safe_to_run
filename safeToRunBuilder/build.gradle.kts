@@ -3,6 +3,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("com.diffplug.spotless")
     id("com.github.johnrengelman.shadow") version "5.0.0"
+    id("org.jetbrains.kotlinx.kover")
     `java-gradle-plugin`
 }
 
