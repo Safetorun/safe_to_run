@@ -1,100 +1,219 @@
-package com.safetorun
+package com.safetorun.inputverification
 
-import com.google.common.truth.Truth
-import com.safetorun.checks.SafeToRunCheck
-import com.safetorun.reporting.SafeToRunReport
-import io.mockk.MockKAnnotations
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import junit.framework.TestCase
-import org.junit.jupiter.api.Test
+import com.google.common.truth.Truth.assertThat
+import com.safetorun.backendresilience.dto.CheckType
+import com.safetorun.backendresilience.dto.Severity
+import com.safetorun.backendresilience.dto.SingleCheck
+import com.safetorun.inputverification.dto.AllowedTypeDto
+import com.safetorun.inputverification.dto.ParameterConfigDto
+import com.safetorun.inputverification.dto.ParentConfigurationDto
+import com.safetorun.inputverification.model.AllowedTypeCore
+import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.safeToRun
+import org.junit.Test
+import java.io.File
 
-internal class SafeToRunSingleConfigurationTest : TestCase() {
 
-    @MockK
-    lateinit var check1: SafeToRunCheck
-
-    @MockK
-    lateinit var check2: SafeToRunCheck
-
-    @MockK
-    lateinit var check3: SafeToRunCheck
-
-    private val result1 = SafeToRunReport.SafeToRunReportSuccess("")
-    private val result2 = SafeToRunReport.SafeToRunReportSuccess("")
-
-    override fun setUp() {
-        MockKAnnotations.init(this)
-        every { check1.canRun() } returns result1
-        every { check2.canRun() } returns result2
-    }
+internal class SafeToRunConfigurationTest {
 
     @Test
-    fun `test that errors passed into warn are converted to warn check`() {
-        // Given
+    fun `test that blacklisted app builder can build a configuration with an os check`() {
 
-        val failureReason = "fr"
-        val failureMessage = "fm"
+        val singleCheckStrVal = "abc"
+        val checkUuid = "uuid"
+        val confName = "Test name"
 
-        val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
+        val check = SingleCheck(
+            stringValue = singleCheckStrVal,
+            checkType = CheckType.MinOsCheck,
+            checkUuid = checkUuid
+        )
 
-        SafeToRun.init {
-            configure {
-                this errorIf check1
-                this errorIf check2
-                this warnIf check3
+        val str = safeToRun {
+            backendResilience {
+                oSCheck {
+                    add {
+                        allChecks = listOf(check)
+                        severity = Severity.Error
+                        osConfigurationName = confName
+                    }
+                }
             }
         }
 
-        every { check3.canRun() } returns result3
+        val checks = str.backendResilience?.osCheckConfiguration?.first()?.configuration?.first()
+        assertThat(checks?.allChecks?.first()).isEqualTo(check)
+        assertThat(checks?.severity).isEqualTo(Severity.Error)
 
-        // When
-        val result = SafeToRun.isSafeToRun() as SafeToRunReport.MultipleReports
+    }
 
-        // Then
-        Truth.assertThat(result.reports).containsExactly(
-            result1,
-            result2,
-            SafeToRunReport.SafeToRunWarning(failureReason, failureMessage)
+    @Test
+    fun `test that blacklisted app builder can build a configuration with an allowed install origin`() {
+        val allowedOrigin = "com.android.vending"
+
+        val str = safeToRun {
+            backendResilience {
+                installOriginCheck(Severity.Error) {
+                    allowedOrigin.allowInstallOrigin()
+                }
+            }
+        }
+
+        assertThat(str.backendResilience?.installOriginCheck?.first()?.allowedInstallOrigins?.first())
+            .isEqualTo(allowedOrigin)
+    }
+
+    @Test
+    fun `test that blacklisted app builder can build a configuration with an allowed signature`() {
+        val allowedSignature = "testsignature"
+
+        val str = safeToRun {
+            backendResilience {
+                verifySignature(Severity.Error) {
+                    allowedSignature.allowSignature()
+                }
+            }
+        }
+
+        assertThat(str.backendResilience?.verifySignatureConfiguration?.first()?.allowedSignatures?.first())
+            .isEqualTo(allowedSignature)
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with various URLs`() {
+        val allowedHost = "safetorun.com"
+        val fullUrl = "bbc.co.uk?abc=def"
+        val config = ParameterConfig("Test", AllowedTypeCore.Any)
+        val configDto = ParameterConfigDto("Test", AllowedTypeDto.Any)
+
+        val str = safeToRun {
+            inputVerification {
+                urlConfiguration(CONFIGURATION_NAME) {
+                    allowAnyParameter = true
+                    allowAnyUrl = false
+                    allowedHost.allowHost()
+                    fullUrl.allowUrl()
+                    config.allowParameter()
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.urlConfigurations?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyParameter).isTrue()
+        assertThat(configuration.configuration.allowAnyUrl).isFalse()
+        assertThat(configuration.configuration.allowedUrls.first()).isEqualTo(fullUrl)
+        assertThat(configuration.configuration.allowedHost.first()).isEqualTo(allowedHost)
+        assertThat(configuration.configuration.allowParameters.first()).isEqualTo(configDto)
+
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow all urls`() {
+        val str = safeToRun {
+            inputVerification {
+                urlConfiguration(CONFIGURATION_NAME) {
+                    allowAnyParameter = true
+                    allowAnyUrl = false
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.urlConfigurations?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyParameter).isTrue()
+        assertThat(configuration.configuration.allowAnyUrl).isFalse()
+
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow all files`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    allowAnyFile = true
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isTrue()
+
+    }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a specific file with string`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    TEST_FILE.allowFile()
+                    +ABC_FILE
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
+            listOf(TEST_FILE,  ABC_FILE)
         )
     }
 
     @Test
-    fun `test that errors passed into warn are converted to warn check when given as a list`() {
-        // Given
-
-        val failureReason = "fr"
-        val failureMessage = "fm"
-
-        val failureReason2 = "fr2"
-        val failureMessage2 = "fm2"
-
-        val result3 = SafeToRunReport.SafeToRunReportFailure(failureReason, failureMessage)
-        val result4 = SafeToRunReport.SafeToRunReportFailure(failureReason2, failureMessage2)
-
-        SafeToRun.init(
-            configure {
-                check1.error()
-                check2.error()
-                check3.warn()
+    fun `test that input verification builder can build a configuration with allow a specific file`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    File(BLAH_DIR, "testfile.txt").allowFile()
+                    +File(ABC_FILE)
+                }
             }
-        )
+        }
 
-        every { check3.canRun() } returns SafeToRunReport.MultipleReports(listOf(result3, result4))
-
-        // When
-        val result = SafeToRun.isSafeToRun() as SafeToRunReport.MultipleReports
-
-        // Then
-        Truth.assertThat(result.reports).containsExactly(
-            result1,
-            result2,
-            SafeToRunReport.MultipleReports(
-                listOf(
-                    SafeToRunReport.SafeToRunWarning(failureReason, failureMessage),
-                    SafeToRunReport.SafeToRunWarning(failureReason2, failureMessage2)
-                )
-            )
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
+            listOf(TEST_FILE, ABC_FILE)
         )
     }
+
+    @Test
+    fun `test that input verification builder can build a configuration with allow a directory`() {
+        val str = safeToRun {
+            inputVerification {
+                fileConfiguration(CONFIGURATION_NAME) {
+                    File(BLAH_DIR).allowDirectory { }
+                    ABC_DIR.allowDirectory { allowSubdirectories = true }
+                }
+            }
+        }
+
+        val configuration =
+            str.inputVerification?.fileConfiguration?.first() ?: throw IllegalAccessError()
+        assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
+        assertThat(configuration.configuration.allowAnyFile).isFalse()
+        assertThat(configuration.configuration.allowedParentDirectories).contains(
+            ParentConfigurationDto(BLAH_DIR, false)
+        )
+        assertThat(configuration.configuration.allowedParentDirectories).contains(
+            ParentConfigurationDto(ABC_DIR, true)
+        )
+    }
+
+    companion object {
+        const val CONFIGURATION_NAME = "test name"
+        const val BLAH_DIR = "/data/data/blah"
+        const val ABC_DIR = "/data/data/abc"
+        const val TEST_FILE = "/data/data/blah/testfile.txt"
+        const val ABC_FILE = "/data/data/blah/abc.txt"
+    }
+
 }
