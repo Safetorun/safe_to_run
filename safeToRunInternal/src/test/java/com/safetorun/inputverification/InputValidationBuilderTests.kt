@@ -15,9 +15,6 @@ import java.io.File
 
 
 internal class InputValidationBuilderTests {
-
-
-
     @Test
     fun `test that input verification builder can build a configuration with various URLs`() {
         val allowedHost = "safetorun.com"
