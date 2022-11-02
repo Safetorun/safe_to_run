@@ -1,4 +1,4 @@
-package com.safetorun.backendresilience.dto
+package com.safetorun.resilienceshared.dto
 /**
  * Severity
  */

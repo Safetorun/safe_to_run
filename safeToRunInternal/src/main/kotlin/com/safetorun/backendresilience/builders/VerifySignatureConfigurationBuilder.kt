@@ -1,13 +1,7 @@
-package com.safetorun.backendresilience.dto
+package com.safetorun.backendresilience.builders
 
-/**
- * Verify signature configuration
- */
-@kotlinx.serialization.Serializable
-data class VerifySignatureConfiguration(
-    var allowedSignatures: List<String> = emptyList(),
-    var severity: Severity = Severity.None
-)
+import com.safetorun.backendresilience.dto.VerifySignatureConfigurationOffDevice
+import com.safetorun.resilienceshared.dto.Severity
 
 /**
  * Verify signature configuration
@@ -29,7 +23,7 @@ class VerifySignatureConfigurationBuilder internal constructor(private val sever
         allowedSignatures.add(this)
     }
 
-    internal fun build(): VerifySignatureConfiguration {
-        return VerifySignatureConfiguration(allowedSignatures, severity)
+    internal fun build(): VerifySignatureConfigurationOffDevice {
+        return VerifySignatureConfigurationOffDevice(allowedSignatures, severity)
     }
 }

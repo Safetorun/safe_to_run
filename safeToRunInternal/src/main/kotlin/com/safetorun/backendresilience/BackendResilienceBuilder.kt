@@ -1,24 +1,24 @@
 package com.safetorun.backendresilience
 
 import com.safetorun.backendresilience.dto.BackendResilience
-import com.safetorun.backendresilience.dto.BlacklistedAppConfiguration
-import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationBuilder
-import com.safetorun.backendresilience.dto.InstallOriginBuilder
-import com.safetorun.backendresilience.dto.InstallOriginCheck
-import com.safetorun.backendresilience.dto.OSCheckConfiguration
-import com.safetorun.backendresilience.dto.OSCheckConfigurationBuilder
-import com.safetorun.backendresilience.dto.Severity
-import com.safetorun.backendresilience.dto.VerifySignatureConfiguration
-import com.safetorun.backendresilience.dto.VerifySignatureConfigurationBuilder
+import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationOffDevice
+import com.safetorun.backendresilience.builders.BlacklistedAppConfigurationBuilder
+import com.safetorun.backendresilience.builders.InstallOriginBuilder
+import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
+import com.safetorun.backendresilience.dto.OSCheckConfigurationOffDevice
+import com.safetorun.backendresilience.builders.OSCheckConfigurationBuilder
+import com.safetorun.resilienceshared.dto.Severity
+import com.safetorun.backendresilience.dto.VerifySignatureConfigurationOffDevice
+import com.safetorun.backendresilience.builders.VerifySignatureConfigurationBuilder
 
 /**
  * Backend resilience builder
  */
 class BackendResilienceBuilder internal constructor() {
-    private val blacklistedAppCheck = mutableListOf<BlacklistedAppConfiguration>()
-    private val verifySignatureConfiguration = mutableListOf<VerifySignatureConfiguration>()
-    private val installOriginCheck = mutableListOf<InstallOriginCheck>()
-    private val osCheckConfiguration = mutableListOf<OSCheckConfiguration>()
+    private val blacklistedAppCheck = mutableListOf<BlacklistedAppConfigurationOffDevice>()
+    private val verifySignatureConfiguration = mutableListOf<VerifySignatureConfigurationOffDevice>()
+    private val installOriginCheck = mutableListOf<InstallOriginCheckOffDevice>()
+    private val osCheckConfiguration = mutableListOf<OSCheckConfigurationOffDevice>()
 
     /**
      * Add a signature verification

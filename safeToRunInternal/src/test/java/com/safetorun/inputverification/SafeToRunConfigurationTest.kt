@@ -1,9 +1,9 @@
 package com.safetorun.inputverification
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.backendresilience.dto.CheckType
-import com.safetorun.backendresilience.dto.Severity
-import com.safetorun.backendresilience.dto.SingleCheck
+import com.safetorun.resilienceshared.dto.CheckType
+import com.safetorun.resilienceshared.dto.Severity
+import com.safetorun.resilienceshared.dto.SingleCheck
 import com.safetorun.inputverification.dto.AllowedTypeDto
 import com.safetorun.inputverification.dto.ParameterConfigDto
 import com.safetorun.inputverification.dto.ParentConfigurationDto
@@ -32,9 +32,8 @@ internal class SafeToRunConfigurationTest {
         val str = safeToRun {
             backendResilience {
                 oSCheck {
-                    add {
+                    singleCheck(Severity.Error) {
                         allChecks = listOf(check)
-                        severity = Severity.Error
                         osConfigurationName = confName
                     }
                 }
@@ -161,7 +160,7 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyFile).isFalse()
         assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
-            listOf(TEST_FILE,  ABC_FILE)
+            listOf(TEST_FILE, ABC_FILE)
         )
     }
 

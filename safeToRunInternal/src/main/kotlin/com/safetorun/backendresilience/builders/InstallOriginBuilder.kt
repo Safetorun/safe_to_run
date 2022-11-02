@@ -1,13 +1,7 @@
-package com.safetorun.backendresilience.dto
+package com.safetorun.backendresilience.builders
 
-/**
- * Install origin check
- */
-@kotlinx.serialization.Serializable
-data class InstallOriginCheck(
-    var allowedInstallOrigins: List<String> = emptyList(),
-    var severity: Severity = Severity.None
-)
+import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
+import com.safetorun.resilienceshared.dto.Severity
 
 /**
  * Builder for install origin configuration
@@ -29,7 +23,7 @@ class InstallOriginBuilder internal constructor(private val severity: Severity) 
         allowedInstallOriginCheck.add(this)
     }
 
-    internal fun build(): InstallOriginCheck {
-        return InstallOriginCheck(allowedInstallOriginCheck, severity)
+    internal fun build(): InstallOriginCheckOffDevice {
+        return InstallOriginCheckOffDevice(allowedInstallOriginCheck, severity)
     }
 }
