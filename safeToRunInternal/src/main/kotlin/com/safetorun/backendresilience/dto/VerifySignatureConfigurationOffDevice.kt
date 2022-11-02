@@ -10,4 +10,3 @@ data class VerifySignatureConfigurationOffDevice(
     var allowedSignatures: List<String> = emptyList(),
     var severity: Severity = Severity.None
 )
-
