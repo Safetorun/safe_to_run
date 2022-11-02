@@ -1,30 +1,20 @@
 package com.safetorun.backendresilience.builders
 
 import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationOffDevice
+import com.safetorun.resilienceshared.builders.BaseBlacklistedAppConfigurationBuilder
+import com.safetorun.resilienceshared.builders.BlacklistedAppConfigurationBuilder
 import com.safetorun.resilienceshared.dto.Severity
 
 /**
  * Build a blacklisted app configuration
  */
-class DefaultBlacklistedAppConfigurationBuilder internal constructor(private val severity: Severity) :
-    BlacklistedAppConfigurationBuilder {
-    private val blacklistedApps = mutableListOf<String>()
-
-    /**
-     * Add a blacklisted app
-     */
-    override operator fun String.unaryPlus() {
-        blacklistedApps.add(this)
-    }
-
-    /**
-     * Add a blacklisted app
-     */
-    override fun String.blacklistApp() {
-        +this
-    }
+class DefaultBlacklistedAppConfigurationBuilder internal constructor(
+    private val severity: Severity,
+    private val baseBuilder: BaseBlacklistedAppConfigurationBuilder = BaseBlacklistedAppConfigurationBuilder()
+) : BlacklistedAppConfigurationBuilder by baseBuilder {
 
     internal fun build(): BlacklistedAppConfigurationOffDevice {
-        return BlacklistedAppConfigurationOffDevice(blacklistedApps, severity)
+        return baseBuilder.build()
+            .run { BlacklistedAppConfigurationOffDevice(blacklistedApps, severity) }
     }
 }
