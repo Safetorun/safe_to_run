@@ -8,7 +8,7 @@ internal class VerifySignatureConfigurationBuilderTest {
 
     @Test
     fun `test adding verify signature configuration with signatures`() {
-        val configuration = VerifySignatureConfigurationBuilder(Severity.Error)
+        val configuration = VerifySignatureConfigurationOffDeviceBuilder(Severity.Error)
             .apply {
                 +SIGNATURE_A
                 SIGNATURE_B.allowSignature()
@@ -21,7 +21,7 @@ internal class VerifySignatureConfigurationBuilderTest {
 
     @Test
     fun `test adding verify signature configuration with no signatures`() {
-        val configuration = VerifySignatureConfigurationBuilder(Severity.Warn)
+        val configuration = VerifySignatureConfigurationOffDeviceBuilder(Severity.Warn)
             .build()
 
         assertThat(configuration.severity).isEqualTo(Severity.Warn)

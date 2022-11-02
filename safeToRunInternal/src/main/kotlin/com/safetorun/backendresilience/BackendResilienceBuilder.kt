@@ -9,7 +9,7 @@ import com.safetorun.backendresilience.dto.OSCheckConfigurationOffDevice
 import com.safetorun.backendresilience.builders.OSCheckConfigurationBuilder
 import com.safetorun.resilienceshared.dto.Severity
 import com.safetorun.backendresilience.dto.VerifySignatureConfigurationOffDevice
-import com.safetorun.backendresilience.builders.VerifySignatureConfigurationBuilder
+import com.safetorun.backendresilience.builders.VerifySignatureConfigurationOffDeviceBuilder
 
 /**
  * Backend resilience builder
@@ -26,9 +26,9 @@ class BackendResilienceBuilder internal constructor() {
      * @param severity severity of issue
      * @param configuration configuration for signature
      */
-    fun verifySignature(severity: Severity, configuration: VerifySignatureConfigurationBuilder.() -> Unit) {
+    fun verifySignature(severity: Severity, configuration: VerifySignatureConfigurationOffDeviceBuilder.() -> Unit) {
         verifySignatureConfiguration.add(
-            VerifySignatureConfigurationBuilder(severity)
+            VerifySignatureConfigurationOffDeviceBuilder(severity)
                 .apply(configuration)
                 .build()
         )
@@ -47,9 +47,8 @@ class BackendResilienceBuilder internal constructor() {
     }
 
     /**
-     * Add a os chec
+     * Add a os check
      *
-     * @param severity severity of issue
      * @param osCheckConf configuration for os check
      */
     fun oSCheck(osCheckConf: OSCheckConfigurationBuilder.() -> Unit) {

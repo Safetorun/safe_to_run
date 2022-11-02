@@ -1,8 +1,6 @@
 package com.safetorun.resilienceshared.builders
 
-import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
 import com.safetorun.resilienceshared.dto.InstallOriginCheck
-import com.safetorun.resilienceshared.dto.Severity
 
 /**
  * Adding install origin builder
