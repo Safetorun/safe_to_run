@@ -16,6 +16,5 @@ class InstallOriginBuilderOffDevice internal constructor(
     internal fun build(): InstallOriginCheckOffDevice {
         return originCheckBuilder.build()
             .run { InstallOriginCheckOffDevice(allowedInstallOrigins, severity) }
-
     }
 }
