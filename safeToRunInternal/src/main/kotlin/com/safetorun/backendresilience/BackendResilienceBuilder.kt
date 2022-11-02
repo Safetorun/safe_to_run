@@ -3,7 +3,7 @@ package com.safetorun.backendresilience
 import com.safetorun.backendresilience.dto.BackendResilience
 import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationOffDevice
 import com.safetorun.backendresilience.builders.BlacklistedAppConfigurationBuilderOffDevice
-import com.safetorun.backendresilience.builders.InstallOriginBuilder
+import com.safetorun.backendresilience.builders.InstallOriginBuilderOffDevice
 import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
 import com.safetorun.backendresilience.dto.OSCheckConfigurationOffDevice
 import com.safetorun.backendresilience.builders.OSCheckConfigurationBuilder
@@ -40,9 +40,9 @@ class BackendResilienceBuilder internal constructor() {
      * @param severity severity of issue
      * @param installOrigin configuration of install origin
      */
-    fun installOriginCheck(severity: Severity, installOrigin: InstallOriginBuilder.() -> Unit) {
+    fun installOriginCheck(severity: Severity, installOrigin: InstallOriginBuilderOffDevice.() -> Unit) {
         installOriginCheck.add(
-            InstallOriginBuilder(severity).apply(installOrigin).build()
+            InstallOriginBuilderOffDevice(severity).apply(installOrigin).build()
         )
     }
 

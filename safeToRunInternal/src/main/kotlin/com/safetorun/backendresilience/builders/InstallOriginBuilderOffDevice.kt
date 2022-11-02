@@ -6,7 +6,7 @@ import com.safetorun.resilienceshared.dto.Severity
 /**
  * Builder for install origin configuration
  */
-class InstallOriginBuilder internal constructor(private val severity: Severity) {
+class InstallOriginBuilderOffDevice internal constructor(private val severity: Severity) {
     private val allowedInstallOriginCheck = mutableListOf<String>()
 
     /**
