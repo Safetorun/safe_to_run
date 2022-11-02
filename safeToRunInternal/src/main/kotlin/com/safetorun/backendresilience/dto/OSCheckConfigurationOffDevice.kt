@@ -1,7 +1,8 @@
 package com.safetorun.backendresilience.dto
 
 import com.safetorun.resilienceshared.dto.Severity
-import com.safetorun.resilienceshared.dto.SingleCheck
+import com.safetorun.resilienceshared.dto.SingleIntCheck
+import com.safetorun.resilienceshared.dto.SingleStringCheck
 
 /**
  * Os check configuration
@@ -14,6 +15,7 @@ data class OSCheckConfigurationOffDevice(var configuration: List<SingleOSCheckCo
  */
 @kotlinx.serialization.Serializable
 data class SingleOSCheckConfigurationOffDevice(
-    var allChecks: List<SingleCheck> = emptyList(),
+    var allStringChecks: List<SingleStringCheck> = emptyList(),
+    var allIntChecks: List<SingleIntCheck> = emptyList(),
     var severity: Severity = Severity.None,
 )

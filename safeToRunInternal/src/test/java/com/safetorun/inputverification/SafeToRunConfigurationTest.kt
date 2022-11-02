@@ -1,50 +1,18 @@
 package com.safetorun.inputverification
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.resilienceshared.dto.CheckType
-import com.safetorun.resilienceshared.dto.Severity
-import com.safetorun.resilienceshared.dto.SingleCheck
 import com.safetorun.inputverification.dto.AllowedTypeDto
 import com.safetorun.inputverification.dto.ParameterConfigDto
 import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.resilienceshared.dto.Severity
 import com.safetorun.safeToRun
 import org.junit.Test
 import java.io.File
 
 
 internal class SafeToRunConfigurationTest {
-
-    @Test
-    fun `test that blacklisted app builder can build a configuration with an os check`() {
-
-        val singleCheckStrVal = "abc"
-        val checkUuid = "uuid"
-        val confName = "Test name"
-
-        val check = SingleCheck(
-            stringValue = singleCheckStrVal,
-            checkType = CheckType.MinOsCheck,
-            checkUuid = checkUuid
-        )
-
-        val str = safeToRun {
-            backendResilience {
-                oSCheck {
-                    singleCheck(Severity.Error) {
-                        allChecks = listOf(check)
-                        osConfigurationName = confName
-                    }
-                }
-            }
-        }
-
-        val checks = str.backendResilience?.osCheckConfiguration?.first()?.configuration?.first()
-        assertThat(checks?.allChecks?.first()).isEqualTo(check)
-        assertThat(checks?.severity).isEqualTo(Severity.Error)
-
-    }
 
     @Test
     fun `test that blacklisted app builder can build a configuration with an allowed install origin`() {

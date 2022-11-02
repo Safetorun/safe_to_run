@@ -15,9 +15,9 @@ class OSCheckConfigurationBuilder internal constructor() {
      *
      * @param bloc os check
      */
-    fun singleCheck(severity: Severity, bloc: (SingleOSCheckBuilder.() -> Unit)) {
+    fun singleCheck(severity: Severity, bloc: (SingleOSCheckBuilderOffDevice.() -> Unit)) {
         osCheckList.add(
-            SingleOSCheckBuilder(severity)
+            SingleOSCheckBuilderOffDevice(severity)
                 .apply(bloc)
                 .build()
         )

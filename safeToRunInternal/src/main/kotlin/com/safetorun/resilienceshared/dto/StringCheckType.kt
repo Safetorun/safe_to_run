@@ -3,8 +3,7 @@ package com.safetorun.resilienceshared.dto
 /**
  * Types of check
  */
-enum class CheckType {
-    MinOsCheck,
+enum class StringCheckType {
     BannedBoard,
     BannedBootloader,
     BannedCpuAbi,
@@ -12,4 +11,16 @@ enum class CheckType {
     BannedHardware,
     BannedHost,
     BannedModel
+}
+
+/**
+ * Types of int checks
+ */
+enum class IntCheckType {
+    MinOsCheck
+}
+
+enum class CheckComparator {
+    EQUALS,
+    GREATER_THAN
 }

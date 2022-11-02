@@ -10,4 +10,3 @@ data class BackendResilience(
     val installOriginCheck: List<InstallOriginCheckOffDevice> = emptyList(),
     val osCheckConfiguration: List<OSCheckConfigurationOffDevice> = emptyList()
 )
-
