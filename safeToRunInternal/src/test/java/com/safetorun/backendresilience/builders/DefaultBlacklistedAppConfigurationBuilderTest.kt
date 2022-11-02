@@ -8,7 +8,7 @@ internal class DefaultBlacklistedAppConfigurationBuilderTest {
 
     @Test
     fun `test that we can build a blacklisted app configuration with blacklisted apps`() {
-        val builder = DefaultBlacklistedAppConfigurationBuilder(Severity.Error)
+        val builder = BlacklistedAppConfigurationBuilderOffDevice(Severity.Error)
             .apply {
                 +BLACKLISTED_APP_1
                 BLACKLISTED_APP_2.blacklistApp()
@@ -21,7 +21,7 @@ internal class DefaultBlacklistedAppConfigurationBuilderTest {
 
     @Test
     fun `test that we can build a blacklisted app configuration`() {
-        val builder = DefaultBlacklistedAppConfigurationBuilder(Severity.Warn)
+        val builder = BlacklistedAppConfigurationBuilderOffDevice(Severity.Warn)
             .build()
 
         assertThat(builder.blacklistedApps).isEmpty()

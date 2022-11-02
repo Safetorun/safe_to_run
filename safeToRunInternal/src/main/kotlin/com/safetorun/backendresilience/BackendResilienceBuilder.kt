@@ -2,7 +2,7 @@ package com.safetorun.backendresilience
 
 import com.safetorun.backendresilience.dto.BackendResilience
 import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationOffDevice
-import com.safetorun.backendresilience.builders.DefaultBlacklistedAppConfigurationBuilder
+import com.safetorun.backendresilience.builders.BlacklistedAppConfigurationBuilderOffDevice
 import com.safetorun.backendresilience.builders.InstallOriginBuilder
 import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
 import com.safetorun.backendresilience.dto.OSCheckConfigurationOffDevice
@@ -64,9 +64,9 @@ class BackendResilienceBuilder internal constructor() {
      * @param severity severity of issue
      * @param blacklistedApp configuration for blacklisted app
      */
-    fun blacklistedApp(severity: Severity, blacklistedApp: DefaultBlacklistedAppConfigurationBuilder.() -> Unit) {
+    fun blacklistedApp(severity: Severity, blacklistedApp: BlacklistedAppConfigurationBuilderOffDevice.() -> Unit) {
         blacklistedAppCheck.add(
-            DefaultBlacklistedAppConfigurationBuilder(severity).apply(blacklistedApp).build()
+            BlacklistedAppConfigurationBuilderOffDevice(severity).apply(blacklistedApp).build()
         )
     }
 

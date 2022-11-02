@@ -1,6 +1,5 @@
 package com.safetorun.resilienceshared.builders
 
-import com.safetorun.backendresilience.dto.BackendResilience
 import com.safetorun.resilienceshared.dto.BlacklistedAppResilience
 
 /**

@@ -8,7 +8,7 @@ import com.safetorun.resilienceshared.dto.Severity
 /**
  * Build a blacklisted app configuration
  */
-class DefaultBlacklistedAppConfigurationBuilder internal constructor(
+class BlacklistedAppConfigurationBuilderOffDevice internal constructor(
     private val severity: Severity,
     private val baseBuilder: BaseBlacklistedAppConfigurationBuilder = BaseBlacklistedAppConfigurationBuilder()
 ) : BlacklistedAppConfigurationBuilder by baseBuilder {
