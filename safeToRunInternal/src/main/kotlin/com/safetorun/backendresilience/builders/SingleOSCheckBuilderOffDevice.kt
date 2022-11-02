@@ -74,6 +74,8 @@ class SingleOSCheckBuilderOffDevice internal constructor(val severity: Severity)
         SingleOSCheckConfigurationOffDevice(
             allIntChecks = allIntChecks,
             severity = severity,
-            allStringChecks = allStringChecks
+            allStringChecks = allStringChecks,
+            unlessIntChecks = allIntUnlessChecks,
+            unlessStringChecks = allStringUnlessChecks,
         )
 }

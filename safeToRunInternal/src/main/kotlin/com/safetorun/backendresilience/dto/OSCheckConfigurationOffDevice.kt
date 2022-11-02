@@ -17,5 +17,7 @@ data class OSCheckConfigurationOffDevice(var configuration: List<SingleOSCheckCo
 data class SingleOSCheckConfigurationOffDevice(
     var allStringChecks: List<SingleStringCheck> = emptyList(),
     var allIntChecks: List<SingleIntCheck> = emptyList(),
+    var unlessIntChecks: List<SingleIntCheck> = emptyList(),
+    var unlessStringChecks: List<SingleStringCheck> = emptyList(),
     var severity: Severity = Severity.None,
 )
