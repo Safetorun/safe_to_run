@@ -20,6 +20,9 @@ enum class IntCheckType {
     MinOsCheck
 }
 
+/**
+ * Type of comparator
+ */
 enum class CheckComparator {
     EQUALS,
     GREATER_THAN

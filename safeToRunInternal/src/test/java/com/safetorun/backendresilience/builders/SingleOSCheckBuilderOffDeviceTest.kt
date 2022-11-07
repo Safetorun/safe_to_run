@@ -5,7 +5,6 @@ import com.safetorun.resilienceshared.dto.CheckComparator
 import com.safetorun.resilienceshared.dto.IntCheckType
 import com.safetorun.resilienceshared.dto.Severity
 import com.safetorun.resilienceshared.dto.StringCheckType
-import org.bouncycastle.asn1.isismtt.ocsp.CertHash
 import org.junit.Test
 
 internal class SingleOSCheckBuilderOffDeviceTest {
