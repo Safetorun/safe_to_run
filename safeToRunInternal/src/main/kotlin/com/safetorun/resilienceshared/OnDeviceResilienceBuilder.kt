@@ -21,6 +21,7 @@ class OnDeviceResilienceBuilder internal constructor() {
     private var installOriginCheck: InstallOriginConfiguration? = null
     private var osCheckConfiguration: OSCheckConfiguration? = null
     private var rootCheck: RootCheckConfiguration? = null
+    private var banDebugger = false
 
     /**
      * Add a signature verification
@@ -41,6 +42,20 @@ class OnDeviceResilienceBuilder internal constructor() {
      */
     fun installOriginCheck(installOrigin: BaseInstallOriginBuilder.() -> Unit) {
         installOriginCheck = BaseInstallOriginBuilder().apply(installOrigin).build()
+    }
+
+    /**
+     * Ban debugger
+     */
+    fun banDebugger() {
+        banDebugger = true
+    }
+
+    /**
+     * Ban debugger
+     */
+    fun allowDebugger() {
+        banDebugger = false
     }
 
     /**
@@ -73,6 +88,7 @@ class OnDeviceResilienceBuilder internal constructor() {
         verifySignatureConfiguration?.allowedSignatures,
         installOriginCheck?.allowedInstallOrigins,
         osCheckConfiguration?.configuration,
-        rootCheck
+        rootCheck,
+        banDebugger
     )
 }

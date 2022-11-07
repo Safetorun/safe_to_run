@@ -4,6 +4,7 @@ import com.safetorun.backendresilience.BackendResilienceBuilder
 import com.safetorun.backendresilience.dto.BackendResilience
 import com.safetorun.inputverification.InputVerificationBuilder
 import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
+import com.safetorun.resilienceshared.OnDeviceResilienceBuilder
 import com.safetorun.resilienceshared.dto.OnDeviceResilience
 
 /**
@@ -38,8 +39,8 @@ class SafeToRunConfigurationBuilder internal constructor() {
     /**
      * Add an on device resilience check
      */
-    fun onDeviceResilience(builder: BackendResilienceBuilder.() -> Unit) {
-        BackendResilienceBuilder().apply(builder).build()
+    fun onDeviceResilience(builder: OnDeviceResilienceBuilder.() -> Unit) {
+        OnDeviceResilienceBuilder().apply(builder).build()
     }
 
     /**

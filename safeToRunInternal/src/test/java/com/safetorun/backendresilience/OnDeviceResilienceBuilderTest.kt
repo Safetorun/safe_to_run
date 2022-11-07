@@ -9,6 +9,23 @@ import org.junit.Test
 internal class OnDeviceResilienceBuilderTest {
 
     @Test
+    fun `test that the debugger is allowed by default`() {
+        val resilience = OnDeviceResilienceBuilder()
+            .build()
+        assertThat(resilience.banDebugger).isFalse()
+    }
+
+    @Test
+    fun `test that we can allow the debugger`() {
+        val resilience = OnDeviceResilienceBuilder()
+            .apply {
+                allowDebugger()
+            }
+            .build()
+        assertThat(resilience.banDebugger).isFalse()
+    }
+
+    @Test
     fun `test that we can add a basic configuration`() {
         val resilience = OnDeviceResilienceBuilder()
             .apply {
@@ -33,6 +50,8 @@ internal class OnDeviceResilienceBuilderTest {
                 rootCheck {
 
                 }
+
+                banDebugger()
             }
             .build()
 
@@ -40,6 +59,9 @@ internal class OnDeviceResilienceBuilderTest {
         assertThat(resilience.installOriginCheck).contains(
             INSTALL_ORIGIN
         )
+
+        // Ban the debugger
+        assertThat(resilience.banDebugger).isTrue()
 
         // Signature check
         assertThat(resilience.allowedSignatures).contains(
