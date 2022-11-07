@@ -1,6 +1,6 @@
 package com.safetorun.resilienceshared.builders
 
-import com.safetorun.resilienceshared.dto.InstallOriginCheck
+import com.safetorun.resilienceshared.dto.InstallOriginConfiguration
 
 /**
  * Adding install origin builder
@@ -37,7 +37,7 @@ class BaseInstallOriginBuilder internal constructor() : InstallOriginBuilder {
         allowedInstallOriginCheck.add(this)
     }
 
-    internal fun build(): InstallOriginCheck {
-        return InstallOriginCheck(allowedInstallOriginCheck)
+    internal fun build(): InstallOriginConfiguration {
+        return InstallOriginConfiguration(allowedInstallOriginCheck)
     }
 }

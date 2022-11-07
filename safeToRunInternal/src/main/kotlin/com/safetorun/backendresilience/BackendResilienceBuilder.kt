@@ -6,7 +6,7 @@ import com.safetorun.backendresilience.builders.BlacklistedAppConfigurationBuild
 import com.safetorun.backendresilience.builders.InstallOriginBuilderOffDevice
 import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
 import com.safetorun.backendresilience.dto.OSCheckConfigurationOffDevice
-import com.safetorun.backendresilience.builders.OSCheckConfigurationBuilder
+import com.safetorun.backendresilience.builders.OSCheckConfigurationBuilderOffDevice
 import com.safetorun.resilienceshared.dto.Severity
 import com.safetorun.backendresilience.dto.VerifySignatureConfigurationOffDevice
 import com.safetorun.backendresilience.builders.VerifySignatureConfigurationOffDeviceBuilder
@@ -51,9 +51,9 @@ class BackendResilienceBuilder internal constructor() {
      *
      * @param osCheckConf configuration for os check
      */
-    fun oSCheck(osCheckConf: OSCheckConfigurationBuilder.() -> Unit) {
+    fun oSCheck(osCheckConf: OSCheckConfigurationBuilderOffDevice.() -> Unit) {
         osCheckConfiguration.add(
-            OSCheckConfigurationBuilder().apply(osCheckConf).build()
+            OSCheckConfigurationBuilderOffDevice().apply(osCheckConf).build()
         )
     }
 

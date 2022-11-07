@@ -1,6 +1,6 @@
 package com.safetorun.resilienceshared.builders
 
-import com.safetorun.resilienceshared.dto.BlacklistedAppResilience
+import com.safetorun.resilienceshared.dto.BlacklistedAppConfiguration
 
 /**
  * Build a blacklisted app configuration
@@ -38,6 +38,6 @@ class BaseBlacklistedAppConfigurationBuilder internal constructor() : Blackliste
         +this
     }
 
-    internal fun build() = BlacklistedAppResilience(blacklistedApps)
+    internal fun build() = BlacklistedAppConfiguration(blacklistedApps)
 
 }

@@ -7,7 +7,7 @@ import com.safetorun.resilienceshared.dto.Severity
 /**
  * Build an os check configuration
  */
-class OSCheckConfigurationBuilder internal constructor() {
+class OSCheckConfigurationBuilderOffDevice internal constructor() {
     private val osCheckList = mutableListOf<SingleOSCheckConfigurationOffDevice>()
 
     /**
