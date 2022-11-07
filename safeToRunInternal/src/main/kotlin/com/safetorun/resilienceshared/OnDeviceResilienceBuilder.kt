@@ -4,20 +4,23 @@ import com.safetorun.resilienceshared.builders.BaseBlacklistedAppConfigurationBu
 import com.safetorun.resilienceshared.builders.BaseInstallOriginBuilder
 import com.safetorun.resilienceshared.builders.BaseVerifySignatureConfigurationBuilder
 import com.safetorun.resilienceshared.builders.OSCheckConfigurationBuilder
+import com.safetorun.resilienceshared.builders.RootCheckConfigurationBuilder
 import com.safetorun.resilienceshared.dto.BlacklistedAppConfiguration
 import com.safetorun.resilienceshared.dto.InstallOriginConfiguration
 import com.safetorun.resilienceshared.dto.OSCheckConfiguration
 import com.safetorun.resilienceshared.dto.OnDeviceResilience
+import com.safetorun.resilienceshared.dto.RootCheckConfiguration
 import com.safetorun.resilienceshared.dto.VerifySignatureConfiguration
 
 /**
  * Backend resilience builder
  */
 class OnDeviceResilienceBuilder internal constructor() {
-    private var blacklistedAppCheck = BlacklistedAppConfiguration()
-    private var verifySignatureConfiguration = VerifySignatureConfiguration()
-    private var installOriginCheck = InstallOriginConfiguration()
-    private var osCheckConfiguration = OSCheckConfiguration()
+    private var blacklistedAppCheck: BlacklistedAppConfiguration? = null
+    private var verifySignatureConfiguration: VerifySignatureConfiguration? = null
+    private var installOriginCheck: InstallOriginConfiguration? = null
+    private var osCheckConfiguration: OSCheckConfiguration? = null
+    private var rootCheck: RootCheckConfiguration? = null
 
     /**
      * Add a signature verification
@@ -49,6 +52,10 @@ class OnDeviceResilienceBuilder internal constructor() {
         osCheckConfiguration = OSCheckConfigurationBuilder().apply(osCheckConf).build()
     }
 
+    fun rootCheck(rootCheckConfiguration: RootCheckConfigurationBuilder.() -> Unit) {
+        rootCheck = RootCheckConfigurationBuilder().apply(rootCheckConfiguration).build()
+    }
+
     /**
      * Add a blacklisted app
      *
@@ -62,9 +69,10 @@ class OnDeviceResilienceBuilder internal constructor() {
     }
 
     internal fun build() = OnDeviceResilience(
-        blacklistedAppCheck.blacklistedApps,
-        verifySignatureConfiguration.allowedSignatures,
-        installOriginCheck.allowedInstallOrigins,
-        osCheckConfiguration.configuration
+        blacklistedAppCheck?.blacklistedApps,
+        verifySignatureConfiguration?.allowedSignatures,
+        installOriginCheck?.allowedInstallOrigins,
+        osCheckConfiguration?.configuration,
+        rootCheck
     )
 }

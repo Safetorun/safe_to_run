@@ -5,8 +5,9 @@ package com.safetorun.resilienceshared.dto
  */
 @kotlinx.serialization.Serializable
 data class OnDeviceResilience(
-    val blacklistedApps: List<String> = emptyList(),
-    val allowedSignatures: List<String> = emptyList(),
-    val installOriginCheck: List<String> = emptyList(),
-    val osCheckConfiguration: List<SingleOSCheckConfiguration> = emptyList()
+    val blacklistedApps: List<String>? = null,
+    val allowedSignatures: List<String>? = null,
+    val installOriginCheck: List<String>? = null,
+    val osCheckConfiguration: List<SingleOSCheckConfiguration>? = null,
+    val rootCheck: RootCheckConfiguration? = null
 )

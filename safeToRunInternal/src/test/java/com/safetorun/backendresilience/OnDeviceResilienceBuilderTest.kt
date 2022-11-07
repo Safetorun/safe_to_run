@@ -2,12 +2,11 @@ package com.safetorun.backendresilience
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.resilienceshared.OnDeviceResilienceBuilder
-import com.safetorun.resilienceshared.dto.BlacklistedAppConfiguration
 import com.safetorun.resilienceshared.dto.CheckComparator
 import com.safetorun.resilienceshared.dto.IntCheckType
 import org.junit.Test
 
-internal class BackendResilienceBuilderTest {
+internal class OnDeviceResilienceBuilderTest {
 
     @Test
     fun `test that we can add a basic configuration`() {
@@ -30,6 +29,10 @@ internal class BackendResilienceBuilderTest {
                 installOriginCheck {
                     INSTALL_ORIGIN.allowInstallOrigin()
                 }
+
+                rootCheck {
+
+                }
             }
             .build()
 
@@ -43,15 +46,18 @@ internal class BackendResilienceBuilderTest {
             ACCEPTED_SIGNATURE
         )
 
+
         // OS Check
         val singleCheck =
-            resilience.osCheckConfiguration.first().allIntChecks.first()
-        assertThat(singleCheck.checkType).isEqualTo(IntCheckType.MinOsCheck)
-        assertThat(singleCheck.comparator).isEqualTo(CheckComparator.GREATER_THAN)
-        assertThat(singleCheck.intValue).isEqualTo(30)
+            resilience.osCheckConfiguration?.first()?.allIntChecks?.first()
+        assertThat(singleCheck?.checkType).isEqualTo(IntCheckType.MinOsCheck)
+        assertThat(singleCheck?.comparator).isEqualTo(CheckComparator.GREATER_THAN)
+        assertThat(singleCheck?.intValue).isEqualTo(30)
 
         // Assert blacklisted app is in the list
         assertThat(resilience.blacklistedApps).contains(BLACKLISTED_APP)
+
+        assertThat(resilience.rootCheck?.tolerateBusyBox).isFalse()
     }
 
     companion object {
