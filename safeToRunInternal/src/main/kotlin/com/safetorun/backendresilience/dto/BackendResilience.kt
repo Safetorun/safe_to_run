@@ -5,9 +5,8 @@ package com.safetorun.backendresilience.dto
  */
 @kotlinx.serialization.Serializable
 data class BackendResilience(
-    val blacklistedAppCheck: List<BlacklistedAppConfiguration> = emptyList(),
-    val verifySignatureConfiguration: List<VerifySignatureConfiguration> = emptyList(),
-    val installOriginCheck: List<InstallOriginCheck> = emptyList(),
-    val osCheckConfiguration: List<OSCheckConfiguration> = emptyList()
+    val blacklistedAppCheck: List<BlacklistedAppConfigurationOffDevice> = emptyList(),
+    val verifySignatureConfiguration: List<VerifySignatureConfigurationOffDevice> = emptyList(),
+    val installOriginCheck: List<InstallOriginCheckOffDevice> = emptyList(),
+    val osCheckConfiguration: List<OSCheckConfigurationOffDevice> = emptyList()
 )
-

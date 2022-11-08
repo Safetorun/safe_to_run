@@ -1,14 +1,12 @@
 package com.safetorun.inputverification
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.backendresilience.dto.CheckType
-import com.safetorun.backendresilience.dto.Severity
-import com.safetorun.backendresilience.dto.SingleCheck
 import com.safetorun.inputverification.dto.AllowedTypeDto
 import com.safetorun.inputverification.dto.ParameterConfigDto
 import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
+import com.safetorun.resilienceshared.dto.Severity
 import com.safetorun.safeToRun
 import org.junit.Test
 import java.io.File
@@ -17,35 +15,21 @@ import java.io.File
 internal class SafeToRunConfigurationTest {
 
     @Test
-    fun `test that blacklisted app builder can build a configuration with an os check`() {
-
-        val singleCheckStrVal = "abc"
-        val checkUuid = "uuid"
-        val confName = "Test name"
-
-        val check = SingleCheck(
-            stringValue = singleCheckStrVal,
-            checkType = CheckType.MinOsCheck,
-            checkUuid = checkUuid
-        )
+    fun `test that os check can be tested for`() {
+        val allowedOrigin = "com.android.vending"
 
         val str = safeToRun {
             backendResilience {
-                oSCheck {
-                    add {
-                        allChecks = listOf(check)
-                        severity = Severity.Error
-                        osConfigurationName = confName
-                    }
+                installOriginCheck(Severity.Error) {
+                    allowedOrigin.allowInstallOrigin()
                 }
             }
         }
 
-        val checks = str.backendResilience?.osCheckConfiguration?.first()?.configuration?.first()
-        assertThat(checks?.allChecks?.first()).isEqualTo(check)
-        assertThat(checks?.severity).isEqualTo(Severity.Error)
-
+        assertThat(str.backendResilience?.installOriginCheck?.first()?.allowedInstallOrigins?.first())
+            .isEqualTo(allowedOrigin)
     }
+
 
     @Test
     fun `test that blacklisted app builder can build a configuration with an allowed install origin`() {
@@ -161,7 +145,7 @@ internal class SafeToRunConfigurationTest {
         assertThat(configuration.name).isEqualTo(CONFIGURATION_NAME)
         assertThat(configuration.configuration.allowAnyFile).isFalse()
         assertThat(configuration.configuration.allowedExactFiles).containsAtLeastElementsIn(
-            listOf(TEST_FILE,  ABC_FILE)
+            listOf(TEST_FILE, ABC_FILE)
         )
     }
 

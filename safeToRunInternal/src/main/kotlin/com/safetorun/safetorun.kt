@@ -4,6 +4,8 @@ import com.safetorun.backendresilience.BackendResilienceBuilder
 import com.safetorun.backendresilience.dto.BackendResilience
 import com.safetorun.inputverification.InputVerificationBuilder
 import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
+import com.safetorun.resilienceshared.OnDeviceResilienceBuilder
+import com.safetorun.resilienceshared.dto.OnDeviceResilience
 
 /**
  * Safe to run configuration
@@ -12,6 +14,7 @@ import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
 data class SafeToRunConfiguration internal constructor(
     val backendResilience: BackendResilience? = null,
     val inputVerification: SafeToRunInputVerificationDto? = null,
+    val ondeviceResilience: OnDeviceResilience? = null,
 )
 
 /**
@@ -20,6 +23,7 @@ data class SafeToRunConfiguration internal constructor(
 class SafeToRunConfigurationBuilder internal constructor() {
     private var backendResilience: BackendResilience = BackendResilience()
     private var inputVerification: SafeToRunInputVerificationDto = SafeToRunInputVerificationDto()
+    private var ondeviceResilience: OnDeviceResilience = OnDeviceResilience()
 
     /**
      * Add backend resilience configuration
@@ -33,6 +37,13 @@ class SafeToRunConfigurationBuilder internal constructor() {
     }
 
     /**
+     * Add an on device resilience check
+     */
+    fun onDeviceResilience(builder: OnDeviceResilienceBuilder.() -> Unit) {
+        OnDeviceResilienceBuilder().apply(builder).build()
+    }
+
+    /**
      * Add inputVerification configuration
      *
      * @param builder builder for input verification
@@ -43,7 +54,8 @@ class SafeToRunConfigurationBuilder internal constructor() {
             .build()
     }
 
-    internal fun build() = SafeToRunConfiguration(backendResilience, inputVerification)
+    internal fun build() =
+        SafeToRunConfiguration(backendResilience, inputVerification, ondeviceResilience)
 }
 
 /**

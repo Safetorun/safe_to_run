@@ -1,24 +1,24 @@
 package com.safetorun.backendresilience
 
 import com.safetorun.backendresilience.dto.BackendResilience
-import com.safetorun.backendresilience.dto.BlacklistedAppConfiguration
-import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationBuilder
-import com.safetorun.backendresilience.dto.InstallOriginBuilder
-import com.safetorun.backendresilience.dto.InstallOriginCheck
-import com.safetorun.backendresilience.dto.OSCheckConfiguration
-import com.safetorun.backendresilience.dto.OSCheckConfigurationBuilder
-import com.safetorun.backendresilience.dto.Severity
-import com.safetorun.backendresilience.dto.VerifySignatureConfiguration
-import com.safetorun.backendresilience.dto.VerifySignatureConfigurationBuilder
+import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationOffDevice
+import com.safetorun.backendresilience.builders.BlacklistedAppConfigurationBuilderOffDevice
+import com.safetorun.backendresilience.builders.InstallOriginBuilderOffDevice
+import com.safetorun.backendresilience.dto.InstallOriginCheckOffDevice
+import com.safetorun.backendresilience.dto.OSCheckConfigurationOffDevice
+import com.safetorun.backendresilience.builders.OSCheckConfigurationBuilderOffDevice
+import com.safetorun.resilienceshared.dto.Severity
+import com.safetorun.backendresilience.dto.VerifySignatureConfigurationOffDevice
+import com.safetorun.backendresilience.builders.VerifySignatureConfigurationOffDeviceBuilder
 
 /**
  * Backend resilience builder
  */
 class BackendResilienceBuilder internal constructor() {
-    private val blacklistedAppCheck = mutableListOf<BlacklistedAppConfiguration>()
-    private val verifySignatureConfiguration = mutableListOf<VerifySignatureConfiguration>()
-    private val installOriginCheck = mutableListOf<InstallOriginCheck>()
-    private val osCheckConfiguration = mutableListOf<OSCheckConfiguration>()
+    private val blacklistedAppCheck = mutableListOf<BlacklistedAppConfigurationOffDevice>()
+    private val verifySignatureConfiguration = mutableListOf<VerifySignatureConfigurationOffDevice>()
+    private val installOriginCheck = mutableListOf<InstallOriginCheckOffDevice>()
+    private val osCheckConfiguration = mutableListOf<OSCheckConfigurationOffDevice>()
 
     /**
      * Add a signature verification
@@ -26,9 +26,9 @@ class BackendResilienceBuilder internal constructor() {
      * @param severity severity of issue
      * @param configuration configuration for signature
      */
-    fun verifySignature(severity: Severity, configuration: VerifySignatureConfigurationBuilder.() -> Unit) {
+    fun verifySignature(severity: Severity, configuration: VerifySignatureConfigurationOffDeviceBuilder.() -> Unit) {
         verifySignatureConfiguration.add(
-            VerifySignatureConfigurationBuilder(severity)
+            VerifySignatureConfigurationOffDeviceBuilder(severity)
                 .apply(configuration)
                 .build()
         )
@@ -40,21 +40,20 @@ class BackendResilienceBuilder internal constructor() {
      * @param severity severity of issue
      * @param installOrigin configuration of install origin
      */
-    fun installOriginCheck(severity: Severity, installOrigin: InstallOriginBuilder.() -> Unit) {
+    fun installOriginCheck(severity: Severity, installOrigin: InstallOriginBuilderOffDevice.() -> Unit) {
         installOriginCheck.add(
-            InstallOriginBuilder(severity).apply(installOrigin).build()
+            InstallOriginBuilderOffDevice(severity).apply(installOrigin).build()
         )
     }
 
     /**
-     * Add a os chec
+     * Add a os check
      *
-     * @param severity severity of issue
      * @param osCheckConf configuration for os check
      */
-    fun oSCheck(osCheckConf: OSCheckConfigurationBuilder.() -> Unit) {
+    fun oSCheck(osCheckConf: OSCheckConfigurationBuilderOffDevice.() -> Unit) {
         osCheckConfiguration.add(
-            OSCheckConfigurationBuilder().apply(osCheckConf).build()
+            OSCheckConfigurationBuilderOffDevice().apply(osCheckConf).build()
         )
     }
 
@@ -64,9 +63,9 @@ class BackendResilienceBuilder internal constructor() {
      * @param severity severity of issue
      * @param blacklistedApp configuration for blacklisted app
      */
-    fun blacklistedApp(severity: Severity, blacklistedApp: BlacklistedAppConfigurationBuilder.() -> Unit) {
+    fun blacklistedApp(severity: Severity, blacklistedApp: BlacklistedAppConfigurationBuilderOffDevice.() -> Unit) {
         blacklistedAppCheck.add(
-            BlacklistedAppConfigurationBuilder(severity).apply(blacklistedApp).build()
+            BlacklistedAppConfigurationBuilderOffDevice(severity).apply(blacklistedApp).build()
         )
     }
 
