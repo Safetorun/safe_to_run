@@ -1,6 +1,7 @@
 package com.safetorun.builder
 
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.builder.input.generateUrlConfigurationCode
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
 import com.safetorun.inputverification.model.UrlConfiguration
@@ -32,7 +33,7 @@ internal class UrlConfigurationCodeGeneratorTest {
 
         val allowParam =
             "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
-                    "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
+                    "com.safetorun.intents.url.params.AllowedType.Boolean)"
 
         assertThat(configurationCode).isEqualTo(
             """
@@ -72,7 +73,7 @@ internal class UrlConfigurationCodeGeneratorTest {
 
         val allowParam =
             "com.safetorun.intents.url.params.ParameterConfig(\"${param.parameterName}\"," +
-                    "com.safetorun.intents.url.params.AllowedType.${param.allowedType})"
+                    "com.safetorun.intents.url.params.AllowedType.Boolean)"
         assertThat(configurationCode).isEqualTo(
             """
  com.safetorun.intents.configurator.registerUrlVerification("${urlConfigurations.name}")

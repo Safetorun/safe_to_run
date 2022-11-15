@@ -1,30 +1,24 @@
 package com.safetorun.inputverification
 
+import com.safetorun.SafeToRunConfiguration
 import com.safetorun.inputverification.builders.FileConfigurationBuilder
 import com.safetorun.inputverification.builders.UrlConfigurationBuilder
 import com.safetorun.inputverification.dto.FileConfigurationsDto
 import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
 import com.safetorun.inputverification.dto.UrlConfigurationsDto
-import com.safetorun.inputverification.dto.toCore
-import com.safetorun.inputverification.model.SafeToRunInputVerification
 import kotlinx.serialization.json.Json
-import java.net.URL
+import java.io.File
 
 /**
  * Function to configure files
  *
  * @param fileName configuration file url
  */
-fun configurationParser(fileName: URL) =
+fun configurationParser(fileName: File) =
     Json.decodeFromString(
-        SafeToRunInputVerificationDto.serializer(),
+        SafeToRunConfiguration.serializer(),
         fileName.readText(),
-    ).let {
-        SafeToRunInputVerification(
-            fileConfiguration = it.fileConfiguration.map { conf -> conf.toCore() },
-            urlConfigurations = it.urlConfigurations.map { conf -> conf.toCore() }
-        )
-    }
+    )
 
 
 /**

@@ -1,6 +1,6 @@
 package com.safetorun.backendresilience
 
-import com.safetorun.backendresilience.dto.BackendResilience
+import com.safetorun.backendresilience.dto.BackendResilienceDto
 import com.safetorun.backendresilience.dto.BlacklistedAppConfigurationOffDevice
 import com.safetorun.backendresilience.builders.BlacklistedAppConfigurationBuilderOffDevice
 import com.safetorun.backendresilience.builders.InstallOriginBuilderOffDevice
@@ -69,7 +69,7 @@ class BackendResilienceBuilder internal constructor() {
         )
     }
 
-    internal fun build() = BackendResilience(
+    internal fun build() = BackendResilienceDto(
         blacklistedAppCheck,
         verifySignatureConfiguration,
         installOriginCheck,

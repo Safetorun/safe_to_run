@@ -68,6 +68,7 @@ class ReportFragment : Fragment() {
 
     private inline fun Context.canIRun(actionOnFailure: () -> Unit) {
         if (safeToRun(
+                { verifySignatureCheck() },
                 { banAvdEmulatorCheck() },
                 { banGenymotionEmulatorCheck() },
                 { banBluestacksEmulatorCheck() },

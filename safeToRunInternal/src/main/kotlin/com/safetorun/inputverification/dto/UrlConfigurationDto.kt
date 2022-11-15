@@ -65,7 +65,10 @@ enum class AllowedTypeDto {
     Double
 }
 
-internal fun UrlConfigurationsDto.toCore() = UrlConfigurations(
+/**
+ * Convert URL configuration DTO to core version
+ */
+fun UrlConfigurationsDto.toCore() = UrlConfigurations(
     name,
     UrlConfiguration(
         allowedHost = configuration.allowedHost,

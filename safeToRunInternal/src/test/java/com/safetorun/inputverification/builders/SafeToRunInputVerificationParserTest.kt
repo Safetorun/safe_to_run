@@ -2,18 +2,21 @@ package com.safetorun.inputverification.builders
 
 import com.google.common.truth.Truth
 import com.safetorun.inputverification.configurationParser
+import com.safetorun.inputverification.dto.AllowedTypeDto
+import com.safetorun.inputverification.dto.ParameterConfigDto
+import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
-import com.safetorun.inputverification.model.ParentConfiguration
 import org.junit.Test
+import java.io.File
 
 internal class SafeToRunInputVerificationParserTest {
 
     @Test
     fun `test that safe to run verification can be parsed from file`() {
         this::class.java.classLoader.getResource("safe_to_run_input_verification.json")?.let {
-            configurationParser(it)
-                .let {
+            configurationParser(File(it.file)).inputVerification
+                ?.let {
                     Truth.assertThat(it.fileConfiguration.first().name).isEqualTo("file_verifier")
                     Truth.assertThat(it.fileConfiguration.first().configuration.allowAnyFile)
                         .isFalse()
@@ -21,7 +24,7 @@ internal class SafeToRunInputVerificationParserTest {
                         .isEqualTo(listOf("/data/data/com.blah/abc"))
                     Truth.assertThat(it.fileConfiguration.first().configuration.allowedParentDirectories)
                         .isEqualTo(
-                            listOf(ParentConfiguration("/data/data/com.blah/parent", false))
+                            listOf(ParentConfigurationDto("/data/data/com.blah/parent", false))
                         )
 
                     Truth.assertThat(it.urlConfigurations.first().configuration.allowAnyUrl)
@@ -35,9 +38,9 @@ internal class SafeToRunInputVerificationParserTest {
                     Truth.assertThat(it.urlConfigurations.first().configuration.allowParameters)
                         .isEqualTo(
                             listOf(
-                                ParameterConfig(
+                                ParameterConfigDto(
                                     "blah",
-                                    AllowedTypeCore.String
+                                    AllowedTypeDto.String
                                 )
                             )
                         )
