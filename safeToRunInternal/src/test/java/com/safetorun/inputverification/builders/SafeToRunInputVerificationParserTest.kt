@@ -6,14 +6,15 @@ import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
 import com.safetorun.inputverification.model.ParentConfiguration
 import org.junit.Test
+import java.io.File
 
 internal class SafeToRunInputVerificationParserTest {
 
     @Test
     fun `test that safe to run verification can be parsed from file`() {
         this::class.java.classLoader.getResource("safe_to_run_input_verification.json")?.let {
-            configurationParser(it)
-                .let {
+            configurationParser(File(it.file)).inputVerification
+                ?.let {
                     Truth.assertThat(it.fileConfiguration.first().name).isEqualTo("file_verifier")
                     Truth.assertThat(it.fileConfiguration.first().configuration.allowAnyFile)
                         .isFalse()
