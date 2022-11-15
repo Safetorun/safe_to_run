@@ -11,7 +11,12 @@
           "allowed_urls": [
             "https://safetorun.com?abc=def"
           ],
-          "allowed_parameters": [],
+          "allowed_parameters": [
+            {
+              "parameter_name": "blah",
+              "allowed_type": "String"
+            }
+          ],
           "allow_any_parameter": false,
           "allow_any_url": false
         }
@@ -49,14 +54,14 @@
           {
             "intValue": 31,
             "comparator": "GREATER_THAN",
-            "checkUuid": "913641b4-c6c5-4ac5-92af-5066a02e4133"
+            "checkUuid": "39e31092-a8cb-4576-9252-dead833cd8d6"
           }
         ],
         "unlessIntChecks": [
           {
             "intValue": 30,
             "comparator": "GREATER_THAN",
-            "checkUuid": "944f1993-5931-41af-aae7-9b3be64d7d0a"
+            "checkUuid": "9c0318c1-9418-456f-bfc2-21e4b66c88a8"
           }
         ]
       }

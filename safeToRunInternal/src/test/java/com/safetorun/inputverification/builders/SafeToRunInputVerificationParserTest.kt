@@ -2,9 +2,11 @@ package com.safetorun.inputverification.builders
 
 import com.google.common.truth.Truth
 import com.safetorun.inputverification.configurationParser
+import com.safetorun.inputverification.dto.AllowedTypeDto
+import com.safetorun.inputverification.dto.ParameterConfigDto
+import com.safetorun.inputverification.dto.ParentConfigurationDto
 import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.ParameterConfig
-import com.safetorun.inputverification.model.ParentConfiguration
 import org.junit.Test
 import java.io.File
 
@@ -22,7 +24,7 @@ internal class SafeToRunInputVerificationParserTest {
                         .isEqualTo(listOf("/data/data/com.blah/abc"))
                     Truth.assertThat(it.fileConfiguration.first().configuration.allowedParentDirectories)
                         .isEqualTo(
-                            listOf(ParentConfiguration("/data/data/com.blah/parent", false))
+                            listOf(ParentConfigurationDto("/data/data/com.blah/parent", false))
                         )
 
                     Truth.assertThat(it.urlConfigurations.first().configuration.allowAnyUrl)
@@ -36,9 +38,9 @@ internal class SafeToRunInputVerificationParserTest {
                     Truth.assertThat(it.urlConfigurations.first().configuration.allowParameters)
                         .isEqualTo(
                             listOf(
-                                ParameterConfig(
+                                ParameterConfigDto(
                                     "blah",
-                                    AllowedTypeCore.String
+                                    AllowedTypeDto.String
                                 )
                             )
                         )
