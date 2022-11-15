@@ -66,13 +66,3 @@ fun safeToRun(builder: SafeToRunConfigurationBuilder.() -> Unit): SafeToRunConfi
     SafeToRunConfigurationBuilder()
         .apply(builder)
         .build()
-
-fun main() {
-    val res = safeToRun {
-        onDeviceResilience {
-            allowDebugger()
-        }
-    }
-
-    println(Json.encodeToString(SafeToRunConfiguration.serializer(), res))
-}
