@@ -5,6 +5,7 @@ import com.safetorun.inputverification.configurationParser
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File
+import java.io.FileNotFoundException
 
 /**
  * Plugin extension for configuration of safe to run plugin
@@ -45,7 +46,7 @@ class SafeToRunBuilderPlugin : Plugin<Project> {
 
                 val configuration = try {
                     configurationParser(file)
-                } catch (exception: Exception) {
+                } catch (exception: FileNotFoundException) {
                     throw SafeToRunBuilderException(
                         "Failed to find valid configuration in file ${file.absolutePath}",
                         exception

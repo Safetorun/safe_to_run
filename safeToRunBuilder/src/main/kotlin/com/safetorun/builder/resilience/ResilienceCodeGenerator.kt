@@ -44,72 +44,12 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
         val checksBuilder = CodeBlock.builder()
             .addStatement("val checks = %M(", safeToRunFun)
             .apply {
-                if (resilienceDto.banDebugger) {
-                    beginControlFlow("")
-                    addStatement("%M()", banDebugCheck)
-                    endControlFlow()
-                }
-
-                resilienceDto.rootCheck?.let {
-                    beginControlFlow("")
-                    addStatement(
-                        "%M(${it.tolerateBusyBox})",
-                        rootDetectionCheck
-                    )
-                    endControlFlow()
-                }
-
-                resilienceDto.blacklistedApps?.let {
-                    beginControlFlow("")
-                    addStatement(
-                        "%M(${it.joinToString(",") { blacklistedApp -> "\"$blacklistedApp\"" }})",
-                        blacklistedApps
-                    )
-                    endControlFlow()
-                }
-
-                resilienceDto.osCheckConfiguration?.onEach {
-                    beginControlFlow("")
-                    addStatement("%M(", safeToRunCombinedCheck)
-                    addStatement("listOf(")
-                    it.allIntChecks.forEach { singleIntCheck ->
-                        intCheckToStatement(singleIntCheck)
-                    }
-                    it.allStringChecks.forEach { singleStringCheck ->
-                        stringCheckToStatement(singleStringCheck)
-                    }
-                    addStatement("),")
-
-                    addStatement("listOf(")
-                    it.unlessIntChecks.forEach { singleIntCheck ->
-                        intCheckToStatement(singleIntCheck)
-                    }
-                    it.unlessStringChecks.forEach { singleStringCheck ->
-                        stringCheckToStatement(singleStringCheck)
-                    }
-                    addStatement(")")
-
-                    addStatement(")")
-                    endControlFlow()
-                }
-                resilienceDto.allowedSignatures?.let {
-                    beginControlFlow("")
-                    addStatement(
-                        "%M(${it.joinToString(",") { signature -> "\"$signature\"" }})",
-                        signatureVerify
-                    )
-                    endControlFlow()
-                }
-
-                resilienceDto.installOriginCheck?.let {
-                    beginControlFlow("")
-                    addStatement(
-                        "%M(${it.joinToString(",") { installOrigin -> "\"$installOrigin\"" }})",
-                        installOrigin
-                    )
-                    endControlFlow()
-
-                }
+                addDebuggerCheck()
+                addRootCheck()
+                addBlacklistedAppChecks()
+                addOsCheck()
+                addAllowedSignaturesCheck()
+                addInstallOriginCheck()
             }
             .addStatement(")")
             .addStatement("return checks()")
@@ -122,6 +62,86 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
             .addCode(checksBuilder.build())
             .returns(ClassName("kotlin", "Boolean"))
             .build()
+    }
+
+    private fun CodeBlock.Builder.addInstallOriginCheck() {
+        resilienceDto.installOriginCheck?.let {
+            beginControlFlow("")
+            addStatement(
+                "%M(${it.joinToString(",") { installOrigin -> "\"$installOrigin\"" }})",
+                installOrigin
+            )
+            endControlFlow()
+
+        }
+    }
+
+    private fun CodeBlock.Builder.addAllowedSignaturesCheck() {
+        resilienceDto.allowedSignatures?.let {
+            beginControlFlow("")
+            addStatement(
+                "%M(${it.joinToString(",") { signature -> "\"$signature\"" }})",
+                signatureVerify
+            )
+            endControlFlow()
+        }
+    }
+
+    private fun CodeBlock.Builder.addOsCheck() {
+        resilienceDto.osCheckConfiguration?.onEach {
+            beginControlFlow("")
+            addStatement("%M(", safeToRunCombinedCheck)
+            addStatement("listOf(")
+            it.allIntChecks.forEach { singleIntCheck ->
+                intCheckToStatement(singleIntCheck)
+            }
+            it.allStringChecks.forEach { singleStringCheck ->
+                stringCheckToStatement(singleStringCheck)
+            }
+            addStatement("),")
+
+            addStatement("listOf(")
+            it.unlessIntChecks.forEach { singleIntCheck ->
+                intCheckToStatement(singleIntCheck)
+            }
+            it.unlessStringChecks.forEach { singleStringCheck ->
+                stringCheckToStatement(singleStringCheck)
+            }
+            addStatement(")")
+
+            addStatement(")")
+            endControlFlow()
+        }
+    }
+
+    private fun CodeBlock.Builder.addBlacklistedAppChecks() {
+        resilienceDto.blacklistedApps?.let {
+            beginControlFlow("")
+            addStatement(
+                "%M(${it.joinToString(",") { blacklistedApp -> "\"$blacklistedApp\"" }})",
+                blacklistedApps
+            )
+            endControlFlow()
+        }
+    }
+
+    private fun CodeBlock.Builder.addDebuggerCheck() {
+        if (resilienceDto.banDebugger) {
+            beginControlFlow("")
+            addStatement("%M()", banDebugCheck)
+            endControlFlow()
+        }
+    }
+
+    private fun CodeBlock.Builder.addRootCheck() {
+        resilienceDto.rootCheck?.let {
+            beginControlFlow("")
+            addStatement(
+                "%M(${it.tolerateBusyBox})",
+                rootDetectionCheck
+            )
+            endControlFlow()
+        }
     }
 
     private fun CodeBlock.Builder.stringCheckToStatement(singleStringCheck: SingleStringCheck) {
@@ -142,7 +162,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
         }
     }
 
-    private fun StringCheckType.toFunctionName() = when(this) {
+    private fun StringCheckType.toFunctionName() = when (this) {
         StringCheckType.BannedBoard -> "bannedBoardCheck"
         StringCheckType.BannedBootloader -> "bannedBootloaderCheck"
         StringCheckType.BannedCpuAbi -> "bannedCpusCheck"

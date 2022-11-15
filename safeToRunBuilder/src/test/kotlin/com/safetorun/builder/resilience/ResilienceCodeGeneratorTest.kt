@@ -43,12 +43,13 @@ internal class ResilienceCodeGeneratorTest {
         }
 
         val onDevice = buildConfigToString(config)
-
+        val installOriginCheck =
+            "com.safetorun.features.installorigin.installOriginCheckWithoutDefaultsCheck"
         assertThat(onDevice).isEqualTo(
             COMMON.format(
                 """
    {
-    com.safetorun.features.installorigin.installOriginCheckWithoutDefaultsCheck("com.install.origin","com.install.origin2")
+    $installOriginCheck("com.install.origin","com.install.origin2")
   }"""
             ).trimIndent()
         )
