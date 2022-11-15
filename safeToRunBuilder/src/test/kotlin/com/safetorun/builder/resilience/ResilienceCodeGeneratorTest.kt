@@ -25,7 +25,8 @@ internal class ResilienceCodeGeneratorTest {
                 """
    {
     com.safetorun.features.debug.banDebugCheck()
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
 
@@ -50,7 +51,8 @@ internal class ResilienceCodeGeneratorTest {
                 """
    {
     $installOriginCheck("com.install.origin","com.install.origin2")
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
 
@@ -77,13 +79,14 @@ internal class ResilienceCodeGeneratorTest {
    {
     com.safetorun.features.oscheck.safeToRunCombinedCheck(
     listOf(
-    com.safetorun.features.oscheck.bannedHardwareCheck("Abc"),
+    { com.safetorun.features.oscheck.bannedHardwareCheck("Abc") },
     ),
     listOf(
-    com.safetorun.features.oscheck.bannedBoardCheck("Def"),
+    { com.safetorun.features.oscheck.bannedBoardCheck("Def") },
     )
     )
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
     }
@@ -109,13 +112,14 @@ internal class ResilienceCodeGeneratorTest {
    {
     com.safetorun.features.oscheck.safeToRunCombinedCheck(
     listOf(
-    com.safetorun.features.oscheck.bannedCpusCheck("Abc"),
+    { com.safetorun.features.oscheck.bannedCpusCheck("Abc") },
     ),
     listOf(
-    com.safetorun.features.oscheck.bannedDeviceCheck("Def"),
+    { com.safetorun.features.oscheck.bannedDeviceCheck("Def") },
     )
     )
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
     }
@@ -141,13 +145,14 @@ internal class ResilienceCodeGeneratorTest {
    {
     com.safetorun.features.oscheck.safeToRunCombinedCheck(
     listOf(
-    com.safetorun.features.oscheck.minOsVersionCheck(31),
+    { com.safetorun.features.oscheck.minOsVersionCheck(31) },
     ),
     listOf(
-    com.safetorun.features.oscheck.minOsVersionCheck(30),
+    { com.safetorun.features.oscheck.minOsVersionCheck(30) },
     )
     )
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
     }
@@ -169,7 +174,8 @@ internal class ResilienceCodeGeneratorTest {
                 """
    {
     com.safetorun.features.rootdetection.rootDetectionCheck(true)
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
 
@@ -193,7 +199,8 @@ internal class ResilienceCodeGeneratorTest {
                 """
    {
     com.safetorun.features.blacklistedapps.blacklistedAppCheck("abc","def")
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
 
@@ -217,7 +224,8 @@ internal class ResilienceCodeGeneratorTest {
                 """
    {
     com.safetorun.features.signatureverify.verifySignatureCheck("abc","def")
-  }"""
+  }
+  ,"""
             ).trimIndent()
         )
 

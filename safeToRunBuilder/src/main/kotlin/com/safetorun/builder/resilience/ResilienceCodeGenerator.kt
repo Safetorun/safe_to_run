@@ -72,7 +72,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
                 installOrigin
             )
             endControlFlow()
-
+            addStatement(",")
         }
     }
 
@@ -84,6 +84,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
                 signatureVerify
             )
             endControlFlow()
+            addStatement(",")
         }
     }
 
@@ -111,6 +112,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
 
             addStatement(")")
             endControlFlow()
+            addStatement(",")
         }
     }
 
@@ -122,6 +124,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
                 blacklistedApps
             )
             endControlFlow()
+            addStatement(",")
         }
     }
 
@@ -130,6 +133,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
             beginControlFlow("")
             addStatement("%M()", banDebugCheck)
             endControlFlow()
+            addStatement(",")
         }
     }
 
@@ -141,12 +145,13 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
                 rootDetectionCheck
             )
             endControlFlow()
+            addStatement(",")
         }
     }
 
     private fun CodeBlock.Builder.stringCheckToStatement(singleStringCheck: SingleStringCheck) {
         addStatement(
-            "%M(\"${singleStringCheck.stringValue}\"),",
+            "{ %M(\"${singleStringCheck.stringValue}\") },",
             MemberName(OS_CHECK_PACKAGE, singleStringCheck.checkType.toFunctionName())
         )
     }
@@ -155,7 +160,7 @@ internal class ResilienceCodeGenerator(private val resilienceDto: OnDeviceResili
         when (it.checkType) {
             IntCheckType.MinOsCheck -> {
                 addStatement(
-                    "%M(${it.intValue}),",
+                    "{ %M(${it.intValue}) },",
                     MemberName(OS_CHECK_PACKAGE, "minOsVersionCheck")
                 )
             }
