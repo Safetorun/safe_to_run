@@ -1,5 +1,6 @@
-package com.safetorun.builder
+package com.safetorun.builder.input
 
+import com.safetorun.inputverification.model.AllowedTypeCore
 import com.safetorun.inputverification.model.UrlConfigurations
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
@@ -37,8 +38,17 @@ internal fun generateUrlConfigurationCode(urlConfigurations: UrlConfigurations):
         )
     }
     urlConfigurations.configuration.allowParameters.forEach {
+
+        val type = when (it.allowedType) {
+            AllowedTypeCore.Any -> "Any"
+            AllowedTypeCore.Boolean -> "Boolean"
+            AllowedTypeCore.Double -> "Double"
+            AllowedTypeCore.Int -> "Int"
+            AllowedTypeCore.String -> "String"
+        }
+
         codeBuilder.addStatement(
-            "allowParameter(%T(%S,%T.${it.allowedType}))",
+            "allowParameter(%T(%S,%T.${type}))",
             paramConfig,
             it.parameterName,
             allowedType

@@ -1,29 +1,30 @@
 package com.safetorun
 
 import com.safetorun.backendresilience.BackendResilienceBuilder
-import com.safetorun.backendresilience.dto.BackendResilience
+import com.safetorun.backendresilience.dto.BackendResilienceDto
 import com.safetorun.inputverification.InputVerificationBuilder
 import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
 import com.safetorun.resilienceshared.OnDeviceResilienceBuilder
-import com.safetorun.resilienceshared.dto.OnDeviceResilience
+import com.safetorun.resilienceshared.dto.OnDeviceResilienceDto
+import kotlinx.serialization.json.Json
 
 /**
  * Safe to run configuration
  */
 @kotlinx.serialization.Serializable
 data class SafeToRunConfiguration internal constructor(
-    val backendResilience: BackendResilience? = null,
+    val backendResilience: BackendResilienceDto? = null,
     val inputVerification: SafeToRunInputVerificationDto? = null,
-    val ondeviceResilience: OnDeviceResilience? = null,
+    val ondeviceResilience: OnDeviceResilienceDto? = null,
 )
 
 /**
  * Safe to run configuration builder
  */
 class SafeToRunConfigurationBuilder internal constructor() {
-    private var backendResilience: BackendResilience = BackendResilience()
+    private var backendResilience: BackendResilienceDto = BackendResilienceDto()
     private var inputVerification: SafeToRunInputVerificationDto = SafeToRunInputVerificationDto()
-    private var ondeviceResilience: OnDeviceResilience = OnDeviceResilience()
+    private var ondeviceResilience: OnDeviceResilienceDto = OnDeviceResilienceDto()
 
     /**
      * Add backend resilience configuration
@@ -40,7 +41,7 @@ class SafeToRunConfigurationBuilder internal constructor() {
      * Add an on device resilience check
      */
     fun onDeviceResilience(builder: OnDeviceResilienceBuilder.() -> Unit) {
-        OnDeviceResilienceBuilder().apply(builder).build()
+        ondeviceResilience = OnDeviceResilienceBuilder().apply(builder).build()
     }
 
     /**
@@ -65,3 +66,13 @@ fun safeToRun(builder: SafeToRunConfigurationBuilder.() -> Unit): SafeToRunConfi
     SafeToRunConfigurationBuilder()
         .apply(builder)
         .build()
+
+fun main() {
+    val res = safeToRun {
+        onDeviceResilience {
+            allowDebugger()
+        }
+    }
+
+    println(Json.encodeToString(SafeToRunConfiguration.serializer(), res))
+}

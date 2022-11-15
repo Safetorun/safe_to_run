@@ -1,5 +1,6 @@
 package com.safetorun.builder
 
+import com.safetorun.builder.input.generate
 import com.safetorun.inputverification.configurationParser
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -33,11 +34,27 @@ class SafeToRunBuilderPlugin : Plugin<Project> {
         val extension: SafeToRunBuilderPluginExtension = project.extensions
             .create("safeToRun", SafeToRunBuilderPluginExtension::class.java)
 
+
+
         project.task("safeToRun")
             .doLast {
+                val file = File(
+                    project.projectDir,
+                    extension.configurationPath
+                )
+
+                val configuration = try {
+                    configurationParser(file)
+                } catch (exception: Exception) {
+                    throw SafeToRunBuilderException(
+                        "Failed to find valid configuration in file ${file.absolutePath}",
+                        exception
+                    )
+                }
+
                 generate(
                     File(project.projectDir, extension.generatedCodePath),
-                    configurationParser(File(project.projectDir, extension.configurationPath).toURL())
+                    configuration
                 )
             }
     }

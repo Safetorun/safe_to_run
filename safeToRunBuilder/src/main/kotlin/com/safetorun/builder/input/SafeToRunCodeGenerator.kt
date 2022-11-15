@@ -1,5 +1,9 @@
-package com.safetorun.builder
+package com.safetorun.builder.input
 
+import com.safetorun.SafeToRunConfiguration
+import com.safetorun.builder.generateFileConfigurationCode
+import com.safetorun.builder.resilience.ResilienceCodeGenerator
+import com.safetorun.builder.toCore
 import com.safetorun.inputverification.model.SafeToRunInputVerification
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
@@ -11,7 +15,7 @@ import java.io.File
 
 internal fun generate(
     outFile: File,
-    inputConfiguration: SafeToRunInputVerification
+    configuration: SafeToRunConfiguration
 ) {
     val initClass = "SafeToRunInit"
 
@@ -22,6 +26,9 @@ internal fun generate(
                 ClassName("android.content", "Context")
             ).build()
         )
+
+    val inputConfiguration = configuration.inputVerification.toCore()
+
 
     inputConfiguration.fileConfiguration
         .map(::generateFileConfigurationCode)
@@ -35,6 +42,43 @@ internal fun generate(
         .builder("com.safetorun", initClass)
         .addFunction(initFunc.build())
 
+
+    configuration.ondeviceResilience?.let {
+        fileSpecBuilder.addFunction(
+            ResilienceCodeGenerator(it)
+                .build()
+        )
+    }
+
+    addUrlConfigurations(inputConfiguration, fileSpecBuilder)
+    addFileConfigurations(inputConfiguration, fileSpecBuilder)
+
+    fileSpecBuilder.build().writeTo(outFile)
+}
+
+private fun addFileConfigurations(
+    inputConfiguration: SafeToRunInputVerification,
+    fileSpecBuilder: FileSpec.Builder
+) {
+    inputConfiguration.fileConfiguration.forEach {
+        fileSpecBuilder.addFunction(
+            FunSpec.builder("verifyFile%s".format(it.name.capitalize()))
+                .receiver(File::class)
+                .returns(Boolean::class)
+                .addStatement(
+                    "return %M(%S)",
+                    MemberName("com.safetorun.intents.configurator", "verifyFile"),
+                    it.name
+                )
+                .build()
+        )
+    }
+}
+
+private fun addUrlConfigurations(
+    inputConfiguration: SafeToRunInputVerification,
+    fileSpecBuilder: FileSpec.Builder
+): FileSpec.Builder {
     inputConfiguration.urlConfigurations.forEach {
         fileSpecBuilder.addFunction(
             FunSpec.builder("verifyUrl%s".format(it.name.capitalize()))
@@ -49,20 +93,6 @@ internal fun generate(
         )
     }
 
-    inputConfiguration.fileConfiguration.forEach {
-        fileSpecBuilder.addFunction(
-            FunSpec.builder("verifyFile%s".format(it.name.capitalize()))
-                .receiver(File::class)
-                .returns(Boolean::class)
-                .addStatement(
-                    "return %M(%S)",
-                    MemberName("com.safetorun.intents.configurator", "verifyFile"),
-                    it.name
-                )
-                .build()
-        )
-    }
-
-    fileSpecBuilder.build().writeTo(outFile)
+    return fileSpecBuilder
 }
 

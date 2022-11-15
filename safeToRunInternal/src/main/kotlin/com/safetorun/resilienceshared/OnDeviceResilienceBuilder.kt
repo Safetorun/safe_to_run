@@ -8,7 +8,7 @@ import com.safetorun.resilienceshared.builders.RootCheckConfigurationBuilder
 import com.safetorun.resilienceshared.dto.BlacklistedAppConfiguration
 import com.safetorun.resilienceshared.dto.InstallOriginConfiguration
 import com.safetorun.resilienceshared.dto.OSCheckConfiguration
-import com.safetorun.resilienceshared.dto.OnDeviceResilience
+import com.safetorun.resilienceshared.dto.OnDeviceResilienceDto
 import com.safetorun.resilienceshared.dto.RootCheckConfiguration
 import com.safetorun.resilienceshared.dto.VerifySignatureConfiguration
 
@@ -83,7 +83,7 @@ class OnDeviceResilienceBuilder internal constructor() {
             BaseBlacklistedAppConfigurationBuilder().apply(blacklistedApp).build()
     }
 
-    internal fun build() = OnDeviceResilience(
+    internal fun build() = OnDeviceResilienceDto(
         blacklistedAppCheck?.blacklistedApps,
         verifySignatureConfiguration?.allowedSignatures,
         installOriginCheck?.allowedInstallOrigins,
