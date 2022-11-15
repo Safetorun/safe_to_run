@@ -4,7 +4,7 @@ import com.safetorun.inputverification.dto.SafeToRunInputVerificationDto
 import com.safetorun.inputverification.dto.toCore
 import com.safetorun.inputverification.model.SafeToRunInputVerification
 
-fun SafeToRunInputVerificationDto?.toCore(): SafeToRunInputVerification =
+internal fun SafeToRunInputVerificationDto?.toCore(): SafeToRunInputVerification =
     if (this != null) {
         SafeToRunInputVerification(
             urlConfigurations = urlConfigurations.map { conf -> conf.toCore() },
