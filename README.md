@@ -22,7 +22,7 @@ is safe to run, and provide you with a way to verify data from intents or deep l
 
 ## Documentation
 
-[Documentation website](http://safetorun.github.io/)
+[Documentation website](https://safetorun.gitbook.io/safe-to-run/)
 
 ## Quickstart
 
