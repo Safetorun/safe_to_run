@@ -161,5 +161,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v1.0.0
-          files: safeToRunInternal/*.jar
+          files: safeToRunInternal/build/libs/*.jar
           fail_on_unmatched_files: true
