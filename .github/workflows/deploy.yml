@@ -139,7 +139,7 @@ jobs:
           fileDir: '/home/runner/work/'
           encodedString: ${{ secrets.SIGNING_KEY }}
       - name: Build deploy
-        run: ./gradlew build publishToSonatype
+        run: ./gradlew :safeToRunInternal:shadowJar build publishToSonatype
         env:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -148,3 +148,7 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/libs/safeToRunInternal-2.1.1-all.jar
