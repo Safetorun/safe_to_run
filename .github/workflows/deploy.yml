@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: safeToRunInternal
-          path: build/libs/safeToRunInternal-*.jar
+          path: safeToRunInternal/build/libs/safeToRunInternal-*.jar
       - name: Upload Android Test APK (Pin screen)
         uses: actions/upload-artifact@v1
         with:
@@ -161,5 +161,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v1.0.0
-          files: safeToRunInternal/build/libs/*.jar
+          files: safeToRunInternal/*.jar
           fail_on_unmatched_files: true
