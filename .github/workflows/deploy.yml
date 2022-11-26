@@ -64,7 +64,7 @@ jobs:
       - name: Build plugin
         run: ./gradlew :safeToRunBuilder:shadowJar
       - name: Run build
-        run: ./gradlew build assembleDebug assembleDebugAndroidTest
+        run: ./gradlew build :safeToRunInternal:shadowJar assembleDebug assembleDebugAndroidTest
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
@@ -78,6 +78,11 @@ jobs:
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload internal library
+        uses: actions/upload-artifact@v1
+        with:
+          name: safeToRunInternal
+          path: build/libs/safeToRunInternal-*.jar
       - name: Upload Android Test APK (Pin screen)
         uses: actions/upload-artifact@v1
         with:
@@ -139,7 +144,7 @@ jobs:
           fileDir: '/home/runner/work/'
           encodedString: ${{ secrets.SIGNING_KEY }}
       - name: Build deploy
-        run: ./gradlew :safeToRunInternal:shadowJar build publishToSonatype
+        run: ./gradlew build publishToSonatype
         env:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
@@ -148,8 +153,13 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
+      - name: Download app APK
+        uses: actions/download-artifact@v1
+        with:
+          name: safeToRunInternal
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v1.0.0
-          files: build/libs/safeToRunInternal-2.1.1-all.jar
+          files: safeToRunInternal/*.jar
+          fail_on_unmatched_files: true
