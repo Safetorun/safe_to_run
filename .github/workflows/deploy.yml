@@ -151,4 +151,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: v1.0.0
           files: build/libs/safeToRunInternal-2.1.1-all.jar
