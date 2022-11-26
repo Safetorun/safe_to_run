@@ -64,7 +64,7 @@ jobs:
       - name: Build plugin
         run: ./gradlew :safeToRunBuilder:shadowJar
       - name: Run build
-        run: ./gradlew build :safeToRunInternal:shadowJar assembleDebug assembleDebugAndroidTest
+        run: ./gradlew build :safeToRunInternal:shadowJar shadowJar assembleDebug assembleDebugAndroidTest
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
@@ -79,10 +79,11 @@ jobs:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Upload internal library
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: safeToRunInternal
-          path: safeToRunInternal/build/libs/safeToRunInternal-*.jar
+          path: safeToRunInternal/build/libs/safeToRunInternal-*-all.jar
+          if-no-files-found: error
       - name: Upload Android Test APK (Pin screen)
         uses: actions/upload-artifact@v1
         with:
