@@ -165,6 +165,6 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: {{ env.version }}
+          tag_name: ${{ env.version }}
           files: safeToRunInternal/*.jar
           fail_on_unmatched_files: true
