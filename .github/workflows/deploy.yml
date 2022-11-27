@@ -158,9 +158,11 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: safeToRunInternal
+      - name: Get version number
+        run: version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` && echo "version=$version" >> $GITHUB_ENV
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v1.0.0
+          tag_name: v$version
           files: safeToRunInternal/*.jar
           fail_on_unmatched_files: true

@@ -30,3 +30,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 }
+
+task printVersion {
+    doLast {
+        println project.version
+    }
+}
