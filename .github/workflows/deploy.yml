@@ -132,7 +132,7 @@ jobs:
         run: |
           ./gradlew :safeToRunInternal:shadowJar \
           ./gradlew :safeToRunInternal:printVersion \
-          ./gradlew :safeToRunInternal:printVersion | grep "2.*.*"`\
+          ./gradlew :safeToRunInternal:printVersion | grep "2.*.*" \
           version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` \
           echo $version \
           echo "version=$version" >> $GITHUB_ENV
