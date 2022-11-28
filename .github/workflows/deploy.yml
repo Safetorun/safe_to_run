@@ -130,11 +130,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build & Get version number
         run: |
-          ./gradlew :safeToRunInternal:shadowJar \
-          ./gradlew :safeToRunInternal:printVersion \
-          ./gradlew :safeToRunInternal:printVersion | grep "2.*.*" \
-          version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` \
-          echo $version \
+          ./gradlew :safeToRunInternal:shadowJar 
+          ./gradlew :safeToRunInternal:printVersion 
+          ./gradlew :safeToRunInternal:printVersion | grep "2.*.*" 
+          version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` 
+          echo $version 
           echo "version=$version" >> $GITHUB_ENV
       - name: Get version number
         run: echo $version
