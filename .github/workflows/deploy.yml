@@ -142,7 +142,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.version }}
-          files: safeToRunInternal/*.jar
+          files: safeToRunInternal/build/libs/safeToRunInternal-*-all.jar
           fail_on_unmatched_files: true
 
   deploy:
