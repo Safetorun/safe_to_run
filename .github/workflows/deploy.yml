@@ -125,6 +125,27 @@ jobs:
 
       - name: Run Instrumentation Tests in Firebase Test Lab
         run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Dowwnload safe to run internal
+        uses: actions/download-artifact@v1
+        with:
+          name: safeToRunInternal
+      - name: Get version number
+        run: |
+          export version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` \
+          echo "version=$version" >> $GITHUB_ENV
+      - name: Get version number
+        run: echo $version
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.version }}
+          files: safeToRunInternal/*.jar
+          fail_on_unmatched_files: true
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build, firebaseTest, test, detekt]
@@ -154,17 +175,3 @@ jobs:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
-      - name: Download app APK
-        uses: actions/download-artifact@v1
-        with:
-          name: safeToRunInternal
-      - name: Get version number
-        run: |
-          export version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` \
-          echo "version=$version" >> $GITHUB_ENV
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ env.version }}
-          files: safeToRunInternal/*.jar
-          fail_on_unmatched_files: true
