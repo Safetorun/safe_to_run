@@ -6,12 +6,16 @@ plugins {
     `java-gradle-plugin`
 }
 
+val safeToRunVersion: String by project
 
-//ext {
-//    PUBLISH_GROUP_ID = 'com.safetorun'
-//    PUBLISH_VERSION = project['safeToRunVersion']
-//    PUBLISH_ARTIFACT_ID = 'safeToRunBuilder'
-//}
+ext {
+    set("PUBLISH_GROUP_ID", "com.safetorun")
+    set("PUBLISH_VERSION", "${safeToRunVersion}-alpha")
+    set("PUBLISH_ARTIFACT_ID", "safeToRunBuilder")
+}
+
+
+apply(from = "${rootProject.projectDir}/scripts/publish-module.gradle")
 
 val serializationVersion: String by project
 
