@@ -15,6 +15,9 @@ ext {
     set("PUBLISH_ARTIFACT_ID", "safeToRunBuilder")
 }
 
+group = "com.safetorun"
+version = safeToRunVersion
+
 
 apply(from = "${rootProject.projectDir}/scripts/publish-module.gradle")
 
