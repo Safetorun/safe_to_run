@@ -96,7 +96,7 @@ fun urlConfiguration(config: UrlConfigVerifier) =
  *
  * @receiver string url
  *
- * @return true if the check failed, false otherwise
+ * @return true if the check passed, false otherwise
  */
 fun String.urlVerification(config: UrlConfigVerifier) =
     (UrlConfigImpl() as UrlConfig)
