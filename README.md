@@ -5,7 +5,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dllewellyn_safe_to_run&metric=alert_status)](https://sonarcloud.io/dashboard?id=dllewellyn_safe_to_run) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Safe%20To%20Run-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/8330)
 [![codecov](https://codecov.io/gh/Safetorun/safe_to_run/branch/master/graph/badge.svg?token=2CUARL5E6B)](https://codecov.io/gh/Safetorun/safe_to_run)
-[![Slack channel](https://img.shields.io/badge/chat-slack-blue.svg?logo=slack)](https://safetorun.github.io/slack?utm_source=github&utm_medium=readme)
+[![Slack channel](https://img.shields.io/badge/chat-slack-blue.svg?logo=slack)](https://safetorun.com/#/slack?utm_source=github&utm_medium=readme)
 
 Safe to run (android library)
 ![Maven central - SafeToRun](https://maven-badges.herokuapp.com/maven-central/com.safetorun/safetorun/badge.svg)
