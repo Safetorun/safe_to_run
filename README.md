@@ -16,8 +16,6 @@ Core
 Input validation
 ![Maven central - Input validation](https://maven-badges.herokuapp.com/maven-central/com.safetorun/inputverification/badge.svg)
 
-
-
 The purpose of this library is to provide a simple and extensible framework you can use in order to check your app
 is safe to run, and provide you with a way to verify data from intents or deep links is safe.  
 
