@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.databinding.ActivityWebViewBinding
 import com.safetorun.intents.url.params.AllowedType
-import com.safetorun.intents.url.urlConfiguration
 import com.safetorun.intents.url.urlVerification
 import com.safetorun.intents.verify
 
@@ -39,7 +38,7 @@ class WebViewActivity : AppCompatActivity() {
 
             val result = intent.verify(baseContext) {
 
-                urlConfiguration {
+                urlConfig {
                     "safetorun.com".allowHost()
                     allowParameter {
                         allowedType = AllowedType.String

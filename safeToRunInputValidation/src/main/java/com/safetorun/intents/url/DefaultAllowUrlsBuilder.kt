@@ -1,5 +1,6 @@
 package com.safetorun.intents.url
 
+import com.safetorun.inputverification.builders.UrlConfigurationBuilder
 import com.safetorun.intents.url.util.UrlMatcher
 import com.safetorun.intents.url.util.UrlMatcherImpl
 
@@ -18,6 +19,10 @@ internal class DefaultAllowUrlsBuilder internal constructor(
 
     override fun UrlConfig.addConfiguration() {
         allowedHosts.add(this)
+    }
+
+    override fun urlConfig(bloc: UrlConfigVerifier) {
+        allowedHosts.add(UrlConfigImpl().apply(bloc))
     }
 
     override fun UrlConfig.unaryPlus() {
