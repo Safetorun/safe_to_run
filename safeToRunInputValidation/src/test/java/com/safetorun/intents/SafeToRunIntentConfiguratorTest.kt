@@ -55,7 +55,7 @@ internal class SafeToRunIntentConfiguratorTest {
         val verifierName = "exists"
         var called = false
         registerIntentVerification(verifierName) {
-            +urlConfiguration { "safetorun.com".allowHost() }
+            urlConfiguration { "safetorun.com".allowHost() }
         }
 
         Intent().putExtra("url", SAFETORUN).verifyUrl(verifierName) {

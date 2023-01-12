@@ -69,6 +69,43 @@ internal class AllowUrlsBuilderImplTest {
     }
 
     @Test
+    fun `test that url check fails if a host is not allowed no addConfiguration`() {
+        // Given
+        with(urlsBuilder) {
+            urlConfig {
+                "somethingelse".allowHost()
+            }
+        }
+
+        // When then
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isFalse()
+    }
+
+    @Test
+    fun `test that url check passes if a host is allowed - no addConfiguration`() {
+        // Given
+        with(urlsBuilder) {
+            urlConfig  {
+                HOST.allowHost()
+            }
+        }
+
+        // When then
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()
+    }
+
+    @Test
+    fun `test that adding a specific exemption for a URL allows the exemption - no addConfiguration`() {
+        with(urlsBuilder) {
+            urlConfig  {
+                URL.allowUrl()
+            }
+        }
+
+        assertThat(urlsBuilder.doesUrlCheckPass(listOf(URL))).isTrue()
+    }
+
+    @Test
     fun `test that check fails if there is one allowed URL and one disallowed URL`() {
         listOf(URL, ANOTHER_URL)
             .verifyUrls {

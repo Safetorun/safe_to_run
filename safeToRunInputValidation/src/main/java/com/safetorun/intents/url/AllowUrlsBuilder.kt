@@ -1,12 +1,7 @@
 package com.safetorun.intents.url
 
+import com.safetorun.inputverification.builders.UrlConfigurationBuilder
 import java.lang.Deprecated
-
-
-/**
- * Alias for url verification builder
- */
-typealias UrlConfigVerifier = UrlConfig.() -> Unit
 
 /**
  * The builder for allowing URLs to pass the verifiation service
@@ -28,23 +23,27 @@ interface AllowUrlsBuilder {
      * Host to allow
      *
      * @deprecated
-     *  This method will be removed in version 3.0, use addConfiguration instead 
+     *  This method will be removed in version 3.0, use addConfiguration instead
+     *
      * @receiver the host to allow
      */
     @Deprecated
     fun UrlConfig.addConfiguration()
     
     /**
-    * Add configuration for a URL 
-    * 
-    * @param bloc a builder for URL configuration 
+    * Add configuration for a URL
+    *
+    * @param bloc a builder for URL configuration
     */
-    fun addConfiguration(bloc : UrlConfigVerifier)
+    fun urlConfig(bloc: UrlConfigVerifier)
     
     /**
      * Allow using+ function to add a configuration
+     * @deprecated
+     *  This method will be removed in version 3.0, use addConfiguration instead
      *
      * @receiver the URL Config to add
      */
+    @Deprecated
     operator fun UrlConfig.unaryPlus()
 }
