@@ -38,7 +38,7 @@ class WebViewActivity : AppCompatActivity() {
 
             val result = intent.verify(baseContext) {
 
-                urlConfiguration {
+                urlConfig {
                     "safetorun.com".allowHost()
                     allowParameter {
                         allowedType = AllowedType.String
