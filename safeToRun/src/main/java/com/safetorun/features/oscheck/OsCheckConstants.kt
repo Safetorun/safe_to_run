@@ -16,4 +16,7 @@ object OsCheckConstants {
 
     /** Type of device for genymotion */
     const val GENYMOTION_MANUFACTURER = "Genymotion"
+
+    /** If the manufacturer is Xiaomi */
+    const val XIAOMI = "Xiaomi"
 }
