@@ -7,7 +7,7 @@ internal class SafeToRunKtTest {
 
     @Test
     fun `test that safe to run can log on success`() {
-        safeToRun(
+        safeToRunWithLogger(
             logger = { assertThat(it).isTrue() },
             { true }
         )
@@ -15,7 +15,7 @@ internal class SafeToRunKtTest {
 
     @Test
     fun `test that safe to run can log on failure`() {
-        safeToRun(
+        safeToRunWithLogger(
             logger = { assertThat(it).isFalse() },
             { false }
         )

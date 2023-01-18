@@ -11,7 +11,7 @@ typealias SafeToRunCheck = () -> Boolean
  *
  * @param safeToRunChecks list of checks for warnings
  */
-inline fun safeToRun(
+inline fun safeToRunWithLogger(
     crossinline logger: (Boolean) -> Unit,
     vararg safeToRunChecks: SafeToRunCheck
 ): SafeToRunCheck = safeToRun(logger, safeToRunChecks.toList())
