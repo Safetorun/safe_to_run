@@ -5,6 +5,31 @@ package com.safetorun.inline
  */
 typealias SafeToRunCheck = () -> Boolean
 
+
+/**
+ * Configure
+ *
+ * @param safeToRunChecks list of checks for warnings
+ */
+inline fun safeToRun(
+    crossinline logger: (Boolean) -> Unit,
+    vararg safeToRunChecks: SafeToRunCheck
+): SafeToRunCheck = safeToRun(logger, safeToRunChecks.toList())
+
+
+/**
+ * Configure
+ *
+ * @param safeToRunChecks list of checks for warnings
+ */
+inline fun safeToRun(
+    crossinline logger: (Boolean) -> Unit,
+    safeToRunChecks: List<SafeToRunCheck>
+): SafeToRunCheck = {
+    safeToRun(safeToRunChecks).invoke()
+        .also { logger(it) }
+}
+
 /**
  * Configure
  *
@@ -28,11 +53,7 @@ inline fun safeToRun(
 inline fun safeToRun(
     vararg safeToRunChecks: SafeToRunCheck
 ): SafeToRunCheck {
-    return {
-        safeToRunChecks
-            .map { safeToRunCheck -> safeToRunCheck.invoke() }
-            .any { failed -> failed }
-    }
+    return safeToRun(safeToRunChecks.toList())
 }
 
 /**
