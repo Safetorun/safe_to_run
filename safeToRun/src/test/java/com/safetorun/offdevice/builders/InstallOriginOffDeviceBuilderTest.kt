@@ -24,12 +24,12 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
             .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        assertThat(result.buildPartial().installOrigin.installOriginPackageName).isEqualTo(PACKAGE_NAME)
+        assertThat(result.build().installOrigin.installOriginPackageName).isEqualTo(PACKAGE_NAME)
     }
 
     fun `test that install origin off device builder populates correctly if null`() {
         // Given
-        every { installOriginQuery.getInstallPackageName() } returns null
+        every { installOriginQuery.getInstallPackageName() } returns ""
         val installOriginQueryOffDeviceBuilder = InstallOriginOffDeviceBuilder(installOriginQuery)
 
         // When
@@ -37,7 +37,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
             .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        assertThat(result.buildPartial().installOrigin.installOriginPackageName).isNull()
+        assertThat(result.build().installOrigin.installOriginPackageName).isEqualTo("Not found")
     }
 
     companion object {

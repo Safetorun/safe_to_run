@@ -28,7 +28,7 @@ internal class CompositeBuilderTest : TestCase() {
         val result = compositeBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        with(result.buildPartial()) {
+        with(result.build()) {
             assertThat(signatureVerification.signatureVerificationString).isEqualTo(signature)
             assertThat(deviceId).isEqualTo(deviceId)
         }

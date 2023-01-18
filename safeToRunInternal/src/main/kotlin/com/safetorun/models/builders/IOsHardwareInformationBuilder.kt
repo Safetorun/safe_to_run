@@ -34,10 +34,4 @@ interface IOsHardwareInformationBuilder {
      * if all required params are not provided
      */
     fun buildHardwareInformation(): OsHardwareInformation
-
-    /**
-     * Build partial hardware information. Uses empty strings
-     * if all required params are not provied
-     */
-    fun buildPartialHardwareInformation(): OsHardwareInformation
 }

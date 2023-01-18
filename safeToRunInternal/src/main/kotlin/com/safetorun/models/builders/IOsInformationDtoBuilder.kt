@@ -1,5 +1,6 @@
 package com.safetorun.models.builders
 
+import com.safetorun.models.core.OsCheck
 import com.safetorun.models.models.OsCheckDto
 
 internal interface IOsInformationDtoBuilder : IOsHardwareInformationBuilder {
@@ -32,6 +33,9 @@ internal interface IOsInformationDtoBuilder : IOsHardwareInformationBuilder {
      * Add a device
      */
     fun device(device: String)
-    fun buildOsCheck(): OsCheckDto
-    fun buildPartialOsCheck(): OsCheckDto
+
+    /**
+     * Build the OS Check
+     */
+    fun buildOsCheck(): OsCheck
 }

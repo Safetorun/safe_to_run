@@ -10,7 +10,7 @@ internal class InstallOriginCheck(
 ) : SafeToRunCheck {
 
     override fun canRun(): SafeToRunReport {
-        return installOriginQuery.getInstallPackageName()?.let { installingPackage ->
+        return installOriginQuery.getInstallPackageName().let { installingPackage ->
             if (allowedPackages.map { it.originPackage }.contains(installingPackage)) {
                 SafeToRunReport.SafeToRunReportSuccess(installOriginStrings.packageWasInAllowedList())
             } else {
@@ -19,7 +19,7 @@ internal class InstallOriginCheck(
                     installOriginStrings.packageWasNotInAllowedList(installingPackage)
                 )
             }
-        } ?: SafeToRunReport.SafeToRunReportFailure(FAILURE_REASON, installOriginStrings.couldNotFindPackage())
+        }
     }
 
     companion object {
