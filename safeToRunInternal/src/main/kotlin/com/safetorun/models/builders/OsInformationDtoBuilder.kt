@@ -1,7 +1,7 @@
 package com.safetorun.models.builders
 
 import com.safetorun.models.models.OsCheckDto
-import com.safetorun.models.models.OsHardwareInformation
+import com.safetorun.models.models.OsHardwareInformationDto
 
 internal class OsInformationDtoBuilder : IOsInformationDtoBuilder,
     IOsHardwareInformationBuilder by OsHardwareInformationBuilder() {
@@ -91,7 +91,7 @@ internal class OsInformationDtoBuilder : IOsInformationDtoBuilder,
     }
 
     private fun OsCheckDto.addValues(
-        hardwareInformation: OsHardwareInformation,
+        hardwareInformation: OsHardwareInformationDto,
         osVersion: String,
         manufacturer: String,
         model: String,

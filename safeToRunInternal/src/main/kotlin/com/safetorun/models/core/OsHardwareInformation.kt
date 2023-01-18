@@ -1,4 +1,4 @@
-package com.safetorun.models.models
+package com.safetorun.models.core
 
 /**
  * OS Hardware information object
