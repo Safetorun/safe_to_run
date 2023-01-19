@@ -2,6 +2,7 @@ package com.safetorun.features.oscheck.emulator
 
 import android.os.Build
 import com.safetorun.features.oscheck.OsCheckConstants
+import com.safetorun.features.oscheck.OsCheckConstants.XIAOMI
 
 /**
  * Return true if we're running on an emulator
@@ -9,9 +10,9 @@ import com.safetorun.features.oscheck.OsCheckConstants
  * @return true if we're running on avd
  */
 inline fun banAvdEmulatorCheck() =
-    Build.BOOTLOADER == OsCheckConstants.UNKNOWN ||
+    isXiaomi().not() && (Build.BOOTLOADER == OsCheckConstants.UNKNOWN ||
             Build.DEVICE == OsCheckConstants.AVD_DEVICE_TYPE ||
-            Build.BOARD == OsCheckConstants.AVD_EMULATOR_BOARD
+            Build.BOARD == OsCheckConstants.AVD_EMULATOR_BOARD)
 
 /**
  * Ban bluestacks
@@ -19,14 +20,21 @@ inline fun banAvdEmulatorCheck() =
  * @return true if we're running on bluestacks
  */
 inline fun banBluestacksEmulatorCheck() =
-    Build.BOOTLOADER == OsCheckConstants.UNKNOWN
+    isXiaomi().not() && Build.BOOTLOADER == OsCheckConstants.UNKNOWN
 
 /**
- * Ben the genymotion emulator
+ * Ban the genymotion emulator
  *
- * @return true if we're runing on the genymotion emulator
+ * @return true if we're running on the genymotion emulator
  */
 inline fun banGenymotionEmulatorCheck() =
-    Build.BOARD == OsCheckConstants.UNKNOWN ||
+    isXiaomi().not() && (Build.BOARD == OsCheckConstants.UNKNOWN ||
             Build.MANUFACTURER == OsCheckConstants.GENYMOTION_MANUFACTURER ||
-            Build.BOOTLOADER == OsCheckConstants.UNKNOWN
+            Build.BOOTLOADER == OsCheckConstants.UNKNOWN)
+
+/**
+ * Returns true if the device is a Xiaomi device
+ *
+ * @return true if we're on a Xiaomi device
+ */
+inline fun isXiaomi() = Build.MANUFACTURER == XIAOMI
