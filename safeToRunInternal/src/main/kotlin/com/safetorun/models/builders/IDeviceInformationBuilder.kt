@@ -1,7 +1,8 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.core.DeviceInformation
-
+/**
+ * Builder for device information
+ */
 interface IDeviceInformationBuilder {
     /**
      * Add installed application
