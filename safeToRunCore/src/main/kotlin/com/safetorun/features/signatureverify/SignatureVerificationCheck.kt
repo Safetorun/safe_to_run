@@ -23,7 +23,6 @@ internal class SignatureVerificationCheck(
     }
 
     companion object {
-        private const val SIGNATURE_NOT_FOUND = "sg-nf"
         private const val SIGNATURE_NOT_MATCH = "sg-nf"
     }
 }
