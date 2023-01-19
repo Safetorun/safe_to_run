@@ -16,10 +16,6 @@ apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 group 'com.safetorun'
 version project['safeToRunVersion']
 
-repositories {
-    mavenCentral()
-}
-
 def directory = "$rootProject.projectDir/scripts/dependencies/"
 apply from: "$directory/test_dependencies.gradle"
 

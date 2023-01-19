@@ -59,7 +59,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":safeToRun")
     implementation project(":safeToRunInputValidation")
     implementation("com.auth0:java-jwt:$jwtVersion")
