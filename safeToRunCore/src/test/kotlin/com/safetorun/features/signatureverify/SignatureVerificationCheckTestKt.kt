@@ -55,7 +55,6 @@ internal class SignatureVerificationCheckTestKt : TestCase() {
     companion object {
         private const val SUCCESS_MESSAGE = "Success"
         private const val FAILURE_MESSAGE = "Failure message %s"
-        private const val NOT_FOUND_MESSAGE = "Not found "
         private const val SIGNATURE = "WgtvIJ0A//RKGHShVDQRPdd/9ks="
     }
 }
