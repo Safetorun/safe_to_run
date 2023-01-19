@@ -32,7 +32,7 @@ internal class SafeToRunConfigurationTest {
 
 
     @Test
-    fun `test that blacklisted app builder can build a configuration with an allowed install origin`() {
+    fun `test that blacklisted app builder can build a configuration with an allowed origin`() {
         val allowedOrigin = "com.android.vending"
 
         val str = safeToRun {
