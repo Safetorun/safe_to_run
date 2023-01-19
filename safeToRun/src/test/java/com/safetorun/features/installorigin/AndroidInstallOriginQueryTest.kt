@@ -37,7 +37,7 @@ internal class AndroidInstallOriginQueryTest : TestCase() {
         every { context.resources } returns SharedInstallOrigin.setupAMockResources()
     }
 
-    fun `test that if the package returns null we return the null message`() {
+    fun `test that if the package returns empty we get the right message`() {
         // Given
         versions.forEach { version ->
             every { packageManager.getInstallerPackageName(any()) } returns null
@@ -50,7 +50,7 @@ internal class AndroidInstallOriginQueryTest : TestCase() {
             val result = installOriginQuery.getInstallPackageName()
 
             // Then
-            assertThat(result).isNull()
+            assertThat(result).isEqualTo("Not found")
         }
     }
 
