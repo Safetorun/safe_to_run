@@ -22,10 +22,6 @@ apply from: "$directory/test_dependencies.gradle"
 group 'com.safetorun'
 version project['safeToRunVersion']
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")

@@ -1,14 +1,14 @@
 package com.andro.secure.intents
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
 import com.andro.secure.R
 import com.andro.secure.databinding.ActivityBouncableBinding
 import com.safetorun.intents.verify
 
-class BouncableActivity : AppCompatActivity() {
+class BouncableActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

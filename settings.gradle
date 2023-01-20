@@ -1,3 +1,12 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+
 include ':safeToRun', ':app', ':safeToRunCore', ':safeToRunInternal', ':safeToRunInputValidation', ':safeToRunBuilder'
 rootProject.name = "Safe to run"
 
