@@ -5,7 +5,7 @@ import com.safetorun.models.models.DeviceInformationDto
 import com.safetorun.models.models.InstallOriginDto
 import com.safetorun.models.models.OsCheckDto
 import com.safetorun.models.models.SignatureVerificationDto
-import java.util.UUID
+import java.util.*
 
 /**
  * Device information DTO builder.
@@ -14,13 +14,11 @@ import java.util.UUID
  */
 class DeviceInformationDtoBuilder internal constructor(
     private val apiKey: String,
-    private val osInformation: IOsInformationDtoBuilder = OsInformationDtoBuilder()
-) : IOsInformationDtoBuilder by osInformation {
+    private val deviceInformationBuilder: DeviceInformationBuilder = DeviceInformationBuilder()
+) : IDeviceInformationBuilder by deviceInformationBuilder,
+    IOsInformationDtoBuilder by deviceInformationBuilder {
 
     private var _deviceId = UUID.randomUUID().toString()
-    private val _installedApplications: MutableList<String> = mutableListOf()
-    private var _signature: String? = null
-    private var _installOrigin: String? = null
 
     /**
      * Add device ID
@@ -30,77 +28,32 @@ class DeviceInformationDtoBuilder internal constructor(
     }
 
     /**
-     * Add installed application
-     */
-    fun installedApplication(packageName: String) {
-        _installedApplications.add(packageName)
-    }
-
-    /**
-     * Add signature
-     */
-    fun signature(signature: String?) {
-        _signature = signature
-    }
-
-    /**
-     * Build a full device information DTO. Will pass
-     * blank items if anything is not provided
+     * Build a device information DTO
      *
-     * @return a device information object
+     * @return a device information dto
      */
-    fun buildPartial(): DeviceInformationDto {
-        return buildDtoForUnwrappedValues(
-            buildPartialOsCheck(),
-            _installOrigin,
-            _signature,
+    fun build() = deviceInformationBuilder.build().run {
+        DeviceInformationDto(
+            apiKey,
+            _deviceId,
+            osCheck = osCheck.run {
+                OsCheckDto(
+                    osVersion,
+                    manufacturer,
+                    model,
+                    board,
+                    bootloader,
+                    cpuAbi,
+                    host,
+                    hardware,
+                    device
+                )
+            },
+            installOrigin = InstallOriginDto(installOrigin.installOriginPackageName),
+            blacklistedApp = BlacklistedAppsDto(blacklistedApp.installedPackages),
+            signatureVerification = SignatureVerificationDto(signatureVerification.signature)
         )
     }
-
-    /**
-     * Build a full device information DTO. Will exception if
-     * there are missing values not added
-     *
-     *
-     * @return a device information object
-     * @throws IllegalArgumentException if any items are null
-     */
-    fun build(): DeviceInformationDto {
-        return buildDtoForUnwrappedValues(
-            buildOsCheck(),
-            _installOrigin,
-            _signature
-        )
-    }
-
-    private fun buildDtoForUnwrappedValues(
-        osVersionCheck: OsCheckDto,
-        installOrigin: String?,
-        signature: String?
-    ) =
-        DeviceInformationDto().apply {
-            this.apiKey = this@DeviceInformationDtoBuilder.apiKey
-            deviceId = _deviceId
-            osCheck = osVersionCheck
-            this.installOrigin = InstallOriginDto().apply {
-                this.installOriginPackageName = installOrigin
-            }
-            blacklistedApp = BlacklistedAppsDto().apply { installedPackages = _installedApplications }
-            signatureVerification = SignatureVerificationDto().apply {
-                signatureVerificationString = signature
-            }
-        }
-
-    /**
-     * Add install origin
-     */
-    fun installOrigin(installOrigin: String?) {
-        _installOrigin = installOrigin
-    }
-}
-
-internal fun unwrapOrThrow(field: String?, fieldName: String): String {
-    return field ?: throw IllegalArgumentException("$fieldName cannot be null")
 }
 
 /**
@@ -109,7 +62,10 @@ internal fun unwrapOrThrow(field: String?, fieldName: String): String {
  * @param apiKey apiKey of the backend
  * @param block builder function to run
  */
-fun deviceInformationBuilder(apiKey: String, block: DeviceInformationDtoBuilder.() -> Unit): DeviceInformationDto {
+fun deviceInformationBuilder(
+    apiKey: String,
+    block: DeviceInformationDtoBuilder.() -> Unit
+): DeviceInformationDto {
     return with(DeviceInformationDtoBuilder(apiKey)) {
         block()
         build()

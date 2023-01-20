@@ -23,18 +23,6 @@ internal class InstallOriginCheckTest : TestCase() {
         every { installOriginQuery.getInstallPackageName() } returns PACKAGE_NAME_RETURNS
     }
 
-    fun `test that if the package returns null we return the null message`() {
-        // Given
-        every { installOriginQuery.getInstallPackageName() } returns null
-        val installOriginCheck = InstallOriginCheck(strings, listOf(InstallOrigin("")), installOriginQuery)
-
-        // When
-        val result = installOriginCheck.canRun() as SafeToRunReport.SafeToRunReportFailure
-
-        // Then
-        assertThat(result.failureMessage).isEqualTo(NOT_FOUND)
-    }
-
     fun `test that if the package returns a different package to allowed it will return an error`() {
         // Given
         val installOriginCheck = InstallOriginCheck(strings, listOf(InstallOrigin("")), installOriginQuery)

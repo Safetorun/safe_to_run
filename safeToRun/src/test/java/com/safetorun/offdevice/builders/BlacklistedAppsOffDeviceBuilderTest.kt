@@ -24,7 +24,7 @@ internal class BlacklistedAppsOffDeviceBuilderTest : TestCase() {
             blacklistedAppOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        assertThat(result.buildPartial().blacklistedApp.installedPackages).isEqualTo(installedPackages)
+        assertThat(result.build().blacklistedApp.installedPackages).isEqualTo(installedPackages)
     }
 
     companion object {

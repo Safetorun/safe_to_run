@@ -9,5 +9,5 @@ fun interface SignatureVerificationQuery {
      *
      * @return the signature or null if not available
      */
-    fun retrieveSignatureForApplication(): String?
+    fun retrieveSignatureForApplication(): String
 }

@@ -52,31 +52,9 @@ internal class SignatureVerificationCheckTestKt : TestCase() {
         Truth.assertThat(reportResult.successMessage).isEqualTo(SUCCESS_MESSAGE)
     }
 
-    fun `test that we fail a signature if it is not possible to generate`() {
-        // Given
-        val mockStrings = mockk<SignatureVerificationStrings>().apply {
-            every { signatureNotFoundMessage() } returns NOT_FOUND_MESSAGE
-        }
-
-        every { mockQuery.retrieveSignatureForApplication() } returns null
-
-        // When
-        val reportResult =
-            verifySignatureConfiguration(
-                mockStrings,
-                mockQuery,
-                SIGNATURE,
-            )
-                .canRun() as SafeToRunReport.SafeToRunReportFailure
-
-        // Then
-        Truth.assertThat(reportResult.failureMessage).isEqualTo(NOT_FOUND_MESSAGE)
-    }
-
     companion object {
         private const val SUCCESS_MESSAGE = "Success"
         private const val FAILURE_MESSAGE = "Failure message %s"
-        private const val NOT_FOUND_MESSAGE = "Not found "
         private const val SIGNATURE = "WgtvIJ0A//RKGHShVDQRPdd/9ks="
     }
 }

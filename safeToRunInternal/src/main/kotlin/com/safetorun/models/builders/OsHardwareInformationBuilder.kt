@@ -1,6 +1,6 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.models.OsHardwareInformation
+import com.safetorun.models.core.OsHardwareInformation
 
 internal class OsHardwareInformationBuilder : IOsHardwareInformationBuilder {
     private val _cpuAbis = mutableListOf<String>()
@@ -29,15 +29,8 @@ internal class OsHardwareInformationBuilder : IOsHardwareInformationBuilder {
     }
 
    override fun buildHardwareInformation(): OsHardwareInformation {
-        val board: String = unwrapOrThrow(_board, "Board")
-        val hardware: String = unwrapOrThrow(_hardware, "Hardware")
-
-        return OsHardwareInformation(_cpuAbis, board, hardware)
-    }
-
-    override fun buildPartialHardwareInformation(): OsHardwareInformation {
-        val board: String = _board ?: ""
-        val hardware: String = _hardware ?: ""
+       val board: String = _board ?: ""
+       val hardware: String = _hardware ?: ""
         return OsHardwareInformation(_cpuAbis, board, hardware)
     }
 }

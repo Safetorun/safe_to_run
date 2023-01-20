@@ -20,12 +20,12 @@ const val AMAZON_STORE = "com.amazon.venezia"
  * @param versionNumber the version number that we're running on
  */
 @SuppressLint("NewApi")
-fun Context.getInstaller(versionNumber: Int = Build.VERSION.SDK_INT): String? {
+fun Context.getInstaller(versionNumber: Int = Build.VERSION.SDK_INT): String {
     return if (versionNumber >= Build.VERSION_CODES.R) {
         packageManager.getInstallSourceInfo(packageName).installingPackageName
     } else {
         packageManager.getInstallerPackageName(packageName)
-    }
+    } ?: "Not found"
 }
 
 /**

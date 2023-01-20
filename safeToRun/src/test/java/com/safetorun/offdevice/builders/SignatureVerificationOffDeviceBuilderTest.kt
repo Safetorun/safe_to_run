@@ -23,19 +23,19 @@ internal class SignatureVerificationOffDeviceBuilderTest : TestCase() {
         val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        assertThat(result.buildPartial().signatureVerification.signatureVerificationString).isEqualTo(SIGNATURE_SAMPLE)
+        assertThat(result.build().signatureVerification.signatureVerificationString).isEqualTo(SIGNATURE_SAMPLE)
     }
 
     fun `test that signature verification query will return the expected signature when null`() {
         // Given
-        every { signatureVerificationQuery.retrieveSignatureForApplication() } returns null
+        every { signatureVerificationQuery.retrieveSignatureForApplication() } returns ""
         val signatureVerificationOffDeviceBuilder = SignatureVerificationOffDeviceBuilder(signatureVerificationQuery)
 
         // When
         val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        assertThat(result.buildPartial().signatureVerification.signatureVerificationString).isNull()
+        assertThat(result.build().signatureVerification.signatureVerificationString).isEqualTo("")
     }
 
     companion object {

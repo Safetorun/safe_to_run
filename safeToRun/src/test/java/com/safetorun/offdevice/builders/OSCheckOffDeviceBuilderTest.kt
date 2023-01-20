@@ -27,7 +27,7 @@ internal class OSCheckOffDeviceBuilderTest : TestCase() {
         val osCheckOffDeviceBuilder = OSCheckOffDeviceBuilder(osQuery)
         val result = with(deviceInformationBuilder("")) {
             osCheckOffDeviceBuilder.buildOffDeviceResultBuilder(this)
-            buildPartial()
+            build()
         }
 
         assertThat(result.osCheck.osVersion).isEqualTo(OS_VERSION.toString())

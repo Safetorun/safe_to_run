@@ -10,5 +10,5 @@ fun interface InstallOriginQuery {
      * @return install poackage name or null if not
      * found
      */
-    fun getInstallPackageName(): String?
+    fun getInstallPackageName(): String
 }

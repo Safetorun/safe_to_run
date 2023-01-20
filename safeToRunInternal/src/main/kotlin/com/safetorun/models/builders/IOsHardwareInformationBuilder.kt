@@ -1,6 +1,6 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.models.OsHardwareInformation
+import com.safetorun.models.core.OsHardwareInformation
 
 /**
  * OS Hardware information builder. Use to generate a [OsHardwareInformation]
@@ -34,10 +34,4 @@ interface IOsHardwareInformationBuilder {
      * if all required params are not provided
      */
     fun buildHardwareInformation(): OsHardwareInformation
-
-    /**
-     * Build partial hardware information. Uses empty strings
-     * if all required params are not provied
-     */
-    fun buildPartialHardwareInformation(): OsHardwareInformation
 }

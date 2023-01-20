@@ -1,7 +1,6 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.models.OsCheckDto
-import com.safetorun.models.models.OsHardwareInformation
+import com.safetorun.models.core.OsCheck
 
 internal class OsInformationDtoBuilder : IOsInformationDtoBuilder,
     IOsHardwareInformationBuilder by OsHardwareInformationBuilder() {
@@ -57,23 +56,7 @@ internal class OsInformationDtoBuilder : IOsInformationDtoBuilder,
         this._device = device
     }
 
-    override fun buildOsCheck(): OsCheckDto {
-        val osVersion = unwrapOrThrow(_osVersion, "Os version")
-        val manufacturer = unwrapOrThrow(_manufacturer, "Manufacturer")
-        val model = unwrapOrThrow(_model, "Model")
-        val bootloader: String = unwrapOrThrow(_bootloader, "Bootloader")
-        val host: String = unwrapOrThrow(_host, "Host")
-        val device: String = unwrapOrThrow(_device, "Device")
-        return buildOsCheckDto(host, bootloader, device)
-            .addValues(
-                buildPartialHardwareInformation(),
-                osVersion,
-                manufacturer,
-                model
-            )
-    }
-
-    override fun buildPartialOsCheck(): OsCheckDto {
+    override fun buildOsCheck(): OsCheck {
         val osVersion = _osVersion ?: ""
         val manufacturer = _manufacturer ?: ""
         val model = _model ?: ""
@@ -81,38 +64,18 @@ internal class OsInformationDtoBuilder : IOsInformationDtoBuilder,
         val host: String = _host ?: ""
         val device: String = _device ?: ""
 
-        return buildOsCheckDto(host, bootloader, device)
-            .addValues(
-                buildPartialHardwareInformation(),
+        return buildHardwareInformation().run {
+            OsCheck(
                 osVersion,
                 manufacturer,
-                model
+                model,
+                board,
+                bootloader,
+                cpuAbis,
+                host,
+                hardware,
+                device
             )
-    }
-
-    private fun OsCheckDto.addValues(
-        hardwareInformation: OsHardwareInformation,
-        osVersion: String,
-        manufacturer: String,
-        model: String,
-    ) = apply {
-        this.osVersion = osVersion
-        this.manufacturer = manufacturer
-        this.model = model
-        this.cpuAbi = hardwareInformation.cpuAbis
-        this.board = hardwareInformation.board
-        this.hardware = hardwareInformation.hardware
-    }
-
-    private fun buildOsCheckDto(
-        host: String,
-        bootloader: String,
-        device: String
-    ): OsCheckDto {
-        return OsCheckDto().apply {
-            this.host = host
-            this.bootloader = bootloader
-            this.device = device
         }
     }
 }
