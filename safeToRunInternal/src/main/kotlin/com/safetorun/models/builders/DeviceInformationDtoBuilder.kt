@@ -27,6 +27,11 @@ class DeviceInformationDtoBuilder internal constructor(
         _deviceId = deviceId
     }
 
+    /**
+     * Build a device information DTO
+     *
+     * @return a device information dto
+     */
     fun build() = deviceInformationBuilder.build().run {
         DeviceInformationDto(
             apiKey,
