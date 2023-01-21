@@ -3,3 +3,5 @@ codecov:
 ignore:
   - "app/**/*"
   - "safetorunpinscreen/src/main/java/io/github/dllewellyn/safetorun/pinscreen/SafeToRunStorage.kt"
+  - "safetorunpinscreen/**/*"
+  - "safeToRunBuilder/**/*"
