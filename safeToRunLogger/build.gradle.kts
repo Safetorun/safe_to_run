@@ -3,6 +3,8 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id ("org.jetbrains.kotlin.plugin.serialization").version("1.5.0")
+    id("org.jetbrains.kotlinx.kover")
+
 }
 
 val coroutinesVersion: String by project

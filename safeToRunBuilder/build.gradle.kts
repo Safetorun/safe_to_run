@@ -5,6 +5,8 @@ plugins {
     id("org.jetbrains.dokka")
     id("com.github.johnrengelman.shadow") version "5.0.0"
     `java-gradle-plugin`
+    id("org.jetbrains.kotlinx.kover")
+
 }
 
 val safeToRunVersion: String by project

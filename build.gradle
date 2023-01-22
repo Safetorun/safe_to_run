@@ -33,5 +33,8 @@ apply from: "${rootDir}/scripts/publish-root.gradle"
 apply plugin: 'org.owasp.dependencycheck'
 
 kover {
+    koverMerged {
+        enable()
+    }
     runAllTestsForProjectTask = true
 }
