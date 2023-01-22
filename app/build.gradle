@@ -50,6 +50,7 @@ android {
             buildConfigField "String", "API_KEY", "\"$apiKey\""
         }
     }
+    namespace 'com.andro.secure'
 }
 
 dependencies {
