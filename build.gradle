@@ -37,6 +37,9 @@ kover {
         enable()
 
         filters {
+            classes {
+                excludes.addAll("com.safetorun.logger.*Test")
+            }
             projects {
                 excludes.addAll(":app", ":safetorunpinscreen", ":safeToRunBuilder")
             }
