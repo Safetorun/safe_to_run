@@ -41,6 +41,11 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.9.0
+        with:
+          java-version: 11
+          cache: gradle
       - uses: actions/checkout@v2
       - name: Build plugin
         run: ./gradlew :safeToRunBuilder:shadowJar
