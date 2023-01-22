@@ -2,7 +2,11 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id ("org.jetbrains.kotlin.plugin.serialization").version("1.5.0")
 }
+
+val coroutinesVersion: String by project
+val serializationVersion: String by project
 
 kotlin {
     android()
@@ -18,16 +22,28 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
+                implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(project(":safeToRunInputValidation"))
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
             }
         }
     }
@@ -35,10 +51,10 @@ kotlin {
 
 android {
     namespace = "com.safetorun.logger"
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
     }
 }
 

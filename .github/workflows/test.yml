@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on: push
+
+jobs:
+  detekt:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build plugin
+        run: ./gradlew :safeToRunBuilder:shadowJar
+      - name: Run Detekt
+        run: ./gradlew detekt
+
+  test:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build plugin
+        run: ./gradlew :safeToRunBuilder:shadowJar
+      - name: Run tests
+        run: ./gradlew test && bash scripts/coverage.sh
+        env:
+          SERVER_URL: 'http://example.com'
+          API_KEY: 'apikey'

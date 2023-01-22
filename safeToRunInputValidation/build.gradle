@@ -21,11 +21,11 @@ ext {
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -51,6 +51,5 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':safeToRunInternal')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 }
