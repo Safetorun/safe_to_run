@@ -49,7 +49,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':safeToRunInternal')
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 }
