@@ -38,7 +38,7 @@ kover {
 
         filters {
             projects {
-                excludes.addAll(":app", ":safetorunpinscreen", ":safetorunbuilder")
+                excludes.addAll(":app", ":safetorunpinscreen", ":safeToRunBuilder")
             }
         }
     }
