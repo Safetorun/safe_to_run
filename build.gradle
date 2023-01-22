@@ -35,6 +35,12 @@ apply plugin: 'org.owasp.dependencycheck'
 kover {
     koverMerged {
         enable()
+
+        filters {
+            projects {
+                excludes.addAll(":app", ":safetorunpinscreen", ":safetorunbuilder")
+            }
+        }
     }
     runAllTestsForProjectTask = true
 }

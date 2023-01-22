@@ -79,8 +79,8 @@ firebaseTestLab {
     googleProjectId = "andro-3982e"
     devices {
         nexusEmulator {
-            deviceIds = ["redfin","star2lte","judypn"]
-            androidApiLevels = [28,29,30]
+            deviceIds = ["redfin", "star2lte", "judypn"]
+            androidApiLevels = [28, 29, 30]
         }
     }
 }
