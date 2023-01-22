@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 import java.io.File
 import java.util.*
 
-class JvmDatastore(private val storageDirectory: File, private val verifyFile: File.() -> Boolean) :
+internal class JvmDatastore(private val storageDirectory: File, private val verifyFile: File.() -> Boolean) :
     DataStore {
 
     override suspend fun store(data: SafeToRunEvents) {
