@@ -2,13 +2,15 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id ("org.jetbrains.kotlin.plugin.serialization").version("1.5.0")
+    id("org.jetbrains.kotlin.plugin.serialization").version("1.5.0")
     id("org.jetbrains.kotlinx.kover")
 
 }
 
 val coroutinesVersion: String by project
 val serializationVersion: String by project
+val robolectricVersion: String by project
+val mockkVersion: String by project
 
 kotlin {
     android()
@@ -28,7 +30,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-                implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
             }
         }
         val commonTest by getting {
@@ -40,11 +42,13 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":safeToRunInputValidation"))
+                implementation("org.robolectric:robolectric:$robolectricVersion")
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation("io.mockk:mockk:$mockkVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
             }
         }

@@ -16,9 +16,15 @@ internal class JvmDataStoreTest {
 
     private val testDirectory by lazy {
         File("test_data_dir")
-            .also { if (it.exists().not()) {
-                it.mkdir()}
+            .also {
+                if (it.exists().not()) {
+                    it.mkdir()
+                }
             }
+    }
+
+    private val store = JvmDatastore(testDirectory) {
+        true
     }
 
     @Before
@@ -36,14 +42,42 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve a data`() = runTest {
-        val store = JvmDatastore(testDirectory) {
-            true
-        }
-
-        val failedCheck = SafeToRunEvents.FailedCheck(DeviceInformation.empty(), "default")
+        val failedCheck = failedCheck()
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
         assertEquals(failedCheck, retrievedList[0])
     }
+
+    @Test
+    fun `test that jvm data store rejects deletion of a directory traversal`() = runTest {
+        val store = JvmDatastore(testDirectory) {
+            false
+        }
+        store.delete("test")
+
+        // Hard to see what would happen here ... No crash will have to do
+    }
+
+    @Test
+    fun `test that jvm can delete`() = runTest {
+        val failedChecks = listOf(
+            failedCheck(),
+            failedCheck()
+        )
+
+        failedChecks.forEach { store.store(it) }
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+        assertEquals(failedChecks[0], retrievedList[0])
+        assertEquals(failedChecks[1], retrievedList[1])
+
+        retrievedList.forEach { store.delete(it.uuid) }
+        assertEquals(0, store.retrieve().toList().size)
+    }
+
+
 }
+
+internal fun failedCheck() = SafeToRunEvents.FailedCheck(DeviceInformation.empty(), "default")

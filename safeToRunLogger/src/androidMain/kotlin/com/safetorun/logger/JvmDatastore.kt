@@ -10,11 +10,15 @@ import kotlinx.serialization.json.Json
 import java.io.File
 import java.util.*
 
-internal class JvmDatastore(private val storageDirectory: File, private val verifyFile: File.() -> Boolean) :
+internal class JvmDatastore(
+    private val storageDirectory: File,
+    private val verifyFile: File.() -> Boolean
+) :
     DataStore {
 
     override suspend fun store(data: SafeToRunEvents) {
-        newFile().writeText(Json.encodeToString(SafeToRunEvents.serializer(), data))
+        newFile(data.uuid)
+            .writeText(Json.encodeToString(SafeToRunEvents.serializer(), data))
     }
 
     override suspend fun retrieve(): Flow<SafeToRunEvents> =
@@ -34,6 +38,6 @@ internal class JvmDatastore(private val storageDirectory: File, private val veri
     }
 
     private fun fileForUuid(uuid: String) = File(storageDirectory, uuid)
-    private fun newFile() = File(storageDirectory, UUID.randomUUID().toString())
+    private fun newFile(uuid: String) = File(storageDirectory, uuid)
     private fun listFiles() = storageDirectory.listFiles()
 }
