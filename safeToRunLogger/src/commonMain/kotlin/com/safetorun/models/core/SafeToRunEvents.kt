@@ -4,7 +4,7 @@ import java.util.Calendar
 import java.util.UUID
 
 @kotlinx.serialization.Serializable
-sealed class SafeToRunEvents(
+internal sealed class SafeToRunEvents(
     val time: Long = Calendar.getInstance().time.time,
     val uuid: String = UUID.randomUUID().toString()
 ) {
