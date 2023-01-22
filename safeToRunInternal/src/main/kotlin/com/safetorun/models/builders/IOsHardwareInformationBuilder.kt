@@ -1,6 +1,6 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.core.OsHardwareInformation
+import com.safetorun.models.logger.OsHardwareInformation
 
 /**
  * OS Hardware information builder. Use to generate a [OsHardwareInformation]

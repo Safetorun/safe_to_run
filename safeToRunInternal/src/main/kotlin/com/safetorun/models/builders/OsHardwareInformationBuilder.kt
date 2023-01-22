@@ -1,6 +1,6 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.core.OsHardwareInformation
+import com.safetorun.models.logger.OsHardwareInformation
 
 internal class OsHardwareInformationBuilder : IOsHardwareInformationBuilder {
     private val _cpuAbis = mutableListOf<String>()

@@ -1,6 +1,6 @@
 package com.safetorun.logger
 
-import com.safetorun.models.core.SafeToRunEvents
+import com.safetorun.models.logger.SafeToRunEvents
 import kotlinx.coroutines.flow.Flow
 
 internal interface DataStore {

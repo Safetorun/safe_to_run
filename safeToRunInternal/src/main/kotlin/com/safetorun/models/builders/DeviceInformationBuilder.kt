@@ -1,10 +1,10 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.core.BlacklistedApps
-import com.safetorun.models.core.DeviceInformation
-import com.safetorun.models.core.DeviceSignature
-import com.safetorun.models.core.InstallOrigin
-import com.safetorun.models.core.OsCheck
+import com.safetorun.models.logger.BlacklistedApps
+import com.safetorun.models.logger.DeviceInformation
+import com.safetorun.models.logger.DeviceSignature
+import com.safetorun.models.logger.InstallOrigin
+import com.safetorun.models.logger.OsCheck
 
 
 internal class DeviceInformationBuilder(

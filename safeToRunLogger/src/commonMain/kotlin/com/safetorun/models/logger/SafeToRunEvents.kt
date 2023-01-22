@@ -1,4 +1,4 @@
-package com.safetorun.models.core
+package com.safetorun.models.logger
 
 import java.util.Calendar
 import java.util.UUID
