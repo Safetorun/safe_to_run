@@ -1,4 +1,4 @@
-package com.safetorun.models.logger
+package com.safetorun.models.core
 
 /**
  * Check a list of all installed packages

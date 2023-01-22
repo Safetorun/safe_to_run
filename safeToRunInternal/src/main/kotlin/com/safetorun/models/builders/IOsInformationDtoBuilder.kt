@@ -1,6 +1,6 @@
 package com.safetorun.models.builders
 
-import com.safetorun.models.logger.OsCheck
+import com.safetorun.models.core.OsCheck
 
 internal interface IOsInformationDtoBuilder : IOsHardwareInformationBuilder {
     /**

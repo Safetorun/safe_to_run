@@ -1,9 +1,10 @@
-package com.safetorun.models.logger
+package com.safetorun.logger.models
 
 
 /**
  * DTO Containing OS information like version, model, board etc
  */
+@kotlinx.serialization.Serializable
 data class OsCheck(
     val osVersion: String,
     val manufacturer: String,

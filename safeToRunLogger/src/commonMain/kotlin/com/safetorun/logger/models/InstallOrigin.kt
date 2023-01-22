@@ -1,4 +1,4 @@
-package com.safetorun.models.logger
+package com.safetorun.logger.models
 
 /**
  * Object For the install origin (i.e. which app store installed this app)

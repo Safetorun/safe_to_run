@@ -1,4 +1,4 @@
-package com.safetorun.models.logger
+package com.safetorun.logger.models
 
 /**
  * The object used to send data to the server which can be used to

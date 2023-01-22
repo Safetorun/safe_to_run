@@ -1,4 +1,4 @@
-package com.safetorun.models.logger
+package com.safetorun.logger.models
 
 /**
  * OS Hardware information object
