@@ -29,7 +29,7 @@ class SafeToRunBuilderPlugin : Plugin<Project> {
     /**
      * Apply plugin
      *
-     * @param plugin @see super
+     * @param project @see super
      */
     override fun apply(project: Project) {
         val extension: SafeToRunBuilderPluginExtension = project.extensions
