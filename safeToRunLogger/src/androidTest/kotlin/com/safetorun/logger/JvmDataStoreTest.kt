@@ -1,6 +1,6 @@
 package com.safetorun.logger
 
-import com.safetorun.models.core.DeviceInformation
+import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
