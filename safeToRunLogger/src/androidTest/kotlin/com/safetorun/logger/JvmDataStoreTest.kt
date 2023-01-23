@@ -9,13 +9,14 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import java.io.FileNotFoundException
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class JvmDataStoreTest {
 
     private val testDirectory by lazy {
-        File("test_data_dir")
+        File("test_data_dir_temp")
             .also {
                 if (it.exists().not()) {
                     it.mkdir()
