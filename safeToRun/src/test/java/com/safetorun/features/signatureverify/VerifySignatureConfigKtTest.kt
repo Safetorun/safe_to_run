@@ -12,6 +12,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import junit.framework.TestCase
 
+@Suppress("DEPRECATION")
 internal class VerifySignatureConfigKtTest : TestCase() {
 
     private val mockContext = mockk<Context>()
@@ -28,7 +29,14 @@ internal class VerifySignatureConfigKtTest : TestCase() {
         every {
             mockPackageManager.getPackageInfo(
                 OUR_PACKAGE,
-                any()
+                any<PackageManager.PackageInfoFlags>()
+            )
+        } returns mockPackage
+
+        every {
+            mockPackageManager.getPackageInfo(
+                OUR_PACKAGE,
+                any<Int>()
             )
         } returns mockPackage
 

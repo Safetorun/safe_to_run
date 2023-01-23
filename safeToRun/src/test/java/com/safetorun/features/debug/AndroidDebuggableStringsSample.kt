@@ -6,10 +6,10 @@ import io.mockk.every
 import io.mockk.mockk
 
 object AndroidDebuggableStringsSample {
-    const val DEBUGGER_ATTACHED = "Debugger attached"
-    const val DEBUGGER_NOT_ATTACHED = "Debugger not attached"
-    const val DEBUGGABLE = "Debuggable"
-    const val NOT_DEBUGGABLE = "Not debuggable"
+    private const val DEBUGGER_ATTACHED = "Debugger attached"
+    private const val DEBUGGER_NOT_ATTACHED = "Debugger not attached"
+    private const val DEBUGGABLE = "Debuggable"
+    private const val NOT_DEBUGGABLE = "Not debuggable"
 
     fun setupAMockResources(): Resources {
         val resources = mockk<Resources>()

@@ -2,6 +2,8 @@ plugins {
     id("org.jetbrains.dokka")
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
+    id 'org.jetbrains.kotlinx.kover'
+
 }
 
 apply plugin: 'com.android.library'
@@ -16,12 +18,12 @@ ext {
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
