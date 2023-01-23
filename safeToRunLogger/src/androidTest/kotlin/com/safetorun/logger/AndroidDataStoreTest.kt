@@ -21,7 +21,7 @@ internal class AndroidDataStoreTest {
     private val context by lazy { mockk<Context>() }
 
     private val testDirectory by lazy {
-        File("test_data_dir")
+        File("test_data_dir_123")
             .also {
                 if (it.exists().not()) {
                     it.mkdir()
