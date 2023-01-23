@@ -21,7 +21,7 @@ internal class AndroidDataStoreTest {
     private val context by lazy { mockk<Context>() }
 
     private val testDirectory by lazy {
-        File("test_data_dir_123")
+        File("test_data_dir_{0}".format(System.currentTimeMillis()))
             .also {
                 if (it.exists().not()) {
                     it.mkdir()
@@ -31,23 +31,27 @@ internal class AndroidDataStoreTest {
 
     private val store by lazy { AndroidDataStore(context) }
 
-    private fun clearDirectory() {
+    @Before
+    fun clearDirectory() {
+        every { context.filesDir } returns testDirectory
+
         testDirectory
             .listFiles()
             ?.forEach { it.delete() }
     }
 
+    @After
+    fun removeDirectory() {
+        clearDirectory()
+        testDirectory.delete()
+    }
+
     @Test
     fun `test that android data store rejects deletion of a directory traversal`() = runTest {
-        every { context.filesDir } returns testDirectory
-        clearDirectory()
-
         val failedCheck = failedCheck()
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
         assertEquals(failedCheck, retrievedList[0])
-
-        clearDirectory()
     }
 }
