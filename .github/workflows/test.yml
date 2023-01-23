@@ -24,7 +24,11 @@ jobs:
       - name: Build plugin
         run: ./gradlew :safeToRunBuilder:shadowJar
       - name: Run tests
-        run: ./gradlew test && bash scripts/coverage.sh
+        run: ./gradlew test koverMergedReport
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
+      - name: Upload coverage data
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          token: ${{ secrets.CODE_COV_TOKEN }}

@@ -33,5 +33,17 @@ apply from: "${rootDir}/scripts/publish-root.gradle"
 apply plugin: 'org.owasp.dependencycheck'
 
 kover {
+    koverMerged {
+        enable()
+
+        filters {
+            classes {
+                excludes.addAll("com.safetorun.logger.*Test")
+            }
+            projects {
+                excludes.addAll(":app", ":safetorunpinscreen", ":safeToRunBuilder")
+            }
+        }
+    }
     runAllTestsForProjectTask = true
 }

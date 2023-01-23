@@ -1,1 +1,1 @@
-./gradlew test koverReport
+./gradlew test koverMergedReport koverXmlReport koverHtmlReport

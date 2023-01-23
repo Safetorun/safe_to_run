@@ -12,7 +12,7 @@ class SafeToRunPinScreen internal constructor(
 ) {
     suspend fun isPinSet() = haveSetPin(storage)
     suspend fun createOrUpdatePin(newPin: String) =
-        setPin(newPin, storage, { throw NotImplementedError() })
+        setPin(newPin, storage) { throw NotImplementedError() }
 
     suspend fun checkPin(pinToCheck: String) = validatePin(
         pinToCheck, retryStrategy, storage, { throw NotImplementedError() }, storage

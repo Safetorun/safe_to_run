@@ -70,7 +70,7 @@ class OnDeviceResilienceBuilder internal constructor() {
     /**
     * Add a root check to ban rooted phones
     * 
-    * @param root check configuration
+    * @param rootCheckConfiguration check configuration
     */
     fun rootCheck(rootCheckConfiguration: RootCheckConfigurationBuilder.() -> Unit) {
         rootCheck = RootCheckConfigurationBuilder().apply(rootCheckConfiguration).build()

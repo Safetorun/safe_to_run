@@ -1,5 +1,6 @@
 package com.safetorun.features.blacklistedapps
 
+import android.annotation.SuppressLint
 import android.content.Context
 
 /**
@@ -24,6 +25,7 @@ inline fun Context.blacklistedAppCheck(vararg blacklistedApp: String): Boolean =
  *
  * @param packageName the package we're looking for
  */
+@SuppressLint("QueryPermissionsNeeded")
 inline fun Context.containsPackage(packageName: String): Boolean =
     packageManager.getInstalledPackages(0)
         .map { it.packageName }

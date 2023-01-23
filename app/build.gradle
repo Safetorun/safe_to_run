@@ -1,5 +1,6 @@
 plugins {
     id "com.safetorun.builder"
+    id 'org.jetbrains.kotlinx.kover'
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -79,8 +80,8 @@ firebaseTestLab {
     googleProjectId = "andro-3982e"
     devices {
         nexusEmulator {
-            deviceIds = ["redfin","star2lte","judypn"]
-            androidApiLevels = [28,29,30]
+            deviceIds = ["redfin", "star2lte", "judypn"]
+            androidApiLevels = [28, 29, 30]
         }
     }
 }
