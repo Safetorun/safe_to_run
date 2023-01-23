@@ -31,27 +31,23 @@ internal class AndroidDataStoreTest {
 
     private val store by lazy { AndroidDataStore(context) }
 
-    @Before
-    fun clearDirectory() {
-        every { context.filesDir } returns testDirectory
-
+    private fun clearDirectory() {
         testDirectory
             .listFiles()
             ?.forEach { it.delete() }
     }
 
-    @After
-    fun removeDirectory() {
-        clearDirectory()
-        testDirectory.delete()
-    }
-
     @Test
     fun `test that android data store rejects deletion of a directory traversal`() = runTest {
+        every { context.filesDir } returns testDirectory
+        clearDirectory()
+
         val failedCheck = failedCheck()
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
         assertEquals(failedCheck, retrievedList[0])
+
+        clearDirectory()
     }
 }
