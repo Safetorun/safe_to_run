@@ -114,8 +114,6 @@ jobs:
           version=`./gradlew :safeToRunInternal:printVersion | grep "2.*.*"` 
           echo $version 
           echo "version=$version" >> $GITHUB_ENV
-      - name: Get version number
-        run: echo $version
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
