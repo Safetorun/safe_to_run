@@ -3,7 +3,7 @@ plugins {
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
     id 'org.jetbrains.kotlinx.kover'
-}
+    }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -26,7 +26,7 @@ android {
     compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -48,6 +48,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.safetorun.pinscreen'
 }
 
 dependencies {

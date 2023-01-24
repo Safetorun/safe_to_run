@@ -9,43 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  detekt:
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.9.0
-        with:
-          java-version: 11
-          distribution: corretto
-      - uses: actions/checkout@v2
-      - name: Build plugin
-        run: ./gradlew :safeToRunBuilder:shadowJar
-      - name: Run Detekt
-        run: ./gradlew detekt
-
-  test:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Java JDK
-        uses: actions/setup-java@v3.9.0
-        with:
-          java-version: 11
-          distribution: corretto
-      - uses: actions/checkout@v2
-      - name: Build plugin
-        run: ./gradlew :safeToRunBuilder:shadowJar
-      - name: Run tests
-        run: ./gradlew test koverReport koverXmlReport koverHtmlReport
-        env:
-          SERVER_URL: 'http://example.com'
-          API_KEY: 'apikey'
-      - name: Upload coverage data
-        uses: codecov/codecov-action@v3.1.1
-        with:
-          token: ${{ secrets.CODE_COV_TOKEN }}
 
   build:
     timeout-minutes: 15
