@@ -27,7 +27,6 @@ is safe to run, and provide you with a way to verify data from intents or deep l
 
 ```groovy
 implementation "com.safetorun:safetorun:$safeToRunVersion"
-implementation "com.safetorun:safeToRunCore:$safeToRunVersion"
 implementation "com.safetorun:inputverification:$safeToRunVersion"
 ```
 
