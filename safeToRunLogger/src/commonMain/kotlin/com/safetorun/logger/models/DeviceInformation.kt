@@ -10,6 +10,7 @@ internal data class DeviceInformation(
     val installOrigin: InstallOrigin,
     val blacklistedApp: BlacklistedApps,
     val signatureVerification: DeviceSignature,
+    val isRooted : Boolean
 ) {
     companion object {
         fun empty() =
@@ -17,7 +18,8 @@ internal data class DeviceInformation(
                 OsCheck("", "", "", "", "", emptyList(), "", "", ""),
                 InstallOrigin(""),
                 BlacklistedApps(emptyList()),
-                DeviceSignature("")
+                DeviceSignature(""),
+                false
             )
 
     }
