@@ -17,8 +17,8 @@ plugins {
     id "io.gitlab.arturbosch.detekt" version "1.17.0-RC3"
     id "org.jetbrains.kotlinx.kover" version "0.6.0"
 
-    id 'com.android.application' version '7.2.0' apply false
-    id 'com.android.library' version '7.2.0' apply false
+    id 'com.android.application' version '7.4.0' apply false
+    id 'com.android.library' version '7.4.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
 
@@ -33,5 +33,17 @@ apply from: "${rootDir}/scripts/publish-root.gradle"
 apply plugin: 'org.owasp.dependencycheck'
 
 kover {
+    koverMerged {
+        enable()
+
+        filters {
+            classes {
+                excludes.addAll("com.safetorun.logger.*Test")
+            }
+            projects {
+                excludes.addAll(":app", ":safetorunpinscreen", ":safeToRunBuilder")
+            }
+        }
+    }
     runAllTestsForProjectTask = true
 }

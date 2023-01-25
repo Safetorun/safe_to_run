@@ -7,6 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
 
+@Suppress("DEPRECATION")
 internal class BlacklistedAppConfigurationTest : TestCase() {
 
     private val mockContext = mockk<Context>(relaxed = true)
@@ -16,8 +17,8 @@ internal class BlacklistedAppConfigurationTest : TestCase() {
 
     override fun setUp() {
         every { mockContext.packageManager } returns mockPackageManager
-        every { mockPackageManager.getInstalledPackages(any()) } returns packageInfos
-
+        every { mockPackageManager.getInstalledPackages(any<PackageManager.PackageInfoFlags>()) } returns packageInfos
+        every { mockPackageManager.getInstalledPackages(any<Int>()) } returns packageInfos
         mockPackage1.packageName = IS_PRESENT_PACKAGE
     }
 

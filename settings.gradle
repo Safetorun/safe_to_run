@@ -7,7 +7,14 @@ pluginManagement {
 }
 
 
-include ':safeToRun', ':app', ':safeToRunCore', ':safeToRunInternal', ':safeToRunInputValidation', ':safeToRunBuilder'
+include ':safeToRun',
+        ':app',
+        ':safeToRunCore',
+        ':safeToRunInternal',
+        ':safeToRunInputValidation',
+        ':safeToRunBuilder',
+        ':safetorunpinscreen',
+        ':safeToRunLogger'
+
 rootProject.name = "Safe to run"
 
-include ':safetorunpinscreen'
