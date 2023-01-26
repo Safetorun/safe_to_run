@@ -19,11 +19,12 @@ jobs:
         with:
           java-version: 11
           distribution: corretto
+          cache: 'gradle'
       - uses: actions/checkout@v2
       - name: Build plugin
-        run: ./gradlew :safeToRunBuilder:shadowJar
+        run: ./gradlew :safeToRunBuilder:shadowJar --no-daemon
       - name: Run build
-        run: ./gradlew build assembleDebug assembleDebugAndroidTest
+        run: ./gradlew build assembleDebug assembleDebugAndroidTest --no-daemon
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
