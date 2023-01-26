@@ -42,11 +42,11 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":safeToRunInputValidation"))
-                implementation("org.robolectric:robolectric:$robolectricVersion")
             }
         }
         val androidTest by getting {
             dependencies {
+                implementation("org.robolectric:robolectric:$robolectricVersion")
                 implementation(kotlin("test-junit"))
                 implementation("io.mockk:mockk:$mockkVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
