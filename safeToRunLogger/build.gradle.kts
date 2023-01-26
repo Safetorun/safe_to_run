@@ -58,7 +58,7 @@ kotlin {
 android {
     packagingOptions {
         resources.excludes.apply {
-            add("META-INF/LICENSE.md")
+            add("META-INF/*")
         }
     }
     namespace = "com.safetorun.logger"
