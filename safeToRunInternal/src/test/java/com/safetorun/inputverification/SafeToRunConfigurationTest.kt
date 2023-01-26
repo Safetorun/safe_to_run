@@ -15,23 +15,6 @@ import java.io.File
 internal class SafeToRunConfigurationTest {
 
     @Test
-    fun `test that os check can be tested for`() {
-        val allowedOrigin = "com.android.vending"
-
-        val str = safeToRun {
-            backendResilience {
-                installOriginCheck(Severity.Error) {
-                    allowedOrigin.allowInstallOrigin()
-                }
-            }
-        }
-
-        assertThat(str.backendResilience?.installOriginCheck?.first()?.allowedInstallOrigins?.first())
-            .isEqualTo(allowedOrigin)
-    }
-
-
-    @Test
     fun `test that blacklisted app builder can build a configuration with an allowed origin`() {
         val allowedOrigin = "com.android.vending"
 

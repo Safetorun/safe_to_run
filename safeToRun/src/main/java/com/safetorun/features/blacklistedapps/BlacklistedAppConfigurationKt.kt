@@ -3,8 +3,7 @@ package com.safetorun.features.blacklistedapps
 import android.annotation.SuppressLint
 import android.content.Context
 
-/**
- */
+
 /**
  * Configure application blacklisting by specifying an application(s) which you want
  * to warn about
