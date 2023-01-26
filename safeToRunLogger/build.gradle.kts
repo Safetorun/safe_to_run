@@ -56,6 +56,11 @@ kotlin {
 }
 
 android {
+    packagingOptions {
+        resources.excludes.apply {
+            add("META-INF/LICENSE.md")
+        }
+    }
     namespace = "com.safetorun.logger"
     compileSdk = 33
     defaultConfig {
