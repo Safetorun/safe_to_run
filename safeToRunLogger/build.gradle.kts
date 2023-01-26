@@ -48,7 +48,7 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("io.mockk:mockk:$mockkVersion")
+                implementation("io.mockk:mockk-android:$mockkVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
             }
         }
@@ -60,7 +60,6 @@ android {
     compileSdk = 33
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
     }
 }
 
