@@ -1,7 +1,10 @@
 package com.safetorun.logger.models
 
+/**
+ * App metadata
+ */
 @kotlinx.serialization.Serializable
-data class AppMetadata(
+internal data class AppMetadata(
     val appVersion: String,
     val packageName: String,
     val versionCode: Long,
@@ -9,6 +12,9 @@ data class AppMetadata(
     val lastUpdateTime: Long
 ) {
     companion object {
+        /**
+         * Empty app metadata
+         */
         fun empty() = AppMetadata("", "", 0, 0, 0)
     }
 }
