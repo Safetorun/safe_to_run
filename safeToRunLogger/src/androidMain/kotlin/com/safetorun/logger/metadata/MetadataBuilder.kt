@@ -42,4 +42,7 @@ internal class MetadataBuilder constructor(private val context: Context) {
     }
 }
 
+/**
+ * Retrieve the app metadata
+ */
 internal fun Context.metadata() = MetadataBuilder(this).build()
