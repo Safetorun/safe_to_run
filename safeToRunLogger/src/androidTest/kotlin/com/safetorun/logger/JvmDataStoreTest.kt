@@ -42,8 +42,17 @@ internal class JvmDataStoreTest {
     }
 
     @Test
-    fun `test that jvm data store can save and then retrieve a data`() = runTest {
+    fun `test that jvm data store can save and then retrieve a data for failure`() = runTest {
         val failedCheck = failedCheck()
+        store.store(failedCheck)
+        val retrievedList = store.retrieve().toList()
+        assertEquals(1, retrievedList.size)
+        assertEquals(failedCheck, retrievedList[0])
+    }
+
+    @Test
+    fun `test that jvm data store can save and then retrieve data for success`() = runTest {
+        val failedCheck = successCheck()
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -80,6 +89,12 @@ internal class JvmDataStoreTest {
 }
 
 internal fun failedCheck() = SafeToRunEvents.FailedCheck(
+    DeviceInformation.empty(),
+    AppMetadata.empty(),
+    "default"
+)
+
+internal fun successCheck() = SafeToRunEvents.SucceedCheck(
     DeviceInformation.empty(),
     AppMetadata.empty(),
     "default"
