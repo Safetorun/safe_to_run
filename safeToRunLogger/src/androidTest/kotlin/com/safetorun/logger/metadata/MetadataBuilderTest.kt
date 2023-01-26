@@ -2,6 +2,7 @@ package com.safetorun.logger.metadata
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PackageInfoFlags
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Test
@@ -13,13 +14,13 @@ internal class MetadataBuilderTest {
         mockk<Context>().apply {
             every { packageName } returns PACKAGE_NAME
             every { packageManager } returns mockk<PackageManager>().apply {
-                every { getInstalledPackages(PackageManager.PackageInfoFlags.of(0)) } returns listOf(
+                every { getInstalledPackages(any<PackageInfoFlags>()) } returns listOf(
                     packageInfo
                 )
                 every {
                     getPackageInfo(
                         PACKAGE_NAME,
-                        PackageManager.PackageInfoFlags.of(0)
+                        any<PackageInfoFlags>()
                     )
                 } returns packageInfo
             }
