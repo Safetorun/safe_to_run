@@ -7,5 +7,9 @@ data class AppMetadata(
     val versionCode: Long,
     val firstInstallTime: Long,
     val lastUpdateTime: Long
-)
+) {
+    companion object {
+        fun empty() = AppMetadata("", "", 0, 0, 0)
+    }
+}
 

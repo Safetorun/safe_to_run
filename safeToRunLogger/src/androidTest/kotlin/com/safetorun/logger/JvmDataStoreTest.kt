@@ -1,5 +1,6 @@
 package com.safetorun.logger
 
+import com.safetorun.logger.models.AppMetadata
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -76,8 +77,10 @@ internal class JvmDataStoreTest {
         retrievedList.forEach { store.delete(it.uuid) }
         assertEquals(0, store.retrieve().toList().size)
     }
-
-
 }
 
-internal fun failedCheck() = SafeToRunEvents.FailedCheck(DeviceInformation.empty(), "default")
+internal fun failedCheck() = SafeToRunEvents.FailedCheck(
+    DeviceInformation.empty(),
+    AppMetadata.empty(),
+    "default"
+)
