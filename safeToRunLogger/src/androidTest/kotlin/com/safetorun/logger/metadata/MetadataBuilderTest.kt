@@ -1,44 +1,60 @@
 package com.safetorun.logger.metadata
 
 import android.content.Context
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.Before
 import org.junit.Test
 
 @Suppress("DEPRECATION")
 internal class MetadataBuilderTest {
+    private val packageInfo = mockk<PackageInfo>()
 
     private val context by lazy {
-        mockk<Context>().apply {
+        mockk<Context> {
             every { packageName } returns PACKAGE_NAME
-            every { packageManager } returns mockk<PackageManager>().apply {
-                every { getInstalledPackages(any<PackageInfoFlags>()) } returns listOf(
-                    packageInfo
-                )
-                every {
-                    getPackageInfo(
-                        PACKAGE_NAME,
-                        any<PackageInfoFlags>()
-                    )
-                } returns packageInfo
+            every { packageManager } returns mockk {
+                retrievePackageManager(this)
             }
         }
     }
-    private val packageInfo by lazy {
-        mockk<android.content.pm.PackageInfo>().apply {
-            every { versionName } returns APP_VERSION
-            every { versionCode } returns LONG_VERSION.toInt()
-            every { longVersionCode } returns LONG_VERSION
-            every { firstInstallTime } returns FIRST_INSTALL_TIME
-            every { lastUpdateTime } returns LAST_UPDATE_TIME
-        }
+
+    @Before
+    fun setup() {
+        packageInfo.versionCode = LONG_VERSION.toInt()
+        every { packageInfo.longVersionCode } returns LONG_VERSION
+        packageInfo.firstInstallTime = FIRST_INSTALL_TIME
+        packageInfo.lastUpdateTime = LAST_UPDATE_TIME
+        packageInfo.versionName = APP_VERSION
     }
 
     @Test
     fun `test that metadata can be build using expected output`() {
         context.metadata()
+    }
+
+    private fun retrievePackageManager(
+        packageManager: PackageManager
+    ) {
+        every { packageManager.getInstalledPackages(any<PackageInfoFlags>()) } returns listOf(
+            packageInfo
+        )
+        every {
+            packageManager.getPackageInfo(
+                PACKAGE_NAME,
+                any<PackageInfoFlags>()
+            )
+        } returns packageInfo
+
+        every {
+            packageManager.getPackageInfo(
+                PACKAGE_NAME,
+                0
+            )
+        } returns packageInfo
     }
 
     companion object {
