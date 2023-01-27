@@ -42,12 +42,13 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":safeToRunInputValidation"))
-                implementation("org.robolectric:robolectric:$robolectricVersion")
             }
         }
         val androidTest by getting {
             dependencies {
+                implementation("org.robolectric:robolectric:$robolectricVersion")
                 implementation(kotlin("test-junit"))
+                implementation("io.mockk:mockk:$mockkVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
             }
         }
@@ -55,11 +56,15 @@ kotlin {
 }
 
 android {
+    packagingOptions {
+        resources.excludes.apply {
+            add("META-INF/*")
+        }
+    }
     namespace = "com.safetorun.logger"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
-        targetSdk = 33
     }
 }
 
