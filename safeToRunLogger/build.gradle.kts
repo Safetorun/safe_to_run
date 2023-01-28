@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    id("org.jetbrains.dokka")
     id("com.android.library")
     id("org.jetbrains.kotlin.plugin.serialization").version("1.5.0")
     id("org.jetbrains.kotlinx.kover")
@@ -11,6 +12,16 @@ val coroutinesVersion: String by project
 val serializationVersion: String by project
 val robolectricVersion: String by project
 val mockkVersion: String by project
+
+val safeToRunVersion: String by project
+
+ext {
+    this["PUBLISH_GROUP_ID"] = "com.safetorun"
+    this["PUBLISH_VERSION"] = "${safeToRunVersion}-alpha"
+    this["PUBLISH_ARTIFACT_ID"] = "safeToRunLogger"
+}
+
+apply(from = "${rootProject.projectDir}/scripts/publish-module.gradle")
 
 kotlin {
     android()
