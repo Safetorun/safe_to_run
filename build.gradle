@@ -1,6 +1,4 @@
 buildscript {
-    ext.kotlin_version = "1.7.20"
-
     dependencies {
         classpath files('safeToRunBuilder/build/libs/safeToRunBuilder-all.jar')
         classpath 'org.owasp:dependency-check-gradle:6.4.1.1'

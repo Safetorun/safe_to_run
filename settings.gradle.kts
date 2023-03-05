@@ -26,10 +26,17 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("kotlin", "1.7.20")
+
             library(
                 "jetbrains-kotlin-std",
                 "org.jetbrains.kotlin",
                 "kotlin-stdlib"
+            ).versionRef("kotlin")
+
+            library(
+                "jetbrains-kotlin-reflect",
+                "org.jetbrains.kotlin",
+                "kotlin-reflect"
             ).versionRef("kotlin")
         }
     }

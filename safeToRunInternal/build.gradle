@@ -24,7 +24,7 @@ group 'com.safetorun'
 version project['safeToRunVersion']
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation libs.jetbrains.kotlin.std
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 }
 
