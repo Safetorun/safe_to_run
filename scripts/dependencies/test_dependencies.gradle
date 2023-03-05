@@ -1,7 +1,7 @@
 dependencies {
     testImplementation "androidx.test:core:$androidXTest"
     testImplementation "org.mock-server:mockserver-netty:$mockHttpVersion"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation libs.kotlin.reflect
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"

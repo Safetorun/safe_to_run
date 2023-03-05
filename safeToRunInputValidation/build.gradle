@@ -53,5 +53,5 @@ android {
 
 dependencies {
     implementation project(':safeToRunInternal')
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation libs.kotlinx.serialization.json
 }

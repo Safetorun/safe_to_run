@@ -53,6 +53,6 @@ apply from: "$directory/android_test_dependencies.gradle"
 
 dependencies {
     implementation project(':safeToRunInternal')
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
-    implementation "com.scottyab:rootbeer-lib:$rootbeerVersion"
+    implementation libs.kotlinx.serialization.json
+    implementation libs.rootbeer
 }
