@@ -2,17 +2,17 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("org.jetbrains.dokka")
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("org.jetbrains.kotlin.plugin.serialization").version("1.5.0")
     id("org.jetbrains.kotlinx.kover")
 
 }
 
-val safeToRunVersion = libs.versions.safeToRun.get()
+val safeToRun = libs.versions.safeToRun.get()
 
 ext {
     this["PUBLISH_GROUP_ID"] = "com.safetorun"
-    this["PUBLISH_VERSION"] = "${safeToRunVersion}-alpha"
+    this["PUBLISH_VERSION"] = "${safeToRun}-alpha"
     this["PUBLISH_ARTIFACT_ID"] = "safeToRunLogger"
 }
 
