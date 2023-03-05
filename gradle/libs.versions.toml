@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.7.20"
+kotlin = "1.8.10"
 mockk = "1.13.3"
 rootbeer = "0.1.0"
 googleTruth = "1.1.3"
@@ -37,7 +37,7 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 rootbeer = { module = "com.scottyab:rootbeer-lib", version.ref = "rootbeer" }
 junit = { module = "junit:junit", version.ref = "junit" }
 
-kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+#kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 [plugins]
