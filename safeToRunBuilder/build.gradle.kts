@@ -21,8 +21,6 @@ group = "com.safetorun"
 version = safeToRunVersion
 
 
-val serializationVersion: String by project
-
 val directory = "${rootProject.projectDir}/scripts/dependencies/"
 apply(from = "$directory/test_dependencies.gradle")
 
