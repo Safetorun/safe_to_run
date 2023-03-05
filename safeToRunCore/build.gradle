@@ -22,5 +22,5 @@ apply from: "$directory/test_dependencies.gradle"
 
 dependencies {
     implementation project(':safeToRunInternal')
-    implementation libs.jetbrains.kotlin.std
+    implementation libs.kotlin.std
 }

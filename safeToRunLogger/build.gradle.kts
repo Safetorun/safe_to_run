@@ -8,11 +8,6 @@ plugins {
 
 }
 
-val coroutinesVersion: String by project
-val serializationVersion: String by project
-val robolectricVersion: String by project
-val mockkVersion: String by project
-
 val safeToRunVersion: String by project
 
 ext {
@@ -39,15 +34,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization.core)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
         val androidMain by getting {
@@ -57,10 +52,10 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation("org.robolectric:robolectric:$robolectricVersion")
-                implementation(kotlin("test-junit"))
-                implementation("io.mockk:mockk:$mockkVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+                implementation(libs.robolectric)
+                implementation(libs.junit)
+                implementation(libs.mockk)
+                implementation(libs.kotlinx.coroutines.android)
             }
         }
     }

@@ -27,9 +27,9 @@ val directory = "${rootProject.projectDir}/scripts/dependencies/"
 apply(from = "$directory/test_dependencies.gradle")
 
 dependencies {
-    implementation("com.squareup:kotlinpoet:1.11.0")
+    implementation(libs.kotlinpoet)
     implementation(project(":safeToRunInternal"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation(libs.kotlinx.serialization.json)
 }
 
 gradlePlugin {
