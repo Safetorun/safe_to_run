@@ -8,7 +8,7 @@ plugins {
 
 }
 
-val safeToRunVersion = libs.versions.safeToRunVersion.toString()
+val safeToRunVersion = libs.versions.safeToRun.get()
 
 ext {
     this["PUBLISH_GROUP_ID"] = "com.safetorun"
