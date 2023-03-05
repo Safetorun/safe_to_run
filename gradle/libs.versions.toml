@@ -21,6 +21,7 @@ coroutines = "1.6.4"
 androidGradlePlugin = "7.4.0"
 kover = "0.6.0"
 kotlinPoet = "1.11.0"
+safeToRunVersion = "2.1.2"
 
 [libraries]
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
