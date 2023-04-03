@@ -9,6 +9,7 @@ import com.safetorun.exploration.toDeviceInformation
 import com.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import com.safetorun.features.installorigin.getInstaller
 import com.safetorun.features.oscheck.OSInformationQueryAndroid
+import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.builders.deviceInformationBuilder
 import com.safetorun.offdevice.SafeToRunOffDeviceCache.safeToRunOffDeviceLazy
 import com.safetorun.offdevice.builders.BlacklistedAppsOffDeviceBuilder
@@ -65,6 +66,26 @@ fun Context.safeToRunOffDevice(
     offDeviceResultBuilder(),
     AndroidDeviceIdRepository(this).getOrCreateDeviceIdSync()
 )
+
+typealias SafeToRunLogger = (SafeToRunEvents) -> Unit
+
+/**
+ * Build a safe to run logger
+ */
+fun safeToRunLogger(url: String, apiKey: String): SafeToRunLogger {
+    if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
+        requireNotNull(safeToRunOffDeviceLazy[apiKey])
+    }
+
+    val api = DefaultSafeToRunApi(
+        DefaultHttpClient(url),
+        apiKey,
+    )
+
+    return {
+        api.logEvent(it)
+    }
+}
 
 /**
  * Get a device informatio DTO with information about the currently

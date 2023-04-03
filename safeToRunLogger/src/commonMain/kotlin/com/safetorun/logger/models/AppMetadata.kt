@@ -4,7 +4,7 @@ package com.safetorun.logger.models
  * App metadata
  */
 @kotlinx.serialization.Serializable
-internal data class AppMetadata(
+data class AppMetadata(
     val appVersion: String,
     val packageName: String,
     val versionCode: Long,

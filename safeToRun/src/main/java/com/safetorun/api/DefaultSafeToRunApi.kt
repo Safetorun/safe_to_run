@@ -1,13 +1,18 @@
 package com.safetorun.api
 
+import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.models.ConfirmVerificationRequestDto
 import com.safetorun.models.models.DataWrappedSignatureResult
 import com.safetorun.models.models.DataWrappedVerifyResult
 import com.safetorun.models.models.DeviceInformationDto
 import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.models.models.VerifierResult
+import kotlinx.serialization.builtins.serializer
 
-internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, private val apiKey: String) :
+internal class DefaultSafeToRunApi(
+    private val httpClient: SafeToRunHttpClient,
+    private val apiKey: String
+) :
     SafeToRunApi {
 
     private val headers by lazy { mapOf(API_KEY_HEADER_NAME to apiKey) }
@@ -35,9 +40,20 @@ internal class DefaultSafeToRunApi(private val httpClient: SafeToRunHttpClient, 
         ).data
     }
 
+    override fun logEvent(event: SafeToRunEvents) {
+        httpClient.post(
+            LOG_ENDPOINT,
+            headers,
+            event,
+            SafeToRunEvents.serializer(),
+            SafeToRunEvents.serializer()
+        )
+    }
+
     companion object {
         internal const val DEVICE_CHECK_ENDPOINT = "/deviceCheck"
         internal const val VERIFY_CHECK_ENDPOINT = "/verifyCheck"
+        internal const val LOG_ENDPOINT = "/log"
         internal const val API_KEY_HEADER_NAME = "x-api-key"
     }
 }

@@ -53,6 +53,7 @@ apply from: "$directory/android_test_dependencies.gradle"
 
 dependencies {
     implementation project(':safeToRunInternal')
+    implementation project(':safeToRunLogger')
     implementation libs.kotlinx.serialization.json
     implementation libs.rootbeer
 }

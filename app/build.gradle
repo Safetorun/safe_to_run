@@ -63,6 +63,8 @@ dependencies {
 
     implementation project(":safeToRun")
     implementation project(":safeToRunInputValidation")
+    implementation project(":safeToRunLogger")
+
     implementation("com.auth0:java-jwt:$jwtVersion")
     implementation "com.airbnb.android:epoxy:$epoxyVersion"
     implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"

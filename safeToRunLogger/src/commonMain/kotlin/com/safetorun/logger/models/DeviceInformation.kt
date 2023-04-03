@@ -5,7 +5,7 @@ package com.safetorun.logger.models
  * perform a device check
  */
 @kotlinx.serialization.Serializable
-internal data class DeviceInformation(
+ data class DeviceInformation(
     val osCheck: OsCheck,
     val installOrigin: InstallOrigin,
     val blacklistedApp: BlacklistedApps,
