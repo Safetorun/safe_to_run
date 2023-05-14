@@ -16,7 +16,7 @@ internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient 
         headers: Map<String, String>,
         body: T,
         serializer: SerializationStrategy<T>,
-        deserializer: DeserializationStrategy<O>
+        deserializer: DeserializationStrategy<O>,
     ): O {
         val urlConnection = buildConnection(path, headers)
 

@@ -1,5 +1,6 @@
 package com.safetorun.api
 
+import com.safetorun.models.models.DataWrappedLogResponse
 import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.models.ConfirmVerificationRequestDto
 import com.safetorun.models.models.DataWrappedSignatureResult
@@ -7,7 +8,6 @@ import com.safetorun.models.models.DataWrappedVerifyResult
 import com.safetorun.models.models.DeviceInformationDto
 import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.models.models.VerifierResult
-import kotlinx.serialization.builtins.serializer
 
 internal class DefaultSafeToRunApi(
     private val httpClient: SafeToRunHttpClient,
@@ -46,7 +46,7 @@ internal class DefaultSafeToRunApi(
             headers,
             event,
             SafeToRunEvents.serializer(),
-            SafeToRunEvents.serializer()
+            DataWrappedLogResponse.serializer(SafeToRunEvents.serializer())
         )
     }
 

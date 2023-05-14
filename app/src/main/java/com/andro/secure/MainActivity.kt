@@ -7,8 +7,10 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.andro.secure.databinding.ActivityMainBinding
-import com.safetorun.intents.configurator.verifyFile
 import com.safetorun.intents.file.verifyFile
+import com.safetorun.logger.getLogs
+import com.safetorun.logger.logCheckSuccess
+import com.safetorun.offdevice.safeToRunLogger
 import java.io.File
 
 
@@ -18,6 +20,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+
+        logCheckSuccess("MainActivity")
+
+        val logger = safeToRunLogger(
+            "https://api.safetorun.com",
+            "xTzr6DFulc7PuEfQyGxzr3qn9kbzvCBv12clOyAr"
+        )
+
+        getLogs {
+            logger.invoke(it)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
