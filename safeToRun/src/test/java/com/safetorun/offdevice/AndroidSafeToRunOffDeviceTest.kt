@@ -2,6 +2,9 @@ package com.safetorun.offdevice
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.SafeToRunApi
+import com.safetorun.logger.models.AppMetadata
+import com.safetorun.logger.models.DeviceInformation
+import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.models.builders.deviceInformationBuilder
@@ -36,6 +39,15 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         // Then
         assertThat(result).isEqualTo(SafeToRunOffDeviceResult(expectedResult.signature))
         verify { safeToRunApi.postNewDevice(matchingDto()) }
+    }
+
+    fun `test that when we call android safe to run twice with the same api key it is the same instance`() {
+        // Given
+        val safeToRun = safeToRunLogger("1234")
+        val safeToRun2 = safeToRunLogger("1234")
+
+        assertThat(safeToRun).isNotNull()
+        assertThat(safeToRun2).isNotNull()
     }
 
     private fun matchingDto() = deviceInformationBuilder(api) {

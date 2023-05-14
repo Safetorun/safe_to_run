@@ -23,8 +23,9 @@ import com.safetorun.features.oscheck.emulator.banGenymotionEmulatorCheck
 import com.safetorun.features.oscheck.safeToRunCombinedCheck
 import com.safetorun.features.rootdetection.rootDetectionCheck
 import com.safetorun.features.signatureverify.verifySignatureCheck
-import com.safetorun.inline.safeToRun
-import java.util.*
+import com.safetorun.inline.safeToRunWithLogger
+import com.safetorun.logger.loggerForCheck
+import java.util.Date
 
 class ReportFragment : Fragment() {
 
@@ -40,7 +41,7 @@ class ReportFragment : Fragment() {
 
     private fun setup(binding: ReportFragmentBinding) {
         binding.runSensitiveAction.setOnClickListener {
-            requireContext().canIRun {
+            requireContext().canIRun("ReportFragmentCheck") {
                 throw RuntimeException("Def")
             }
 
@@ -52,7 +53,7 @@ class ReportFragment : Fragment() {
             startActivity(Intent(requireContext(), ProtectedActivity::class.java))
         }
 
-        requireContext().canIRun { Log.v("Failure", "Failure") }
+        requireContext().canIRun("ReportFragmentCheck") { Log.v("Failure", "Failure") }
 
     }
 
@@ -66,8 +67,9 @@ class ReportFragment : Fragment() {
         ).mapValues { it.value.toString() }
 
 
-    private inline fun Context.canIRun(actionOnFailure: () -> Unit) {
-        if (safeToRun(
+    private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
+        if (safeToRunWithLogger(
+                logger = loggerForCheck(checkName),
                 { verifySignatureCheck() },
                 { banAvdEmulatorCheck() },
                 { banGenymotionEmulatorCheck() },

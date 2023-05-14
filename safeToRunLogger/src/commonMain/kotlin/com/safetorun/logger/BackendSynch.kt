@@ -10,6 +10,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
+fun Context.loggerForCheck(checkName: String): (Boolean) -> Unit = {
+    if (it) {
+        logCheckSuccess(checkName)
+    } else {
+        logCheckFailure(checkName)
+    }
+}
+
 fun Context.logCheckFailure(checkName: String) = GlobalScope.launch {
     AndroidDataStore(this@logCheckFailure)
         .store(
@@ -33,7 +41,7 @@ fun Context.logCheckSuccess(checkName: String) = GlobalScope.launch {
         )
 }
 
-fun Context.getLogs(onEach : (SafeToRunEvents) -> Unit) = GlobalScope.launch {
+fun Context.getLogs(onEach: (SafeToRunEvents) -> Unit) = GlobalScope.launch {
     AndroidDataStore(this@getLogs)
         .retrieve()
         .onEach { onEach(it) }

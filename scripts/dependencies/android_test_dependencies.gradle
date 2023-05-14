@@ -2,5 +2,5 @@ dependencies {
 
     androidTestImplementation "androidx.test.ext:junit:$androidXJunit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$expressoCore"
-    androidTestImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation "com.google.truth:truth:$googleTruth"
 }

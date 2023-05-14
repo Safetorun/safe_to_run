@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity() {
         logCheckSuccess("MainActivity")
 
         val logger = safeToRunLogger(
-            "https://api.safetorun.com",
-            "xTzr6DFulc7PuEfQyGxzr3qn9kbzvCBv12clOyAr"
+            "DcqHpAsUkx4CoAqM6ffAT86Zw8vLrPaw2crfoNap"
         )
 
         getLogs {

@@ -4,8 +4,6 @@ import android.content.Context
 import com.safetorun.api.DefaultHttpClient
 import com.safetorun.api.DefaultSafeToRunApi
 import com.safetorun.api.SafeToRunApi
-import com.safetorun.exploration.DeviceInformation
-import com.safetorun.exploration.toDeviceInformation
 import com.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import com.safetorun.features.installorigin.getInstaller
 import com.safetorun.features.oscheck.OSInformationQueryAndroid
@@ -72,7 +70,7 @@ typealias SafeToRunLogger = (SafeToRunEvents) -> Unit
 /**
  * Build a safe to run logger
  */
-fun safeToRunLogger(url: String, apiKey: String): SafeToRunLogger {
+fun safeToRunLogger(apiKey: String, url: String = "https://api.safetorun.com"): SafeToRunLogger {
     if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
         requireNotNull(safeToRunOffDeviceLazy[apiKey])
     }
@@ -86,16 +84,6 @@ fun safeToRunLogger(url: String, apiKey: String): SafeToRunLogger {
         api.logEvent(it)
     }
 }
-
-/**
- * Get a device informatio DTO with information about the currently
- * running device. This can be useful to help deciding on where to set
- * your OS rules
- */
-fun Context.deviceInformation(): DeviceInformation = offDeviceResultBuilder()
-    .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
-    .build()
-    .toDeviceInformation()
 
 internal fun safeToRunOffDevice(
     url: String,
