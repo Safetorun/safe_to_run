@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
-fun Context.loggerForCheck(checkName: String): (Boolean) -> Unit = {
+fun Context.loggerForCheck(apiKey : String, checkName: String): (Boolean) -> Unit = {
     if (it) {
         logCheckSuccess(checkName)
     } else {

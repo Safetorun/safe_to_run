@@ -1,5 +1,6 @@
 package com.andro.secure
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -7,9 +8,19 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.andro.secure.databinding.ActivityMainBinding
+import com.safetorun.features.blacklistedapps.blacklistedAppCheck
+import com.safetorun.features.installorigin.installOriginCheckWithDefaultsCheck
+import com.safetorun.features.oscheck.bannedBoardCheck
+import com.safetorun.features.oscheck.bannedHardwareCheck
+import com.safetorun.features.oscheck.emulator.banAvdEmulatorCheck
+import com.safetorun.features.oscheck.emulator.banBluestacksEmulatorCheck
+import com.safetorun.features.oscheck.emulator.banGenymotionEmulatorCheck
+import com.safetorun.features.oscheck.safeToRunCombinedCheck
+import com.safetorun.features.rootdetection.rootDetectionCheck
+import com.safetorun.inline.safeToRunWithLogger
 import com.safetorun.intents.file.verifyFile
 import com.safetorun.logger.getLogs
-import com.safetorun.logger.logCheckSuccess
+import com.safetorun.logger.loggerForCheck
 import com.safetorun.offdevice.safeToRunLogger
 import java.io.File
 
@@ -21,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
-        logCheckSuccess("MainActivity")
+        canIRun("MainActivityCheck") {
+            throw RuntimeException("Failed to start activity!")
+        }
 
         val logger = safeToRunLogger(
             "DcqHpAsUkx4CoAqM6ffAT86Zw8vLrPaw2crfoNap"
@@ -29,6 +42,34 @@ class MainActivity : AppCompatActivity() {
 
         getLogs {
             logger.invoke(it)
+        }
+    }
+
+    private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
+        if (safeToRunWithLogger(
+                logger = loggerForCheck("", checkName),
+                { banAvdEmulatorCheck() },
+                { banGenymotionEmulatorCheck() },
+                { banBluestacksEmulatorCheck() },
+                { blacklistedAppCheck("Test app", "Test app 2") },
+                { rootDetectionCheck() },
+                {
+                    safeToRunCombinedCheck(
+                        listOf(
+                            { bannedHardwareCheck("hardware") },
+                            { bannedBoardCheck("board") }
+                        )
+                    )
+                },
+                {
+                    safeToRunCombinedCheck(
+                        listOf { installOriginCheckWithDefaultsCheck() },
+                        listOf { !BuildConfig.DEBUG }
+                    )
+                },
+            )()
+        ) {
+            actionOnFailure()
         }
     }
 
