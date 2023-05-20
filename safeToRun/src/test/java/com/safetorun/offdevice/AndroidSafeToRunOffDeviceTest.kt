@@ -29,75 +29,48 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     private val api: String = "Apikkey"
     private val deviceId: String = "DeviceId"
 
-    private val installOriginDto = InstallOriginDto(installOriginPackageName = "com.example.app")
-    private val blacklistedAppsDto =
-        BlacklistedAppsDto(installedPackages = listOf("com.example.blacklisted"))
-    private val signatureVerificationDto = DeviceSignatureDto(signature = "signatureString")
-    private val isRooted = false
-
-
     private val androidSafeToRunOffDevice =
         AndroidSafeToRunOffDevice(safeToRunApi, offDeviceResultBuilder, api, deviceId)
-
-    private val osCheckDto = OsCheckDto(
-        osVersion = "Android 10",
-        manufacturer = "Samsung",
-        model = "Galaxy S10",
-        board = "exynos",
-        bootloader = "BLv3",
-        cpuAbi = listOf("arm64-v8a"),
-        host = "buildhost",
-        hardware = "samsungexynos9820",
-        device = "beyond1q"
-    )
 
 
     fun `test that os check can convert`() {
         val expectedOsCheck = OsCheck(
-            osVersion = "Android 10",
-            manufacturer = "Samsung",
-            model = "Galaxy S10",
-            board = "exynos",
-            bootloader = "BLv3",
-            cpuAbi = listOf("arm64-v8a"),
-            host = "buildhost",
-            hardware = "samsungexynos9820",
-            device = "beyond1q"
+            osVersion = matchingDto().osCheck.osVersion,
+            manufacturer = matchingDto().osCheck.manufacturer,
+            model = matchingDto().osCheck.model,
+            board = matchingDto().osCheck.board,
+            bootloader = matchingDto().osCheck.bootloader,
+            cpuAbi = matchingDto().osCheck.cpuAbi,
+            host = matchingDto().osCheck.host,
+            hardware = matchingDto().osCheck.hardware,
+            device = matchingDto().osCheck.device
         )
 
-        val actualOsCheck = osCheckDto.toOsCheck()
+        val actualOsCheck = matchingDto().osCheck.toOsCheck()
 
         assertThat(actualOsCheck).isEqualTo(expectedOsCheck)
     }
 
     fun `test that device configuration can be converted to the right object`() {
-        val deviceInformationDto = DeviceInformationDto(
-            osCheck = osCheckDto,
-            installOrigin = installOriginDto,
-            blacklistedApp = blacklistedAppsDto,
-            signatureVerification = SignatureVerificationDto(signatureVerificationDto.signature),
-            isRooted = isRooted
-        )
-
         val expectedDeviceInformation = DeviceInformation(
             osCheck = OsCheck(
-                osVersion = "Android 10",
-                manufacturer = "Samsung",
-                model = "Galaxy S10",
-                board = "exynos",
-                bootloader = "BLv3",
-                cpuAbi = listOf("arm64-v8a"),
-                host = "buildhost",
-                hardware = "samsungexynos9820",
-                device = "beyond1q"
+                osVersion = matchingDto().osCheck.osVersion,
+                manufacturer = matchingDto().osCheck.manufacturer,
+                model = matchingDto().osCheck.model,
+                board = matchingDto().osCheck.board,
+                bootloader = matchingDto().osCheck.bootloader,
+                cpuAbi = matchingDto().osCheck.cpuAbi,
+                host = matchingDto().osCheck.host,
+                hardware = matchingDto().osCheck.hardware,
+                device = matchingDto().osCheck.device
             ),
-            installOrigin = InstallOrigin("com.example.app"),
-            blacklistedApp = BlacklistedApps(listOf("com.example.blacklisted")),
-            signatureVerification = DeviceSignature("signatureString"),
+            installOrigin = InstallOrigin(matchingDto().installOrigin.installOriginPackageName!!),
+            blacklistedApp = BlacklistedApps(matchingDto().blacklistedApp.installedPackages),
+            signatureVerification = DeviceSignature(matchingDto().signatureVerification.signatureVerificationString!!),
             isRooted = false
         )
 
-        val actualDeviceInformation = deviceInformationDto.toDeviceInformation()
+        val actualDeviceInformation = matchingDto().toDeviceInformation()
 
         assertThat(actualDeviceInformation).isEqualTo(expectedDeviceInformation)
     }
