@@ -14,7 +14,7 @@ internal class DeviceInformationBuilder(
     private val _installedApplications: MutableList<String> = mutableListOf()
     private var _signature: String = ""
     private var _installOrigin: String = ""
-
+    private var _isRooted: Boolean = false
 
     /**
      * Add installed application
@@ -38,6 +38,13 @@ internal class DeviceInformationBuilder(
     }
 
     /**
+     * Add if device is rooted
+     */
+    override fun isRooted(isRooted: Boolean) {
+        _isRooted = isRooted
+    }
+
+    /**
      * Build a full device information DTO. Will exception if
      * there are missing values not added
      *
@@ -48,14 +55,16 @@ internal class DeviceInformationBuilder(
         return buildForUnwrappedValues(
             osInformation.buildOsCheck(),
             _installOrigin,
-            _signature
+            _signature,
+            _isRooted
         )
     }
 
     private fun buildForUnwrappedValues(
         osVersionCheck: OsCheck,
         installOrigin: String,
-        signature: String
+        signature: String,
+        isRooted: Boolean
     ) =
         DeviceInformation(
             osCheck = osVersionCheck,
@@ -65,6 +74,7 @@ internal class DeviceInformationBuilder(
             ),
             signatureVerification = DeviceSignature(
                 signature = signature
-            )
+            ),
+            isRooted = isRooted
         )
 }

@@ -9,4 +9,5 @@ data class DeviceInformation(
     val installOrigin: InstallOrigin,
     val blacklistedApp: BlacklistedApps,
     val signatureVerification: DeviceSignature,
+    val isRooted : Boolean
 )

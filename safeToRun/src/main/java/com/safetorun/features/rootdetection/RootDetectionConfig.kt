@@ -7,6 +7,8 @@ import com.scottyab.rootbeer.RootBeer
  * Check for root (defers to rootbeer)
  *
  * @param tolerateBusyBox whether or not to tolerate busybox
+ *
+ * @return true if the device is rooted
  */
 inline fun Context.rootDetectionCheck(tolerateBusyBox: Boolean = true): Boolean {
     return RootBeer(this).run {

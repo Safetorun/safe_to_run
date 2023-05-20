@@ -7,7 +7,6 @@ import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 fun Context.loggerForCheck(apiKey : String, checkName: String): (Boolean) -> Unit = {
@@ -47,3 +46,4 @@ fun Context.getLogs(onEach: (SafeToRunEvents) -> Unit) = GlobalScope.launch {
         .onEach { onEach(it) }
         .collect()
 }
+

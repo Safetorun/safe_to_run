@@ -1,5 +1,6 @@
 package com.safetorun.offdevice
 
+import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.SafeToRunApi
 import com.safetorun.logger.models.AppMetadata
@@ -17,6 +18,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
     private val safeToRunApi = mockk<SafeToRunApi>()
     private val offDeviceResultBuilder = mockk<OffDeviceResultBuilder>()
+    private val context = mockk<Context>()
     private val api: String = "Apikkey"
     private val deviceId: String = "DeviceId"
 
@@ -43,8 +45,8 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
     fun `test that when we call android safe to run twice with the same api key it is the same instance`() {
         // Given
-        val safeToRun = safeToRunLogger("1234")
-        val safeToRun2 = safeToRunLogger("1234")
+        val safeToRun = context.safeToRunLogger("1234")
+        val safeToRun2 = context.safeToRunLogger("1234")
 
         assertThat(safeToRun).isNotNull()
         assertThat(safeToRun2).isNotNull()

@@ -14,4 +14,5 @@ data class DeviceInformationDto(
     var installOrigin: InstallOriginDto = InstallOriginDto(),
     var blacklistedApp: BlacklistedAppsDto = BlacklistedAppsDto(),
     var signatureVerification: SignatureVerificationDto = SignatureVerificationDto(),
+    var isRooted: Boolean = false,
 )
