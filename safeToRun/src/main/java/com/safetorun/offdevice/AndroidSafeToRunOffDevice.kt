@@ -144,7 +144,7 @@ fun Context.offDeviceResultBuilder(): OffDeviceResultBuilder = CompositeBuilder(
 )
 
 
-private fun OsCheckDto.toOsCheck() = OsCheck(
+internal fun OsCheckDto.toOsCheck() = OsCheck(
     osVersion = this.osVersion,
     manufacturer = this.manufacturer,
     model = this.model,
@@ -156,7 +156,7 @@ private fun OsCheckDto.toOsCheck() = OsCheck(
     device = this.device
 )
 
-private fun DeviceInformationDto.toDeviceInformation() = DeviceInformation(
+internal fun DeviceInformationDto.toDeviceInformation() = DeviceInformation(
     osCheck = osCheck.toOsCheck(),
     installOrigin = InstallOrigin(installOrigin.installOriginPackageName ?: ""),
     blacklistedApp = BlacklistedApps(blacklistedApp.installedPackages),
