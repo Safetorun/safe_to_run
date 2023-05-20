@@ -69,7 +69,7 @@ class ReportFragment : Fragment() {
 
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
         if (safeToRunWithLogger(
-                logger = loggerForCheck("", checkName),
+                logger = loggerForCheck(checkName),
                 { verifySignatureCheck() },
                 { banAvdEmulatorCheck() },
                 { banGenymotionEmulatorCheck() },

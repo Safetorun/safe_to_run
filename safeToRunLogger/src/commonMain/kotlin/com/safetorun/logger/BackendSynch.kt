@@ -12,10 +12,9 @@ import kotlinx.coroutines.launch
 /**
  * Retrieve a logger for a given check
  *
- * @param apiKey the api key to use
  * @param checkName a unique name to describe your check
  */
-fun Context.loggerForCheck(apiKey : String, checkName: String): (Boolean) -> Unit = {
+fun Context.loggerForCheck(checkName: String): (Boolean) -> Unit = {
     if (it) {
         logCheckSuccess(checkName)
     } else {
