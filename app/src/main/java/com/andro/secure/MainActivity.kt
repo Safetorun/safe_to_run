@@ -36,14 +36,6 @@ class MainActivity : AppCompatActivity() {
         canIRun("MainActivityCheck") {
             throw RuntimeException("Failed to start activity!")
         }
-
-        val logger = safeToRunLogger(
-            "DcqHpAsUkx4CoAqM6ffAT86Zw8vLrPaw2crfoNap"
-        )
-
-        getLogs {
-            logger.invoke(it)
-        }
     }
 
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {

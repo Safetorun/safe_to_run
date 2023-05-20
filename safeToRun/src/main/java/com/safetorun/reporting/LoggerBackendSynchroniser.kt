@@ -6,7 +6,7 @@ import androidx.work.WorkerParameters
 import com.safetorun.logger.getLogs
 import com.safetorun.offdevice.safeToRunLogger
 
-class LoggerBackendSynchroniser(appContext: Context, workerParams: WorkerParameters) :
+internal class LoggerBackendSynchroniser(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
@@ -26,6 +26,7 @@ class LoggerBackendSynchroniser(appContext: Context, workerParams: WorkerParamet
                 Result.failure()
             }
         } catch (e: Exception) {
+            @Suppress("Detekt:TooGenericException")
             Result.failure()
         }
     }
