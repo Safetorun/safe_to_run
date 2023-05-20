@@ -25,8 +25,9 @@ internal class LoggerBackendSynchroniser(appContext: Context, workerParams: Work
             } else {
                 Result.failure()
             }
+
         } catch (e: Exception) {
-            @Suppress("Detekt:TooGenericException")
+            @Suppress("Detekt:TooGenericException", "Detekt:SwallowedException")
             Result.failure()
         }
     }
