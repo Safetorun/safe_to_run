@@ -9,6 +9,7 @@ import com.safetorun.offdevice.safeToRunLogger
 internal class LoggerBackendSynchroniser(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
+    @Suppress("TooGenericExceptionCaught", "SwallowedException")
     override suspend fun doWork(): Result {
         val apiKey = inputData.getString(KEY_API_KEY)
 
@@ -26,8 +27,8 @@ internal class LoggerBackendSynchroniser(appContext: Context, workerParams: Work
                 Result.failure()
             }
 
+
         } catch (e: Exception) {
-            @Suppress("Detekt:TooGenericException", "Detekt:SwallowedException")
             Result.failure()
         }
     }
