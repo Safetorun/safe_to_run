@@ -15,31 +15,21 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class JvmDataStoreTest {
 
-    private val testDirectory by lazy {
-        File("test_data_dir_temp")
-            .also {
-                if (it.exists().not()) {
-                    it.mkdir()
-                }
-            }
-    }
-
     private val store = JvmDatastore(testDirectory) {
         true
     }
 
+
     @Before
     fun clearDirectory() {
-        testDirectory
-            .listFiles()
-            ?.forEach { it.delete() }
+        clear()
     }
 
     @After
     fun removeDirectory() {
-        clearDirectory()
-        testDirectory.delete()
+        remove()
     }
+
 
     @Test
     fun `test that jvm data store can save and then retrieve a data for failure`() = runTest {

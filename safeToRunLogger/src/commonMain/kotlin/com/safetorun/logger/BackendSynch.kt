@@ -53,9 +53,10 @@ internal fun Context.logCheckSuccess(checkName: String) = GlobalScope.launch {
  * @return a job that can be cancelled
  */
 fun Context.getLogs(onEach: (SafeToRunEvents) -> Unit) = GlobalScope.launch {
-    AndroidDataStore(this@getLogs)
-        .retrieve()
+    logs()
         .onEach { onEach(it) }
         .collect()
 }
+
+suspend fun Context.logs() = AndroidDataStore(this).retrieve()
 
