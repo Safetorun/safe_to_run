@@ -49,9 +49,10 @@ internal class BackendSynchKtTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test that backend synch can store data to disk when called`() = runTest {
-        context.loggerForCheck("testname").invoke(false)
+        context.loggerForCheck("testname", this).invoke(false)
 
-        val logs = context.logs().toList()
+        val logs = mutableListOf<SafeToRunEvents>()
+        context.getLogs({ logs.add(it) }, scope = this).join()
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.FailedCheck::class, logs[0]::class)
