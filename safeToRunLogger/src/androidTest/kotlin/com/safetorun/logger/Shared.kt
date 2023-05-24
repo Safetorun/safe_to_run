@@ -17,11 +17,19 @@ val testDirectory by lazy {
 internal fun clear() {
     testDirectory
         .listFiles()
-        ?.forEach { it.delete() }
+        ?.forEach { it.deleteRecursively() }
+
+    if (testDirectory.exists()) {
+        testDirectory.deleteRecursively()
+    }
+
     testDirectory.mkdir()
 }
 
 internal fun remove() {
     clear()
-    testDirectory.delete()
+
+    if (testDirectory.exists()) {
+        testDirectory.deleteRecursively()
+    }
 }

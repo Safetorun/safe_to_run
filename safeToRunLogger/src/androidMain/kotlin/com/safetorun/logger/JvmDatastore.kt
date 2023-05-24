@@ -4,6 +4,7 @@ import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -23,6 +24,7 @@ internal class JvmDatastore(
     override suspend fun retrieve(): Flow<SafeToRunEvents> =
         listFiles()
             ?.asFlow()
+            ?.filter { it.isDirectory.not() }
             ?.map { it.readText() }
             ?.map { Json.decodeFromString(it) } ?: emptyFlow()
 
