@@ -18,9 +18,9 @@ internal class LoggerBackendSynchroniser(appContext: Context, workerParams: Work
 
                 val logger = this.applicationContext.safeToRunLogger(apiKey)
 
-                this.applicationContext.getLogs {
+                this.applicationContext.getLogs({
                     logger.invoke(it)
-                }
+                })
 
                 Result.success()
             } else {

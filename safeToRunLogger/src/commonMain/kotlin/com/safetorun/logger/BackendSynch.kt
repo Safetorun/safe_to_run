@@ -63,5 +63,5 @@ fun Context.getLogs(onEach: (SafeToRunEvents) -> Unit, scope: CoroutineScope = G
             .collect()
     }
 
-suspend fun Context.logs() = AndroidDataStore(this).retrieve()
+internal suspend fun Context.logs() = AndroidDataStore(this).retrieve()
 
