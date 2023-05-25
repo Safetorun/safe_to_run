@@ -51,17 +51,11 @@ internal suspend fun Context.logCheckSuccess(checkName: String) =
 
 /**
  * Retrieve all logs previously stored
- *
- * @param onEach a callback to be called for each log
- *
- * @return a job that can be cancelled
  */
-fun Context.getLogs(onEach: (SafeToRunEvents) -> Unit, scope: CoroutineScope = GlobalScope) =
-    scope.launch {
-        logs()
-            .onEach { onEach(it) }
-            .collect()
-    }
+suspend fun Context.logs() = AndroidDataStore(this).retrieve()
 
-internal suspend fun Context.logs() = AndroidDataStore(this).retrieve()
+/**
+ * Remove all logs previously stored
+ */
+suspend fun Context.clearLogs() = AndroidDataStore(this).clear()
 

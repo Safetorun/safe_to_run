@@ -8,6 +8,7 @@ import com.safetorun.logger.models.SafeToRunEvents
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -49,8 +50,7 @@ internal class BackendSynchKtTest {
     fun `test that backend synch can store data to disk when called`() = runTest {
         context.loggerForCheck("testname", this).invoke(false)
 
-        val logs = mutableListOf<SafeToRunEvents>()
-        context.getLogs({ logs.add(it) }, scope = this).join()
+        val logs = context.logs().toList()
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.FailedCheck::class, logs[0]::class)
@@ -61,8 +61,7 @@ internal class BackendSynchKtTest {
     fun `test that backend synch can store data to disk when called (pass)`() = runTest {
         context.loggerForCheck("testname", this).invoke(true)
 
-        val logs = mutableListOf<SafeToRunEvents>()
-        context.getLogs({ logs.add(it) }, scope = this).join()
+        val logs = context.logs().toList()
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.SucceedCheck::class, logs[0]::class)

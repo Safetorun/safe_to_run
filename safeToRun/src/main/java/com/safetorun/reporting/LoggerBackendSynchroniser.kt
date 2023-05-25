@@ -3,8 +3,10 @@ package com.safetorun.reporting
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.safetorun.logger.getLogs
+import com.safetorun.logger.clearLogs
+import com.safetorun.logger.logs
 import com.safetorun.offdevice.safeToRunLogger
+import kotlinx.coroutines.flow.onEach
 
 internal class LoggerBackendSynchroniser(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
@@ -18,9 +20,12 @@ internal class LoggerBackendSynchroniser(appContext: Context, workerParams: Work
 
                 val logger = this.applicationContext.safeToRunLogger(apiKey)
 
-                this.applicationContext.getLogs({
-                    logger.invoke(it)
-                })
+                this.applicationContext.logs()
+                    .onEach {
+                        logger.invoke(it)
+                    }
+
+                this.applicationContext.clearLogs()
 
                 Result.success()
             } else {

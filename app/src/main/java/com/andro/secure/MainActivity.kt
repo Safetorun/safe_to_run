@@ -20,9 +20,6 @@ import com.safetorun.features.rootdetection.rootDetectionCheck
 import com.safetorun.inline.logger
 import com.safetorun.inline.safeToRunWithLogger
 import com.safetorun.intents.file.verifyFile
-import com.safetorun.logger.getLogs
-import com.safetorun.logger.loggerForCheck
-import com.safetorun.offdevice.safeToRunLogger
 import java.io.File
 
 
@@ -39,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
+
         if (safeToRunWithLogger(
                 logger = logger("DcqHpAsUkx4CoAqM6ffAT86Zw8vLrPaw2crfoNap", checkName),
                 { banAvdEmulatorCheck() },

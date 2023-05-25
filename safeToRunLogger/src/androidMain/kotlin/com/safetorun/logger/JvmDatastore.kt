@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -32,10 +33,16 @@ internal class JvmDatastore(
         fileForUuid(uuid)
             .run {
                 if (verifyFile() && exists()) {
-                    delete()
+                    deleteRecursively()
                 }
             }
 
+    }
+
+    override suspend fun clear() {
+        listFiles()
+            ?.asFlow()
+            ?.onEach { it.deleteRecursively() }
     }
 
     private fun fileForUuid(uuid: String) = File(storageDirectory, uuid)
