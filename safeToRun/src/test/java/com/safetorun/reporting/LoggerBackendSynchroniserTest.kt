@@ -19,11 +19,6 @@ import org.junit.Test
 
 internal class LoggerBackendSynchroniserTest {
 
-    private val context = mockk<Context>()
-        .apply {
-            coEvery { logs() } coAnswers { returnList.asFlow() }
-        }
-
     private val returnList = listOf(
         failedCheck(),
         successCheck()
@@ -36,6 +31,9 @@ internal class LoggerBackendSynchroniserTest {
         val listAtEnd = mutableListOf<SafeToRunEvents>()
         val inputData = workDataOf(LoggerBackendSynchroniser.KEY_API_KEY to "Abc")
 
+        val context = mockk<Context>()
+
+        coEvery { context.logs() } coAnswers { returnList.asFlow() }
         every { context.safeToRunLogger(any()) } returns {
             listAtEnd.add(it)
         }
