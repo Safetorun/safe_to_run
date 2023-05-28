@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 fun Context.loggerForCheck(
     checkName: String,
     scope: CoroutineScope = GlobalScope
-): (Boolean) -> Job = {
+): (Boolean) -> Unit = {
      scope.launch {
         if (it) {
             logCheckSuccess(checkName)

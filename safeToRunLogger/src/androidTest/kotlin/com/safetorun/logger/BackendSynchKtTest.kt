@@ -10,6 +10,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.job
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -50,7 +51,8 @@ internal class BackendSynchKtTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test that backend synch can store data to disk when called`() = runTest {
-        context.loggerForCheck("testname", this).invoke(false).join()
+        context.loggerForCheck("testname", this).invoke(false)
+        this.testScheduler.runCurrent()
 
         val logs = context.logs().toList()
 
@@ -61,7 +63,8 @@ internal class BackendSynchKtTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test that backend synch can store data to disk when called (pass)`() = runTest {
-        context.loggerForCheck("testname", this).invoke(true).join()
+        context.loggerForCheck("testname", this).invoke(true)
+        this.testScheduler.runCurrent()
 
         joinAll()
 

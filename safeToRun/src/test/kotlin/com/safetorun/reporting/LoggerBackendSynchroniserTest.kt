@@ -12,35 +12,46 @@ import com.safetorun.offdevice.safeToRunLogger
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
 
-internal class LoggerBackendSynchroniserTest {
+@ExperimentalCoroutinesApi
+internal class LoggerBackendSynchroniserTest : TestCase() {
+
+    private val context by lazy {
+        mockk<Context>()
+    }
+
+    private val listAtEnd = mutableListOf<SafeToRunEvents>()
 
     private val returnList = listOf(
         failedCheck(),
         successCheck()
     )
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun `test that all items returned from logs are synchronised with the backend`() = runTest {
+    override fun setUp() {
+        mockkStatic("com.safetorun.offdevice.AndroidSafeToRunOffDeviceKt")
+        mockkStatic("com.safetorun.logger.BackendSynchKt")
 
-        val listAtEnd = mutableListOf<SafeToRunEvents>()
-        val inputData = workDataOf(LoggerBackendSynchroniser.KEY_API_KEY to "Abc")
-
-        val context = mockk<Context>()
-
-        coEvery { context.logs() } coAnswers { returnList.asFlow() }
         every { context.safeToRunLogger(any()) } returns {
             listAtEnd.add(it)
         }
 
-        LoggerBackendSynchroniser(context, mockk<WorkerParameters>().also {
+        coEvery { context.logs() } coAnswers { returnList.asFlow() }
+    }
+
+    fun `test that all items returned from logs are synchronised with the backend`() = runTest {
+
+        val inputData = workDataOf(LoggerBackendSynchroniser.KEY_API_KEY to "Abc")
+
+        LoggerBackendSynchroniser(context, mockk<WorkerParameters>(relaxed = true).also {
             every { it.inputData } returns inputData
         }).doWork()
+
+        this.testScheduler.runCurrent()
 
         assertThat(listAtEnd).containsExactlyElementsIn(returnList)
     }

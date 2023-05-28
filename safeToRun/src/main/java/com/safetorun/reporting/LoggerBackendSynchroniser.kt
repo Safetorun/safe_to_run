@@ -6,6 +6,7 @@ import androidx.work.WorkerParameters
 import com.safetorun.logger.clearLogs
 import com.safetorun.logger.logs
 import com.safetorun.offdevice.safeToRunLogger
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
 internal class LoggerBackendSynchroniser(appContext: Context, workerParams: WorkerParameters) :
@@ -24,6 +25,7 @@ internal class LoggerBackendSynchroniser(appContext: Context, workerParams: Work
                     .onEach {
                         logger.invoke(it)
                     }
+                    .collect()
 
                 this.applicationContext.clearLogs()
 
