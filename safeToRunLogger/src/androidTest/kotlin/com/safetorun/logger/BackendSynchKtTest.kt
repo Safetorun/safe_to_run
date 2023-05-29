@@ -8,9 +8,7 @@ import com.safetorun.logger.models.SafeToRunEvents
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.job
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -58,6 +56,7 @@ internal class BackendSynchKtTest {
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.FailedCheck::class, logs[0]::class)
+        context.clearLogs()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -72,6 +71,7 @@ internal class BackendSynchKtTest {
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.SucceedCheck::class, logs[0]::class)
+        context.clearLogs()
     }
 
     private fun retrievePackageManager(

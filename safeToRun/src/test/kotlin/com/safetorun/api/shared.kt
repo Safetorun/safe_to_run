@@ -17,5 +17,6 @@ val deviceInformation by lazy {
         host("host")
         cpuAbi("cpu")
         cpuAbi("cpuAbi")
+        isRooted(false)
     }
 }

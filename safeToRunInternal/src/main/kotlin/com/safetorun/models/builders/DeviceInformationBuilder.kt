@@ -4,7 +4,6 @@ import com.safetorun.models.core.BlacklistedApps
 import com.safetorun.models.core.DeviceInformation
 import com.safetorun.models.core.DeviceSignature
 import com.safetorun.models.core.InstallOrigin
-import com.safetorun.models.core.OsCheck
 
 
 internal class DeviceInformationBuilder(
@@ -40,8 +39,8 @@ internal class DeviceInformationBuilder(
     /**
      * Add if device is rooted
      */
-    override fun isRooted(isRooted: Boolean) {
-        _isRooted = isRooted
+    override fun isRooted(rooted: Boolean) {
+        _isRooted = rooted
     }
 
     /**
@@ -52,29 +51,19 @@ internal class DeviceInformationBuilder(
      * @throws IllegalArgumentException if any items are null
      */
     internal fun build(): DeviceInformation {
-        return buildForUnwrappedValues(
-            osInformation.buildOsCheck(),
-            _installOrigin,
-            _signature,
-            _isRooted
-        )
+        return buildForUnwrappedValues()
     }
 
-    private fun buildForUnwrappedValues(
-        osVersionCheck: OsCheck,
-        installOrigin: String,
-        signature: String,
-        isRooted: Boolean
-    ) =
+    private fun buildForUnwrappedValues() =
         DeviceInformation(
-            osCheck = osVersionCheck,
-            installOrigin = InstallOrigin(installOrigin),
+            osCheck = osInformation.buildOsCheck(),
+            installOrigin = InstallOrigin(_installOrigin),
             blacklistedApp = BlacklistedApps(
                 installedPackages = _installedApplications
             ),
             signatureVerification = DeviceSignature(
-                signature = signature
+                signature = _signature
             ),
-            isRooted = isRooted
+            isRooted = _isRooted
         )
 }

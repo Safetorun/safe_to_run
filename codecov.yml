@@ -5,3 +5,4 @@ ignore:
   - "safetorunpinscreen/**/*"
   - "safeToRunBuilder/**/*"
   - "**/*Test.kt"
+  - "safeToRun/src/main/java/com/safetorun/inline/safeToRun.kt"

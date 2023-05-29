@@ -22,5 +22,5 @@ interface IDeviceInformationBuilder {
     /**
      * Add if device is rooted
      */
-    fun isRooted(isRooted: Boolean)
+    fun isRooted(rooted: Boolean)
 }

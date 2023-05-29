@@ -4,7 +4,6 @@ import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.decodeFromString
@@ -25,7 +24,6 @@ internal class JvmDatastore(
     override suspend fun retrieve(): Flow<SafeToRunEvents> =
         listFiles()
             ?.asFlow()
-            ?.filter { it.isDirectory.not() }
             ?.map { it.readText() }
             ?.map { Json.decodeFromString(it) } ?: emptyFlow()
 
@@ -41,11 +39,11 @@ internal class JvmDatastore(
 
     override suspend fun clear() {
         listFiles()
-            ?.asFlow()
-            ?.onEach { it.deleteRecursively() }
+            .asFlow()
+            .onEach { it.deleteRecursively() }
     }
 
     private fun fileForUuid(uuid: String) = File(storageDirectory, uuid)
     private fun newFile(uuid: String) = File(storageDirectory, uuid)
-    private fun listFiles() = storageDirectory.listFiles()
+    private fun listFiles() = storageDirectory.listFiles()?.toList() ?: emptyList()
 }

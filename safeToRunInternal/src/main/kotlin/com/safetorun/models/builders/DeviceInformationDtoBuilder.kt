@@ -51,7 +51,8 @@ class DeviceInformationDtoBuilder internal constructor(
             },
             installOrigin = InstallOriginDto(installOrigin.installOriginPackageName),
             blacklistedApp = BlacklistedAppsDto(blacklistedApp.installedPackages),
-            signatureVerification = SignatureVerificationDto(signatureVerification.signature)
+            signatureVerification = SignatureVerificationDto(signatureVerification.signature),
+            isRooted = isRooted
         )
     }
 }
