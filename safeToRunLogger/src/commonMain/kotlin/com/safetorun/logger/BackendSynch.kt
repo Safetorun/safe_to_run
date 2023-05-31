@@ -60,3 +60,8 @@ suspend fun Context.logs() = AndroidDataStore(this).retrieve()
  */
 suspend fun Context.clearLogs() = AndroidDataStore(this).clear()
 
+/**
+ * Remove a specific log
+ */
+suspend fun Context.deleteLog(uuid: String) = AndroidDataStore(this).delete(uuid)
+

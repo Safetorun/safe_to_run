@@ -19,6 +19,11 @@ internal class JvmDataStoreTest {
         true
     }
 
+    private val failedChecks = listOf(
+        failedCheck(),
+        failedCheck()
+    )
+
 
     @Before
     fun clearDirectory() {
@@ -50,6 +55,33 @@ internal class JvmDataStoreTest {
     }
 
     @Test
+    fun `test that JVM data store is resilience to deleting a non-existing file`() = runTest {
+        store.delete("test")
+    }
+
+    @Test
+    fun `test that JVM data store is resilience to not reading a directory`() = runTest {
+        failedChecks.forEach { store.store(it) }
+        File(testDirectory, "inner-dir").mkdirs()
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+
+        File(testDirectory, "inner-dir").deleteRecursively()
+    }
+
+    @Test
+    fun `test that JVM data store is resilience to not reading a duff file`() = runTest {
+        failedChecks.forEach { store.store(it) }
+        File(testDirectory, "test-file").writeText("test")
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+
+        File(testDirectory, "test-file").writeText("test")
+    }
+
+    @Test
     fun `test that jvm data store rejects deletion of a directory traversal`() = runTest {
         val store = JvmDatastore(testDirectory) {
             false
@@ -60,12 +92,18 @@ internal class JvmDataStoreTest {
     }
 
     @Test
-    fun `test that jvm can delete`() = runTest {
-        val failedChecks = listOf(
-            failedCheck(),
-            failedCheck()
-        )
+    fun `test that jvm data store can clear`() = runTest {
+        failedChecks.forEach { store.store(it) }
 
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+
+        store.clear()
+        assertEquals(store.retrieve().toList().size, 0)
+    }
+
+    @Test
+    fun `test that jvm can delete`() = runTest {
         failedChecks.forEach { store.store(it) }
 
         val retrievedList = store.retrieve().toList()

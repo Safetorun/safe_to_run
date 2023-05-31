@@ -56,6 +56,7 @@ internal class BackendSynchKtTest {
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.FailedCheck::class, logs[0]::class)
+        context.deleteLog(logs[0].uuid)
         context.clearLogs()
     }
 
@@ -71,6 +72,7 @@ internal class BackendSynchKtTest {
 
         assertEquals(1, logs.size)
         assertEquals(SafeToRunEvents.SucceedCheck::class, logs[0]::class)
+        context.deleteLog(logs[0].uuid)
         context.clearLogs()
     }
 
