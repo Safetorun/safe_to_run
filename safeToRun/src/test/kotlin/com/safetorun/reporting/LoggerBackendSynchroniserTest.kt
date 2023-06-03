@@ -6,8 +6,6 @@ import androidx.work.workDataOf
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.logger.deleteLog
 import com.safetorun.logger.logs
-import com.safetorun.logger.models.AppMetadata
-import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.offdevice.safeToRunLogger
 import io.mockk.coEvery
@@ -29,8 +27,8 @@ internal class LoggerBackendSynchroniserTest : TestCase() {
     private val listAtEnd = mutableListOf<SafeToRunEvents>()
 
     private val returnList = listOf(
-        failedCheck(),
-        successCheck()
+        SafeToRunEvents.FailedCheck.empty("default"),
+        SafeToRunEvents.SucceedCheck.empty("default")
     )
 
     override fun setUp() {
@@ -57,16 +55,4 @@ internal class LoggerBackendSynchroniserTest : TestCase() {
 
         assertThat(listAtEnd).containsExactlyElementsIn(returnList)
     }
-
-    private fun failedCheck() = SafeToRunEvents.FailedCheck(
-        DeviceInformation.empty(),
-        AppMetadata.empty(),
-        "default"
-    )
-
-    private fun successCheck() = SafeToRunEvents.SucceedCheck(
-        DeviceInformation.empty(),
-        AppMetadata.empty(),
-        "default"
-    )
 }

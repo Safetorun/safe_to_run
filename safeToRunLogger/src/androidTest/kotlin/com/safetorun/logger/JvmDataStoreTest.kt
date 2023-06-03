@@ -1,7 +1,5 @@
 package com.safetorun.logger
 
-import com.safetorun.logger.models.AppMetadata
-import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -20,8 +18,8 @@ internal class JvmDataStoreTest {
     }
 
     private val failedChecks = listOf(
-        failedCheck(),
-        failedCheck()
+        SafeToRunEvents.SucceedCheck.empty("default"),
+        SafeToRunEvents.FailedCheck.empty("default"),
     )
 
 
@@ -38,7 +36,7 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve a data for failure`() = runTest {
-        val failedCheck = failedCheck()
+        val failedCheck = SafeToRunEvents.FailedCheck.empty("default")
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -47,7 +45,7 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve data for success`() = runTest {
-        val failedCheck = successCheck()
+        val failedCheck = SafeToRunEvents.SucceedCheck.empty("default")
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -115,15 +113,3 @@ internal class JvmDataStoreTest {
         assertEquals(0, store.retrieve().toList().size)
     }
 }
-
-internal fun failedCheck() = SafeToRunEvents.FailedCheck(
-    DeviceInformation.empty(),
-    AppMetadata.empty(),
-    "default"
-)
-
-internal fun successCheck() = SafeToRunEvents.SucceedCheck(
-    DeviceInformation.empty(),
-    AppMetadata.empty(),
-    "default"
-)

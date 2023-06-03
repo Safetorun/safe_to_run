@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.DefaultSafeToRunApi
 import com.safetorun.api.SafeToRunApi
-import com.safetorun.logger.models.AppMetadata
 import com.safetorun.logger.models.BlacklistedApps
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.DeviceSignature
@@ -124,27 +123,18 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         ).respond(
             HttpResponse.response()
                 .withStatusCode(200)
-                .withBody(responseBody())
+                .withBody(responseBody(SafeToRunEvents.SucceedCheck.empty("default")))
         )
 
         safeToRun.invoke(
-            succeedCheck()
+            SafeToRunEvents.SucceedCheck.empty("default")
         )
     }
 
-    private fun responseBody() = Json.encodeToString(
+    private fun responseBody(event : SafeToRunEvents) = Json.encodeToString(
         DataWrappedLogResponse.serializer(SafeToRunEvents.serializer()),
-        DataWrappedLogResponse(
-            succeedCheck()
-        ),
+        DataWrappedLogResponse(event),
     )
-
-    private fun succeedCheck() = SafeToRunEvents.SucceedCheck(
-        DeviceInformation.empty(),
-        AppMetadata.empty(),
-        "default"
-    )
-
 
     private fun matchingDto() = deviceInformationBuilder(api) {
         dtoResult()

@@ -5,8 +5,6 @@ import com.safetorun.api.DefaultSafeToRunApi.Companion.API_KEY_HEADER_NAME
 import com.safetorun.api.DefaultSafeToRunApi.Companion.DEVICE_CHECK_ENDPOINT
 import com.safetorun.api.DefaultSafeToRunApi.Companion.LOG_ENDPOINT
 import com.safetorun.api.DefaultSafeToRunApi.Companion.VERIFY_CHECK_ENDPOINT
-import com.safetorun.logger.models.AppMetadata
-import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.models.ConfirmVerificationRequestDto
 import com.safetorun.models.models.DataWrappedLogResponse
@@ -19,7 +17,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.TestCase
-import kotlinx.serialization.builtins.serializer
 
 internal class DefaultSafeToRunApiTest : TestCase() {
     private val mockHttpClient = mockk<SafeToRunHttpClient>(relaxed = true)
@@ -86,10 +83,10 @@ internal class DefaultSafeToRunApiTest : TestCase() {
                 SafeToRunEvents.serializer(),
                 serializer
             )
-        } returns DataWrappedLogResponse(failedCheck())
+        } returns DataWrappedLogResponse(SafeToRunEvents.FailedCheck.empty("default"))
 
         // When
-        defaultSafeToRunApi.logEvent(failedCheck())
+        defaultSafeToRunApi.logEvent(SafeToRunEvents.FailedCheck.empty("default"))
 
         // Then
         verify {
@@ -102,12 +99,6 @@ internal class DefaultSafeToRunApiTest : TestCase() {
             )
         }
     }
-
-    private fun failedCheck() = SafeToRunEvents.FailedCheck(
-        DeviceInformation.empty(),
-        AppMetadata.empty(),
-        "default"
-    )
 
     companion object {
         const val API_KEY = "FakeApiKey"

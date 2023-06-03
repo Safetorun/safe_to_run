@@ -23,7 +23,13 @@ sealed class SafeToRunEvents(
         val appMetadata: AppMetadata,
         val checkName: String
     ) :
-        SafeToRunEvents(metadata = appMetadata)
+        SafeToRunEvents(metadata = appMetadata) {
+        companion object {
+            fun empty(name: String) =
+                FailedCheck(DeviceInformation.empty(), AppMetadata.empty(), name)
+
+        }
+    }
 
     /**
      * A check succeeded
@@ -35,5 +41,11 @@ sealed class SafeToRunEvents(
         val appMetadata: AppMetadata,
         val checkName: String
     ) :
-        SafeToRunEvents(metadata = appMetadata)
+        SafeToRunEvents(metadata = appMetadata) {
+        companion object {
+            fun empty(name: String) =
+                SucceedCheck(DeviceInformation.empty(), AppMetadata.empty(), name)
+
+        }
+    }
 }
