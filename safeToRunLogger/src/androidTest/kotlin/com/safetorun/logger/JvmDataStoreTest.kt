@@ -10,6 +10,14 @@ import org.junit.Test
 import java.io.File
 import kotlin.test.assertEquals
 
+private const val InnerDir = "inner-dir"
+
+private const val TestFile = "test-file"
+
+private const val TestUuid = "test"
+
+private const val DefaultCheckName = "default"
+
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class JvmDataStoreTest {
 
@@ -18,10 +26,9 @@ internal class JvmDataStoreTest {
     }
 
     private val failedChecks = listOf(
-        SafeToRunEvents.SucceedCheck.empty("default"),
-        SafeToRunEvents.FailedCheck.empty("default"),
+        SafeToRunEvents.SucceedCheck.empty(DefaultCheckName),
+        SafeToRunEvents.FailedCheck.empty(DefaultCheckName),
     )
-
 
     @Before
     fun clearDirectory() {
@@ -33,10 +40,9 @@ internal class JvmDataStoreTest {
         remove()
     }
 
-
     @Test
     fun `test that jvm data store can save and then retrieve a data for failure`() = runTest {
-        val failedCheck = SafeToRunEvents.FailedCheck.empty("default")
+        val failedCheck = SafeToRunEvents.FailedCheck.empty(DefaultCheckName)
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -45,7 +51,7 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve data for success`() = runTest {
-        val failedCheck = SafeToRunEvents.SucceedCheck.empty("default")
+        val failedCheck = SafeToRunEvents.SucceedCheck.empty(DefaultCheckName)
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -54,29 +60,29 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that JVM data store is resilience to deleting a non-existing file`() = runTest {
-        store.delete("test")
+        store.delete(TestUuid)
     }
 
     @Test
     fun `test that JVM data store is resilience to not reading a directory`() = runTest {
         failedChecks.forEach { store.store(it) }
-        File(testDirectory, "inner-dir").mkdirs()
+        File(testDirectory, InnerDir).mkdirs()
 
         val retrievedList = store.retrieve().toList()
         assertEquals(2, retrievedList.size)
 
-        File(testDirectory, "inner-dir").deleteRecursively()
+        File(testDirectory, InnerDir).deleteRecursively()
     }
 
     @Test
     fun `test that JVM data store is resilience to not reading a duff file`() = runTest {
         failedChecks.forEach { store.store(it) }
-        File(testDirectory, "test-file").writeText("test")
+        File(testDirectory, TestFile).writeText(TestUuid)
 
         val retrievedList = store.retrieve().toList()
         assertEquals(2, retrievedList.size)
 
-        File(testDirectory, "test-file").writeText("test")
+        File(testDirectory, TestFile).writeText(TestUuid)
     }
 
     @Test
@@ -84,7 +90,7 @@ internal class JvmDataStoreTest {
         val store = JvmDatastore(testDirectory) {
             false
         }
-        store.delete("test")
+        store.delete(TestUuid)
 
         // Hard to see what would happen here ... No crash will have to do
     }

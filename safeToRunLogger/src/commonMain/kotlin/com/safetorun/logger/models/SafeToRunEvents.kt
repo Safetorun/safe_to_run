@@ -25,6 +25,11 @@ sealed class SafeToRunEvents(
     ) :
         SafeToRunEvents(metadata = appMetadata) {
         companion object {
+            /**
+             * Create an empty event
+             *
+             * @param name the name of the check
+             */
             fun empty(name: String) =
                 FailedCheck(DeviceInformation.empty(), AppMetadata.empty(), name)
 
@@ -43,6 +48,11 @@ sealed class SafeToRunEvents(
     ) :
         SafeToRunEvents(metadata = appMetadata) {
         companion object {
+            /**
+             * Create an empty event
+             *
+             * @param name the name of the check
+             */
             fun empty(name: String) =
                 SucceedCheck(DeviceInformation.empty(), AppMetadata.empty(), name)
 
