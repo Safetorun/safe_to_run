@@ -12,7 +12,7 @@ import org.junit.Test
 internal class SafeToRunOffDeviceTest {
 
     companion object {
-        const val URL = "https://qm37a5nppe.execute-api.eu-west-1.amazonaws.com/Prod/"
+        const val URL = "https://api.safetorun.com"
         const val API_KEY = "cGYypq1epDguXVB6qDvJ5noPCZyMv9W4wB6t64Gf"
     }
 

@@ -7,5 +7,7 @@ internal interface DataStore {
     suspend fun store(data: SafeToRunEvents)
     suspend fun retrieve(): Flow<SafeToRunEvents>
     suspend fun delete(uuid: String)
+
+    suspend fun clear()
 }
 

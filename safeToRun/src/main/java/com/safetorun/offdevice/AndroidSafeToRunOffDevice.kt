@@ -4,17 +4,25 @@ import android.content.Context
 import com.safetorun.api.DefaultHttpClient
 import com.safetorun.api.DefaultSafeToRunApi
 import com.safetorun.api.SafeToRunApi
-import com.safetorun.exploration.DeviceInformation
-import com.safetorun.exploration.toDeviceInformation
 import com.safetorun.features.blacklistedapps.AndroidInstalledPackagesQuery
 import com.safetorun.features.installorigin.getInstaller
 import com.safetorun.features.oscheck.OSInformationQueryAndroid
+import com.safetorun.features.rootdetection.rootDetectionCheck
+import com.safetorun.logger.models.BlacklistedApps
+import com.safetorun.logger.models.DeviceInformation
+import com.safetorun.logger.models.DeviceSignature
+import com.safetorun.logger.models.InstallOrigin
+import com.safetorun.logger.models.OsCheck
+import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.models.models.DeviceInformationDto
+import com.safetorun.models.models.OsCheckDto
 import com.safetorun.offdevice.SafeToRunOffDeviceCache.safeToRunOffDeviceLazy
 import com.safetorun.offdevice.builders.BlacklistedAppsOffDeviceBuilder
 import com.safetorun.offdevice.builders.CompositeBuilder
 import com.safetorun.offdevice.builders.InstallOriginOffDeviceBuilder
 import com.safetorun.offdevice.builders.OSCheckOffDeviceBuilder
+import com.safetorun.offdevice.builders.RootCheckOffDeviceBuilder
 import com.safetorun.repository.AndroidDeviceIdRepository
 import java.util.concurrent.Executors
 
@@ -66,15 +74,37 @@ fun Context.safeToRunOffDevice(
     AndroidDeviceIdRepository(this).getOrCreateDeviceIdSync()
 )
 
+typealias SafeToRunLogger = (SafeToRunEvents) -> Unit
+
 /**
- * Get a device informatio DTO with information about the currently
- * running device. This can be useful to help deciding on where to set
- * your OS rules
+ * Build a safe to run logger
  */
-fun Context.deviceInformation(): DeviceInformation = offDeviceResultBuilder()
-    .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
-    .build()
-    .toDeviceInformation()
+fun Context.safeToRunLogger(
+    apiKey: String,
+    url: String = "https://api.safetorun.com"
+): SafeToRunLogger {
+    if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
+        requireNotNull(safeToRunOffDeviceLazy[apiKey])
+    }
+
+    val api = DefaultSafeToRunApi(
+        DefaultHttpClient(url),
+        apiKey,
+    )
+
+
+    return {
+        val deviceInformation = offDeviceResultBuilder()
+            .buildOffDeviceResultBuilder(deviceInformationBuilder(apiKey))
+            .build()
+
+        val event = when (it) {
+            is SafeToRunEvents.FailedCheck -> it.copy(deviceInformation = deviceInformation.toDeviceInformation())
+            is SafeToRunEvents.SucceedCheck -> it.copy(deviceInformation = deviceInformation.toDeviceInformation())
+        }
+        api.logEvent(event)
+    }
+}
 
 internal fun safeToRunOffDevice(
     url: String,
@@ -97,10 +127,42 @@ internal fun safeToRunOffDevice(
     ).also { safeToRunOffDeviceLazy[apiKey] = it }
 }
 
-internal fun Context.offDeviceResultBuilder(): OffDeviceResultBuilder = CompositeBuilder(
+/**
+ * Build a safe to run off device result
+ *
+ * @receiver the app context
+ *
+ * @return an instance of [OffDeviceResultBuilder]
+ */
+fun Context.offDeviceResultBuilder(): OffDeviceResultBuilder = CompositeBuilder(
     listOf(
         OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
         InstallOriginOffDeviceBuilder { getInstaller() },
-        BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this))
+        BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this)),
+        RootCheckOffDeviceBuilder { this.rootDetectionCheck() }
     )
+)
+
+
+internal fun OsCheckDto.toOsCheck() = OsCheck(
+    osVersion = this.osVersion,
+    manufacturer = this.manufacturer,
+    model = this.model,
+    board = this.board,
+    bootloader = this.bootloader,
+    cpuAbi = this.cpuAbi,
+    host = this.host,
+    hardware = this.hardware,
+    device = this.device
+)
+
+internal fun DeviceInformationDto.toDeviceInformation() = DeviceInformation(
+    osCheck = osCheck.toOsCheck(),
+    installOrigin = InstallOrigin(installOrigin.installOriginPackageName ?: ""),
+    blacklistedApp = BlacklistedApps(blacklistedApp.installedPackages),
+    signatureVerification = DeviceSignature(
+        signatureVerification.signatureVerificationString ?: ""
+    ),
+    isRooted = isRooted
+
 )

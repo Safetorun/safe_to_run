@@ -1,7 +1,5 @@
 package com.safetorun.logger
 
-import com.safetorun.logger.models.AppMetadata
-import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -12,38 +10,39 @@ import org.junit.Test
 import java.io.File
 import kotlin.test.assertEquals
 
+private const val InnerDir = "inner-dir"
+
+private const val TestFile = "test-file"
+
+private const val TestUuid = "test"
+
+private const val DefaultCheckName = "default"
+
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class JvmDataStoreTest {
-
-    private val testDirectory by lazy {
-        File("test_data_dir_temp")
-            .also {
-                if (it.exists().not()) {
-                    it.mkdir()
-                }
-            }
-    }
 
     private val store = JvmDatastore(testDirectory) {
         true
     }
 
+    private val failedChecks = listOf(
+        SafeToRunEvents.SucceedCheck.empty(DefaultCheckName),
+        SafeToRunEvents.FailedCheck.empty(DefaultCheckName),
+    )
+
     @Before
     fun clearDirectory() {
-        testDirectory
-            .listFiles()
-            ?.forEach { it.delete() }
+        clear()
     }
 
     @After
     fun removeDirectory() {
-        clearDirectory()
-        testDirectory.delete()
+        remove()
     }
 
     @Test
     fun `test that jvm data store can save and then retrieve a data for failure`() = runTest {
-        val failedCheck = failedCheck()
+        val failedCheck = SafeToRunEvents.FailedCheck.empty(DefaultCheckName)
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -52,7 +51,7 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve data for success`() = runTest {
-        val failedCheck = successCheck()
+        val failedCheck = SafeToRunEvents.SucceedCheck.empty(DefaultCheckName)
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -60,22 +59,55 @@ internal class JvmDataStoreTest {
     }
 
     @Test
+    fun `test that JVM data store is resilience to deleting a non-existing file`() = runTest {
+        store.delete(TestUuid)
+    }
+
+    @Test
+    fun `test that JVM data store is resilience to not reading a directory`() = runTest {
+        failedChecks.forEach { store.store(it) }
+        File(testDirectory, InnerDir).mkdirs()
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+
+        File(testDirectory, InnerDir).deleteRecursively()
+    }
+
+    @Test
+    fun `test that JVM data store is resilience to not reading a duff file`() = runTest {
+        failedChecks.forEach { store.store(it) }
+        File(testDirectory, TestFile).writeText(TestUuid)
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+
+        File(testDirectory, TestFile).writeText(TestUuid)
+    }
+
+    @Test
     fun `test that jvm data store rejects deletion of a directory traversal`() = runTest {
         val store = JvmDatastore(testDirectory) {
             false
         }
-        store.delete("test")
+        store.delete(TestUuid)
 
         // Hard to see what would happen here ... No crash will have to do
     }
 
     @Test
-    fun `test that jvm can delete`() = runTest {
-        val failedChecks = listOf(
-            failedCheck(),
-            failedCheck()
-        )
+    fun `test that jvm data store can clear`() = runTest {
+        failedChecks.forEach { store.store(it) }
 
+        val retrievedList = store.retrieve().toList()
+        assertEquals(2, retrievedList.size)
+
+        store.clear()
+        assertEquals(store.retrieve().toList().size, 0)
+    }
+
+    @Test
+    fun `test that jvm can delete`() = runTest {
         failedChecks.forEach { store.store(it) }
 
         val retrievedList = store.retrieve().toList()
@@ -87,15 +119,3 @@ internal class JvmDataStoreTest {
         assertEquals(0, store.retrieve().toList().size)
     }
 }
-
-internal fun failedCheck() = SafeToRunEvents.FailedCheck(
-    DeviceInformation.empty(),
-    AppMetadata.empty(),
-    "default"
-)
-
-internal fun successCheck() = SafeToRunEvents.SucceedCheck(
-    DeviceInformation.empty(),
-    AppMetadata.empty(),
-    "default"
-)

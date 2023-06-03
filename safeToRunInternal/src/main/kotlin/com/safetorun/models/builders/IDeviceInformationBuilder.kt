@@ -18,4 +18,9 @@ interface IDeviceInformationBuilder {
      * Add signature
      */
     fun signature(signature: String)
+
+    /**
+     * Add if device is rooted
+     */
+    fun isRooted(rooted: Boolean)
 }

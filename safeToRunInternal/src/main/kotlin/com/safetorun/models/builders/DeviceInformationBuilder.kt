@@ -4,7 +4,6 @@ import com.safetorun.models.core.BlacklistedApps
 import com.safetorun.models.core.DeviceInformation
 import com.safetorun.models.core.DeviceSignature
 import com.safetorun.models.core.InstallOrigin
-import com.safetorun.models.core.OsCheck
 
 
 internal class DeviceInformationBuilder(
@@ -14,7 +13,7 @@ internal class DeviceInformationBuilder(
     private val _installedApplications: MutableList<String> = mutableListOf()
     private var _signature: String = ""
     private var _installOrigin: String = ""
-
+    private var _isRooted: Boolean = false
 
     /**
      * Add installed application
@@ -38,6 +37,13 @@ internal class DeviceInformationBuilder(
     }
 
     /**
+     * Add if device is rooted
+     */
+    override fun isRooted(rooted: Boolean) {
+        _isRooted = rooted
+    }
+
+    /**
      * Build a full device information DTO. Will exception if
      * there are missing values not added
      *
@@ -45,26 +51,19 @@ internal class DeviceInformationBuilder(
      * @throws IllegalArgumentException if any items are null
      */
     internal fun build(): DeviceInformation {
-        return buildForUnwrappedValues(
-            osInformation.buildOsCheck(),
-            _installOrigin,
-            _signature
-        )
+        return buildForUnwrappedValues()
     }
 
-    private fun buildForUnwrappedValues(
-        osVersionCheck: OsCheck,
-        installOrigin: String,
-        signature: String
-    ) =
+    private fun buildForUnwrappedValues() =
         DeviceInformation(
-            osCheck = osVersionCheck,
-            installOrigin = InstallOrigin(installOrigin),
+            osCheck = osInformation.buildOsCheck(),
+            installOrigin = InstallOrigin(_installOrigin),
             blacklistedApp = BlacklistedApps(
                 installedPackages = _installedApplications
             ),
             signatureVerification = DeviceSignature(
-                signature = signature
-            )
+                signature = _signature
+            ),
+            isRooted = _isRooted
         )
 }

@@ -22,5 +22,4 @@ apply from: "$directory/test_dependencies.gradle"
 
 dependencies {
     implementation project(':safeToRunInternal')
-//    implementation libs.kotlin.std
 }

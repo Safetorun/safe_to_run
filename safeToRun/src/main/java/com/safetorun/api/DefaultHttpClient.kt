@@ -16,11 +16,12 @@ internal class DefaultHttpClient(private val url: String) : SafeToRunHttpClient 
         headers: Map<String, String>,
         body: T,
         serializer: SerializationStrategy<T>,
-        deserializer: DeserializationStrategy<O>
+        deserializer: DeserializationStrategy<O>,
     ): O {
         val urlConnection = buildConnection(path, headers)
 
-        urlConnection.outputStream.write(Json.encodeToString(serializer, body).toByteArray())
+        val encodedBody = Json.encodeToString(serializer, body)
+        urlConnection.outputStream.write(encodedBody.toByteArray())
         urlConnection.outputStream.flush()
 
         urlConnection.checkStatusAndThrowException()

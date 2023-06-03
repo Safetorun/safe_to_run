@@ -3,8 +3,11 @@ package com.safetorun.api
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.DefaultSafeToRunApi.Companion.API_KEY_HEADER_NAME
 import com.safetorun.api.DefaultSafeToRunApi.Companion.DEVICE_CHECK_ENDPOINT
+import com.safetorun.api.DefaultSafeToRunApi.Companion.LOG_ENDPOINT
 import com.safetorun.api.DefaultSafeToRunApi.Companion.VERIFY_CHECK_ENDPOINT
+import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.models.ConfirmVerificationRequestDto
+import com.safetorun.models.models.DataWrappedLogResponse
 import com.safetorun.models.models.DataWrappedSignatureResult
 import com.safetorun.models.models.DataWrappedVerifyResult
 import com.safetorun.models.models.DeviceInformationDto
@@ -12,6 +15,7 @@ import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.models.models.VerifierResult
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import junit.framework.TestCase
 
 internal class DefaultSafeToRunApiTest : TestCase() {
@@ -65,6 +69,35 @@ internal class DefaultSafeToRunApiTest : TestCase() {
 
         // Then
         assertThat(result).isEqualTo(deviceSignatureVerification.data)
+    }
+
+    fun `test that when we call log endpoint it returns expected result`() {
+        // Given
+        val serializer = DataWrappedLogResponse.serializer(SafeToRunEvents.serializer())
+
+        every {
+            mockHttpClient.post(
+                LOG_ENDPOINT,
+                mapOf(API_KEY_HEADER_NAME to API_KEY),
+                any(),
+                SafeToRunEvents.serializer(),
+                serializer
+            )
+        } returns DataWrappedLogResponse(SafeToRunEvents.FailedCheck.empty("default"))
+
+        // When
+        defaultSafeToRunApi.logEvent(SafeToRunEvents.FailedCheck.empty("default"))
+
+        // Then
+        verify {
+            mockHttpClient.post(
+                LOG_ENDPOINT,
+                mapOf(API_KEY_HEADER_NAME to API_KEY),
+                any(),
+                SafeToRunEvents.serializer(),
+                any()
+            )
+        }
     }
 
     companion object {

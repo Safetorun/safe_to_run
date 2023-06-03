@@ -1,10 +1,45 @@
 package com.safetorun.inline
 
+import android.content.Context
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
+import androidx.work.workDataOf
+import com.safetorun.logger.loggerForCheck
+import com.safetorun.reporting.LoggerBackendSynchroniser
+
 /**
  * Safe to run check (Return true if the check fails)
  */
 typealias SafeToRunCheck = () -> Boolean
 
+/**
+ * Safe to run logger for checker
+ */
+fun Context.logger(apiKey: String, checkName: String): (Boolean) -> Unit = {
+    loggerForCheck(checkName).invoke(it)
+
+    val inputData = workDataOf(LoggerBackendSynchroniser.KEY_API_KEY to apiKey)
+
+    val constraints = Constraints.Builder()
+        .setRequiredNetworkType(NetworkType.CONNECTED)
+        .setRequiresBatteryNotLow(true)
+        .build()
+
+
+    val uploadWorkRequest: WorkRequest =
+        OneTimeWorkRequestBuilder<LoggerBackendSynchroniser>()
+            .setConstraints(constraints)
+            .setInputData(inputData)
+            .build()
+
+    WorkManager
+        .getInstance(this)
+        .enqueue(uploadWorkRequest)
+
+}
 
 /**
  * Configure

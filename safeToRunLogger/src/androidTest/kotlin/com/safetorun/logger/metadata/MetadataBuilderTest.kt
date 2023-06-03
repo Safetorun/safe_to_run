@@ -36,7 +36,7 @@ internal class MetadataBuilderTest {
         context.metadata()
     }
 
-    private fun retrievePackageManager(
+    fun retrievePackageManager(
         packageManager: PackageManager
     ) {
         every { packageManager.getInstalledPackages(any<PackageInfoFlags>()) } returns listOf(
@@ -58,10 +58,10 @@ internal class MetadataBuilderTest {
     }
 
     companion object {
-        private const val PACKAGE_NAME = "com.test.package"
-        private const val APP_VERSION = "1.0.1"
-        private const val LONG_VERSION = 321L
-        private const val FIRST_INSTALL_TIME = 123L
-        private const val LAST_UPDATE_TIME = 456L
+        const val PACKAGE_NAME = "com.test.package"
+        const val APP_VERSION = "1.0.1"
+        const val LONG_VERSION = 321L
+        const val FIRST_INSTALL_TIME = 123L
+        const val LAST_UPDATE_TIME = 456L
     }
 }
