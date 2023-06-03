@@ -2,24 +2,29 @@ package com.safetorun.offdevice
 
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.api.DefaultSafeToRunApi
 import com.safetorun.api.SafeToRunApi
+import com.safetorun.logger.models.AppMetadata
 import com.safetorun.logger.models.BlacklistedApps
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.DeviceSignature
 import com.safetorun.logger.models.InstallOrigin
 import com.safetorun.logger.models.OsCheck
+import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import com.safetorun.models.builders.deviceInformationBuilder
-import com.safetorun.models.models.BlacklistedAppsDto
-import com.safetorun.models.models.DeviceInformationDto
+import com.safetorun.models.models.DataWrappedLogResponse
 import com.safetorun.models.models.DeviceSignatureDto
-import com.safetorun.models.models.InstallOriginDto
-import com.safetorun.models.models.OsCheckDto
-import com.safetorun.models.models.SignatureVerificationDto
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.verify
 import junit.framework.TestCase
+import kotlinx.serialization.json.Json
+import org.mockserver.integration.ClientAndServer
+import org.mockserver.model.HttpRequest
+import org.mockserver.model.HttpResponse
+import kotlin.random.Random
 
 internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
@@ -32,6 +37,16 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     private val androidSafeToRunOffDevice =
         AndroidSafeToRunOffDevice(safeToRunApi, offDeviceResultBuilder, api, deviceId)
 
+    private val port = Random.nextInt(9000, 9999)
+    private val mockServer: ClientAndServer by lazy { ClientAndServer.startClientAndServer(port) }
+    private val url: String = "http://localhost:$port"
+
+    override fun setUp() {
+        mockkStatic("com.safetorun.offdevice.AndroidSafeToRunOffDeviceKt")
+        every { context.offDeviceResultBuilder() } returns OffDeviceResultBuilder {
+            it
+        }
+    }
 
     fun `test that os check can convert`() {
         val expectedOsCheck = OsCheck(
@@ -95,12 +110,41 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
     fun `test that when we call android safe to run twice with the same api key it is the same instance`() {
         // Given
-        val safeToRun = context.safeToRunLogger("1234")
-        val safeToRun2 = context.safeToRunLogger("1234")
+        val apiKey = "1234"
+        val safeToRun = context.safeToRunLogger(apiKey, url)
+        val safeToRun2 = context.safeToRunLogger(apiKey, url)
 
         assertThat(safeToRun).isNotNull()
         assertThat(safeToRun2).isNotNull()
+
+        mockServer.`when`(
+            HttpRequest.request()
+                .withHeader("x-api-key", apiKey)
+                .withPath(DefaultSafeToRunApi.LOG_ENDPOINT)
+        ).respond(
+            HttpResponse.response()
+                .withStatusCode(200)
+                .withBody(responseBody())
+        )
+
+        safeToRun.invoke(
+            succeedCheck()
+        )
     }
+
+    private fun responseBody() = Json.encodeToString(
+        DataWrappedLogResponse.serializer(SafeToRunEvents.serializer()),
+        DataWrappedLogResponse(
+            succeedCheck()
+        ),
+    )
+
+    private fun succeedCheck() = SafeToRunEvents.SucceedCheck(
+        DeviceInformation.empty(),
+        AppMetadata.empty(),
+        "default"
+    )
+
 
     private fun matchingDto() = deviceInformationBuilder(api) {
         dtoResult()
@@ -122,4 +166,9 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         cpuAbi("cpu")
         cpuAbi("cpuAbi")
     }
+
+    override fun tearDown() {
+        mockServer.close()
+    }
+
 }
