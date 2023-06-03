@@ -42,10 +42,8 @@ internal class JvmDatastore(
     override suspend fun delete(uuid: String) {
         fileForUuid(uuid)
             .run {
-                if (exists()) {
-                    if (deleteRecursively().not()) {
-                        delete()
-                    }
+                if (exists() && deleteRecursively().not()) {
+                    delete()
                 }
             }
 
