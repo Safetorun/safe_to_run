@@ -1,6 +1,7 @@
 package com.safetorun.offdevice
 
 import android.content.Context
+import android.content.pm.PackageManager
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.DefaultSafeToRunApi
 import com.safetorun.api.SafeToRunApi
@@ -14,6 +15,7 @@ import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import com.safetorun.models.builders.deviceInformationBuilder
 import com.safetorun.models.models.DataWrappedLogResponse
 import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.setupMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -42,8 +44,24 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
     override fun setUp() {
         mockkStatic("com.safetorun.offdevice.AndroidSafeToRunOffDeviceKt")
-        every { context.offDeviceResultBuilder() } returns OffDeviceResultBuilder {
+        every {
+            context.offDeviceResultBuilder(
+                enableInstalledPackageScan = true,
+                rootCheck = false
+            )
+        } returns OffDeviceResultBuilder {
             it
+        }
+        context.setupMocks()
+        every { context.packageManager } returns mockk<PackageManager>(relaxed = true).apply {
+            every {
+                getPackageInfo(
+                    any<String>(),
+                    any<PackageManager.PackageInfoFlags>()
+                )
+            } returns mockk(
+                relaxed = true
+            )
         }
     }
 
@@ -110,8 +128,18 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     fun `test that when we call android safe to run twice with the same api key it is the same instance`() {
         // Given
         val apiKey = "1234"
-        val safeToRun = context.safeToRunLogger(apiKey, url)
-        val safeToRun2 = context.safeToRunLogger(apiKey, url)
+        val safeToRun = context.safeToRunLogger(
+            apiKey,
+            url,
+            enableInstalledPackageScan = true,
+            rootCheck = false
+        )
+        val safeToRun2 = context.safeToRunLogger(
+            apiKey,
+            url,
+            enableInstalledPackageScan = true,
+            rootCheck = false
+        )
 
         assertThat(safeToRun).isNotNull()
         assertThat(safeToRun2).isNotNull()
@@ -131,7 +159,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         )
     }
 
-    private fun responseBody(event : SafeToRunEvents) = Json.encodeToString(
+    private fun responseBody(event: SafeToRunEvents) = Json.encodeToString(
         DataWrappedLogResponse.serializer(SafeToRunEvents.serializer()),
         DataWrappedLogResponse(event),
     )

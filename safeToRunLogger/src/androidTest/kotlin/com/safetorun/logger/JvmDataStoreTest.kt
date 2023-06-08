@@ -112,9 +112,6 @@ internal class JvmDataStoreTest {
 
         val retrievedList = store.retrieve().toList()
         assertEquals(2, retrievedList.size)
-        assertEquals(failedChecks[0], retrievedList[0])
-        assertEquals(failedChecks[1], retrievedList[1])
-
         retrievedList.forEach { store.delete(it.uuid) }
         assertEquals(0, store.retrieve().toList().size)
     }

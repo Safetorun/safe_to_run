@@ -66,11 +66,12 @@ private object SafeToRunOffDeviceCache {
  */
 fun Context.safeToRunOffDevice(
     url: String,
-    apiKey: String
+    apiKey: String,
+    enableInstalledPackageScan: Boolean = false,
 ) = safeToRunOffDevice(
     url,
     apiKey,
-    offDeviceResultBuilder(),
+    offDeviceResultBuilder(enableInstalledPackageScan),
     AndroidDeviceIdRepository(this).getOrCreateDeviceIdSync()
 )
 
@@ -81,7 +82,9 @@ typealias SafeToRunLogger = (SafeToRunEvents) -> Unit
  */
 fun Context.safeToRunLogger(
     apiKey: String,
-    url: String = "https://api.safetorun.com"
+    url: String = "https://api.safetorun.com",
+    enableInstalledPackageScan: Boolean = false,
+    rootCheck: Boolean = true
 ): SafeToRunLogger {
     if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
         requireNotNull(safeToRunOffDeviceLazy[apiKey])
@@ -94,7 +97,7 @@ fun Context.safeToRunLogger(
 
 
     return {
-        val deviceInformation = offDeviceResultBuilder()
+        val deviceInformation = offDeviceResultBuilder(enableInstalledPackageScan, rootCheck)
             .buildOffDeviceResultBuilder(deviceInformationBuilder(apiKey))
             .build()
 
@@ -134,14 +137,23 @@ internal fun safeToRunOffDevice(
  *
  * @return an instance of [OffDeviceResultBuilder]
  */
-fun Context.offDeviceResultBuilder(): OffDeviceResultBuilder = CompositeBuilder(
-    listOf(
-        OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
-        InstallOriginOffDeviceBuilder { getInstaller() },
-        BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this)),
-        RootCheckOffDeviceBuilder { this.rootDetectionCheck() }
+fun Context.offDeviceResultBuilder(
+    enableInstalledPackageScan: Boolean,
+    rootCheck: Boolean = true
+): OffDeviceResultBuilder =
+    CompositeBuilder(
+        mutableListOf(
+            OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
+            InstallOriginOffDeviceBuilder { getInstaller() },
+        ).apply {
+            if (rootCheck) {
+                add(RootCheckOffDeviceBuilder { rootDetectionCheck() })
+            }
+            if (enableInstalledPackageScan) {
+                add(BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this@offDeviceResultBuilder)))
+            }
+        }
     )
-)
 
 
 internal fun OsCheckDto.toOsCheck() = OsCheck(
