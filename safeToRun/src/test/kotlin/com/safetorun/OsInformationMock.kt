@@ -12,15 +12,15 @@ import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
 
-internal const val SdkInt = 123
-internal const val Manufacturer = "manufacturer"
-internal const val Model = "brand"
-internal const val Board = "board"
-internal const val BootLoader = "bootloader"
-internal val CpuAbi = arrayOf("cpuAbi", "cpuAbi2")
-internal const val Host = "host"
-internal const val Hardware = "hardware"
-internal const val Device = "devive"
+internal const val SDK_INT = 123
+internal const val MANUFACTURER = "manufacturer"
+internal const val MODEL = "brand"
+internal const val BOARD = "board"
+internal const val BOOTLOADER = "bootloader"
+internal val CPU_ABI = arrayOf("cpuAbi", "cpuAbi2")
+internal const val HOST = "host"
+internal const val HARDWARE = "hardware"
+internal const val DEVICE = "devive"
 
 private val pm = mockk<PackageManager>()
 
@@ -28,15 +28,15 @@ private val pm = mockk<PackageManager>()
 internal fun Context.setupMocks() {
     mockkStatic(Build::class)
 
-    mockBuildField(SdkInt, "SDK_INT", Build.VERSION::class.java)
-    mockBuildField(Manufacturer, "MANUFACTURER", Build::class.java)
-    mockBuildField(Model, "MODEL", Build::class.java)
-    mockBuildField(Board, "BOARD", Build::class.java)
-    mockBuildField(BootLoader, "BOOTLOADER", Build::class.java)
-    mockBuildField(CpuAbi, "SUPPORTED_ABIS", Build::class.java)
-    mockBuildField(Host, "HOST", Build::class.java)
-    mockBuildField(Hardware, "HARDWARE", Build::class.java)
-    mockBuildField(Device, "DEVICE", Build::class.java)
+    mockBuildField(SDK_INT, "SDK_INT", Build.VERSION::class.java)
+    mockBuildField(MANUFACTURER, "MANUFACTURER", Build::class.java)
+    mockBuildField(MODEL, "MODEL", Build::class.java)
+    mockBuildField(BOARD, "BOARD", Build::class.java)
+    mockBuildField(BOOTLOADER, "BOOTLOADER", Build::class.java)
+    mockBuildField(CPU_ABI, "SUPPORTED_ABIS", Build::class.java)
+    mockBuildField(HOST, "HOST", Build::class.java)
+    mockBuildField(HARDWARE, "HARDWARE", Build::class.java)
+    mockBuildField(DEVICE, "DEVICE", Build::class.java)
 
     every { packageManager } returns pm
     every { packageManager.getInstallerPackageName(any()) } returns SharedInstallOrigin.PACKAGE_NAME_RETURNS
