@@ -8,14 +8,14 @@ plugins {
 
 ext {
     PUBLISH_GROUP_ID = 'com.safetorun'
-    PUBLISH_VERSION = project['safeToRunVersion']
+    PUBLISH_VERSION =  libs.versions.safeToRun
     PUBLISH_ARTIFACT_ID = 'safeToRunCore'
 }
 
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 group 'com.safetorun'
-version project['safeToRunVersion']
+version libs.versions.safeToRun
 
 def directory = "$rootProject.projectDir/scripts/dependencies/"
 apply from: "$directory/test_dependencies.gradle"

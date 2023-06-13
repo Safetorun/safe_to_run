@@ -9,16 +9,15 @@ plugins {
 
 }
 
-val safeToRunVersion: String by project
 
 ext {
     set("PUBLISH_GROUP_ID", "com.safetorun")
-    set("PUBLISH_VERSION", "${safeToRunVersion}-alpha")
+    set("PUBLISH_VERSION", "${libs.versions.safeToRun}-alpha")
     set("PUBLISH_ARTIFACT_ID", "safeToRunBuilder")
 }
 
 group = "com.safetorun"
-version = safeToRunVersion
+version = libs.versions.safeToRun
 
 
 val directory = "${rootProject.projectDir}/scripts/dependencies/"
