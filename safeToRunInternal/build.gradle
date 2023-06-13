@@ -11,7 +11,7 @@ plugins {
 
 ext {
     PUBLISH_GROUP_ID = 'com.safetorun'
-    PUBLISH_VERSION =  libs.versions.safeToRun
+    PUBLISH_VERSION = project['safeToRunVersion']
     PUBLISH_ARTIFACT_ID = 'safeToRunInternal'
 }
 
@@ -21,7 +21,7 @@ apply from: "$directory/test_dependencies.gradle"
 
 
 group 'com.safetorun'
-version libs.versions.safeToRun
+version project['safeToRunVersion']
 
 dependencies {
 //    implementation libs.kotlin.std

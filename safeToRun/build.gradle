@@ -11,7 +11,7 @@ apply plugin: 'kotlin-android'
 
 ext {
     PUBLISH_GROUP_ID = 'com.safetorun'
-    PUBLISH_VERSION =  libs.versions.safeToRun
+    PUBLISH_VERSION =  project['safeToRunVersion']
     PUBLISH_ARTIFACT_ID = 'safetorun'
 }
 

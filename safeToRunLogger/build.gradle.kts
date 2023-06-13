@@ -10,7 +10,7 @@ plugins {
 
 ext {
     this["PUBLISH_GROUP_ID"] = "com.safetorun"
-    this["PUBLISH_VERSION"] = libs.versions.safeToRun.get()
+    this["PUBLISH_VERSION"] = "${libs.versions.safeToRun.get()}-alpha"
     this["PUBLISH_ARTIFACT_ID"] = "safeToRunLogger"
 }
 
