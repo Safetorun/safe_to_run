@@ -19,6 +19,18 @@ Input validation
 The purpose of this library is to provide a simple and extensible framework you can use in order to check your app
 is safe to run, and provide you with a way to verify data from intents or deep links is safe.  
 
+## What is safe to run?
+
+Check out our website for more information on safe to run 
+
+[Visit the site](https://safetorun.com/?utm_source=github&utm_medium=safetorun&utm_campaign=readme)
+
+## Safe to run plus?
+
+Safe to run plus adds to the Safe to Run security platform an provides developers and security teams an online portal for vigilant application security monitoring. This tool offers security analytics, allowing you to uncover and address Safe to Run verify and resilience failures. 
+
+[Visit the site](https://app.safetorun.com/?utm_source=github&utm_medium=safetorun&utm_campaign=readme)
+
 ## Documentation
 
 [Documentation website](https://docs.safetorun.com/) 
