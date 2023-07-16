@@ -9,7 +9,7 @@ inline fun <T> ((T) -> Boolean).withLogger(
             if (verbose) {
                 logger(pass, value.toString())
             } else {
-                logger(pass, value.toString())
+                logger(pass, null)
             }
         }
     }

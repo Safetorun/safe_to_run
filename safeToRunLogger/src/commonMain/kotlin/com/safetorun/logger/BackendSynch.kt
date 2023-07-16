@@ -6,9 +6,6 @@ import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 /**
