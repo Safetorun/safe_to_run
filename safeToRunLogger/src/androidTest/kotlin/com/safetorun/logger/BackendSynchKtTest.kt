@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.safetorun.logger.metadata.MetadataBuilderTest
 import com.safetorun.logger.models.SafeToRunEvents
+import com.safetorun.logger.models.VerifyType
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -45,6 +46,38 @@ internal class BackendSynchKtTest {
         remove()
     }
 
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `test that backend synch can store data to disk when called for a success verify`() =
+        runTest {
+            context.loggerForVerify("testname", VerifyType.File, "Test extra info", this)
+                .invoke(false)
+            this.testScheduler.runCurrent()
+
+            val logs = context.logs().toList()
+
+            assertEquals(1, logs.size)
+            assertEquals(SafeToRunEvents.FailedVerify::class, logs[0]::class)
+            context.deleteLog(logs[0].uuid)
+            context.clearLogs()
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `test that backend synch can store data to disk when called for a fail verify`() =
+        runTest {
+            context.loggerForVerify("testname", VerifyType.File, "Test extra info", this)
+                .invoke(false)
+            this.testScheduler.runCurrent()
+
+            val logs = context.logs().toList()
+
+            assertEquals(1, logs.size)
+            assertEquals(SafeToRunEvents.FailedVerify::class, logs[0]::class)
+            context.deleteLog(logs[0].uuid)
+            context.clearLogs()
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
