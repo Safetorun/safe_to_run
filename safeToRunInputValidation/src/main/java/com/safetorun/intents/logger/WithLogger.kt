@@ -10,7 +10,7 @@ package com.safetorun.intents.logger
  * @return The wrapped function with logging capabilities.
  */
 inline fun <T : Any> ((T) -> Boolean).withLogger(
-    logValue: Boolean = false,
+    logValue: Boolean,
     crossinline logger: (Boolean, String?) -> Unit
 ): (T) -> Boolean {
     return { value ->
