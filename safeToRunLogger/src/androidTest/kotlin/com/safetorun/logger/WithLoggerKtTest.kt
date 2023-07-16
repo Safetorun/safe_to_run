@@ -35,20 +35,6 @@ class WithLoggerKtTest {
     }
 
     @Test
-    fun `logger function is called with null when logValue is true and value is null`() {
-        val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
-        val withLoggerFunction = withLogger<String?>(logValue = true, logger = logger) {
-            it != null
-        }
-
-        val value: String? = null
-        val result = withLoggerFunction(value)
-
-        assertEquals(false, result)
-        verify(exactly = 1) { logger(false, null) }
-    }
-
-    @Test
     fun `logger function is called with custom message when logValue is true`() {
         val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
         val withLoggerFunction = withLogger<String>(logValue = true, logger = logger) {

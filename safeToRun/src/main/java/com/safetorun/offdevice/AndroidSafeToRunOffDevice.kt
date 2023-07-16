@@ -104,6 +104,8 @@ fun Context.safeToRunLogger(
         val event = when (it) {
             is SafeToRunEvents.FailedCheck -> it.copy(deviceInformation = deviceInformation.toDeviceInformation())
             is SafeToRunEvents.SucceedCheck -> it.copy(deviceInformation = deviceInformation.toDeviceInformation())
+            is SafeToRunEvents.FailedVerify -> it.copy(deviceInformation = deviceInformation.toDeviceInformation())
+            is SafeToRunEvents.SuccessVerify -> it.copy(deviceInformation = deviceInformation.toDeviceInformation())
         }
         api.logEvent(event)
     }

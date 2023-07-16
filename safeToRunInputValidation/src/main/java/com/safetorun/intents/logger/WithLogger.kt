@@ -9,7 +9,7 @@ package com.safetorun.intents.logger
  * @param invoke The function to be wrapped with logging capabilities.
  * @return The wrapped function with logging capabilities.
  */
-inline fun <T> ((T) -> Boolean).withLogger(
+inline fun <T : Any> ((T) -> Boolean).withLogger(
     logValue: Boolean = false,
     crossinline logger: (Boolean, String?) -> Unit
 ): (T) -> Boolean {
@@ -32,7 +32,7 @@ inline fun <T> ((T) -> Boolean).withLogger(
  * @param logger A function accepting a boolean result and a string value for logging purposes.
  * @return The wrapped function with logging capabilities.
  */
-inline fun <T> withLogger(
+inline fun <T : Any> withLogger(
     logValue: Boolean = false,
     crossinline logger: (Boolean, String?) -> Unit,
     crossinline invoke: (T) -> Boolean

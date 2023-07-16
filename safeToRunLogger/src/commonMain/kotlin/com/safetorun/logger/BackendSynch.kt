@@ -4,9 +4,11 @@ import android.content.Context
 import com.safetorun.logger.metadata.metadata
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
+import com.safetorun.logger.models.VerifyType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 /**
  * Retrieve a logger for a given check
@@ -17,11 +19,33 @@ fun Context.loggerForCheck(
     checkName: String,
     scope: CoroutineScope = GlobalScope
 ): (Boolean) -> Unit = {
-     scope.launch {
+    scope.launch {
         if (it) {
             logCheckSuccess(checkName)
         } else {
             logCheckFailure(checkName)
+        }
+    }
+}
+
+/**
+ * Retrieve a logger for a given check
+ *
+ * @param checkName a unique name to describe your check
+ * @param verifyType the type of the verify
+ * @param extraInfo extra info to be logged
+ */
+fun Context.loggerForVerify(
+    checkName: String,
+    verifyType: VerifyType,
+    extraInfo: String?,
+    scope: CoroutineScope = GlobalScope
+): (Boolean) -> Unit = {
+    scope.launch {
+        if (it) {
+            logVerifySuccess(checkName, verifyType, extraInfo)
+        } else {
+            logVerifyFailure(checkName, verifyType, extraInfo)
         }
     }
 }
@@ -36,6 +60,37 @@ internal suspend fun Context.logCheckFailure(checkName: String) =
             )
         )
 
+internal suspend fun Context.logVerifyFailure(
+    checkName: String,
+    verifyType: VerifyType,
+    extraInfo: String?
+) =
+    AndroidDataStore(this@logVerifyFailure)
+        .store(
+            SafeToRunEvents.FailedVerify(
+                appMetadata = metadata(),
+                checkName = checkName,
+                deviceInformation = DeviceInformation.empty(),
+                verifyType = verifyType,
+                extra = extraInfo
+            )
+        )
+
+internal suspend fun Context.logVerifySuccess(
+    checkName: String,
+    verifyFile: VerifyType,
+    extraInfo: String?,
+) =
+    AndroidDataStore(this@logVerifySuccess)
+        .store(
+            SafeToRunEvents.SuccessVerify(
+                appMetadata = metadata(),
+                checkName = checkName,
+                deviceInformation = DeviceInformation.empty(),
+                verifyType = verifyFile,
+                extra = extraInfo
+            )
+        )
 
 internal suspend fun Context.logCheckSuccess(checkName: String) =
     AndroidDataStore(this@logCheckSuccess)
