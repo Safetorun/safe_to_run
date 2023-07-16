@@ -51,7 +51,7 @@ internal class BackendSynchKtTest {
     @Test
     fun `test that backend synch can store data to disk when called for a success verify`() =
         runTest {
-            context.loggerForVerify("testname", VerifyType.File, "Test extra info", this)
+            context.loggerForVerify(checkName, VerifyType.File, "Test extra info", this)
                 .invoke(false)
             this.testScheduler.runCurrent()
 
@@ -67,7 +67,7 @@ internal class BackendSynchKtTest {
     @Test
     fun `test that backend synch can store data to disk when called for a fail verify`() =
         runTest {
-            context.loggerForVerify("testname", VerifyType.File, "Test extra info", this)
+            context.loggerForVerify(checkName, VerifyType.File, testMessage, this)
                 .invoke(false)
             this.testScheduler.runCurrent()
 
@@ -82,7 +82,7 @@ internal class BackendSynchKtTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test that backend synch can store data to disk when called`() = runTest {
-        context.loggerForCheck("testname", this).invoke(false)
+        context.loggerForCheck(checkName, this).invoke(false)
         this.testScheduler.runCurrent()
 
         val logs = context.logs().toList()
@@ -96,7 +96,7 @@ internal class BackendSynchKtTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `test that backend synch can store data to disk when called (pass)`() = runTest {
-        context.loggerForCheck("testname", this).invoke(true)
+        context.loggerForCheck(checkName, this).invoke(true)
         this.testScheduler.runCurrent()
 
         joinAll()
@@ -128,5 +128,10 @@ internal class BackendSynchKtTest {
                 0
             )
         } returns packageInfo
+    }
+
+    companion object {
+        const val checkName = "CheckName"
+        const val testMessage = "Test message"
     }
 }
