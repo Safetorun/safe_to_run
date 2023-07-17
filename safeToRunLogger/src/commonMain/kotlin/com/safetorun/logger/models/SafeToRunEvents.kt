@@ -29,7 +29,7 @@ sealed class SafeToRunEvents(
      * A check failed
      */
     @Serializable
-    @SerialName("FailedCheck")
+    @SerialName("Failed")
     data class FailedCheck(
         val deviceInformation: DeviceInformation,
         val appMetadata: AppMetadata,
@@ -51,7 +51,7 @@ sealed class SafeToRunEvents(
      * A check succeeded
      */
     @Serializable
-    @SerialName("SucceedCheck")
+    @SerialName("Succeed")
     data class SucceedCheck(
         val deviceInformation: DeviceInformation,
         val appMetadata: AppMetadata,
