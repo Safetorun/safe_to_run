@@ -35,7 +35,7 @@ inline fun <T : Any> ((T) -> Boolean).withLogger(
 inline fun <T : Any> withLogger(
     logValue: Boolean = false,
     crossinline logger: (Boolean, String?) -> Unit,
-    crossinline invoke: (T) -> Boolean
+    crossinline invoke: T.() -> Boolean
 ): (T) -> Boolean {
     return invoke.withLogger(logValue, logger)
 }

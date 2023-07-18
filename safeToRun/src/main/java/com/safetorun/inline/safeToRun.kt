@@ -8,6 +8,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.workDataOf
 import com.safetorun.logger.loggerForCheck
+import com.safetorun.logger.loggerForVerify
+import com.safetorun.logger.models.VerifyType
 import com.safetorun.reporting.LoggerBackendSynchroniser
 
 /**
@@ -15,12 +17,8 @@ import com.safetorun.reporting.LoggerBackendSynchroniser
  */
 typealias SafeToRunCheck = () -> Boolean
 
-/**
- * Safe to run logger for checker
- */
-fun Context.logger(apiKey: String, checkName: String): (Boolean) -> Unit = {
-    loggerForCheck(checkName).invoke(it)
 
+internal fun Context.startLoggerTracking(apiKey: String) {
     val inputData = workDataOf(LoggerBackendSynchroniser.KEY_API_KEY to apiKey)
 
     val constraints = Constraints.Builder()
@@ -38,7 +36,27 @@ fun Context.logger(apiKey: String, checkName: String): (Boolean) -> Unit = {
     WorkManager
         .getInstance(this)
         .enqueue(uploadWorkRequest)
+}
 
+/**
+ * Safe to run logger for verify
+ */
+fun <T> Context.logger(
+    apiKey: String,
+    checkName: String,
+    verifyType: VerifyType,
+): (Boolean, T?) -> Unit = {
+    value, extraData ->
+    loggerForVerify<T>(checkName, verifyType).invoke(value, extraData)
+    startLoggerTracking(apiKey)
+}
+
+/**
+ * Safe to run logger for checker
+ */
+fun Context.logger(apiKey: String, checkName: String): (Boolean) -> Unit = {
+    loggerForCheck(checkName).invoke(it)
+    startLoggerTracking(apiKey)
 }
 
 /**

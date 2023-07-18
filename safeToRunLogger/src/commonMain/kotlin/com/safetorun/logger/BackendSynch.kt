@@ -33,19 +33,17 @@ fun Context.loggerForCheck(
  *
  * @param checkName a unique name to describe your check
  * @param verifyType the type of the verify
- * @param extraInfo extra info to be logged
  */
-fun Context.loggerForVerify(
+fun <T> Context.loggerForVerify(
     checkName: String,
     verifyType: VerifyType,
-    extraInfo: String?,
     scope: CoroutineScope = GlobalScope
-): (Boolean) -> Unit = {
+): (Boolean, T?) -> Unit = { pass, value ->
     scope.launch {
-        if (it) {
-            logVerifySuccess(checkName, verifyType, extraInfo)
+        if (pass) {
+            logVerifySuccess(checkName, verifyType, value?.toString())
         } else {
-            logVerifyFailure(checkName, verifyType, extraInfo)
+            logVerifyFailure(checkName, verifyType, value?.toString())
         }
     }
 }
