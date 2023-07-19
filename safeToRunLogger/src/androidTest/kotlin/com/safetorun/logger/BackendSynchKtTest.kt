@@ -69,14 +69,14 @@ internal class BackendSynchKtTest {
     fun `test that backend synch can store data to disk when called for a fail verify`() =
         runTest {
             context.loggerForVerify<String>(checkName, VerifyType.File, this)
-                .invoke(true, extraData)
+                .invoke(false, extraData)
             this.testScheduler.runCurrent()
 
             val logs = context.logs().toList()
 
             assertEquals(1, logs.size)
             assertEquals(SafeToRunEvents.SuccessVerify::class, logs[0]::class)
-            assertEquals(extraData, (logs[0] as SafeToRunEvents.SuccessVerify).extra)
+            assertEquals(extraData, (logs[0] as SafeToRunEvents.FailedVerify).extra)
             context.deleteLog(logs[0].uuid)
             context.clearLogs()
         }
@@ -134,7 +134,6 @@ internal class BackendSynchKtTest {
 
     companion object {
         const val checkName = "CheckName"
-        const val testMessage = "Test message"
         const val extraData = "data"
     }
 }

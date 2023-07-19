@@ -81,25 +81,7 @@ sealed class SafeToRunEvents(
         val verifyType: VerifyType,
         val extra: String?
     ) :
-        SafeToRunEvents(metadata = appMetadata) {
-        companion object {
-            /**
-             * Create an empty event for failed verification
-             *
-             * @param name the name of the check
-             * @param verifyType the type of verification (Intent, Url, or File)
-             * @param extra additional information (nullable)
-             */
-            fun empty(name: String, verifyType: VerifyType, extra: String? = null) =
-                FailedVerify(
-                    DeviceInformation.empty(),
-                    AppMetadata.empty(),
-                    name,
-                    verifyType,
-                    extra
-                )
-        }
-    }
+        SafeToRunEvents(metadata = appMetadata)
 
     /**
      * A successful verification
@@ -112,24 +94,5 @@ sealed class SafeToRunEvents(
         val checkName: String,
         val verifyType: VerifyType,
         val extra: String?
-    ) :
-        SafeToRunEvents(metadata = appMetadata) {
-        companion object {
-            /**
-             * Create an empty event for successful verification
-             *
-             * @param name the name of the check
-             * @param verifyType the type of verification (Intent, Url, or File)
-             * @param extra additional information (nullable)
-             */
-            fun empty(name: String, verifyType: VerifyType, extra: String? = null) =
-                SuccessVerify(
-                    DeviceInformation.empty(),
-                    AppMetadata.empty(),
-                    name,
-                    verifyType,
-                    extra
-                )
-        }
-    }
+    ) : SafeToRunEvents(metadata = appMetadata)
 }
