@@ -51,14 +51,15 @@ internal class BackendSynchKtTest {
     @Test
     fun `test that backend synch can store data to disk when called for a success verify`() =
         runTest {
-            context.loggerForVerify(checkName, VerifyType.File, "Test extra info", this)
-                .invoke(true)
+            context.loggerForVerify<String>(checkName, VerifyType.File, this)
+                .invoke(true, extraData)
             this.testScheduler.runCurrent()
 
             val logs = context.logs().toList()
 
             assertEquals(1, logs.size)
             assertEquals(SafeToRunEvents.SuccessVerify::class, logs[0]::class)
+            assertEquals("data", (logs[0] as SafeToRunEvents.SuccessVerify).extra)
             context.deleteLog(logs[0].uuid)
             context.clearLogs()
         }
@@ -67,14 +68,15 @@ internal class BackendSynchKtTest {
     @Test
     fun `test that backend synch can store data to disk when called for a fail verify`() =
         runTest {
-            context.loggerForVerify(checkName, VerifyType.File, testMessage, this)
-                .invoke(true)
+            context.loggerForVerify<String>(checkName, VerifyType.File, this)
+                .invoke(true, extraData)
             this.testScheduler.runCurrent()
 
             val logs = context.logs().toList()
 
             assertEquals(1, logs.size)
             assertEquals(SafeToRunEvents.SuccessVerify::class, logs[0]::class)
+            assertEquals(extraData, (logs[0] as SafeToRunEvents.SuccessVerify).extra)
             context.deleteLog(logs[0].uuid)
             context.clearLogs()
         }
@@ -133,5 +135,6 @@ internal class BackendSynchKtTest {
     companion object {
         const val checkName = "CheckName"
         const val testMessage = "Test message"
+        const val extraData = "data"
     }
 }
