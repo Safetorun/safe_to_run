@@ -10,7 +10,7 @@ internal class WithLoggerKtTest {
     fun `logger function is called when verbose is true`() {
         val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
         val withLoggerFunction = withLogger<Int>(logValue = true, logger = logger) {
-            it > 0
+            this > 0
         }
 
         val value = 10
@@ -24,7 +24,7 @@ internal class WithLoggerKtTest {
     fun `logger function is not called when verbose is false`() {
         val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
         val withLoggerFunction = withLogger<Int>(logger = logger) {
-            it > 0
+            this > 0
         }
 
         val value = -5
@@ -37,9 +37,10 @@ internal class WithLoggerKtTest {
     @Test
     fun `logger function is called with custom message when logValue is true`() {
         val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
-        val withLoggerFunction = withLogger<String>(logValue = true, logger = logger) {
-            it.length > 5
-        }
+        val withLoggerFunction =
+            withLogger<String>(logValue = true, logger = logger) {
+                true
+            }
 
         val value = "Hello World"
         val result = withLoggerFunction(value)
