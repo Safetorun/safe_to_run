@@ -75,7 +75,7 @@ internal class BackendSynchKtTest {
             val logs = context.logs().toList()
 
             assertEquals(1, logs.size)
-            assertEquals(SafeToRunEvents.SuccessVerify::class, logs[0]::class)
+            assertEquals(SafeToRunEvents.FailedVerify::class, logs[0]::class)
             assertEquals(extraData, (logs[0] as SafeToRunEvents.FailedVerify).extra)
             context.deleteLog(logs[0].uuid)
             context.clearLogs()
