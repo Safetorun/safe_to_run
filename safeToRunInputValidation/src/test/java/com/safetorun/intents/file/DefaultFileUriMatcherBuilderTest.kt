@@ -18,7 +18,7 @@ internal class DefaultFileUriMatcherBuilderTest {
         every { packageName } returns PACKAGE
     }
 
-    private val defaultFileUriMatcher = DefaultFileUriMatcherBuilder(context)
+    private val defaultFileUriMatcher = DefaultFileUriMatcherBuilder<File>(context)
 
 
     @Test

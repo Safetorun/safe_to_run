@@ -8,7 +8,7 @@ interface SafeToRunVerifier<T> {
     /**
      * Add post-action
      */
-    fun andThen(next: (Boolean, T) -> Boolean): SafeToRunVerifier<T>
+    fun andThen(next: (Boolean, T) -> Unit): SafeToRunVerifier<T>
 
     /**
      * Verify the input

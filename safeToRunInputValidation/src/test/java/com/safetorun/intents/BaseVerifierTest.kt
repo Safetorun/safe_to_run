@@ -1,7 +1,6 @@
-package com.safetorun.intents
-
-import io.mockk.every
+import com.safetorun.intents.BaseVerifier
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -35,7 +34,7 @@ class BaseVerifierTest {
 
     @Test
     fun testAndThen() {
-        val nextFunctionMock = mockk<(Boolean, Int) -> Boolean>(relaxed = true)
+        val nextFunctionMock = mockk<(Boolean, Int) -> Unit>(relaxed = true)
         baseVerifier.andThen(nextFunctionMock)
 
         baseVerifier.verify(42)
@@ -43,31 +42,30 @@ class BaseVerifierTest {
         // Verify that the next function is invoked with the expected arguments
         val expectedArg1 = true
         val expectedArg2 = 42
-        every { nextFunctionMock.invoke(any(), any()) } returns false
-        baseVerifier.verify(42)
-        io.mockk.verify { nextFunctionMock.invoke(expectedArg1, expectedArg2) }
+        verify(exactly = 1) { nextFunctionMock.invoke(expectedArg1, expectedArg2) }
     }
 
     @Test
     fun testVerifyWithNextFunctionReturningTrue() {
-        val nextFunctionMock = mockk<(Boolean, Int) -> Boolean>(relaxed = true)
+        val nextFunctionMock = mockk<(Boolean, Int) -> Unit>(relaxed = true)
         baseVerifier.andThen(nextFunctionMock)
 
         baseVerifier.verify(42)
 
-        io.mockk.verify { nextFunctionMock.invoke(any(), any()) }
+        verify(exactly = 1) { nextFunctionMock.invoke(true, 42) }
     }
 
     @Test
-    fun testVerifyWithNextFunctionReturningFalse() {
-        val nextFunctionMock = mockk<(Boolean, Int) -> Boolean>(relaxed = true)
+    fun testVerifyWithNextFunctionReturningTrueTwoFuncs() {
+        val nextFunctionMock = mockk<(Boolean, Int) -> Unit>(relaxed = true)
+        val nextFunctionMock2 = mockk<(Boolean, Int) -> Unit>(relaxed = true)
+
         baseVerifier.andThen(nextFunctionMock)
+        baseVerifier.andThen(nextFunctionMock2)
 
-        // Next function returning false will break the verification chain.
-        // The result should be false, and the next function should not be invoked.
-        val result = baseVerifier.verify(-10)
+        baseVerifier.verify(42)
 
-        assertFalse(result)
-        io.mockk.verify(exactly = 0) { nextFunctionMock.invoke(any(), any()) }
+        verify(exactly = 1) { nextFunctionMock.invoke(true, 42) }
+        verify(exactly = 1) { nextFunctionMock2.invoke(true, 42) }
     }
 }
