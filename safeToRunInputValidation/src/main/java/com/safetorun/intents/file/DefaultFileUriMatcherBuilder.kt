@@ -3,9 +3,11 @@ package com.safetorun.intents.file
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import com.safetorun.intents.BaseVerifier
 import java.io.File
 
-internal class DefaultFileUriMatcherBuilder(private val context: Context) : FileUriMatcherBuilder {
+internal class DefaultFileUriMatcherBuilder<T>(private val context: Context) :
+    FileUriMatcherBuilder, BaseVerifier<T>() {
 
     private val allowedDirectories = mutableListOf<FileUriMatcherCheck>()
     private val allowExactFile = mutableListOf<File>()
@@ -24,10 +26,6 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
         addAllowedExactFile(this)
     }
 
-    private fun FileUriMatcherCheck.allowParentDir() {
-        addAllowedParentDirectory(this)
-
-    }
 
     override fun doesFileCheckPass(file: File): Boolean {
         return isDirectoryPublicDirectory(file) ||
@@ -58,8 +56,15 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) : File
     }
 
     override fun File.allowDirectory(allowSubdirectories: Boolean) {
-        FileUriMatcherCheck(this, allowSubdirectories)
-            .allowParentDir()
+        addAllowedParentDirectory(FileUriMatcherCheck(this, allowSubdirectories))
+    }
+
+    override fun internalVerify(input: T): Boolean {
+        return when (input) {
+            is File -> doesFileCheckPass(input)
+            is Uri -> doesFileCheckPass(input)
+            else -> throw IllegalArgumentException("Unsupported type")
+        }
     }
 }
 

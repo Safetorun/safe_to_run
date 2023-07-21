@@ -18,7 +18,7 @@ class IntentVerificationBuilder internal constructor(
     private val intent: Intent,
     private val context: Context
 ) : AllowUrlsBuilder by DefaultAllowUrlsBuilder(),
-    FileUriMatcherBuilder by DefaultFileUriMatcherBuilder(context) {
+    FileUriMatcherBuilder by DefaultFileUriMatcherBuilder<Intent>(context) {
 
     /**
      * Whether to allow an 'intent' inside this bundle
