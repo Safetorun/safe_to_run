@@ -42,19 +42,6 @@ internal class UrlConfigImpl : UrlConfig, BaseVerifier<String>() {
             ?.also { allowParameter(it) }
     }
 
-    override fun verify(url: String): Boolean {
-        val uri = Uri.parse(url)
-
-        return uri.host == null || allowAnyUrl || (url.urlsAreInAllowedLists()
-                && (
-
-                uri.queryParameterNames.isEmpty()
-                        || allowedUrls.contains(url)
-                        || allowAnyParameter
-                        || uri.allParametersAccountFor()
-                ))
-    }
-
     private fun Uri.allParametersAccountFor(): Boolean =
         queryParameterNames.map { actualParam ->
             Pair(
@@ -73,7 +60,15 @@ internal class UrlConfigImpl : UrlConfig, BaseVerifier<String>() {
         parameterName?.let { ParameterConfig(it, allowedType) }
 
     override fun internalVerify(input: String): Boolean {
-        TODO("Not yet implemented")
+        val uri = Uri.parse(input)
+
+        return uri.host == null || allowAnyUrl || (input.urlsAreInAllowedLists()
+                && (
+                uri.queryParameterNames.isEmpty()
+                        || allowedUrls.contains(input)
+                        || allowAnyParameter
+                        || uri.allParametersAccountFor()
+                ))
     }
 }
 
