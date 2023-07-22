@@ -18,12 +18,13 @@ class BouncableActivity : Activity() {
 
         intent.verify(this) {
 
-            actionOnSuccess = {
-                startActivity(intent.extras?.get("bounce") as Intent)
-            }
+            andThen { passed, _ ->
+                if (passed) {
+                    startActivity(intent.extras?.get("bounce") as Intent)
+                } else {
+                    layout.oopsNotWorking.text = getString(R.string.oops_couldn_t_bounce)
 
-            actionOnFailure = {
-                layout.oopsNotWorking.text = getString(R.string.oops_couldn_t_bounce)
+                }
             }
         }
     }

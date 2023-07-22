@@ -43,8 +43,8 @@ internal class DefaultIntentVerificationBuilder internal constructor(
     override var allowContainingIntents: Boolean = false
 
     override var actionOnSuccess: (() -> Unit)? = null
-    override var actionOnFailure: (() -> Unit)? = null
 
+    override var actionOnFailure: (() -> Unit)? = null
 
     private fun doesIntentCheckPass() = if (!allowContainingIntents) {
         intent.extras?.gatherAllIntents()?.isEmpty() == true
