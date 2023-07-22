@@ -1,51 +1,69 @@
-import com.safetorun.intents.logger.withLogger
+import com.safetorun.intents.SafeToRunVerifier
+import com.safetorun.logger.withLogger
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
-internal class WithLoggerKtTest {
+internal class SafeToRunVerifierWithLoggerTest {
 
-    @Test
-    fun `logger function is called when verbose is true`() {
-        val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
-        val withLoggerFunction = withLogger<Int>(logValue = true, logger = logger) {
-            this > 0
-        }
+    private lateinit var safeToRunVerifier: SafeToRunVerifier<Int>
+    private lateinit var logger: (Boolean, String?) -> Unit
 
-        val value = 10
-        val result = withLoggerFunction(value)
+    @Before
+    fun setUp() {
+        // Create a mock logger for testing
+        logger = mockk(relaxed = true)
 
-        assertEquals(true, result)
-        verify(exactly = 1) { logger(true, value.toString()) }
-    }
+        // Create a mock SafeToRunVerifier
+        safeToRunVerifier = object : SafeToRunVerifier<Int> {
 
-    @Test
-    fun `logger function is not called when verbose is false`() {
-        val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
-        val withLoggerFunction = withLogger<Int>(logger = logger) {
-            this > 0
-        }
+            val nextList: MutableList<(Boolean, Int) -> Unit> = mutableListOf()
 
-        val value = -5
-        val result = withLoggerFunction(value)
-
-        assertEquals(false, result)
-        verify(exactly = 1) { logger(false, null) }
-    }
-
-    @Test
-    fun `logger function is called with custom message when logValue is true`() {
-        val logger = mockk<(Boolean, String?) -> Unit>(relaxed = true)
-        val withLoggerFunction =
-            withLogger<String>(logValue = true, logger = logger) {
-                true
+            override fun verify(input: Int): Boolean {
+                return (input >= 0).also {
+                    nextList.forEach { next -> next.invoke(it, input) }
+                }
             }
 
-        val value = "Hello World"
-        val result = withLoggerFunction(value)
+            override fun andThen(next: (Boolean, Int) -> Unit): SafeToRunVerifier<Int> {
+                nextList.add(next)
+                return this
+            }
+        }
+    }
 
-        assertEquals(true, result)
-        verify(exactly = 1) { logger(true, value) }
+    @Test
+    fun `test withLogger logs value when logValue is true`() {
+        // Create the wrapped SafeToRunVerifier with logger
+        val wrappedVerifier = safeToRunVerifier.withLogger(logValue = true, logger = logger)
+
+        // Perform verification
+        val result = wrappedVerifier.verify(42)
+
+        // Verify that the logger was called with the appropriate arguments
+        verify(exactly = 1) { logger.invoke(result, "42") }
+    }
+
+    @Test
+    fun `test withLogger does not log value when logValue is false`() {
+        // Create the wrapped SafeToRunVerifier with logger
+        val wrappedVerifier = safeToRunVerifier.withLogger(logValue = false, logger = logger)
+
+        // Perform verification
+        val result = wrappedVerifier.verify(42)
+
+        // Verify that the logger was called with the appropriate arguments
+        verify(exactly = 1) { logger.invoke(result, null) }
+    }
+
+    @Test
+    fun `test withLogger returns the same SafeToRunVerifier instance`() {
+        // Create the wrapped SafeToRunVerifier with logger
+        val wrappedVerifier = safeToRunVerifier.withLogger(logValue = true, logger = logger)
+
+        // Ensure that the returned instance is the same as the original SafeToRunVerifier
+        assertEquals(safeToRunVerifier, wrappedVerifier)
     }
 }

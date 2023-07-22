@@ -8,6 +8,13 @@ import com.safetorun.intents.url.AllowUrlsBuilder
 import com.safetorun.intents.url.DefaultAllowUrlsBuilder
 
 
+/**
+ * Interface for building a verification builder use
+ *
+ * ```
+ * Intent.verify()
+ * ```
+ */
 interface IntentVerificationBuilder : AllowUrlsBuilder, FileUriMatcherBuilder,
     SafeToRunVerifier<Intent> {
     /**
@@ -15,20 +22,19 @@ interface IntentVerificationBuilder : AllowUrlsBuilder, FileUriMatcherBuilder,
      */
     var allowContainingIntents: Boolean
 
+    /**
+     * Add an action to be executed if the verification succeeds
+     */
     @Deprecated("Use andThen instead")
     var actionOnSuccess: (() -> Unit)?
 
+    /**
+     * Add an action to be executed if the verification fails
+     */
     @Deprecated("Use andThen instead")
     var actionOnFailure: (() -> Unit)?
 }
 
-/**
- * Class for building a verification builder use
- *
- * ```
- * Intent.verify()
- * ```
- */
 internal class DefaultIntentVerificationBuilder internal constructor(
     private val intent: Intent,
     private val context: Context
@@ -37,9 +43,6 @@ internal class DefaultIntentVerificationBuilder internal constructor(
     FileUriMatcherBuilder by DefaultFileUriMatcherBuilder(context),
     BaseVerifier<Intent>() {
 
-    /**
-     * Whether to allow an 'intent' inside this bundle
-     */
     override var allowContainingIntents: Boolean = false
 
     override var actionOnSuccess: (() -> Unit)? = null
