@@ -16,7 +16,7 @@ typealias FileVerifier = FileUriMatcherBuilder.() -> Unit
  * @return true if the check passes
  */
 fun File.verifyFile(context: Context, config: FileVerifier) =
-    DefaultFileUriMatcherBuilder<File>(context)
+    DefaultFileUriMatcherBuilder(context)
         .apply(config)
         .verify(this)
 
@@ -30,6 +30,6 @@ fun File.verifyFile(context: Context, config: FileVerifier) =
  * @return true if the check passes
  */
 fun Uri.verifyFile(context: Context, config: FileVerifier) =
-    DefaultFileUriMatcherBuilder<Uri>(context)
+    DefaultFileUriMatcherBuilder(context)
         .apply(config)
-        .verify(this)
+        .run { path?.let { verify(File(it)) } ?: false }

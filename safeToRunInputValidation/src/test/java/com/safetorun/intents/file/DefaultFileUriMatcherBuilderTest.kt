@@ -18,7 +18,7 @@ internal class DefaultFileUriMatcherBuilderTest {
         every { packageName } returns PACKAGE
     }
 
-    private val defaultFileUriMatcher = DefaultFileUriMatcherBuilder<File>(context)
+    private val defaultFileUriMatcher = DefaultFileUriMatcherBuilder(context)
 
 
     @Test
@@ -85,7 +85,7 @@ internal class DefaultFileUriMatcherBuilderTest {
     @Test
     fun `test that we do not allow a directory in private directory even with directory traversal`() {
         defaultFileUriMatcher
-            .doesFileCheckPass(File("/data/app/../data/$PACKAGE/files/abc.txt"))
+            .verify(File("/data/app/../data/$PACKAGE/files/abc.txt"))
             .assertFalse()
     }
 
@@ -100,7 +100,7 @@ internal class DefaultFileUriMatcherBuilderTest {
                     )
                 )
             }
-            .doesFileCheckPass(File("/data/data/$PACKAGE/files/def/abc.txt"))
+            .verify(File("/data/data/$PACKAGE/files/def/abc.txt"))
             .assertTrue()
     }
 
@@ -115,7 +115,7 @@ internal class DefaultFileUriMatcherBuilderTest {
                     )
                 )
             }
-            .doesFileCheckPass(File("/data/data/$PACKAGE/files/def/abc.txt"))
+            .verify(File("/data/data/$PACKAGE/files/def/abc.txt"))
             .assertFalse()
     }
 
@@ -125,7 +125,7 @@ internal class DefaultFileUriMatcherBuilderTest {
             .apply {
                 allowAnyFile = true
             }
-            .doesFileCheckPass(File("/data/data/$PACKAGE/files/def/abc.txt"))
+            .verify(File("/data/data/$PACKAGE/files/def/abc.txt"))
             .assertTrue()
     }
 

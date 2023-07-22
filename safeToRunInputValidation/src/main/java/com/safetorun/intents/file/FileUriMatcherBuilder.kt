@@ -1,6 +1,5 @@
 package com.safetorun.intents.file
 
-import android.net.Uri
 import java.io.File
 
 internal class FileUriMatcherCheck internal constructor(val directoryToAllow: File, val allowSubdirectories: Boolean)
@@ -31,24 +30,6 @@ interface FileUriMatcherBuilder {
      * @receiver the file you want to allow
      */
     fun File.allowExactFile()
-
-    /**
-     * Does file check pass
-     *
-     * @param file file to check if we should 'open' it
-     *
-     * @return if file check passes
-     */
-    fun doesFileCheckPass(file: File): Boolean
-
-    /**
-     * Does file check pass
-     *
-     * @param uri file to check if we should 'open' it
-     *
-     * @return if file check passes
-     */
-    fun doesFileCheckPass(uri: Uri): Boolean
 
     /**
      * Convert a file to a allow directory check
