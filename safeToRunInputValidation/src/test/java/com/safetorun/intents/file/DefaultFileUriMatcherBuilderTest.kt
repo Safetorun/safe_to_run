@@ -65,6 +65,16 @@ internal class DefaultFileUriMatcherBuilderTest {
     }
 
     @Test
+    fun `test that when path is null we get a false in response `() {
+        Uri.Builder()
+            .path(null)
+            .build()
+            .verifyFile(context) {}
+            .assertFalse()
+    }
+
+
+    @Test
     fun `test that we do allow a file in a directory that has been added`() {
         File("/data/data/$PACKAGE/files/abc.txt")
             .verifyFile(context) {
