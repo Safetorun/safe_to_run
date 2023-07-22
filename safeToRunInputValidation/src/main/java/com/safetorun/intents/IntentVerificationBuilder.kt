@@ -7,6 +7,17 @@ import com.safetorun.intents.file.FileUriMatcherBuilder
 import com.safetorun.intents.url.AllowUrlsBuilder
 import com.safetorun.intents.url.DefaultAllowUrlsBuilder
 
+
+interface IntentVerificationBuilder : AllowUrlsBuilder, FileUriMatcherBuilder {
+    /**
+     * Whether to allow an 'intent' inside this bundle
+     */
+    var allowContainingIntents: Boolean
+
+    var actionOnSuccess: (() -> Unit)?
+    var actionOnFailure: (() -> Unit)?
+}
+
 /**
  * Class for building a verification builder use
  *
@@ -14,29 +25,22 @@ import com.safetorun.intents.url.DefaultAllowUrlsBuilder
  * Intent.verify()
  * ```
  */
-class IntentVerificationBuilder internal constructor(
+internal class DefaultIntentVerificationBuilder internal constructor(
     private val intent: Intent,
     private val context: Context
-) : AllowUrlsBuilder by DefaultAllowUrlsBuilder(),
-    FileUriMatcherBuilder by DefaultFileUriMatcherBuilder(context) {
+) : IntentVerificationBuilder,
+    AllowUrlsBuilder by DefaultAllowUrlsBuilder(),
+    FileUriMatcherBuilder by DefaultFileUriMatcherBuilder(context),
+    BaseVerifier<Intent>() {
 
     /**
      * Whether to allow an 'intent' inside this bundle
      */
-    var allowContainingIntents: Boolean = false
+    override var allowContainingIntents: Boolean = false
 
-    var actionOnSuccess: (() -> Unit)? = null
-    var actionOnFailure: (() -> Unit)? = null
+    override var actionOnSuccess: (() -> Unit)? = null
+    override var actionOnFailure: (() -> Unit)? = null
 
-    internal fun verify() =
-        (doesIntentCheckPass() && doesUrlCheckPass(gatherAllStrings(intent)))
-            .also { passed ->
-                if (passed) {
-                    actionOnSuccess?.invoke()
-                } else {
-                    actionOnFailure?.invoke()
-                }
-            }
 
     private fun doesIntentCheckPass() = if (!allowContainingIntents) {
         intent.extras?.gatherAllIntents()?.isEmpty() == true
@@ -45,6 +49,16 @@ class IntentVerificationBuilder internal constructor(
     }
 
     private fun gatherAllStrings(intent: Intent) = intent.gatherAllStrings()
+    override fun internalVerify(input: Intent): Boolean {
+        return (doesIntentCheckPass() && doesUrlCheckPass(gatherAllStrings(intent)))
+            .also { passed ->
+                if (passed) {
+                    actionOnSuccess?.invoke()
+                } else {
+                    actionOnFailure?.invoke()
+                }
+            }
+    }
 }
 
 /**
@@ -71,7 +85,7 @@ typealias IntentVerifier = IntentVerificationBuilder.() -> Unit
  * @param context android context
  */
 fun Intent.verify(context: Context, builderBlock: IntentVerifier) =
-    IntentVerificationBuilder(this, context).run {
+    DefaultIntentVerificationBuilder(this, context).run {
         builderBlock()
-        verify()
+        verify(this@verify)
     }

@@ -2,7 +2,6 @@ package com.safetorun.intents.url
 
 import android.net.Uri
 import com.safetorun.intents.BaseVerifier
-import com.safetorun.intents.IntentVerificationBuilder
 import com.safetorun.intents.url.hostname.hostNameMatcher
 import com.safetorun.intents.url.params.ParameterConfig
 import com.safetorun.intents.url.params.ParameterConfigBuilder
