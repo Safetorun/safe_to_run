@@ -49,6 +49,3 @@ interface FileUriMatcherBuilder {
         allowDirectory(true)
 
 }
-
-
-
