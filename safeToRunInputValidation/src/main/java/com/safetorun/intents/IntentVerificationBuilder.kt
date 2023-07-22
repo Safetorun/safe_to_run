@@ -8,13 +8,17 @@ import com.safetorun.intents.url.AllowUrlsBuilder
 import com.safetorun.intents.url.DefaultAllowUrlsBuilder
 
 
-interface IntentVerificationBuilder : AllowUrlsBuilder, FileUriMatcherBuilder {
+interface IntentVerificationBuilder : AllowUrlsBuilder, FileUriMatcherBuilder,
+    SafeToRunVerifier<Intent> {
     /**
      * Whether to allow an 'intent' inside this bundle
      */
     var allowContainingIntents: Boolean
 
+    @Deprecated("Use andThen instead")
     var actionOnSuccess: (() -> Unit)?
+
+    @Deprecated("Use andThen instead")
     var actionOnFailure: (() -> Unit)?
 }
 
