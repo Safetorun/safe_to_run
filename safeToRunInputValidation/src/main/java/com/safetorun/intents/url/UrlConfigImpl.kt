@@ -1,6 +1,7 @@
 package com.safetorun.intents.url
 
 import android.net.Uri
+import com.safetorun.intents.BaseVerifier
 import com.safetorun.intents.IntentVerificationBuilder
 import com.safetorun.intents.url.hostname.hostNameMatcher
 import com.safetorun.intents.url.params.ParameterConfig
@@ -8,7 +9,7 @@ import com.safetorun.intents.url.params.ParameterConfigBuilder
 import com.safetorun.intents.url.params.matchesAllowedType
 
 
-internal class UrlConfigImpl : UrlConfig {
+internal class UrlConfigImpl : UrlConfig, BaseVerifier<String>() {
     private val allowedHost = mutableListOf<String>()
     private val allowedUrls = mutableListOf<String>()
     private val allowParameters = mutableListOf<ParameterConfig>()
@@ -71,6 +72,10 @@ internal class UrlConfigImpl : UrlConfig {
 
     private fun ParameterConfigBuilder.toConfig() =
         parameterName?.let { ParameterConfig(it, allowedType) }
+
+    override fun internalVerify(input: String): Boolean {
+        TODO("Not yet implemented")
+    }
 }
 
 /**

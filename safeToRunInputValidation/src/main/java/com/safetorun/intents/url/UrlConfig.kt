@@ -1,12 +1,13 @@
 package com.safetorun.intents.url
 
+import com.safetorun.intents.SafeToRunVerifier
 import com.safetorun.intents.url.params.ParameterConfig
 import com.safetorun.intents.url.params.ParameterConfigBuilder
 
 /**
  * Url configuration
  */
-interface UrlConfig {
+interface UrlConfig : SafeToRunVerifier<String> {
     /**
      * Allow a host
      *
@@ -56,13 +57,4 @@ interface UrlConfig {
      * @param parameter the configuration to use
      */
     fun allowParameter(parameter: ParameterConfigBuilder.() -> Unit)
-
-    /**
-     * Verify a URL
-     *
-     * @param url a url
-     *
-     * @return true if the URL is valid for use, false otherwise
-     */
-    fun verify(url: String): Boolean
 }
