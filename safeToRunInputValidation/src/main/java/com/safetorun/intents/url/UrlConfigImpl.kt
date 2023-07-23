@@ -97,7 +97,21 @@ fun urlConfiguration(config: UrlConfigVerifier) =
  *
  * @return true if the check passed, false otherwise
  */
+@Deprecated("Use verify instead", ReplaceWith("verify(config)", "com.safetorun.intents.url.verify"))
 fun String.urlVerification(config: UrlConfigVerifier) =
     (UrlConfigImpl() as UrlConfig)
         .apply(config)
         .verify(this)
+
+
+/**
+ * Verify a URL matches the configuration
+ *
+ * @param config the configuration
+ *
+ * @receiver string url
+ *
+ * @return true if the check passed, false otherwise
+ */
+fun String.verify(config: UrlConfigVerifier) =
+    urlVerification(config)

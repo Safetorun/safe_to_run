@@ -25,13 +25,13 @@ interface IntentVerificationBuilder : AllowUrlsBuilder, FileUriMatcherBuilder,
     /**
      * Add an action to be executed if the verification succeeds
      */
-    @Deprecated("Use andThen instead")
+    @Deprecated("Use andThen instead", ReplaceWith("andThen(actionOnSuccess)"))
     var actionOnSuccess: (() -> Unit)?
 
     /**
      * Add an action to be executed if the verification fails
      */
-    @Deprecated("Use andThen instead")
+    @Deprecated("Use andThen instead", ReplaceWith("andThen(actionOnSuccess)"))
     var actionOnFailure: (() -> Unit)?
 }
 
@@ -56,6 +56,7 @@ internal class DefaultIntentVerificationBuilder internal constructor(
     }
 
     private fun gatherAllStrings(intent: Intent) = intent.gatherAllStrings()
+
     override fun internalVerify(input: Intent): Boolean {
         return (doesIntentCheckPass() && doesUrlCheckPass(gatherAllStrings(intent)))
             .also { passed ->

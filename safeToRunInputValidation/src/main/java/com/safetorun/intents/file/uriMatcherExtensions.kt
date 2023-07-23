@@ -15,10 +15,11 @@ typealias FileVerifier = FileUriMatcherWithVerifier.() -> Unit
  *
  * @return true if the check passes
  */
-@Deprecated("Use verify instead", ReplaceWith(
-    "verify(context, config)",
-    "com.safetorun.intents.file.verify"
-)
+@Deprecated(
+    "Use verify instead", ReplaceWith(
+        "verify(context, config)",
+        "com.safetorun.intents.file.verify"
+    )
 )
 fun File.verifyFile(context: Context, config: FileVerifier) =
     DefaultFileUriBuilderWithVerifier(context)
@@ -47,7 +48,6 @@ fun File.verify(context: Context, config: FileVerifier) =
  */
 fun Uri.verify(context: Context, config: FileVerifier) =
     this.verifyFile(context, config)
-
 
 
 /**

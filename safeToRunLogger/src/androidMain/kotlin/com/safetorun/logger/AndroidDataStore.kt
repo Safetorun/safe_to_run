@@ -1,7 +1,7 @@
 package com.safetorun.logger
 
 import android.content.Context
-import com.safetorun.intents.file.verifyFile
+import com.safetorun.intents.file.verify
 import java.io.File
 
 internal class AndroidDataStore(private val context: Context) : DataStore by JvmDatastore(
@@ -12,7 +12,7 @@ internal class AndroidDataStore(private val context: Context) : DataStore by Jvm
             }
         },
     verifyFile = {
-        verifyFile(context) {
+        verify(context) {
             context.filesDir.allowDirectory()
         }
     }

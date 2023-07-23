@@ -44,7 +44,7 @@ internal class WithLoggerKtTest {
         val result = wrappedVerifier.verify(42)
 
         // Verify that the logger was called with the appropriate arguments
-        verify(exactly = 1) { logger.invoke(result, VerifyType.Url, "42") }
+        verify(exactly = 1) { logger.invoke(result, VerifyType.Other, "42") }
     }
 
     @Test
@@ -56,7 +56,7 @@ internal class WithLoggerKtTest {
         val result = wrappedVerifier.verify(42)
 
         // Verify that the logger was called with the appropriate arguments
-        verify(exactly = 1) { logger.invoke(result, VerifyType.Url, null) }
+        verify(exactly = 1) { logger.invoke(result, VerifyType.Other, null) }
     }
 
     @Test
