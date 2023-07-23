@@ -9,7 +9,6 @@ import androidx.work.WorkRequest
 import androidx.work.workDataOf
 import com.safetorun.logger.loggerForCheck
 import com.safetorun.logger.loggerForVerify
-import com.safetorun.logger.models.VerifyType
 import com.safetorun.reporting.LoggerBackendSynchroniser
 
 /**
@@ -44,9 +43,8 @@ internal fun Context.startLoggerTracking(apiKey: String) {
 fun <T> Context.verifyLogger(
     apiKey: String,
     checkName: String,
-): (Boolean, VerifyType, T?) -> Unit = {
-    value, type, extraData ->
-    loggerForVerify<T>(checkName, type).invoke(value, extraData)
+): (Boolean, T?) -> Unit = { value, extraData ->
+    loggerForVerify<T>(checkName).invoke(value, extraData)
     startLoggerTracking(apiKey)
 }
 

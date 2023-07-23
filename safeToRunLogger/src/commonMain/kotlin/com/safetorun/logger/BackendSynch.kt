@@ -4,7 +4,6 @@ import android.content.Context
 import com.safetorun.logger.metadata.metadata
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.logger.models.VerifyType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -32,18 +31,16 @@ fun Context.loggerForCheck(
  * Retrieve a logger for a given check
  *
  * @param checkName a unique name to describe your check
- * @param verifyType the type of the verify
  */
 fun <T> Context.loggerForVerify(
     checkName: String,
-    verifyType: VerifyType,
     scope: CoroutineScope = GlobalScope
 ): (Boolean, T?) -> Unit = { pass, value ->
     scope.launch {
         if (pass) {
-            logVerifySuccess(checkName, verifyType, value?.toString())
+            logVerifySuccess(checkName, value?.toString())
         } else {
-            logVerifyFailure(checkName, verifyType, value?.toString())
+            logVerifyFailure(checkName, value?.toString())
         }
     }
 }
@@ -60,7 +57,6 @@ internal suspend fun Context.logCheckFailure(checkName: String) =
 
 internal suspend fun Context.logVerifyFailure(
     checkName: String,
-    verifyType: VerifyType,
     extraInfo: String?
 ) =
     AndroidDataStore(this@logVerifyFailure)
@@ -69,14 +65,12 @@ internal suspend fun Context.logVerifyFailure(
                 appMetadata = metadata(),
                 checkName = checkName,
                 deviceInformation = DeviceInformation.empty(),
-                verifyType = verifyType,
                 extra = extraInfo
             )
         )
 
 internal suspend fun Context.logVerifySuccess(
     checkName: String,
-    verifyFile: VerifyType,
     extraInfo: String?,
 ) =
     AndroidDataStore(this@logVerifySuccess)
@@ -85,7 +79,6 @@ internal suspend fun Context.logVerifySuccess(
                 appMetadata = metadata(),
                 checkName = checkName,
                 deviceInformation = DeviceInformation.empty(),
-                verifyType = verifyFile,
                 extra = extraInfo
             )
         )

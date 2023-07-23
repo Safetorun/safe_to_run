@@ -11,10 +11,8 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.andro.secure.databinding.WebViewFragmentBinding
 import com.andro.secure.util.logVerbose
-import com.safetorun.inline.logger
 import com.safetorun.inline.verifyLogger
 import com.safetorun.intents.url.urlVerification
-import com.safetorun.logger.models.VerifyType
 import com.safetorun.logger.withLogger
 
 class WebViewSample : Fragment() {

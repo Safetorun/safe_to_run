@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.safetorun.logger.metadata.MetadataBuilderTest
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.logger.models.VerifyType
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -51,8 +50,9 @@ internal class BackendSynchKtTest {
     @Test
     fun `test that backend synch can store data to disk when called for a success verify`() =
         runTest {
-            context.loggerForVerify<String>(checkName, VerifyType.File, this)
+            context.loggerForVerify<String>(checkName, this)
                 .invoke(true, extraData)
+
             this.testScheduler.runCurrent()
 
             val logs = context.logs().toList()
@@ -68,7 +68,7 @@ internal class BackendSynchKtTest {
     @Test
     fun `test that backend synch can store data to disk when called for a fail verify`() =
         runTest {
-            context.loggerForVerify<String>(checkName, VerifyType.File, this)
+            context.loggerForVerify<String>(checkName, this)
                 .invoke(false, extraData)
             this.testScheduler.runCurrent()
 

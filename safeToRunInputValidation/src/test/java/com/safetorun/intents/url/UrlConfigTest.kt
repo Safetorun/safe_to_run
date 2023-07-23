@@ -11,14 +11,14 @@ internal class UrlConfigTest {
 
     @Test
     fun `test that allow any url will pass`() {
-        assertThat(URL.urlVerification {
+        assertThat(URL.verify {
             allowAnyUrl()
         }).isTrue()
     }
 
     @Test
     fun `test that allow any url with paramswill pass`() {
-        assertThat("$URL?query=abc".urlVerification {
+        assertThat("$URL?query=abc".verify {
             allowAnyUrl()
         }).isTrue()
     }
@@ -26,7 +26,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if allowed host`() {
         assertThat(
-            URL.urlVerification {
+            URL.verify {
                 HOST.allowHost()
             }
         ).isTrue()
@@ -35,7 +35,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if allowed url`() {
         assertThat(
-            URL.urlVerification {
+            URL.verify {
                 URL.allowUrl()
             }
         ).isTrue()
@@ -44,14 +44,14 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will fail by default`() {
         assertThat(
-            URL.urlVerification {}
+            URL.verify {}
         ).isFalse()
     }
 
     @Test
     fun `test that url config will pass if parameters are allowed`() {
         assertThat(
-            URL_WITH_QUERY_PARAM.urlVerification {
+            URL_WITH_QUERY_PARAM.verify {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = QUERY_PARAM
@@ -63,7 +63,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if parameters and type is allowed`() {
         assertThat(
-            URL_WITH_QUERY_PARAM.urlVerification {
+            URL_WITH_QUERY_PARAM.verify {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = "queryparam"
@@ -76,7 +76,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will fail if parameters and type is not allowed`() {
         assertThat(
-            URL_WITH_QUERY_PARAM.urlVerification {
+            URL_WITH_QUERY_PARAM.verify {
                 HOST.allowHost()
                 allowParameter {
                     parameterName = QUERY_PARAM
@@ -89,7 +89,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will fail if parameters are not allowed`() {
         assertThat(
-            URL_WITH_QUERY_PARAM.urlVerification {
+            URL_WITH_QUERY_PARAM.verify {
                 HOST.allowHost()
             }
         ).isFalse()
@@ -98,7 +98,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will pass if all parameters are  allowed`() {
         assertThat(
-            URL_WITH_QUERY_PARAM.urlVerification {
+            URL_WITH_QUERY_PARAM.verify {
                 HOST.allowHost()
                 allowAnyParameter()
             }
@@ -107,7 +107,7 @@ internal class UrlConfigTest {
 
     @Test
     fun `test that url with config will be ok if the url itself is allowed`() {
-        assertThat(URL_WITH_QUERY_PARAM.urlVerification {
+        assertThat(URL_WITH_QUERY_PARAM.verify {
             URL_WITH_QUERY_PARAM.allowUrl()
         }).isTrue()
     }
@@ -115,7 +115,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will fail with @ if all parameters are  allowed`() {
         assertThat(
-            "$URL@def.com".urlVerification {
+            "$URL@def.com".verify {
                 HOST.allowHost()
                 allowAnyParameter()
             }
@@ -125,7 +125,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will verify the underlying URL configuration (passes)`() {
         assertThat(
-            "$URL?proceed_to=$URL?blah=blah".urlVerification {
+            "$URL?proceed_to=$URL?blah=blah".verify {
                 HOST.allowHost()
 
                 allowParameter {
@@ -142,7 +142,7 @@ internal class UrlConfigTest {
     @Test
     fun `test that url config will verify the underlying URL configuration (fail)`() {
         assertThat(
-            "$URL?proceed_to=https://google.co.uk".urlVerification {
+            "$URL?proceed_to=https://google.co.uk".verify {
                 HOST.allowHost()
 
                 allowParameter {

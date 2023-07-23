@@ -1,9 +1,6 @@
 package com.safetorun.logger
 
-import android.content.Intent
 import com.safetorun.intents.SafeToRunVerifier
-import com.safetorun.logger.models.VerifyType
-import java.io.File
 
 /**
  * Returns a function that wraps the given function with logging capabilities.
@@ -17,18 +14,10 @@ import java.io.File
  */
 inline fun <reified T> SafeToRunVerifier<T>.withLogger(
     logValue: Boolean = false,
-    crossinline logger: (Boolean, VerifyType, String?) -> Unit
+    crossinline logger: (Boolean, String?) -> Unit
 ): SafeToRunVerifier<T> {
-
-    val verifiedTyped = when (T::class) {
-        Intent::class -> VerifyType.Intent
-        String::class -> VerifyType.Url
-        File::class -> VerifyType.File
-        else -> VerifyType.Other
-    }
-
     this.andThen { b, t ->
-        logger(b, verifiedTyped, if (logValue) t.toString() else null)
+        logger(b, if (logValue) t.toString() else null)
     }
 
     return this

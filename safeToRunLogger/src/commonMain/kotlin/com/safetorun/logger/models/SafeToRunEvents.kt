@@ -5,18 +5,6 @@ import kotlinx.serialization.Serializable
 import java.util.*
 
 /**
- * The safe to run verify type to be used
- */
-@Serializable
-enum class VerifyType {
-    Intent,
-    Url,
-    File,
-    Other
-}
-
-
-/**
  * Fire events to safe to run backend
  */
 @Serializable
@@ -79,7 +67,6 @@ sealed class SafeToRunEvents(
         val deviceInformation: DeviceInformation,
         val appMetadata: AppMetadata,
         val checkName: String,
-        val verifyType: VerifyType,
         val extra: String?
     ) :
         SafeToRunEvents(metadata = appMetadata)
@@ -93,7 +80,6 @@ sealed class SafeToRunEvents(
         val deviceInformation: DeviceInformation,
         val appMetadata: AppMetadata,
         val checkName: String,
-        val verifyType: VerifyType,
         val extra: String?
     ) : SafeToRunEvents(metadata = appMetadata)
 }
