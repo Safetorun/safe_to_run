@@ -1,4 +1,5 @@
 import com.safetorun.intents.SafeToRunVerifier
+import com.safetorun.logger.models.VerifyType
 import com.safetorun.logger.withLogger
 import io.mockk.mockk
 import io.mockk.verify
@@ -6,10 +7,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-internal class SafeToRunVerifierWithLoggerTest {
+internal class WithLoggerKtTest {
 
     private lateinit var safeToRunVerifier: SafeToRunVerifier<Int>
-    private lateinit var logger: (Boolean, String?) -> Unit
+    private lateinit var logger: (Boolean, VerifyType, String?) -> Unit
 
     @Before
     fun setUp() {
@@ -43,7 +44,7 @@ internal class SafeToRunVerifierWithLoggerTest {
         val result = wrappedVerifier.verify(42)
 
         // Verify that the logger was called with the appropriate arguments
-        verify(exactly = 1) { logger.invoke(result, "42") }
+        verify(exactly = 1) { logger.invoke(result, VerifyType.Url, "42") }
     }
 
     @Test
@@ -55,7 +56,7 @@ internal class SafeToRunVerifierWithLoggerTest {
         val result = wrappedVerifier.verify(42)
 
         // Verify that the logger was called with the appropriate arguments
-        verify(exactly = 1) { logger.invoke(result, null) }
+        verify(exactly = 1) { logger.invoke(result, VerifyType.Url, null) }
     }
 
     @Test
