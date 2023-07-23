@@ -1,10 +1,24 @@
 package com.safetorun.intents.url
 
-import com.safetorun.inputverification.builders.UrlConfigurationBuilder
+import com.safetorun.intents.BaseVerifier
 import com.safetorun.intents.url.util.UrlMatcher
 import com.safetorun.intents.url.util.UrlMatcherImpl
 
-internal class DefaultAllowUrlsBuilder internal constructor(
+
+/**
+ * Interface for building an allows URL but with a verifier
+ */
+internal class DefaultAllowUrlsBuilderWithVerifier(
+    private val urlMatcher: UrlMatcher = UrlMatcherImpl()
+) : AllowUrlsBuilderWithVerifier,
+    AllowUrlsBuilder by DefaultAllowUrlsBuilder(urlMatcher),
+    BaseVerifier<List<String>>() {
+    override fun internalVerify(input: List<String>): Boolean {
+        return doesUrlCheckPass(input)
+    }
+}
+
+internal class DefaultAllowUrlsBuilder(
     private val urlMatcher: UrlMatcher = UrlMatcherImpl()
 ) : AllowUrlsBuilder {
 
@@ -29,7 +43,8 @@ internal class DefaultAllowUrlsBuilder internal constructor(
         addConfiguration()
     }
 
-    private fun List<String>.areAllUrlsInAllowedHosts() = all { allowedHosts.any { host -> host.verify(it) } }
+    private fun List<String>.areAllUrlsInAllowedHosts() =
+        all { allowedHosts.any { host -> host.verify(it) } }
 
     private fun List<String>.filterUrls() =
         filter(urlMatcher::isUrl)
@@ -47,8 +62,8 @@ internal class DefaultAllowUrlsBuilder internal constructor(
  *
  * @return true if this URL is ok, false otherwise
  */
-fun List<String>.verifyUrls(allowUrlsBuilder: AllowUrlsBuilder.() -> Unit) =
-    (DefaultAllowUrlsBuilder() as AllowUrlsBuilder).run {
+fun List<String>.verifyUrls(allowUrlsBuilder: AllowUrlsBuilderWithVerifier.() -> Unit) =
+    (DefaultAllowUrlsBuilderWithVerifier()).run {
         allowUrlsBuilder()
-        doesUrlCheckPass(this@verifyUrls)
+        verify(this@verifyUrls)
     }

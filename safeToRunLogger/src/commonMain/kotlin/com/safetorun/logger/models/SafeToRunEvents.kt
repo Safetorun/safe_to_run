@@ -11,7 +11,8 @@ import java.util.*
 enum class VerifyType {
     Intent,
     Url,
-    File
+    File,
+    Other
 }
 
 

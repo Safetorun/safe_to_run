@@ -17,6 +17,8 @@ class BouncableActivity : Activity() {
         }
 
         intent.verify(this) {
+            allowAnyFile = false
+            
 
             andThen { passed, _ ->
                 if (passed) {

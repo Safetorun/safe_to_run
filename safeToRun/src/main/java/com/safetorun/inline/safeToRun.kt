@@ -41,13 +41,12 @@ internal fun Context.startLoggerTracking(apiKey: String) {
 /**
  * Safe to run logger for verify
  */
-fun <T> Context.logger(
+fun <T> Context.verifyLogger(
     apiKey: String,
     checkName: String,
-    verifyType: VerifyType,
-): (Boolean, T?) -> Unit = {
-    value, extraData ->
-    loggerForVerify<T>(checkName, verifyType).invoke(value, extraData)
+): (Boolean, VerifyType, T?) -> Unit = {
+    value, type, extraData ->
+    loggerForVerify<T>(checkName, type).invoke(value, extraData)
     startLoggerTracking(apiKey)
 }
 

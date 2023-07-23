@@ -5,15 +5,29 @@ import android.content.Context
 import com.safetorun.intents.BaseVerifier
 import java.io.File
 
+
+/**
+ * Interface for building an allows URL but with a verifier
+ */
+internal class DefaultFileUriBuilderWithVerifier(
+    context : Context
+) : FileUriMatcherWithVerifier,
+    FileUriMatcherBuilder by DefaultFileUriMatcherBuilder(context),
+    BaseVerifier<File>() {
+    override fun internalVerify(input: File): Boolean {
+        return doesFileCheckPass(input)
+    }
+}
+
 internal class DefaultFileUriMatcherBuilder(private val context: Context) :
-    FileUriMatcherBuilder, BaseVerifier<File>() {
+    FileUriMatcherBuilder {
 
     private val allowedDirectories = mutableListOf<FileUriMatcherCheck>()
     private val allowExactFile = mutableListOf<File>()
 
     override var allowAnyFile: Boolean = false
 
-    fun addAllowedParentDirectory(parentDirectory: FileUriMatcherCheck) {
+    private fun addAllowedParentDirectory(parentDirectory: FileUriMatcherCheck) {
         allowedDirectories.add(parentDirectory)
     }
 
@@ -26,7 +40,7 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) :
     }
 
 
-    private fun doesFileCheckPass(file: File): Boolean {
+    override fun doesFileCheckPass(file: File): Boolean {
         return isDirectoryPublicDirectory(file) ||
                 allowAnyFile ||
                 isExactFileAllowed(file) ||
@@ -52,10 +66,6 @@ internal class DefaultFileUriMatcherBuilder(private val context: Context) :
 
     override fun File.allowDirectory(allowSubdirectories: Boolean) {
         addAllowedParentDirectory(FileUriMatcherCheck(this, allowSubdirectories))
-    }
-
-    override fun internalVerify(input: File): Boolean {
-        return doesFileCheckPass(input)
     }
 }
 

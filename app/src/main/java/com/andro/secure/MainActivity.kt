@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
 
         if (safeToRunWithLogger(
-                logger = logger("DcqHpAsUkx4CoAqM6ffAT86Zw8vLrPaw2crfoNap", checkName),
+                logger = logger("CEnQEwYzpV8O05Q5x8lGe5rijnvqcxAk4EuTD3bW", checkName),
                 { banAvdEmulatorCheck() },
                 { banGenymotionEmulatorCheck() },
                 { banBluestacksEmulatorCheck() },
@@ -84,5 +84,7 @@ class MainActivity : AppCompatActivity() {
         File(fullFilenameToVerify).verifyFile(this) {
             File("/ok/to/downloadto").allowDirectory(allowSubdirectories = false)
         }
+
+
     }
 }

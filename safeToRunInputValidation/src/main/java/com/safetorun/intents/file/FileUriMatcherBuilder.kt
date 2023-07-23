@@ -1,11 +1,20 @@
 package com.safetorun.intents.file
 
+import com.safetorun.intents.SafeToRunVerifier
 import java.io.File
 
-internal class FileUriMatcherCheck internal constructor(val directoryToAllow: File, val allowSubdirectories: Boolean)
+internal class FileUriMatcherCheck internal constructor(
+    val directoryToAllow: File,
+    val allowSubdirectories: Boolean
+)
 
 /**
- * The builder for allowing File URIs to pass the verifiation service
+ * The builder for allowing File URIs to pass the verification service with a verifier
+ */
+interface FileUriMatcherWithVerifier : FileUriMatcherBuilder, SafeToRunVerifier<File>
+
+/**
+ * The builder for allowing File URIs to pass the verification service
  */
 interface FileUriMatcherBuilder {
 
@@ -22,7 +31,7 @@ interface FileUriMatcherBuilder {
      *
      * @param file the file you want to allow
      */
-    fun addAllowedExactFile(file : File)
+    fun addAllowedExactFile(file: File)
 
     /**
      * Allow a file to be opened
@@ -47,5 +56,14 @@ interface FileUriMatcherBuilder {
      */
     fun File.allowDirectoryAndSubdirectories() =
         allowDirectory(true)
+
+    /**
+     * Check if a file is allowed to be opened
+     *
+     * @param file the file to check
+     *
+     * @return true if the file is allowed to be opened
+     */
+    fun doesFileCheckPass(file: File): Boolean
 
 }
