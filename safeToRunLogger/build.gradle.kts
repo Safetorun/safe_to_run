@@ -41,6 +41,7 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(libs.robolectric)
+                implementation(libs.google.truth)
                 implementation(libs.junit)
                 implementation(libs.mockk)
                 implementation(libs.kotlinx.coroutines.android)
