@@ -27,7 +27,7 @@ Check out our website for more information on safe to run
 
 ## Safe to run plus?
 
-Safe to run plus adds to the Safe to Run security platform an provides developers and security teams an online portal for vigilant application security monitoring. This tool offers security analytics, allowing you to uncover and address Safe to Run verify and resilience failures. 
+Safe to run plus adds to the Safe to run security platform by providing developers and security teams an online portal for application security monitoring. This tool offers security analytics, allowing you to uncover and address Safe to run verify and resilience failures. 
 
 [Visit the site](https://app.safetorun.com/?utm_source=github&utm_medium=safetorun&utm_campaign=readme)
 
