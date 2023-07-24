@@ -11,12 +11,18 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import com.andro.secure.databinding.WebViewFragmentBinding
 import com.andro.secure.util.logVerbose
-import com.safetorun.intents.url.urlVerification
+import com.safetorun.inline.verifyLogger
+import com.safetorun.intents.url.verify
+import com.safetorun.logger.withLogger
 
 class WebViewSample : Fragment() {
 
     @SuppressLint("SetJavaScriptEnabled")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) =
         WebViewFragmentBinding.inflate(inflater, container, false)
             .apply {
                 webViewSample.webViewClient = WebViewClientSample()
@@ -32,12 +38,23 @@ class WebViewSample : Fragment() {
     }
 
     class WebViewClientSample : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            val result = request?.toString()?.urlVerification {
-                "file:///android_asset/index.html".allowUrl()
-            }
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
 
-            return if (result == true) {
+            val result = request!!.url?.toString()?.verify {
+                withLogger(
+                    true,
+                    view!!.context.verifyLogger(
+                        "WebViewSample"
+                    )
+                )
+                "file:///android_asset/index.html".allowUrl()
+            } ?: false
+
+
+            return if (result) {
                 super.shouldOverrideUrlLoading(view, request)
             } else {
                 true

@@ -4,7 +4,6 @@ import com.safetorun.logger.models.SafeToRunEvents
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.io.FileNotFoundException
 
 internal class JvmDatastore(
     private val storageDirectory: File,
@@ -20,6 +20,10 @@ internal class JvmDatastore(
     DataStore {
 
     override suspend fun store(data: SafeToRunEvents) {
+        if (storageDirectory.exists().not()) {
+            throw FileNotFoundException("Storage directory does not exist")
+        }
+
         newFile(data.uuid)
             .writeText(Json.encodeToString(SafeToRunEvents.serializer(), data))
     }
@@ -29,6 +33,7 @@ internal class JvmDatastore(
         listFiles()
             .asFlow()
             .filter { it.isDirectory.not() }
+            .filter { verifyFile(it) }
             .map { it.readText() }
             .map<String, SafeToRunEvents?> {
                 try {
@@ -46,7 +51,6 @@ internal class JvmDatastore(
                     delete()
                 }
             }
-
     }
 
     override suspend fun clear() {

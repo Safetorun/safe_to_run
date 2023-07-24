@@ -18,13 +18,13 @@ internal class DefaultFileUriMatcherBuilderTest {
         every { packageName } returns PACKAGE
     }
 
-    private val defaultFileUriMatcher = DefaultFileUriMatcherBuilder(context)
+    private val defaultFileUriMatcher = DefaultFileUriBuilderWithVerifier(context)
 
 
     @Test
     fun `test that by default we allow a file not in private directory`() {
         File("Abc")
-            .verifyFile(context) {}
+            .verify(context) {}
             .assertTrue()
 
         Uri.parse("file:///sdcard/Abc")
@@ -35,18 +35,18 @@ internal class DefaultFileUriMatcherBuilderTest {
     @Test
     fun `test that by default we dont allow a file in private directory`() {
         File("/data/data/$PACKAGE/files/abc.txt")
-            .verifyFile(context) {}
+            .verify(context) {}
             .assertFalse()
 
         Uri.parse("file:///data/data/$PACKAGE/files/abc.txt")
-            .verifyFile(context) {}
+            .verify(context) {}
             .assertFalse()
     }
 
     @Test
     fun `test that we are blocked from a file being available if not in the right directory`() {
         Uri.parse("file:///data/data/$PACKAGE/abc.txt")
-            .verifyFile(context) {
+            .verify(context) {
                 File("/data/data/$PACKAGE/files").allowDirectory()
             }
             .assertFalse()
@@ -56,18 +56,28 @@ internal class DefaultFileUriMatcherBuilderTest {
     @Test
     fun `test that by default we dont allow a file in private directory userdata`() {
         File("/user/data/$PACKAGE/files/abc.txt")
-            .verifyFile(context) {}
+            .verify(context) {}
             .assertFalse()
 
         Uri.parse("file:///user/data/$PACKAGE/files/abc.txt")
-            .verifyFile(context) {}
+            .verify(context) {}
             .assertFalse()
     }
 
     @Test
+    fun `test that when path is null we get a false in response `() {
+        Uri.Builder()
+            .path(null)
+            .build()
+            .verify(context) {}
+            .assertFalse()
+    }
+
+
+    @Test
     fun `test that we do allow a file in a directory that has been added`() {
         File("/data/data/$PACKAGE/files/abc.txt")
-            .verifyFile(context) {
+            .verify(context) {
                 File("/data/data/$PACKAGE/files/").allowDirectory()
             }
             .assertTrue()
@@ -85,7 +95,7 @@ internal class DefaultFileUriMatcherBuilderTest {
     @Test
     fun `test that we do not allow a directory in private directory even with directory traversal`() {
         defaultFileUriMatcher
-            .doesFileCheckPass(File("/data/app/../data/$PACKAGE/files/abc.txt"))
+            .verify(File("/data/app/../data/$PACKAGE/files/abc.txt"))
             .assertFalse()
     }
 
@@ -93,14 +103,10 @@ internal class DefaultFileUriMatcherBuilderTest {
     fun `test that we do allow a file in a directory that has been added in a subdir`() {
         defaultFileUriMatcher
             .apply {
-                addAllowedParentDirectory(
-                    FileUriMatcherCheck(
-                        File("/data/data/$PACKAGE/files/"),
-                        true
-                    )
-                )
+                File("/data/data/$PACKAGE/files/").allowDirectory(true)
+
             }
-            .doesFileCheckPass(File("/data/data/$PACKAGE/files/def/abc.txt"))
+            .verify(File("/data/data/$PACKAGE/files/def/abc.txt"))
             .assertTrue()
     }
 
@@ -108,14 +114,9 @@ internal class DefaultFileUriMatcherBuilderTest {
     fun `test that we do not allow a file in a directory that has been added in a subdir`() {
         defaultFileUriMatcher
             .apply {
-                addAllowedParentDirectory(
-                    FileUriMatcherCheck(
-                        File("/data/data/$PACKAGE/files/"),
-                        false
-                    )
-                )
+                File("/data/data/$PACKAGE/files/").allowDirectory(false)
             }
-            .doesFileCheckPass(File("/data/data/$PACKAGE/files/def/abc.txt"))
+            .verify(File("/data/data/$PACKAGE/files/def/abc.txt"))
             .assertFalse()
     }
 
@@ -125,7 +126,7 @@ internal class DefaultFileUriMatcherBuilderTest {
             .apply {
                 allowAnyFile = true
             }
-            .doesFileCheckPass(File("/data/data/$PACKAGE/files/def/abc.txt"))
+            .verify(File("/data/data/$PACKAGE/files/def/abc.txt"))
             .assertTrue()
     }
 

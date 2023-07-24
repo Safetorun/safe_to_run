@@ -1,12 +1,13 @@
 package com.safetorun.logger.models
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.util.*
 
 /**
  * Fire events to safe to run backend
  */
-@kotlinx.serialization.Serializable
+@Serializable
 sealed class SafeToRunEvents(
     val time: Long = Calendar.getInstance().time.time,
     val uuid: String = UUID.randomUUID().toString(),
@@ -16,7 +17,7 @@ sealed class SafeToRunEvents(
     /**
      * A check failed
      */
-    @kotlinx.serialization.Serializable
+    @Serializable
     @SerialName("Failed")
     data class FailedCheck(
         val deviceInformation: DeviceInformation,
@@ -32,14 +33,13 @@ sealed class SafeToRunEvents(
              */
             fun empty(name: String) =
                 FailedCheck(DeviceInformation.empty(), AppMetadata.empty(), name)
-
         }
     }
 
     /**
      * A check succeeded
      */
-    @kotlinx.serialization.Serializable
+    @Serializable
     @SerialName("Succeed")
     data class SucceedCheck(
         val deviceInformation: DeviceInformation,
@@ -55,7 +55,31 @@ sealed class SafeToRunEvents(
              */
             fun empty(name: String) =
                 SucceedCheck(DeviceInformation.empty(), AppMetadata.empty(), name)
-
         }
     }
+
+    /**
+     * A failed verification
+     */
+    @Serializable
+    @SerialName("FailedVerify")
+    data class FailedVerify(
+        val deviceInformation: DeviceInformation,
+        val appMetadata: AppMetadata,
+        val checkName: String,
+        val extra: String?
+    ) :
+        SafeToRunEvents(metadata = appMetadata)
+
+    /**
+     * A successful verification
+     */
+    @Serializable
+    @SerialName("SuccessVerify")
+    data class SuccessVerify(
+        val deviceInformation: DeviceInformation,
+        val appMetadata: AppMetadata,
+        val checkName: String,
+        val extra: String?
+    ) : SafeToRunEvents(metadata = appMetadata)
 }

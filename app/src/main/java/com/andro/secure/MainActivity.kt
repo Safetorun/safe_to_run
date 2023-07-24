@@ -17,6 +17,7 @@ import com.safetorun.features.oscheck.emulator.banBluestacksEmulatorCheck
 import com.safetorun.features.oscheck.emulator.banGenymotionEmulatorCheck
 import com.safetorun.features.oscheck.safeToRunCombinedCheck
 import com.safetorun.features.rootdetection.rootDetectionCheck
+import com.safetorun.inline.initialiseSafeToRunPlus
 import com.safetorun.inline.logger
 import com.safetorun.inline.safeToRunWithLogger
 import com.safetorun.intents.file.verifyFile
@@ -27,6 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initialiseSafeToRunPlus("CEnQEwYzpV8O05Q5x8lGe5rijnvqcxAk4EuTD3bW")
+
         val binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
 
         if (safeToRunWithLogger(
-                logger = logger("DcqHpAsUkx4CoAqM6ffAT86Zw8vLrPaw2crfoNap", checkName),
+                logger = logger(checkName),
                 { banAvdEmulatorCheck() },
                 { banGenymotionEmulatorCheck() },
                 { banBluestacksEmulatorCheck() },
@@ -84,5 +88,7 @@ class MainActivity : AppCompatActivity() {
         File(fullFilenameToVerify).verifyFile(this) {
             File("/ok/to/downloadto").allowDirectory(allowSubdirectories = false)
         }
+
+
     }
 }

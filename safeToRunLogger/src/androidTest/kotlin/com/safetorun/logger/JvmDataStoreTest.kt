@@ -8,15 +8,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import java.io.FileNotFoundException
 import kotlin.test.assertEquals
 
-private const val InnerDir = "inner-dir"
+private const val INNER_DIR = "inner-dir"
 
-private const val TestFile = "test-file"
+private const val TEST_FILE = "test-file"
 
-private const val TestUuid = "test"
+private const val TEST_UUID = "test"
 
-private const val DefaultCheckName = "default"
+private const val DEFAULT_CHECK_NAME = "default"
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class JvmDataStoreTest {
@@ -26,8 +27,8 @@ internal class JvmDataStoreTest {
     }
 
     private val failedChecks = listOf(
-        SafeToRunEvents.SucceedCheck.empty(DefaultCheckName),
-        SafeToRunEvents.FailedCheck.empty(DefaultCheckName),
+        SafeToRunEvents.SucceedCheck.empty(DEFAULT_CHECK_NAME),
+        SafeToRunEvents.FailedCheck.empty(DEFAULT_CHECK_NAME),
     )
 
     @Before
@@ -42,7 +43,7 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve a data for failure`() = runTest {
-        val failedCheck = SafeToRunEvents.FailedCheck.empty(DefaultCheckName)
+        val failedCheck = SafeToRunEvents.FailedCheck.empty(DEFAULT_CHECK_NAME)
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -51,7 +52,7 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that jvm data store can save and then retrieve data for success`() = runTest {
-        val failedCheck = SafeToRunEvents.SucceedCheck.empty(DefaultCheckName)
+        val failedCheck = SafeToRunEvents.SucceedCheck.empty(DEFAULT_CHECK_NAME)
         store.store(failedCheck)
         val retrievedList = store.retrieve().toList()
         assertEquals(1, retrievedList.size)
@@ -60,29 +61,29 @@ internal class JvmDataStoreTest {
 
     @Test
     fun `test that JVM data store is resilience to deleting a non-existing file`() = runTest {
-        store.delete(TestUuid)
+        store.delete(TEST_UUID)
     }
 
     @Test
     fun `test that JVM data store is resilience to not reading a directory`() = runTest {
         failedChecks.forEach { store.store(it) }
-        File(testDirectory, InnerDir).mkdirs()
+        File(testDirectory, INNER_DIR).mkdirs()
 
         val retrievedList = store.retrieve().toList()
         assertEquals(2, retrievedList.size)
 
-        File(testDirectory, InnerDir).deleteRecursively()
+        File(testDirectory, INNER_DIR).deleteRecursively()
     }
 
     @Test
     fun `test that JVM data store is resilience to not reading a duff file`() = runTest {
         failedChecks.forEach { store.store(it) }
-        File(testDirectory, TestFile).writeText(TestUuid)
+        File(testDirectory, TEST_FILE).writeText(TEST_UUID)
 
         val retrievedList = store.retrieve().toList()
         assertEquals(2, retrievedList.size)
 
-        File(testDirectory, TestFile).writeText(TestUuid)
+        File(testDirectory, TEST_FILE).writeText(TEST_UUID)
     }
 
     @Test
@@ -90,7 +91,7 @@ internal class JvmDataStoreTest {
         val store = JvmDatastore(testDirectory) {
             false
         }
-        store.delete(TestUuid)
+        store.delete(TEST_UUID)
 
         // Hard to see what would happen here ... No crash will have to do
     }
@@ -104,6 +105,39 @@ internal class JvmDataStoreTest {
 
         store.clear()
         assertEquals(store.retrieve().toList().size, 0)
+    }
+
+    @Test
+    fun `test that jvm store will ignore files that are not in the right directory`() = runTest {
+        val store = JvmDatastore(testDirectory) {
+            false
+        }
+
+        failedChecks.forEach { store.store(it) }
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(0, retrievedList.size)
+    }
+
+    @Test(expected = FileNotFoundException::class)
+    fun `test that jvm store will throw an exception for a not existing directory`() = runTest {
+        val store = JvmDatastore(File("Does not exist")) {
+            true
+        }
+
+        failedChecks.forEach {
+            store.store(it)
+        }
+    }
+
+    @Test
+    fun `test that jvm store will ignore not existing directory`() = runTest {
+        val store = JvmDatastore(File("Does not exist")) {
+            true
+        }
+
+        val retrievedList = store.retrieve().toList()
+        assertEquals(0, retrievedList.size)
     }
 
     @Test

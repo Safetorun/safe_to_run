@@ -1,14 +1,14 @@
 package com.safetorun.intents.url
 
 import android.net.Uri
-import com.safetorun.intents.IntentVerificationBuilder
+import com.safetorun.intents.BaseVerifier
 import com.safetorun.intents.url.hostname.hostNameMatcher
 import com.safetorun.intents.url.params.ParameterConfig
 import com.safetorun.intents.url.params.ParameterConfigBuilder
 import com.safetorun.intents.url.params.matchesAllowedType
 
 
-internal class UrlConfigImpl : UrlConfig {
+internal class UrlConfigImpl : UrlConfig, BaseVerifier<String>() {
     private val allowedHost = mutableListOf<String>()
     private val allowedUrls = mutableListOf<String>()
     private val allowParameters = mutableListOf<ParameterConfig>()
@@ -42,19 +42,6 @@ internal class UrlConfigImpl : UrlConfig {
             ?.also { allowParameter(it) }
     }
 
-    override fun verify(url: String): Boolean {
-        val uri = Uri.parse(url)
-
-        return uri.host == null || allowAnyUrl || (url.urlsAreInAllowedLists()
-                && (
-
-                uri.queryParameterNames.isEmpty()
-                        || allowedUrls.contains(url)
-                        || allowAnyParameter
-                        || uri.allParametersAccountFor()
-                ))
-    }
-
     private fun Uri.allParametersAccountFor(): Boolean =
         queryParameterNames.map { actualParam ->
             Pair(
@@ -71,6 +58,18 @@ internal class UrlConfigImpl : UrlConfig {
 
     private fun ParameterConfigBuilder.toConfig() =
         parameterName?.let { ParameterConfig(it, allowedType) }
+
+    override fun internalVerify(input: String): Boolean {
+        val uri = Uri.parse(input)
+
+        return uri.host == null || allowAnyUrl || (input.urlsAreInAllowedLists()
+                && (
+                uri.queryParameterNames.isEmpty()
+                        || allowedUrls.contains(input)
+                        || allowAnyParameter
+                        || uri.allParametersAccountFor()
+                ))
+    }
 }
 
 /**
@@ -98,7 +97,21 @@ fun urlConfiguration(config: UrlConfigVerifier) =
  *
  * @return true if the check passed, false otherwise
  */
+@Deprecated("Use verify instead", ReplaceWith("verify(config)", "com.safetorun.intents.url.verify"))
 fun String.urlVerification(config: UrlConfigVerifier) =
     (UrlConfigImpl() as UrlConfig)
         .apply(config)
         .verify(this)
+
+
+/**
+ * Verify a URL matches the configuration
+ *
+ * @param config the configuration
+ *
+ * @receiver string url
+ *
+ * @return true if the check passed, false otherwise
+ */
+fun String.verify(config: UrlConfigVerifier) =
+    urlVerification(config)
