@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.andro.secure.databinding.WebViewFragmentBinding
 import com.andro.secure.util.logVerbose
 import com.safetorun.inline.verifyLogger
-import com.safetorun.intents.url.urlVerification
+import com.safetorun.intents.url.verify
 import com.safetorun.logger.withLogger
 
 class WebViewSample : Fragment() {
@@ -43,11 +43,10 @@ class WebViewSample : Fragment() {
             request: WebResourceRequest?
         ): Boolean {
 
-            val result = request!!.url?.toString()?.urlVerification {
+            val result = request!!.url?.toString()?.verify {
                 withLogger(
                     true,
                     view!!.context.verifyLogger(
-                        "CEnQEwYzpV8O05Q5x8lGe5rijnvqcxAk4EuTD3bW",
                         "WebViewSample"
                     )
                 )

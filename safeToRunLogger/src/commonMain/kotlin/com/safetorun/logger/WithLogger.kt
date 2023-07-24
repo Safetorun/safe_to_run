@@ -1,5 +1,6 @@
 package com.safetorun.logger
 
+import android.content.Context
 import com.safetorun.intents.SafeToRunVerifier
 
 /**

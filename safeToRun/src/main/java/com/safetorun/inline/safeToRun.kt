@@ -1,5 +1,6 @@
 package com.safetorun.inline
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.work.Constraints
 import androidx.work.NetworkType
@@ -38,19 +39,50 @@ internal fun Context.startLoggerTracking(apiKey: String) {
 }
 
 /**
+ * Initialise safe to run plus
+ *
+ * @param apiKey api key for the backend
+ */
+fun initialiseSafeToRunPlus(apiKey: String) {
+    SafeToRunPlus.initialise(apiKey)
+}
+
+@SuppressLint("StaticFieldLeak")
+private object SafeToRunPlus {
+
+    private lateinit var _apiKey: String
+    val apiKey get() = _apiKey
+
+    fun initialise(apiKey: String) {
+        this._apiKey = apiKey
+    }
+}
+
+/**
  * Safe to run logger for verify
  */
 fun <T> Context.verifyLogger(
-    apiKey: String,
-    checkName: String,
+    checkName: String
 ): (Boolean, T?) -> Unit = { value, extraData ->
     loggerForVerify<T>(checkName).invoke(value, extraData)
-    startLoggerTracking(apiKey)
+    startLoggerTracking(SafeToRunPlus.apiKey)
 }
 
 /**
  * Safe to run logger for checker
  */
+fun Context.logger(checkName: String): (Boolean) -> Unit = {
+    loggerForCheck(checkName).invoke(it)
+    startLoggerTracking(SafeToRunPlus.apiKey)
+}
+
+/**
+ * Safe to run logger for checker
+ */
+@Deprecated(
+    "Use initialiseSafeToRunPlus and logger instead",
+    ReplaceWith("initialiseSafeToRunPlus(apiKey); logger(checkName)")
+)
 fun Context.logger(apiKey: String, checkName: String): (Boolean) -> Unit = {
     loggerForCheck(checkName).invoke(it)
     startLoggerTracking(apiKey)
