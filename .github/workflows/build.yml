@@ -11,7 +11,7 @@ on:
 jobs:
 
   build:
-    timeout-minutes: 15
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache@v3
