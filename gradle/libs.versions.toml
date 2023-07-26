@@ -41,7 +41,7 @@ mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 rootbeer = { module = "com.scottyab:rootbeer-lib", version.ref = "rootbeer" }
 junit = { module = "junit:junit", version.ref = "junit" }
-mockk-server = { module = "io.mockk:mockk-server-netty", version.ref = "mockHttpVersion" }
+mockk-server = { module = "org.mock-server:mockserver-netty", version.ref = "mockHttpVersion" }
 jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiterVersion" }
 
 #kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }

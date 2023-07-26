@@ -1,12 +1,13 @@
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.models.models.DataWrappedSignatureResult
 import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.plus.ApiException
+import com.safetorun.plus.DefaultHttpClient
 import com.safetorun.plus.DefaultSafeToRunApi
+import com.safetorun.plus.models.DataWrappedSignatureResult
 import junit.framework.TestCase
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.assertThrows
+import org.junit.Assert.assertThrows
 import org.mockserver.integration.ClientAndServer
 import org.mockserver.model.HttpRequest.request
 import org.mockserver.model.HttpResponse.response
@@ -57,7 +58,13 @@ internal class DefaultISafeToRunApiIntegrationTest : TestCase() {
 
         val httpClient = DefaultSafeToRunApi(DefaultHttpClient(url), API_KEY)
 
-        assertThrows<ApiException> { httpClient.postNewDevice(deviceInformation) }
+
+        val exception = kotlin.runCatching {
+            httpClient.postNewDevice(deviceInformation)
+        }.exceptionOrNull()
+
+        assertThat(exception)
+            .isInstanceOf(ApiException::class.java)
     }
 
     companion object {

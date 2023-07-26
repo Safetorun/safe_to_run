@@ -6,6 +6,6 @@ dependencies {
     testImplementation libs.junit
     testImplementation libs.google.truth
     testImplementation libs.mockk
-    testImplementation "org.junit.jupiter:junit-jupiter:$jupiterVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation libs.jupiter
+    testImplementation libs.robolectric
 }

@@ -38,12 +38,14 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":safeToRunInputValidation"))
+                implementation(project(":safeToRunInternal"))
             }
         }
 
         val androidTest by getting {
             dependencies {
                 implementation(libs.mockk.server)
+                implementation(libs.jupiter)
                 implementation(libs.robolectric)
                 implementation(libs.google.truth)
                 implementation(libs.junit)
