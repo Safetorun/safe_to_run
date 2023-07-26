@@ -15,7 +15,8 @@ include(
     ":safeToRunInputValidation",
     ":safeToRunBuilder",
     ":safetorunpinscreen",
-    ":safeToRunLogger"
+    ":safeToRunLogger",
+    ":safeToRunPlus"
 )
 
 dependencyResolutionManagement {
