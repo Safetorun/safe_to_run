@@ -1,8 +1,5 @@
-package com.safetorun.repository
-
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
-import offdevice.FakeSharedPrefs
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
