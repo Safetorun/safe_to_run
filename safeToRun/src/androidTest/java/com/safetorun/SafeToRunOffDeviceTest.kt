@@ -4,7 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.safetorun.api.DefaultHttpClient
 import com.safetorun.api.DefaultSafeToRunApi
 import com.safetorun.models.models.DeviceSignatureDto
-import com.safetorun.offdevice.safeToRunOffDevice
+import com.safetorun.plus.safeToRunOffDevice
 import junit.framework.Assert.assertFalse
 import junit.framework.Assert.assertTrue
 import org.junit.Test

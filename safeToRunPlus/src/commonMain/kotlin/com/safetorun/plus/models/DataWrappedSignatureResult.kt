@@ -1,5 +1,6 @@
 package com.safetorun.plus.models
 
+import com.safetorun.models.models.DeviceSignatureDto
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -39,6 +39,8 @@ kotlin {
             dependencies {
                 implementation(project(":safeToRunInputValidation"))
                 implementation(project(":safeToRunInternal"))
+                implementation(libs.androidx.workmanager)
+                implementation(libs.rootbeer)
             }
         }
 
