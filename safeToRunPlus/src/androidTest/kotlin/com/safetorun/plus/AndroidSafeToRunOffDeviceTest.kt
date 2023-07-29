@@ -1,10 +1,8 @@
-package offdevice
+package com.safetorun.plus
 
 import android.content.Context
 import android.content.pm.PackageManager
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.api.DefaultSafeToRunApi
-import com.safetorun.api.SafeToRunApi
 import com.safetorun.logger.models.BlacklistedApps
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.DeviceSignature
@@ -15,11 +13,6 @@ import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import com.safetorun.models.builders.deviceInformationBuilder
 import com.safetorun.models.models.DataWrappedLogResponse
 import com.safetorun.models.models.DeviceSignatureDto
-import com.safetorun.plus.offDeviceResultBuilder
-import com.safetorun.plus.safeToRunLogger
-import com.safetorun.plus.toDeviceInformation
-import com.safetorun.plus.toOsCheck
-import com.safetorun.setupMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -40,7 +33,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     private val deviceId: String = "DeviceId"
 
     private val androidSafeToRunOffDevice =
-        com.safetorun.plus.AndroidSafeToRunOffDevice(
+        AndroidSafeToRunOffDevice(
             safeToRunApi,
             offDeviceResultBuilder,
             api,
@@ -56,7 +49,8 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         every {
             context.offDeviceResultBuilder(
                 enableInstalledPackageScan = true,
-                rootCheck = false
+                getInstaller = { "com.installer.package" },
+                null,
             )
         } returns com.safetorun.plus.offdevice.OffDeviceResultBuilder {
             it
@@ -143,15 +137,17 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         val apiKey = "1234"
         val safeToRun = context.safeToRunLogger(
             apiKey,
-            url,
+            { "com.installer.package" },
+            null,
+            url = url,
             enableInstalledPackageScan = true,
-            rootCheck = false
         )
         val safeToRun2 = context.safeToRunLogger(
             apiKey,
+            { "com.installer.package" },
+            null,
             url,
             enableInstalledPackageScan = true,
-            rootCheck = false
         )
 
         assertThat(safeToRun).isNotNull()

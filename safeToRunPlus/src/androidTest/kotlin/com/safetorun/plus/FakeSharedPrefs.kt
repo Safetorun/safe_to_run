@@ -1,4 +1,4 @@
-package offdevice
+package com.safetorun.plus
 
 import android.content.SharedPreferences
 

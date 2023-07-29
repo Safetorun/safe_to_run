@@ -1,3 +1,5 @@
+package com.safetorun.plus
+
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.DefaultSafeToRunApi.Companion.API_KEY_HEADER_NAME
 import com.safetorun.api.DefaultSafeToRunApi.Companion.DEVICE_CHECK_ENDPOINT
@@ -11,8 +13,6 @@ import com.safetorun.models.models.DataWrappedVerifyResult
 import com.safetorun.models.models.DeviceInformationDto
 import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.models.models.VerifierResult
-import com.safetorun.plus.DefaultSafeToRunApi
-import com.safetorun.plus.SafeToRunHttpClient
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

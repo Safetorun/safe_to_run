@@ -1,3 +1,5 @@
+package com.safetorun.plus
+
 import com.safetorun.models.builders.deviceInformationBuilder
 
 val deviceInformation by lazy {

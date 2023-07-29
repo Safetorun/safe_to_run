@@ -1,10 +1,9 @@
-package com.safetorun
+package com.safetorun.plus
 
 import android.content.Context
 import android.content.pm.InstallSourceInfo
 import android.content.pm.PackageManager
 import android.os.Build
-import com.safetorun.features.installorigin.SharedInstallOrigin
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -44,8 +43,6 @@ internal fun Context.setupMocks() {
     every { packageManager.getInstallSourceInfo(any()) } returns mockk<InstallSourceInfo>().apply {
         every { installingPackageName } returns SharedInstallOrigin.PACKAGE_NAME_RETURNS
     }
-
-    every { resources } returns SharedInstallOrigin.setupAMockResources()
 }
 
 

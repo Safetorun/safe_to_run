@@ -1,11 +1,10 @@
-package offdevice.builders
+package com.safetorun.plus.offdevice.builders
 
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.plus.queries.AndroidInstalledPackagesQuery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

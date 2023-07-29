@@ -1,8 +1,7 @@
+package com.safetorun.plus
+
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.models.models.DeviceSignatureDto
-import com.safetorun.plus.ApiException
-import com.safetorun.plus.DefaultHttpClient
-import com.safetorun.plus.DefaultSafeToRunApi
 import com.safetorun.plus.models.DataWrappedSignatureResult
 import junit.framework.TestCase
 import kotlinx.serialization.encodeToString

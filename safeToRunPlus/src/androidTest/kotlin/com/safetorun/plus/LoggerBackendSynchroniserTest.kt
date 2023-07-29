@@ -1,4 +1,4 @@
-package reporting
+package com.safetorun.plus
 
 import android.content.Context
 import androidx.work.WorkerParameters
@@ -7,7 +7,6 @@ import com.google.common.truth.Truth.assertThat
 import com.safetorun.logger.deleteLog
 import com.safetorun.logger.logs
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.plus.safeToRunLogger
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -45,10 +44,10 @@ internal class LoggerBackendSynchroniserTest : TestCase() {
 
     fun `test that all items returned from logs are synchronised with the backend`() = runTest {
         val inputData =
-            workDataOf(com.safetorun.plus.LoggerBackendSynchroniser.KEY_API_KEY to "Abc")
+            workDataOf(LoggerBackendSynchroniser.KEY_API_KEY to "Abc")
         listAtEnd.clear()
 
-        com.safetorun.plus.LoggerBackendSynchroniser(
+        LoggerBackendSynchroniser(
             context,
             mockk<WorkerParameters>(relaxed = true).also {
                 every { it.inputData } returns inputData

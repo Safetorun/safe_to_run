@@ -1,3 +1,5 @@
+package com.safetorun.plus
+
 import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -8,7 +10,7 @@ import org.junit.Test
 class AndroidDeviceIdRepositoryTest : TestCase() {
 
     private val context = mockk<Context>().apply {
-        every { getSharedPreferences(any(), any()) } returns offdevice.FakeSharedPrefs()
+        every { getSharedPreferences(any(), any()) } returns FakeSharedPrefs()
     }
 
     @Test

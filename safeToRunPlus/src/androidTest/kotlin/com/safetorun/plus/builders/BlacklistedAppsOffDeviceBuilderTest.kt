@@ -1,4 +1,4 @@
-package offdevice.builders
+package com.safetorun.plus.offdevice.builders
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.models.builders.deviceInformationBuilder
