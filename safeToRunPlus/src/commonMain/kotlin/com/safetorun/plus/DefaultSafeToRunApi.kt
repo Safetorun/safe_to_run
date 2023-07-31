@@ -1,12 +1,12 @@
 package com.safetorun.plus
 
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.models.models.DataWrappedLogResponse
-import com.safetorun.models.models.DataWrappedVerifyResult
+import com.safetorun.plus.models.DataWrappedVerifyResult
 import com.safetorun.models.models.DeviceInformationDto
-import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.plus.models.DeviceSignatureDto
 import com.safetorun.models.models.VerifierResult
 import com.safetorun.plus.models.ConfirmVerificationRequestDto
+import com.safetorun.plus.models.DataWrappedLogResponse
 import com.safetorun.plus.models.DataWrappedSignatureResult
 
 internal class DefaultSafeToRunApi(

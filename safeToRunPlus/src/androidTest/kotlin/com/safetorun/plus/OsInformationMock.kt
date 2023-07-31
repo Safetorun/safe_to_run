@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.safetorun.plus
 
 import android.content.Context

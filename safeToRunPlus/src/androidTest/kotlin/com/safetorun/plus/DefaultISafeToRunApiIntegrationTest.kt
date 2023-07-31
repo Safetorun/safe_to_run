@@ -1,7 +1,7 @@
 package com.safetorun.plus
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.plus.models.DeviceSignatureDto
 import com.safetorun.plus.models.DataWrappedSignatureResult
 import junit.framework.TestCase
 import kotlinx.serialization.encodeToString

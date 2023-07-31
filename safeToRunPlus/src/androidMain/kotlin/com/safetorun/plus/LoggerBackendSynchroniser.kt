@@ -6,6 +6,7 @@ import androidx.work.WorkerParameters
 import com.safetorun.logger.deleteLog
 import com.safetorun.logger.logs
 import com.safetorun.plus.queries.getInstaller
+import com.safetorun.plus.queries.listInstalledPackages
 import com.safetorun.plus.queries.rootDetectionCheck
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -20,9 +21,10 @@ internal class LoggerBackendSynchroniser(appContext: Context, workerParams: Work
         return try {
             if (apiKey != null) {
 
-                val logger = this.applicationContext.safeToRunLogger(
+                val logger = safeToRunLogger(
                     apiKey,
                     { this.applicationContext.getInstaller() },
+                    this.applicationContext::listInstalledPackages,
                     this.applicationContext::rootDetectionCheck,
                 )
 

@@ -1,26 +1,25 @@
 package com.safetorun.plus
 
+import com.safetorun.plus.models.DataWrappedLogResponse
+import com.safetorun.plus.models.DataWrappedVerifyResult
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.api.DefaultSafeToRunApi.Companion.API_KEY_HEADER_NAME
-import com.safetorun.api.DefaultSafeToRunApi.Companion.DEVICE_CHECK_ENDPOINT
-import com.safetorun.api.DefaultSafeToRunApi.Companion.LOG_ENDPOINT
-import com.safetorun.api.DefaultSafeToRunApi.Companion.VERIFY_CHECK_ENDPOINT
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.models.models.ConfirmVerificationRequestDto
-import com.safetorun.models.models.DataWrappedLogResponse
-import com.safetorun.models.models.DataWrappedSignatureResult
-import com.safetorun.models.models.DataWrappedVerifyResult
-import com.safetorun.models.models.DeviceInformationDto
-import com.safetorun.models.models.DeviceSignatureDto
 import com.safetorun.models.models.VerifierResult
+import com.safetorun.plus.DefaultSafeToRunApi.Companion.API_KEY_HEADER_NAME
+import com.safetorun.plus.DefaultSafeToRunApi.Companion.DEVICE_CHECK_ENDPOINT
+import com.safetorun.plus.DefaultSafeToRunApi.Companion.LOG_ENDPOINT
+import com.safetorun.plus.DefaultSafeToRunApi.Companion.VERIFY_CHECK_ENDPOINT
+import com.safetorun.plus.models.ConfirmVerificationRequestDto
+import com.safetorun.plus.models.DataWrappedSignatureResult
+import com.safetorun.plus.models.DeviceSignatureDto
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import junit.framework.TestCase
 
 internal class DefaultSafeToRunApiTest : TestCase() {
-    private val mockHttpClient = mockk<SafeToRunHttpClient>(relaxed = true)
-    private val defaultSafeToRunApi = DefaultSafeToRunApi(mockHttpClient, API_KEY)
+    private val mockHttpClient by lazy { mockk<SafeToRunHttpClient>() }
+    private val defaultSafeToRunApi by lazy { DefaultSafeToRunApi(mockHttpClient, API_KEY) }
     private val deviceSignatureDto = DeviceSignatureDto("signature")
     private val dataWrapperSignatureResult = DataWrappedSignatureResult(deviceSignatureDto)
     private val deviceSignatureVerification = DataWrappedVerifyResult(
@@ -33,14 +32,13 @@ internal class DefaultSafeToRunApiTest : TestCase() {
     )
 
     fun `test that call through has correct parameters for device check from client`() {
-
         // Given
         every {
             mockHttpClient.post(
                 DEVICE_CHECK_ENDPOINT,
                 mapOf(API_KEY_HEADER_NAME to API_KEY),
                 deviceInformation,
-                DeviceInformationDto.serializer(),
+                any(),
                 DataWrappedSignatureResult.serializer()
             )
         } returns dataWrapperSignatureResult
@@ -74,19 +72,20 @@ internal class DefaultSafeToRunApiTest : TestCase() {
     fun `test that when we call log endpoint it returns expected result`() {
         // Given
         val serializer = DataWrappedLogResponse.serializer(SafeToRunEvents.serializer())
+        val expectedCheck = SafeToRunEvents.FailedCheck.empty("default")
 
         every {
-            mockHttpClient.post(
+            mockHttpClient.post<SafeToRunEvents, DataWrappedLogResponse<SafeToRunEvents>>(
                 LOG_ENDPOINT,
                 mapOf(API_KEY_HEADER_NAME to API_KEY),
-                any(),
+                expectedCheck,
                 SafeToRunEvents.serializer(),
-                serializer
+                any()
             )
-        } returns DataWrappedLogResponse(SafeToRunEvents.FailedCheck.empty("default"))
+        } returns DataWrappedLogResponse(expectedCheck)
 
         // When
-        defaultSafeToRunApi.logEvent(SafeToRunEvents.FailedCheck.empty("default"))
+        defaultSafeToRunApi.logEvent(expectedCheck)
 
         // Then
         verify {

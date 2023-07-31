@@ -1,10 +1,11 @@
-package com.safetorun.plus.offdevice.builders
+package com.safetorun.plus.builders
 
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.plus.queries.listInstalledPackages
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -27,12 +28,8 @@ internal class AndroidInstalledPackagesQueryTest : TestCase() {
     }
 
     fun `test that android installed packages returns based on the context`() {
-        // Given
-        val androidInstalledPackagesQuery =
-            com.safetorun.plus.queries.AndroidInstalledPackagesQuery(context)
-
-        // When
-        val result = androidInstalledPackagesQuery.listInstalledPackages()
+        // Given // When
+        val result  = context.listInstalledPackages()
 
         // Then
         assertThat(result).isEqualTo(installedPackagesNames)

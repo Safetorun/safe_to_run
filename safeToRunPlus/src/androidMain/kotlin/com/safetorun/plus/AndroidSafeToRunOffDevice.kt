@@ -20,8 +20,8 @@ import com.safetorun.plus.offdevice.builders.CompositeBuilder
 import com.safetorun.plus.offdevice.builders.InstallOriginOffDeviceBuilder
 import com.safetorun.plus.offdevice.builders.OSCheckOffDeviceBuilder
 import com.safetorun.plus.offdevice.builders.RootCheckOffDeviceBuilder
-import com.safetorun.plus.queries.AndroidInstalledPackagesQuery
 import com.safetorun.plus.queries.OSInformationQueryAndroid
+import com.safetorun.plus.queries.listInstalledPackages
 import com.safetorun.plus.repository.AndroidDeviceIdRepository
 import java.util.concurrent.Executors
 
@@ -67,13 +67,16 @@ private object SafeToRunOffDeviceCache {
 fun Context.safeToRunOffDevice(
     url: String,
     apiKey: String,
-    enableInstalledPackageScan: Boolean = false,
     getInstaller: InstallOriginQuery,
     rootCheck: (() -> Boolean)? = null
 ) = safeToRunOffDevice(
     url,
     apiKey,
-    offDeviceResultBuilder(enableInstalledPackageScan, getInstaller, rootCheck),
+    offDeviceResultBuilder(
+        getInstaller = getInstaller,
+        rootCheck = rootCheck,
+        installedPackagesQuery = this::listInstalledPackages,
+    ),
     AndroidDeviceIdRepository(this).getOrCreateDeviceIdSync()
 )
 
@@ -82,12 +85,12 @@ typealias SafeToRunLogger = (SafeToRunEvents) -> Unit
 /**
  * Build a safe to run logger
  */
-fun Context.safeToRunLogger(
+fun safeToRunLogger(
     apiKey: String,
     getInstaller: () -> String,
+    installedPackagesQuery: (() -> List<String>)? = null,
     rootCheck: (() -> Boolean)? = null,
     url: String = "https://api.safetorun.com",
-    enableInstalledPackageScan: Boolean = false,
 ): SafeToRunLogger {
     if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
         requireNotNull(safeToRunOffDeviceLazy[apiKey])
@@ -101,7 +104,11 @@ fun Context.safeToRunLogger(
 
     return {
         val deviceInformation =
-            offDeviceResultBuilder(enableInstalledPackageScan, getInstaller, rootCheck)
+            offDeviceResultBuilder(
+                getInstaller = getInstaller,
+                rootCheck = rootCheck,
+                installedPackagesQuery = installedPackagesQuery,
+            )
                 .buildOffDeviceResultBuilder(deviceInformationBuilder(apiKey))
                 .build()
 
@@ -143,10 +150,10 @@ internal fun safeToRunOffDevice(
  *
  * @return an instance of [OffDeviceResultBuilder]
  */
-internal fun Context.offDeviceResultBuilder(
-    enableInstalledPackageScan: Boolean,
+internal fun offDeviceResultBuilder(
     getInstaller: InstallOriginQuery,
-    rootCheck: (() -> Boolean)? = null
+    rootCheck: (() -> Boolean)? = null,
+    installedPackagesQuery: (() -> List<String>)? = null,
 ): OffDeviceResultBuilder =
     CompositeBuilder(
         mutableListOf(
@@ -156,8 +163,8 @@ internal fun Context.offDeviceResultBuilder(
             if (rootCheck != null) {
                 add(RootCheckOffDeviceBuilder { rootCheck() })
             }
-            if (enableInstalledPackageScan) {
-                add(BlacklistedAppsOffDeviceBuilder(AndroidInstalledPackagesQuery(this@offDeviceResultBuilder)))
+            if (installedPackagesQuery != null) {
+                add(BlacklistedAppsOffDeviceBuilder(installedPackagesQuery))
             }
         }
     )

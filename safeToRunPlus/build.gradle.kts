@@ -37,7 +37,6 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(project(":safeToRunInputValidation"))
                 implementation(project(":safeToRunInternal"))
                 implementation(libs.androidx.workmanager)
                 implementation(libs.rootbeer)

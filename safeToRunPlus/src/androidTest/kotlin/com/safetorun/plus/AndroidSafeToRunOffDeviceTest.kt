@@ -1,5 +1,6 @@
 package com.safetorun.plus
 
+import com.safetorun.plus.models.DataWrappedLogResponse
 import android.content.Context
 import android.content.pm.PackageManager
 import com.google.common.truth.Truth.assertThat
@@ -11,8 +12,8 @@ import com.safetorun.logger.models.OsCheck
 import com.safetorun.logger.models.SafeToRunEvents
 import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import com.safetorun.models.builders.deviceInformationBuilder
-import com.safetorun.models.models.DataWrappedLogResponse
-import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.plus.models.DeviceSignatureDto
+import com.safetorun.plus.offdevice.OffDeviceResultBuilder
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -27,7 +28,8 @@ import kotlin.random.Random
 internal class AndroidSafeToRunOffDeviceTest : TestCase() {
 
     private val safeToRunApi = mockk<SafeToRunApi>()
-    private val offDeviceResultBuilder = mockk<com.safetorun.plus.offdevice.OffDeviceResultBuilder>()
+    private val offDeviceResultBuilderMock =
+        mockk<OffDeviceResultBuilder>()
     private val context = mockk<Context>()
     private val api: String = "Apikkey"
     private val deviceId: String = "DeviceId"
@@ -35,7 +37,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     private val androidSafeToRunOffDevice =
         AndroidSafeToRunOffDevice(
             safeToRunApi,
-            offDeviceResultBuilder,
+            offDeviceResultBuilderMock,
             api,
             deviceId
         )
@@ -45,14 +47,14 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     private val url: String = "http://localhost:$port"
 
     override fun setUp() {
-        mockkStatic("com.safetorun.offdevice.AndroidSafeToRunOffDeviceKt")
+        mockkStatic("com.safetorun.plus.AndroidSafeToRunOffDeviceKt")
         every {
-            context.offDeviceResultBuilder(
-                enableInstalledPackageScan = true,
+            offDeviceResultBuilder(
                 getInstaller = { "com.installer.package" },
-                null,
+                rootCheck = null,
+                installedPackagesQuery = { emptyList() },
             )
-        } returns com.safetorun.plus.offdevice.OffDeviceResultBuilder {
+        } returns OffDeviceResultBuilder {
             it
         }
         context.setupMocks()
@@ -113,7 +115,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     fun `test that when we call android safe to run it returns result from client`() {
         // Given
         val expectedResult = DeviceSignatureDto("signed result")
-        every { offDeviceResultBuilder.buildOffDeviceResultBuilder(any()) } answers {
+        every { offDeviceResultBuilderMock.buildOffDeviceResultBuilder(any()) } answers {
             (args[0] as DeviceInformationDtoBuilder).apply {
                 dtoResult()
             }
@@ -135,19 +137,15 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
     fun `test that when we call android safe to run twice with the same api key it is the same instance`() {
         // Given
         val apiKey = "1234"
-        val safeToRun = context.safeToRunLogger(
+        val safeToRun = safeToRunLogger(
             apiKey,
             { "com.installer.package" },
-            null,
             url = url,
-            enableInstalledPackageScan = true,
         )
-        val safeToRun2 = context.safeToRunLogger(
+        val safeToRun2 = safeToRunLogger(
             apiKey,
             { "com.installer.package" },
-            null,
-            url,
-            enableInstalledPackageScan = true,
+            url = url,
         )
 
         assertThat(safeToRun).isNotNull()

@@ -8,6 +8,7 @@ import com.safetorun.logger.deleteLog
 import com.safetorun.logger.logs
 import com.safetorun.logger.models.SafeToRunEvents
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -31,10 +32,10 @@ internal class LoggerBackendSynchroniserTest : TestCase() {
     )
 
     override fun setUp() {
-        mockkStatic("com.safetorun.offdevice.AndroidSafeToRunOffDeviceKt")
+        mockkStatic("com.safetorun.plus.AndroidSafeToRunOffDeviceKt")
         mockkStatic("com.safetorun.logger.BackendSynchKt")
 
-        every { context.safeToRunLogger(any(), { "com.test" }, { false }) } returns {
+        every { safeToRunLogger(any(), any(), any(), any()) } returns {
             listAtEnd.add(it)
         }
 
@@ -55,6 +56,7 @@ internal class LoggerBackendSynchroniserTest : TestCase() {
 
         this.testScheduler.runCurrent()
 
+        coVerify { context.logs() } // Called once
         assertThat(listAtEnd).containsExactlyElementsIn(returnList)
     }
 }
