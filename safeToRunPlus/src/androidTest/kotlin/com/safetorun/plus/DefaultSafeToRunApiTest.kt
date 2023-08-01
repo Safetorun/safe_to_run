@@ -71,7 +71,6 @@ internal class DefaultSafeToRunApiTest : TestCase() {
 
     fun `test that when we call log endpoint it returns expected result`() {
         // Given
-        val serializer = DataWrappedLogResponse.serializer(SafeToRunEvents.serializer())
         val expectedCheck = SafeToRunEvents.FailedCheck.empty("default")
 
         every {

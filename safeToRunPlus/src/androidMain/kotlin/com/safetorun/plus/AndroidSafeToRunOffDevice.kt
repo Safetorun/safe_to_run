@@ -21,6 +21,7 @@ import com.safetorun.plus.offdevice.builders.InstallOriginOffDeviceBuilder
 import com.safetorun.plus.offdevice.builders.OSCheckOffDeviceBuilder
 import com.safetorun.plus.offdevice.builders.RootCheckOffDeviceBuilder
 import com.safetorun.plus.queries.OSInformationQueryAndroid
+import com.safetorun.plus.queries.getInstaller
 import com.safetorun.plus.queries.listInstalledPackages
 import com.safetorun.plus.repository.AndroidDeviceIdRepository
 import java.util.concurrent.Executors
@@ -67,13 +68,12 @@ private object SafeToRunOffDeviceCache {
 fun Context.safeToRunOffDevice(
     url: String,
     apiKey: String,
-    getInstaller: InstallOriginQuery,
     rootCheck: (() -> Boolean)? = null
 ) = safeToRunOffDevice(
     url,
     apiKey,
     offDeviceResultBuilder(
-        getInstaller = getInstaller,
+        getInstaller = this::getInstaller,
         rootCheck = rootCheck,
         installedPackagesQuery = this::listInstalledPackages,
     ),

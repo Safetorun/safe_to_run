@@ -17,14 +17,12 @@ internal class AndroidSafeToRunOffDeviceKtTest : TestCase() {
     fun `test device returns as expected and returns the same result if given correct`() {
         val safeToRun = context.safeToRunOffDevice(
             "Url", "ApiKey",
-            getInstaller = { "com.installer.package" },
             rootCheck = null
         )
         assertThat(safeToRun).isNotNull()
         assertThat(safeToRun).isEqualTo(
             context.safeToRunOffDevice(
                 "Url", "ApiKey",
-                getInstaller = { "com.installer.package" },
                 rootCheck = null
             )
         )
@@ -32,7 +30,6 @@ internal class AndroidSafeToRunOffDeviceKtTest : TestCase() {
             context.safeToRunOffDevice(
                 "DifferentUrl",
                 "DifferentApiKey",
-                getInstaller = { "com.installer.package" },
                 rootCheck = null
             )
         )
