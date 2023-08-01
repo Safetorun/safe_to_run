@@ -1,10 +1,10 @@
 package com.safetorun.plus.builders
 
-import com.safetorun.models.models.BlacklistedAppsDto
-import com.safetorun.models.models.DeviceInformationDto
-import com.safetorun.models.models.InstallOriginDto
-import com.safetorun.models.models.OsCheckDto
-import com.safetorun.models.models.SignatureVerificationDto
+import com.safetorun.plus.models.BlacklistedAppsDto
+import com.safetorun.plus.models.DeviceInformationDto
+import com.safetorun.plus.models.InstallOriginDto
+import com.safetorun.plus.models.OsCheckDto
+import com.safetorun.plus.models.SignatureVerificationDto
 import java.util.*
 
 /**
