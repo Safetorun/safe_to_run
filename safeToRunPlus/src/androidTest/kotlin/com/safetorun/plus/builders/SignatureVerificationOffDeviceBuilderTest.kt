@@ -1,8 +1,8 @@
-package com.safetorun.plus.offdevice.builders
+package com.safetorun.plus.builders
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.signatureverify.SignatureVerificationQuery
-import com.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.plus.offdevice.builders.SignatureVerificationOffDeviceBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -18,12 +18,14 @@ internal class SignatureVerificationOffDeviceBuilderTest : TestCase() {
     fun `test that signature verification query will return the expected signature`() {
         // Given
         val signatureVerificationOffDeviceBuilder =
-            com.safetorun.plus.offdevice.builders.SignatureVerificationOffDeviceBuilder(
+            SignatureVerificationOffDeviceBuilder(
                 signatureVerificationQuery
             )
 
         // When
-        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
+        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(
+            deviceInformationBuilder("")
+        )
 
         // Then
         assertThat(result.build().signatureVerification.signatureVerificationString).isEqualTo(
@@ -35,12 +37,14 @@ internal class SignatureVerificationOffDeviceBuilderTest : TestCase() {
         // Given
         every { signatureVerificationQuery.retrieveSignatureForApplication() } returns ""
         val signatureVerificationOffDeviceBuilder =
-            com.safetorun.plus.offdevice.builders.SignatureVerificationOffDeviceBuilder(
+            SignatureVerificationOffDeviceBuilder(
                 signatureVerificationQuery
             )
 
         // When
-        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(deviceInformationBuilder(""))
+        val result = signatureVerificationOffDeviceBuilder.buildOffDeviceResultBuilder(
+            deviceInformationBuilder("")
+        )
 
         // Then
         assertThat(result.build().signatureVerification.signatureVerificationString).isEqualTo("")

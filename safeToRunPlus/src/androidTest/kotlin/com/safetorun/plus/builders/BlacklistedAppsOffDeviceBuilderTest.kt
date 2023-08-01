@@ -1,7 +1,6 @@
 package com.safetorun.plus.builders
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.models.builders.deviceInformationBuilder
 import com.safetorun.plus.offdevice.builders.BlacklistedAppsOffDeviceBuilder
 import junit.framework.TestCase
 

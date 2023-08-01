@@ -1,8 +1,8 @@
-package com.safetorun.plus.offdevice.builders
+package com.safetorun.plus.builders
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.installorigin.InstallOriginQuery
-import com.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.plus.offdevice.builders.InstallOriginOffDeviceBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -18,7 +18,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
     fun `test that install origin off device builder populates correctly`() {
         // Given
         val installOriginQueryOffDeviceBuilder =
-            com.safetorun.plus.offdevice.builders.InstallOriginOffDeviceBuilder(installOriginQuery)
+            InstallOriginOffDeviceBuilder(installOriginQuery)
 
         // When
         val result = installOriginQueryOffDeviceBuilder
@@ -32,7 +32,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
         // Given
         every { installOriginQuery.getInstallPackageName() } returns ""
         val installOriginQueryOffDeviceBuilder =
-            com.safetorun.plus.offdevice.builders.InstallOriginOffDeviceBuilder(installOriginQuery)
+            InstallOriginOffDeviceBuilder(installOriginQuery)
 
         // When
         val result = installOriginQueryOffDeviceBuilder

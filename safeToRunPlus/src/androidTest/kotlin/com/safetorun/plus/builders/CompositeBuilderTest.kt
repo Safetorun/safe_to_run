@@ -1,8 +1,8 @@
-package com.safetorun.plus.offdevice.builders
+package com.safetorun.plus.builders
 
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.models.builders.deviceInformationBuilder
 import com.safetorun.plus.offdevice.OffDeviceResultBuilder
+import com.safetorun.plus.offdevice.builders.CompositeBuilder
 import junit.framework.TestCase
 
 internal class CompositeBuilderTest : TestCase() {
@@ -11,13 +11,13 @@ internal class CompositeBuilderTest : TestCase() {
         // Given
         val signature = "signatureexample"
         val deviceId = "deviceId"
-        val compositeBuilder = com.safetorun.plus.offdevice.builders.CompositeBuilder(
+        val compositeBuilder = CompositeBuilder(
             listOf(
-                com.safetorun.plus.offdevice.OffDeviceResultBuilder {
+                OffDeviceResultBuilder {
                     it.signature(signature)
                     it
                 },
-                com.safetorun.plus.offdevice.OffDeviceResultBuilder {
+                OffDeviceResultBuilder {
                     it.deviceId(deviceId)
                     it
                 }

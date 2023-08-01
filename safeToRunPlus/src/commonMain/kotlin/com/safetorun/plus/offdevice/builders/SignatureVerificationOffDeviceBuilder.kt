@@ -1,7 +1,7 @@
 package com.safetorun.plus.offdevice.builders
 
 import com.safetorun.features.signatureverify.SignatureVerificationQuery
-import com.safetorun.models.builders.DeviceInformationDtoBuilder
+import com.safetorun.plus.builders.DeviceInformationDtoBuilder
 import com.safetorun.plus.offdevice.OffDeviceResultBuilder
 
 internal class SignatureVerificationOffDeviceBuilder(

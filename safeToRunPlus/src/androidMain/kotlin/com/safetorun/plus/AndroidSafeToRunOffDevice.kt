@@ -8,7 +8,7 @@ import com.safetorun.logger.models.DeviceSignature
 import com.safetorun.logger.models.InstallOrigin
 import com.safetorun.logger.models.OsCheck
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.plus.builders.deviceInformationBuilder
 import com.safetorun.models.models.DeviceInformationDto
 import com.safetorun.models.models.OsCheckDto
 import com.safetorun.plus.SafeToRunOffDeviceCache.safeToRunOffDeviceLazy

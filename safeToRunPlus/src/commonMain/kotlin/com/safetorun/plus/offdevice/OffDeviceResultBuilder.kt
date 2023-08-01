@@ -1,6 +1,6 @@
 package com.safetorun.plus.offdevice
 
-import com.safetorun.models.builders.DeviceInformationDtoBuilder
+import com.safetorun.plus.builders.DeviceInformationDtoBuilder
 
 /**
  * Builder for an off device result

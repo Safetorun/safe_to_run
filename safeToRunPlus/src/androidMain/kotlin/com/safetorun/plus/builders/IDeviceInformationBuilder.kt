@@ -1,4 +1,4 @@
-package com.safetorun.models.builders
+package com.safetorun.plus.builders
 
 /**
  * Builder for device information

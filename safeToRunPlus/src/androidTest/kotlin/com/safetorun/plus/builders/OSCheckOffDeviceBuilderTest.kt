@@ -1,8 +1,8 @@
-package com.safetorun.plus.offdevice.builders
+package com.safetorun.plus.builders
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.oscheck.OSInformationQuery
-import com.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.plus.offdevice.builders.OSCheckOffDeviceBuilder
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -25,7 +25,7 @@ internal class OSCheckOffDeviceBuilderTest : TestCase() {
 
     fun `test that os check off device adds the device check`() {
         val osCheckOffDeviceBuilder =
-            com.safetorun.plus.offdevice.builders.OSCheckOffDeviceBuilder(osQuery)
+            OSCheckOffDeviceBuilder(osQuery)
         val result = with(deviceInformationBuilder("")) {
             osCheckOffDeviceBuilder.buildOffDeviceResultBuilder(this)
             build()

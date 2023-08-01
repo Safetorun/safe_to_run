@@ -10,8 +10,8 @@ import com.safetorun.logger.models.DeviceSignature
 import com.safetorun.logger.models.InstallOrigin
 import com.safetorun.logger.models.OsCheck
 import com.safetorun.logger.models.SafeToRunEvents
-import com.safetorun.models.builders.DeviceInformationDtoBuilder
-import com.safetorun.models.builders.deviceInformationBuilder
+import com.safetorun.plus.builders.DeviceInformationDtoBuilder
+import com.safetorun.plus.builders.deviceInformationBuilder
 import com.safetorun.plus.models.DeviceSignatureDto
 import com.safetorun.plus.offdevice.OffDeviceResultBuilder
 import io.mockk.every

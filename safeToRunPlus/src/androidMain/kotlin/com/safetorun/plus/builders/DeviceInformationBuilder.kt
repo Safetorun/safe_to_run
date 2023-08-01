@@ -1,4 +1,4 @@
-package com.safetorun.models.builders
+package com.safetorun.plus.builders
 
 import com.safetorun.models.core.BlacklistedApps
 import com.safetorun.models.core.DeviceInformation
