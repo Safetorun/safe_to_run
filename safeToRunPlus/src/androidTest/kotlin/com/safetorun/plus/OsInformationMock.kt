@@ -9,8 +9,6 @@ import android.os.Build
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import java.lang.reflect.Field
-import java.lang.reflect.Modifier
 
 
 internal const val SDK_INT = 123
@@ -45,15 +43,4 @@ internal fun Context.setupMocks() {
     every { packageManager.getInstallSourceInfo(any()) } returns mockk<InstallSourceInfo>().apply {
         every { installingPackageName } returns SharedInstallOrigin.PACKAGE_NAME_RETURNS
     }
-}
-
-
-private fun <T> mockBuildField(v: T, fieldName: String, clazz: Class<*>) {
-    val sdkIntField = clazz.getField(fieldName)
-    sdkIntField.isAccessible = true
-    Field::class.java.getDeclaredField("modifiers").also {
-        it.isAccessible = true
-        it.set(sdkIntField, sdkIntField.modifiers and Modifier.FINAL.inv())
-    }
-    sdkIntField.set(null, v)
 }
