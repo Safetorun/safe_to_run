@@ -1,6 +1,7 @@
 package com.safetorun.exploration
 
-import com.safetorun.models.models.DeviceInformationDto
+import com.safetorun.plus.models.DeviceInformationDto
+
 
 /**
  * @param osCheck results of the os check

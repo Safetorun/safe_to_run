@@ -2,8 +2,8 @@ package com.safetorun.exploration
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.api.deviceInformation
-import com.safetorun.models.models.InstallOriginDto
-import com.safetorun.models.models.SignatureVerificationDto
+import com.safetorun.plus.models.InstallOriginDto
+import com.safetorun.plus.models.SignatureVerificationDto
 import junit.framework.TestCase
 
 internal class DeviceInformationKtTest : TestCase() {
