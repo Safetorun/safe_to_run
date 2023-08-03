@@ -9,6 +9,8 @@ import com.google.common.truth.Truth.assertThat
 import com.safetorun.plus.SharedInstallOrigin.INSTALLER_PACKAGE
 import com.safetorun.plus.mockBuildField
 import com.safetorun.plus.queries.getInstaller
+import com.safetorun.plus.setOlderAndroidVersion
+import com.safetorun.plus.setTiramusu
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -43,6 +45,7 @@ internal class AndroidInstalledOriginTest : TestCase() {
     fun `test that android install origin returns based on the context when null`() {
         // Given
         every { context.packageName } returns fakeName
+        setTiramusu()
 
         // When
         val result = context.getInstaller()
@@ -53,11 +56,7 @@ internal class AndroidInstalledOriginTest : TestCase() {
 
     fun `test that android install origin returns based on the context pre TIRAMUSU`() {
         // Given
-        mockBuildField(
-            Build.VERSION_CODES.Q,
-            "SDK_INT",
-            Build.VERSION::class.java
-        )
+        setOlderAndroidVersion()
 
         // When
         val result = context.getInstaller()
@@ -66,8 +65,12 @@ internal class AndroidInstalledOriginTest : TestCase() {
         assertThat(result).isEqualTo(INSTALLER_PACKAGE)
     }
 
+
     fun `test that android install origin returns based on the context`() {
-        // Given // When
+        // Given
+        setTiramusu()
+
+        // When
         val result = context.getInstaller()
 
         // Then

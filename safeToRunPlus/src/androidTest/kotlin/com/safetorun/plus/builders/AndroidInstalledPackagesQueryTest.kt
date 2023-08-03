@@ -8,6 +8,8 @@ import android.os.Build
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.plus.mockBuildField
 import com.safetorun.plus.queries.listInstalledPackages
+import com.safetorun.plus.setOlderAndroidVersion
+import com.safetorun.plus.setTiramusu
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -33,11 +35,7 @@ internal class AndroidInstalledPackagesQueryTest : TestCase() {
 
     fun `test that android installed packages rturns based on the context pre TIRAMUSU`() {
         // Given
-        mockBuildField(
-            Build.VERSION_CODES.S,
-            "SDK_INT",
-            Build.VERSION::class.java
-        )
+        setOlderAndroidVersion()
 
         // When
         val result = context.listInstalledPackages()
@@ -47,7 +45,10 @@ internal class AndroidInstalledPackagesQueryTest : TestCase() {
     }
 
     fun `test that android installed packages returns based on the context`() {
-        // Given // When
+        // Given
+        setTiramusu()
+
+        // When
         val result = context.listInstalledPackages()
 
         // Then
