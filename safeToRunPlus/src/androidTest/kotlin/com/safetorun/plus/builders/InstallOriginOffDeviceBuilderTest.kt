@@ -2,6 +2,7 @@ package com.safetorun.plus.builders
 
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.installorigin.InstallOriginQuery
+import com.safetorun.plus.SharedInstallOrigin.INSTALLER_PACKAGE
 import com.safetorun.plus.offdevice.builders.InstallOriginOffDeviceBuilder
 import io.mockk.every
 import io.mockk.mockk
@@ -12,7 +13,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
     private val installOriginQuery = mockk<InstallOriginQuery>()
 
     override fun setUp() {
-        every { installOriginQuery.getInstallPackageName() } returns PACKAGE_NAME
+        every { installOriginQuery.getInstallPackageName() } returns INSTALLER_PACKAGE
     }
 
     fun `test that install origin off device builder populates correctly`() {
@@ -25,7 +26,7 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
             .buildOffDeviceResultBuilder(deviceInformationBuilder(""))
 
         // Then
-        assertThat(result.build().installOrigin.installOriginPackageName).isEqualTo(PACKAGE_NAME)
+        assertThat(result.build().installOrigin.installOriginPackageName).isEqualTo(INSTALLER_PACKAGE)
     }
 
     fun `test that install origin off device builder populates correctly if empty`() {
@@ -40,9 +41,5 @@ internal class InstallOriginOffDeviceBuilderTest : TestCase() {
 
         // Then
         assertThat(result.build().installOrigin.installOriginPackageName).isEmpty()
-    }
-
-    companion object {
-        const val PACKAGE_NAME = "Package name"
     }
 }

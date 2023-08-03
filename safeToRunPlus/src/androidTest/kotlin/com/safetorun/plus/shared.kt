@@ -23,7 +23,7 @@ val deviceInformation by lazy {
     }
 }
 
-fun <T> mockBuildField(v: T, fieldName: String, clazz: Class<*>) {
+internal fun <T> mockBuildField(v: T, fieldName: String, clazz: Class<*>) {
     val sdkIntField = clazz.getField(fieldName)
     sdkIntField.isAccessible = true
     Field::class.java.getDeclaredField("modifiers").also {

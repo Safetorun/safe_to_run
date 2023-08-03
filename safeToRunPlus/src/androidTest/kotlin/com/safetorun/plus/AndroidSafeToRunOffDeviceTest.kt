@@ -50,7 +50,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         mockkStatic("com.safetorun.plus.AndroidSafeToRunOffDeviceKt")
         every {
             offDeviceResultBuilder(
-                getInstaller = { "com.installer.package" },
+                getInstaller = { INSTALLER_PACKAGE },
                 rootCheck = null,
                 installedPackagesQuery = { emptyList() },
             )
@@ -139,12 +139,12 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         val apiKey = "1234"
         val safeToRun = safeToRunLogger(
             apiKey,
-            { "com.installer.package" },
+            { INSTALLER_PACKAGE },
             url = url,
         )
         val safeToRun2 = safeToRunLogger(
             apiKey,
-            { "com.installer.package" },
+            { INSTALLER_PACKAGE },
             url = url,
         )
 
@@ -196,4 +196,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         mockServer.close()
     }
 
+    companion object {
+        private const val INSTALLER_PACKAGE = "com.installer.package"
+    }
 }
