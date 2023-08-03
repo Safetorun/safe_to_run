@@ -11,7 +11,7 @@ internal object SharedInstallOrigin {
 
 internal fun setOlderAndroidVersion() {
     mockBuildField(
-        Build.VERSION_CODES.N,
+        Build.VERSION_CODES.LOLLIPOP,
         "SDK_INT",
         Build.VERSION::class.java
     )
