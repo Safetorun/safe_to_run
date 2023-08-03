@@ -28,23 +28,27 @@ internal class AndroidInstalledOriginTest : TestCase() {
         every { context.packageManager } returns pm
 
         every { pm.getInstallSourceInfo(packageName) } returns mockk<InstallSourceInfo>().apply {
-            every { initiatingPackageName } returns INSTALLER_PACKAGE
+            every { installingPackageName } returns INSTALLER_PACKAGE
         }
 
         every { pm.getInstallerPackageName(packageName) } returns INSTALLER_PACKAGE
-        every { pm.getInstallerPackageName(any()) } returns null
+        every { pm.getInstallerPackageName(fakeName) } returns null
+
+        every { pm.getInstallSourceInfo(fakeName) } returns mockk<InstallSourceInfo>().apply {
+            every { installingPackageName } returns null
+        }
 
     }
 
     fun `test that android install origin returns based on the context when null`() {
         // Given
-        every { context.packageName } returns "com.fake"
+        every { context.packageName } returns fakeName
 
         // When
         val result = context.getInstaller()
 
         // Then
-        assertThat(result).isEqualTo(INSTALLER_PACKAGE)
+        assertThat(result).isEqualTo("Not found")
     }
 
     fun `test that android install origin returns based on the context pre TIRAMUSU`() {
@@ -72,5 +76,6 @@ internal class AndroidInstalledOriginTest : TestCase() {
 
     companion object {
         private const val packageName = "com.me"
+        private const val fakeName = "com.fake"
     }
 }
