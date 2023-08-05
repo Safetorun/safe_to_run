@@ -61,6 +61,7 @@ android {
     packagingOptions {
         resources.excludes.apply {
             add("META-INF/*")
+            add("javax/xml/bind/util/Messages.properties")
         }
     }
     namespace = "com.safetorun.plus"
