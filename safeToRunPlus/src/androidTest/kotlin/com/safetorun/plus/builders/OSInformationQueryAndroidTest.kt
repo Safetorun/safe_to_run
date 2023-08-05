@@ -3,7 +3,6 @@ package com.safetorun.plus.builders
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.plus.queries.OSInformationQueryAndroid
-import com.safetorun.plus.setOlderAndroidVersion
 import io.mockk.mockkStatic
 import junit.framework.TestCase
 import java.lang.reflect.Field
@@ -22,14 +21,6 @@ internal class OSInformationQueryAndroidTest : TestCase() {
         mockBuildField(host, "HOST", Build::class.java)
         mockBuildField(hardware, "HARDWARE", Build::class.java)
         mockBuildField(device, "DEVICE", Build::class.java)
-    }
-
-    fun `test that CPU ABIs return empty on old android versions`() {
-        // Given
-        setOlderAndroidVersion()
-
-        // When // Then
-        assertThat(OSInformationQueryAndroid().cpuAbi()).isEmpty()
     }
 
     fun `test that os information query returns data from build class`() {

@@ -9,12 +9,7 @@ internal class OSInformationQueryAndroid : OSInformationQuery {
     override fun model(): String = Build.MODEL
     override fun board(): String = Build.BOARD
     override fun bootloader(): String = Build.BOOTLOADER
-    override fun cpuAbi(): List<String> =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Build.SUPPORTED_ABIS.toList()
-        } else {
-            emptyList()
-        }
+    override fun cpuAbi(): List<String> = Build.SUPPORTED_ABIS.toList()
 
     override fun host(): String = Build.HOST
     override fun hardware(): String = Build.HARDWARE
