@@ -41,31 +41,31 @@ class MainActivity : AppCompatActivity() {
 
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
 
-        if (safeToRunWithLogger(
-                logger = logger(checkName),
-                { banAvdEmulatorCheck() },
-                { banGenymotionEmulatorCheck() },
-                { banBluestacksEmulatorCheck() },
-                { blacklistedAppCheck("Test app", "Test app 2") },
-                { rootDetectionCheck() },
-                {
-                    safeToRunCombinedCheck(
-                        listOf(
-                            { bannedHardwareCheck("hardware") },
-                            { bannedBoardCheck("board") }
-                        )
-                    )
-                },
-                {
-                    safeToRunCombinedCheck(
-                        listOf { installOriginCheckWithDefaultsCheck() },
-                        listOf { !BuildConfig.DEBUG }
-                    )
-                },
-            )()
-        ) {
-            actionOnFailure()
-        }
+//        if (safeToRunWithLogger(
+//                logger = logger(checkName),
+//                { banAvdEmulatorCheck() },
+//                { banGenymotionEmulatorCheck() },
+//                { banBluestacksEmulatorCheck() },
+//                { blacklistedAppCheck("Test app", "Test app 2") },
+//                { rootDetectionCheck() },
+//                {
+//                    safeToRunCombinedCheck(
+//                        listOf(
+//                            { bannedHardwareCheck("hardware") },
+//                            { bannedBoardCheck("board") }
+//                        )
+//                    )
+//                },
+//                {
+//                    safeToRunCombinedCheck(
+//                        listOf { installOriginCheckWithDefaultsCheck() },
+//                        listOf { !BuildConfig.DEBUG }
+//                    )
+//                },
+//            )()
+//        ) {
+//            actionOnFailure()
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

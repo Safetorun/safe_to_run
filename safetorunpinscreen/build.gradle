@@ -3,7 +3,7 @@ plugins {
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
     id 'org.jetbrains.kotlinx.kover'
-    }
+}
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -33,13 +33,19 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     buildTypes {
@@ -52,7 +58,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.security:security-crypto:1.0.0"
+    implementation libs.androidx.security.crypto
 }
 
 
