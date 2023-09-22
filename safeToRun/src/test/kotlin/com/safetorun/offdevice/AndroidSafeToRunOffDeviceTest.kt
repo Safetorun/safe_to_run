@@ -15,6 +15,7 @@ import com.safetorun.models.builders.DeviceInformationDtoBuilder
 import com.safetorun.models.builders.deviceInformationBuilder
 import com.safetorun.models.models.DataWrappedLogResponse
 import com.safetorun.models.models.DeviceSignatureDto
+import com.safetorun.setupMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -51,7 +52,7 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         } returns OffDeviceResultBuilder {
             it
         }
-//        context.setupMocks()
+        context.setupMocks()
         every { context.packageManager } returns mockk<PackageManager>(relaxed = true).apply {
             every {
                 getPackageInfo(

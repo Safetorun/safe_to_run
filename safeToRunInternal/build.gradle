@@ -8,14 +8,6 @@ plugins {
     id 'org.jetbrains.kotlinx.kover'
 }
 
-sourceCompatibility = JavaVersion.VERSION_11.toString()
-targetCompatibility = JavaVersion.VERSION_11.toString()
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-}
 
 ext {
     PUBLISH_GROUP_ID = 'com.safetorun'
