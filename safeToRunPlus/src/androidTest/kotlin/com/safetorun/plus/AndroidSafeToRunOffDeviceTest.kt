@@ -4,6 +4,7 @@ import com.safetorun.plus.models.DataWrappedLogResponse
 import android.content.Context
 import android.content.pm.PackageManager
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.logger.models.BlacklistedApps
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.DeviceSignature
@@ -42,6 +43,8 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
             deviceId
         )
 
+    private val osInformationQuery = mockk<OSInformationQuery>()
+
     private val port = Random.nextInt(9000, 9999)
     private val mockServer: ClientAndServer by lazy { ClientAndServer.startClientAndServer(port) }
     private val url: String = "http://localhost:$port"
@@ -53,10 +56,14 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
                 getInstaller = { INSTALLER_PACKAGE },
                 rootCheck = null,
                 installedPackagesQuery = { emptyList() },
+                osInformationQuery = osInformationQuery
             )
         } returns OffDeviceResultBuilder {
             it
         }
+
+        every { osInformationQuery.manufacturer() } returns "MANUFACTURER"
+
         every { context.packageManager } returns mockk<PackageManager>(relaxed = true).apply {
             every {
                 getPackageInfo(

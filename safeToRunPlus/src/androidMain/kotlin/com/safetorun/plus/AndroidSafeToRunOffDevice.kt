@@ -2,6 +2,7 @@ package com.safetorun.plus
 
 import android.content.Context
 import com.safetorun.features.installorigin.InstallOriginQuery
+import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.logger.models.BlacklistedApps
 import com.safetorun.logger.models.DeviceInformation
 import com.safetorun.logger.models.DeviceSignature
@@ -23,6 +24,7 @@ import com.safetorun.plus.offdevice.builders.RootCheckOffDeviceBuilder
 import com.safetorun.plus.queries.OSInformationQueryAndroid
 import com.safetorun.plus.queries.getInstaller
 import com.safetorun.plus.queries.listInstalledPackages
+import com.safetorun.plus.queries.osInformationQuery
 import com.safetorun.plus.repository.AndroidDeviceIdRepository
 import java.util.concurrent.Executors
 
@@ -91,6 +93,7 @@ fun safeToRunLogger(
     installedPackagesQuery: (() -> List<String>)? = null,
     rootCheck: (() -> Boolean)? = null,
     url: String = "https://api.safetorun.com",
+    osInformationQuery: OSInformationQuery = osInformationQuery()
 ): SafeToRunLogger {
     if (safeToRunOffDeviceLazy.containsKey(apiKey)) {
         requireNotNull(safeToRunOffDeviceLazy[apiKey])
@@ -154,10 +157,11 @@ internal fun offDeviceResultBuilder(
     getInstaller: InstallOriginQuery,
     rootCheck: (() -> Boolean)? = null,
     installedPackagesQuery: (() -> List<String>)? = null,
+    osInformationQuery : OSInformationQuery = osInformationQuery()
 ): OffDeviceResultBuilder =
     CompositeBuilder(
         mutableListOf(
-            OSCheckOffDeviceBuilder(OSInformationQueryAndroid()),
+            OSCheckOffDeviceBuilder(osInformationQuery),
             InstallOriginOffDeviceBuilder(getInstaller),
         ).apply {
             if (rootCheck != null) {

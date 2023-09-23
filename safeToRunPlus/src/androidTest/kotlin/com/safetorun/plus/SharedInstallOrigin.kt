@@ -1,6 +1,8 @@
 package com.safetorun.plus
 
 import android.os.Build
+import com.safetorun.features.oscheck.OSInformationQuery
+import io.mockk.every
 
 internal object SharedInstallOrigin {
 
@@ -9,18 +11,11 @@ internal object SharedInstallOrigin {
 }
 
 
-internal fun setOlderAndroidVersion() {
-    mockBuildField(
-        Build.VERSION_CODES.LOLLIPOP,
-        "SDK_INT",
-        Build.VERSION::class.java
-    )
+internal fun setOlderAndroidVersion(osInformation : OSInformationQuery) {
+    every { osInformation.osVersion() } returns Build.VERSION_CODES.LOLLIPOP
 }
 
-internal fun setTiramusu() {
-    mockBuildField(
-        Build.VERSION_CODES.TIRAMISU,
-        "SDK_INT",
-        Build.VERSION::class.java
-    )
+
+internal fun setTiramusu(osInformation : OSInformationQuery) {
+    every { osInformation.osVersion() } returns Build.VERSION_CODES.TIRAMISU
 }

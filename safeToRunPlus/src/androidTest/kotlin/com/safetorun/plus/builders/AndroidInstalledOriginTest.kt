@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.plus.SharedInstallOrigin.INSTALLER_PACKAGE
 import com.safetorun.plus.mockBuildField
 import com.safetorun.plus.queries.getInstaller
@@ -20,6 +21,7 @@ internal class AndroidInstalledOriginTest : TestCase() {
 
     private val context by lazy { mockk<Context>() }
     private val pm by lazy { mockk<PackageManager>() }
+    private val osInformation by lazy { mockk<OSInformationQuery>() }
 
     @Suppress("DEPRECATION") // Need to do it for older devices
     override fun setUp() {
@@ -45,10 +47,10 @@ internal class AndroidInstalledOriginTest : TestCase() {
     fun `test that android install origin returns based on the context when null`() {
         // Given
         every { context.packageName } returns fakeName
-        setTiramusu()
+        setTiramusu(osInformation)
 
         // When
-        val result = context.getInstaller()
+        val result = context.getInstaller(osInformation)
 
         // Then
         assertThat(result).isEqualTo("Not found")
@@ -56,10 +58,10 @@ internal class AndroidInstalledOriginTest : TestCase() {
 
     fun `test that android install origin returns based on the context pre TIRAMUSU`() {
         // Given
-        setOlderAndroidVersion()
+        setOlderAndroidVersion(osInformation)
 
         // When
-        val result = context.getInstaller()
+        val result = context.getInstaller(osInformation)
 
         // Then
         assertThat(result).isEqualTo(INSTALLER_PACKAGE)
@@ -68,10 +70,10 @@ internal class AndroidInstalledOriginTest : TestCase() {
 
     fun `test that android install origin returns based on the context`() {
         // Given
-        setTiramusu()
+        setTiramusu(osInformation)
 
         // When
-        val result = context.getInstaller()
+        val result = context.getInstaller(osInformation)
 
         // Then
         assertThat(result).isEqualTo(INSTALLER_PACKAGE)

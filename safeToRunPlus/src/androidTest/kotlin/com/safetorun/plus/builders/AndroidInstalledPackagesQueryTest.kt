@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import com.google.common.truth.Truth.assertThat
+import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.plus.mockBuildField
 import com.safetorun.plus.queries.listInstalledPackages
 import com.safetorun.plus.setOlderAndroidVersion
@@ -19,6 +20,7 @@ internal class AndroidInstalledPackagesQueryTest : TestCase() {
 
     private val context by lazy { mockk<Context>() }
     private val pm by lazy { mockk<PackageManager>() }
+    private val osInformation by lazy { mockk<OSInformationQuery>() }
 
     @Suppress("DEPRECATION") // Need to do it for older devices
     override fun setUp() {
@@ -35,7 +37,7 @@ internal class AndroidInstalledPackagesQueryTest : TestCase() {
 
     fun `test that android installed packages rturns based on the context pre TIRAMUSU`() {
         // Given
-        setOlderAndroidVersion()
+        setOlderAndroidVersion(osInformation)
 
         // When
         val result = context.listInstalledPackages()
@@ -46,7 +48,7 @@ internal class AndroidInstalledPackagesQueryTest : TestCase() {
 
     fun `test that android installed packages returns based on the context`() {
         // Given
-        setTiramusu()
+        setTiramusu(osInformation)
 
         // When
         val result = context.listInstalledPackages()
