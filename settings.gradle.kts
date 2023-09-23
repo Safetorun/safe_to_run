@@ -9,7 +9,6 @@ pluginManagement {
 
 include(
     ":safeToRun",
-    ":app",
     ":safeToRunCore",
     ":safeToRunInternal",
     ":safeToRunInputValidation",
