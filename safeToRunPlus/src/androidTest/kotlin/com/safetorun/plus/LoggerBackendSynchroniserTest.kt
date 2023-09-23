@@ -35,7 +35,14 @@ internal class LoggerBackendSynchroniserTest : TestCase() {
         mockkStatic("com.safetorun.plus.AndroidSafeToRunOffDeviceKt")
         mockkStatic("com.safetorun.logger.BackendSynchKt")
 
-        every { safeToRunLogger(any(), any(), any(), any(), any()) } returns {
+        every { safeToRunLogger(
+            apiKey = any(),
+            getInstaller = any(),
+            installedPackagesQuery = any(),
+            rootCheck = any(),
+            url = any(),
+            osInformationQuery = any()
+        ) } returns {
             listAtEnd.add(it)
         }
 
