@@ -57,7 +57,6 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         } returns OffDeviceResultBuilder {
             it
         }
-        context.setupMocks()
         every { context.packageManager } returns mockk<PackageManager>(relaxed = true).apply {
             every {
                 getPackageInfo(

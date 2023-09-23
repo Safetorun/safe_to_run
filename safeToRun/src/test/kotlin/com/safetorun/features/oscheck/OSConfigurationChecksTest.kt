@@ -1,100 +1,101 @@
 package com.safetorun.features.oscheck
 
-import android.os.Build
 import com.google.common.truth.Truth.assertThat
-import com.safetorun.utils.mockBuildField
-import io.mockk.mockkStatic
+import io.mockk.every
+import io.mockk.mockk
 import junit.framework.TestCase
 
 internal class OSConfigurationChecksTest : TestCase() {
-    override fun setUp() {
-        mockkStatic(Build::class)
 
-        mockBuildField(CURRENT_DEVICE, "DEVICE", Build::class.java)
-        mockBuildField(CURRENT_HARDWARE, "HARDWARE", Build::class.java)
-        mockBuildField(CURRENT_HOST, "HOST", Build::class.java)
-        mockBuildField(CURRENT_ABIS, "SUPPORTED_ABIS", Build::class.java)
-        mockBuildField(CURRENT_BOOTLOADER, "BOOTLOADER", Build::class.java)
-        mockBuildField(CURRENT_BOARD, "BOARD", Build::class.java)
-        mockBuildField(CURRENT_MODEL, "MODEL", Build::class.java)
-        mockBuildField(CURRENT_MANUFACTURER, "MANUFACTURER", Build::class.java)
-        mockBuildField(CURRENT_SDK, "SDK_INT", Build.VERSION::class.java)
+    private val osCheck by lazy { mockk<OSInformationQuery>() }
+
+    override fun setUp() {
+        every { osCheck.osVersion() } returns CURRENT_SDK
+        every { osCheck.manufacturer() } returns CURRENT_MANUFACTURER
+        every { osCheck.model() } returns CURRENT_MODEL
+        every { osCheck.board() } returns CURRENT_BOARD
+        every { osCheck.bootloader() } returns CURRENT_BOOTLOADER
+        every { osCheck.cpuAbi() } returns CURRENT_ABIS.toList()
+        every { osCheck.hardware() } returns CURRENT_HARDWARE
+        every { osCheck.device() } returns CURRENT_DEVICE
+        every { osCheck.host() } returns CURRENT_HOST
+
     }
 
     fun `test that min os version check passes if os version is greater than min`() {
-        assertThat(minOsVersionCheck(CURRENT_SDK - 1)).isFalse()
+        assertThat(minOsVersionCheck(CURRENT_SDK - 1, osCheck)).isFalse()
     }
 
     fun `test that min os version check passes if os version is equal than min`() {
-        assertThat(minOsVersionCheck(CURRENT_SDK)).isFalse()
+        assertThat(minOsVersionCheck(CURRENT_SDK, osCheck)).isFalse()
     }
 
     fun `test that min os version check fails if os version is less than min`() {
-        assertThat(minOsVersionCheck(CURRENT_SDK + 1)).isTrue()
+        assertThat(minOsVersionCheck(CURRENT_SDK + 1, osCheck)).isTrue()
     }
 
     fun `test that manufacturer check passes if we are not a banned manufacturer`() {
-        assertThat(notManufacturerCheck("Not banned")).isFalse()
+        assertThat(notManufacturerCheck("Not banned", osCheck)).isFalse()
     }
 
     fun `test that manufacturer check fails if we are a banned manufacturer`() {
-        assertThat(notManufacturerCheck(CURRENT_MANUFACTURER)).isTrue()
+        assertThat(notManufacturerCheck(CURRENT_MANUFACTURER, osCheck)).isTrue()
     }
 
     fun `test that banned model check if we are a banned`() {
-        assertThat(bannedModelCheck("")).isFalse()
+        assertThat(bannedModelCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned model check if we are not banned`() {
-        assertThat(bannedModelCheck(CURRENT_MODEL)).isTrue()
+        assertThat(bannedModelCheck(CURRENT_MODEL, osCheck)).isTrue()
     }
 
     fun `test that banned board check doesnt fail if not banned`() {
-        assertThat(bannedBoardCheck("")).isFalse()
+        assertThat(bannedBoardCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned board check does fail if banned`() {
-        assertThat(bannedBoardCheck(CURRENT_BOARD)).isTrue()
+        assertThat(bannedBoardCheck(CURRENT_BOARD, osCheck)).isTrue()
     }
 
     fun `test that banned bootloader check doesnt fail if not banned`() {
-        assertThat(bannedBootloaderCheck("")).isFalse()
+        assertThat(bannedBootloaderCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned bootloader check does fail if banned`() {
-        assertThat(bannedBootloaderCheck(CURRENT_BOOTLOADER)).isTrue()
+        assertThat(bannedBootloaderCheck(CURRENT_BOOTLOADER, osCheck)).isTrue()
     }
 
     fun `test that banned cpus check doesnt fail if not banned`() {
-        assertThat(bannedCpusCheck("")).isFalse()
+        assertThat(bannedCpusCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned cpus check does fail if banned`() {
-        assertThat(bannedCpusCheck(CURRENT_ABIS.first())).isTrue()
+        assertThat(bannedCpusCheck(CURRENT_ABIS.first(), osCheck)).isTrue()
     }
 
     fun `test that banned device check doesnt fail if not banned`() {
-        assertThat(bannedDeviceCheck("")).isFalse()
+        assertThat(bannedDeviceCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned device check does fail if banned`() {
-        assertThat(bannedDeviceCheck(CURRENT_DEVICE)).isTrue()
+        assertThat(bannedDeviceCheck(CURRENT_DEVICE, osCheck)).isTrue()
     }
 
     fun `test that banned hardware check doesnt fail if not banned`() {
-        assertThat(bannedHardwareCheck("")).isFalse()
+        assertThat(bannedHardwareCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned hardware check does fail if banned`() {
-        assertThat(bannedHardwareCheck(CURRENT_HARDWARE)).isTrue()
+        assertThat(bannedHardwareCheck(CURRENT_HARDWARE, osCheck)).isTrue()
     }
 
     fun `test that banned host check doesnt fail if not banned`() {
-        assertThat(bannedHostCheck("")).isFalse()
+        assertThat(bannedHostCheck("", osCheck)).isFalse()
     }
 
     fun `test that banned host check does fail if banned`() {
-        assertThat(bannedHostCheck(CURRENT_HOST)).isTrue()
+        assertThat(bannedHostCheck(CURRENT_HOST, osCheck)).isTrue()
     }
 
     companion object {
