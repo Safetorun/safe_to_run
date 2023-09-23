@@ -7,5 +7,4 @@ dependencies {
     testImplementation libs.google.truth
     testImplementation libs.mockk
     testImplementation libs.jupiter
-    testImplementation libs.robolectric
 }
