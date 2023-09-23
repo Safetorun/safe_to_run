@@ -3,6 +3,7 @@ package com.safetorun.plus
 import com.safetorun.plus.models.DataWrappedLogResponse
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import com.google.common.truth.Truth.assertThat
 import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.logger.models.BlacklistedApps
@@ -63,6 +64,14 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
         }
 
         every { osInformationQuery.manufacturer() } returns "MANUFACTURER"
+        every { osInformationQuery.osVersion() } returns Build.VERSION_CODES.TIRAMISU
+        every { osInformationQuery.model() } returns "Xiaomi"
+        every { osInformationQuery.bootloader() } returns "BOOTLOADER"
+        every { osInformationQuery.device() } returns "DEVICE"
+        every { osInformationQuery.cpuAbi() } returns emptyList()
+        every { osInformationQuery.hardware() } returns "HARDWARE"
+        every { osInformationQuery.board() } returns "BOARD"
+        every { osInformationQuery.host() } returns "HOST"
 
         every { context.packageManager } returns mockk<PackageManager>(relaxed = true).apply {
             every {
@@ -147,11 +156,13 @@ internal class AndroidSafeToRunOffDeviceTest : TestCase() {
             apiKey,
             { INSTALLER_PACKAGE },
             url = url,
+            osInformationQuery = osInformationQuery
         )
         val safeToRun2 = safeToRunLogger(
             apiKey,
             { INSTALLER_PACKAGE },
             url = url,
+            osInformationQuery = osInformationQuery
         )
 
         assertThat(safeToRun).isNotNull()
