@@ -111,6 +111,7 @@ fun safeToRunLogger(
                 getInstaller = getInstaller,
                 rootCheck = rootCheck,
                 installedPackagesQuery = installedPackagesQuery,
+                osInformationQuery = osInformationQuery
             )
                 .buildOffDeviceResultBuilder(deviceInformationBuilder(apiKey))
                 .build()
@@ -157,7 +158,7 @@ internal fun offDeviceResultBuilder(
     getInstaller: InstallOriginQuery,
     rootCheck: (() -> Boolean)? = null,
     installedPackagesQuery: (() -> List<String>)? = null,
-    osInformationQuery : OSInformationQuery = osInformationQuery()
+    osInformationQuery: OSInformationQuery = osInformationQuery()
 ): OffDeviceResultBuilder =
     CompositeBuilder(
         mutableListOf(
