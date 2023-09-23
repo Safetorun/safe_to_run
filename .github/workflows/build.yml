@@ -30,6 +30,16 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build plugin
         run: ./gradlew :safeToRunBuilder:shadowJar --no-daemon
+      - name: Build InputValidation
+        run: ./gradlew :safeToRunInternal:build
+      - name: Build plus
+        run: ./gradlew :safeToRunPlus:build
+      - name: Build Logger
+        run: ./gradlew :safeToRunLogger:build
+      - name: Build InputValidation
+        run: ./gradlew :safeToRunInputValidation:build
+      - name: Build Core
+        run: ./gradlew :safeToRunCore:build
       - name: Run build
         run: ./gradlew build assembleDebug assembleDebugAndroidTest --no-daemon
         env:
