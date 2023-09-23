@@ -68,34 +68,34 @@ class ReportFragment : Fragment() {
 
 
     private inline fun Context.canIRun(checkName: String, actionOnFailure: () -> Unit) {
-        if (safeToRunWithLogger(
-                logger = loggerForCheck(checkName),
-                { verifySignatureCheck() },
-                { banAvdEmulatorCheck() },
-                { banGenymotionEmulatorCheck() },
-                { banBluestacksEmulatorCheck() },
-                { blacklistedAppCheck("Test app", "Test app 2") },
-                { rootDetectionCheck() },
-                { isDebuggableCheck() },
-                {
-                    safeToRunCombinedCheck(
-                        listOf(
-                            { bannedHardwareCheck("hardware") },
-                            { bannedBoardCheck("board") }
-                        )
-                    )
-                },
-                {
-                    safeToRunCombinedCheck(
-                        listOf { installOriginCheckWithDefaultsCheck() },
-                        listOf { !BuildConfig.DEBUG }
-                    )
-                },
-                { verifySignatureCheck("Abc") }
-            )()
-        ) {
-            actionOnFailure()
-        }
+//        if (safeToRunWithLogger(
+//                logger = loggerForCheck(checkName),
+//                { verifySignatureCheck() },
+//                { banAvdEmulatorCheck() },
+//                { banGenymotionEmulatorCheck() },
+//                { banBluestacksEmulatorCheck() },
+//                { blacklistedAppCheck("Test app", "Test app 2") },
+//                { rootDetectionCheck() },
+//                { isDebuggableCheck() },
+//                {
+//                    safeToRunCombinedCheck(
+//                        listOf(
+//                            { bannedHardwareCheck("hardware") },
+//                            { bannedBoardCheck("board") }
+//                        )
+//                    )
+//                },
+//                {
+//                    safeToRunCombinedCheck(
+//                        listOf { installOriginCheckWithDefaultsCheck() },
+//                        listOf { !BuildConfig.DEBUG }
+//                    )
+//                },
+//                { verifySignatureCheck("Abc") }
+//            )()
+//        ) {
+//            actionOnFailure()
+//        }
     }
 
     companion object {

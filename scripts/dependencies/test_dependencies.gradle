@@ -7,5 +7,4 @@ dependencies {
     testImplementation "com.google.truth:truth:$googleTruth"
     testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation "org.junit.jupiter:junit-jupiter:$jupiterVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
 }
