@@ -24,8 +24,6 @@ jobs:
         run: ./gradlew :safeToRunBuilder:shadowJar --no-daemon
       - name: Build InputValidation
         run: ./gradlew :safeToRunInternal:build
-      - name: Build plus
-        run: ./gradlew :safeToRunPlus:build
       - name: Build Logger
         run: ./gradlew :safeToRunLogger:build
       - name: Build InputValidation
