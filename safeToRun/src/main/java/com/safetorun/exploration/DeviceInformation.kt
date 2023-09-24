@@ -1,6 +1,5 @@
 package com.safetorun.exploration
 
-import com.safetorun.plus.models.DeviceInformationDto
 
 
 /**
@@ -14,22 +13,22 @@ data class DeviceInformation(
     val signatureVerification: SignatureInformation
 )
 
-/**
- * Convert device information DTO to a Core object
- */
-fun DeviceInformationDto.toDeviceInformation() =
-    DeviceInformation(
-        osCheck = OsCheck(
-            osVersion = osCheck.osVersion,
-            manufacturer = osCheck.manufacturer,
-            model = osCheck.model,
-            board = osCheck.board,
-            bootloader = osCheck.bootloader,
-            cpuAbi = osCheck.cpuAbi,
-            host = osCheck.host,
-            hardware = osCheck.hardware,
-            device = osCheck.device
-        ),
-        installOrigin = InstallOrigin(installOrigin.installOriginPackageName ?: ""),
-        signatureVerification = SignatureInformation(signatureVerification.signatureVerificationString ?: "")
-    )
+///**
+// * Convert device information DTO to a Core object
+// */
+//fun DeviceInformationDto.toDeviceInformation() =
+//    DeviceInformation(
+//        osCheck = OsCheck(
+//            osVersion = osCheck.osVersion,
+//            manufacturer = osCheck.manufacturer,
+//            model = osCheck.model,
+//            board = osCheck.board,
+//            bootloader = osCheck.bootloader,
+//            cpuAbi = osCheck.cpuAbi,
+//            host = osCheck.host,
+//            hardware = osCheck.hardware,
+//            device = osCheck.device
+//        ),
+//        installOrigin = InstallOrigin(installOrigin.installOriginPackageName ?: ""),
+//        signatureVerification = SignatureInformation(signatureVerification.signatureVerificationString ?: "")
+//    )
