@@ -97,29 +97,6 @@ jobs:
 
       - name: Run Instrumentation Tests in Firebase Test Lab
         run: gcloud firebase test android run --type instrumentation --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk  --device-ids=redfin,star2lte,judypn --os-version-ids=28,29,30
-  artifact:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'corretto'
-      - uses: actions/checkout@v2
-      - name: Build & Get version number
-        run: |
-          ./gradlew :safeToRunInternal:shadowJar 
-          ./gradlew :safeToRunInternal:printVersion 
-          ./gradlew :safeToRunInternal:printVersion | grep "^2.*.*$" 
-          version=`./gradlew :safeToRunInternal:printVersion | grep "^2.*.*$"` 
-          echo $version 
-          echo "version=$version" >> $GITHUB_ENV
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ env.version }}
-          files: safeToRunInternal/build/libs/safeToRunInternal-*-all.jar
-          fail_on_unmatched_files: true
 
   deploy:
     runs-on: ubuntu-latest
