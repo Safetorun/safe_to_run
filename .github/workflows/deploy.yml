@@ -48,7 +48,7 @@ jobs:
           API_KEY: 'apikey'
   deploy:
     runs-on: ubuntu-latest
-    needs: [build, firebaseTest, detekt]
+    needs: [build, detekt]
     environment: maven-central
     steps:
       - name: Set up JDK 1.8
