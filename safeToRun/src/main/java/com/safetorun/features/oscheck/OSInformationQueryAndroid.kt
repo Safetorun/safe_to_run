@@ -1,6 +1,7 @@
 package com.safetorun.features.oscheck
 
 import android.os.Build
+import com.safetorun.features.oscheck.OSInformationQuery
 
 /**
  * OSInformationQueryAndroid is a concrete implementation of the OSInformationQuery interface.

@@ -3,7 +3,7 @@ package com.safetorun.features.oscheck.emulator
 import com.safetorun.features.oscheck.OSInformationQuery
 import com.safetorun.features.oscheck.OsCheckConstants
 import com.safetorun.features.oscheck.OsCheckConstants.XIAOMI
-import com.safetorun.features.oscheck.osInformationQuery
+ import com.safetorun.features.oscheck.osInformationQuery
 
 /**
  * Return true if we're running on an emulator

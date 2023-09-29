@@ -1,7 +1,5 @@
 package com.safetorun.features.oscheck
 
-import android.os.Build
-
 /**
  * Configure a min os version to fail if we fall below that version
  *

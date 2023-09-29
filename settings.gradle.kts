@@ -9,13 +9,11 @@ pluginManagement {
 
 include(
     ":safeToRun",
-    ":app",
     ":safeToRunCore",
     ":safeToRunInternal",
     ":safeToRunInputValidation",
     ":safeToRunBuilder",
     ":safetorunpinscreen",
-    ":safeToRunLogger"
 )
 
 dependencyResolutionManagement {

@@ -22,8 +22,10 @@ coroutines = "1.6.4"
 androidGradlePlugin = "7.4.0"
 kover = "0.6.0"
 kotlinPoet = "1.11.0"
-safeToRun = "2.2.4"
+safeToRun = "3.0.0"
 work_version = "2.8.1"
+mockHttpVersion = "5.11.2"
+jupiterVersion = "5.8.1"
 
 [libraries]
 androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
@@ -41,6 +43,8 @@ mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 rootbeer = { module = "com.scottyab:rootbeer-lib", version.ref = "rootbeer" }
 junit = { module = "junit:junit", version.ref = "junit" }
+mockk-server = { module = "org.mock-server:mockserver-netty", version.ref = "mockHttpVersion" }
+jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiterVersion" }
 
 #kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
