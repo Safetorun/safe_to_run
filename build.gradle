@@ -1,6 +1,5 @@
 buildscript {
     dependencies {
-        classpath files('safeToRunBuilder/build/libs/safeToRunBuilder-all.jar')
         classpath 'org.owasp:dependency-check-gradle:6.4.1.1'
         classpath "firebase.test.lab:plugin:2.6.2"
     }
