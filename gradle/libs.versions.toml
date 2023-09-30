@@ -46,7 +46,6 @@ junit = { module = "junit:junit", version.ref = "junit" }
 mockk-server = { module = "org.mock-server:mockserver-netty", version.ref = "mockHttpVersion" }
 jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiterVersion" }
 
-#kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 [plugins]
