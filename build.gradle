@@ -7,12 +7,11 @@ buildscript {
 }
 
 plugins {
-    id "com.diffplug.spotless" version "5.7.0"
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
     id("org.jetbrains.dokka") version "1.7.0"
     id 'io.codearte.nexus-staging' version '0.11.0'
-    id "io.gitlab.arturbosch.detekt" version "1.22.0"
-    id "org.jetbrains.kotlinx.kover" version "0.6.0"
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.kotlinx.kover)
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.android) apply false
@@ -34,5 +33,4 @@ kover {
             }
         }
     }
-    runAllTestsForProjectTask = true
 }

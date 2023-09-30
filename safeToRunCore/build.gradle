@@ -1,7 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id("org.jetbrains.dokka")
-    id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
     id 'org.jetbrains.kotlinx.kover'
 }
