@@ -17,8 +17,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v3.9.0
         with:
-          java-version: 11
-          distribution: corretto
+          java-version: 17
       - uses: actions/checkout@v2
       - name: Run build
         run: ./gradlew build assembleDebug assembleDebugAndroidTest --no-daemon
