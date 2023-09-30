@@ -1,6 +1,5 @@
 plugins {
     id("org.jetbrains.dokka")
-    id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
     id 'org.jetbrains.kotlinx.kover'
 }
@@ -24,6 +23,12 @@ apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 android {
     compileSdkVersion 33
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 
     defaultConfig {
         minSdkVersion 23

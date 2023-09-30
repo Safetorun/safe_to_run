@@ -1,7 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("io.gitlab.arturbosch.detekt")
-    id("com.diffplug.spotless")
     id("org.jetbrains.dokka")
     id("com.github.johnrengelman.shadow") version "5.0.0"
     `java-gradle-plugin`

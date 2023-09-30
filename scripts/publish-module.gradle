@@ -3,29 +3,29 @@ apply plugin: 'signing'
 
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
+//
+//task androidSourcesJar(type: Jar) {
+//    archiveClassifier.set('sources')
+//    if (project.plugins.findPlugin("com.android.library")) {
+//        // For Android libraries
+//        from android.sourceSets.main.java.srcDirs
+//        from android.sourceSets.main.kotlin.srcDirs
+//    } else {
+//        // For pure Kotlin libraries, in case you have them
+//        from sourceSets.main.java.srcDirs
+//        from sourceSets.main.kotlin.srcDirs
+//    }
+//}
+//
+//task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+//    archiveClassifier.set('javadoc')
+//    from dokkaJavadoc.outputDirectory
+//}
 
-task androidSourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    if (project.plugins.findPlugin("com.android.library")) {
-        // For Android libraries
-        from android.sourceSets.main.java.srcDirs
-        from android.sourceSets.main.kotlin.srcDirs
-    } else {
-        // For pure Kotlin libraries, in case you have them
-        from sourceSets.main.java.srcDirs
-        from sourceSets.main.kotlin.srcDirs
-    }
-}
-
-task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
-    archiveClassifier.set('javadoc')
-    from dokkaJavadoc.outputDirectory
-}
-
-artifacts {
-    archives androidSourcesJar
-    archives javadocJar
-}
+//artifacts {
+//    archives androidSourcesJar
+//    archives javadocJar
+//}
 
 afterEvaluate {
     publishing {
@@ -35,11 +35,11 @@ afterEvaluate {
                 artifactId PUBLISH_ARTIFACT_ID
                 version PUBLISH_VERSION
 
-                if (project.plugins.findPlugin("com.android.library")) {
-                    from components.release
-                } else {
-                    artifact("$buildDir/libs/${project.getName()}-${version}.jar")
-                }
+//                if (project.plugins.findPlugin("com.android.library")) {
+//                    from components.release
+//                } else {
+//                    artifact("$buildDir/libs/${project.getName()}-${version}.jar")
+//                }
 
                 artifact androidSourcesJar
                 artifact javadocJar

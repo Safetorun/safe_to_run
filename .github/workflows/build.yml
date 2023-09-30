@@ -1,4 +1,4 @@
-# This is a basic workflow to help you get started with Actions
+R# This is a basic workflow to help you get started with Actions
 
 name: CI
 
@@ -17,14 +17,11 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v3.9.0
         with:
-          java-version: 11
-          distribution: corretto
+          java-version: 17
+          distribution: 'corretto'
       - uses: actions/checkout@v2
-      - name: Build plugin
-        run: ./gradlew :safeToRunBuilder:shadowJar --no-daemon
       - name: Run build
         run: ./gradlew build assembleDebug assembleDebugAndroidTest --no-daemon
         env:
           SERVER_URL: 'http://example.com'
           API_KEY: 'apikey'
-      

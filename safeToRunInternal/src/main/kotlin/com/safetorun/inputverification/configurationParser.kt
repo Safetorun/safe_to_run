@@ -15,7 +15,7 @@ import java.io.File
  * @param fileName configuration file url
  */
 fun configurationParser(fileName: File) =
-    Json.decodeFromString(
+    Json.decodeFromString<SafeToRunConfiguration>(
         SafeToRunConfiguration.serializer(),
         fileName.readText(),
     )
