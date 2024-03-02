@@ -4,7 +4,7 @@ plugins {
     id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.0'
-    id("com.github.johnrengelman.shadow") version "5.0.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     id 'org.jetbrains.kotlinx.kover'
 }
 
