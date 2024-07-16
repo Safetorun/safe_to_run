@@ -1,13 +1,10 @@
 plugins {
+    id("com.android.library")
     id("org.jetbrains.dokka")
-    id "com.diffplug.spotless"
     id "io.gitlab.arturbosch.detekt"
     id 'org.jetbrains.kotlinx.kover'
-
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 ext {
     PUBLISH_GROUP_ID = 'com.safetorun'
@@ -20,6 +17,12 @@ apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 android {
     compileSdkVersion 33
 
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 
     defaultConfig {
         minSdkVersion 24
